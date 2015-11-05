@@ -21,8 +21,8 @@
 
 namespace Fusio\Engine\Template;
 
-use Fusio\ContextInterface;
-use Fusio\RequestInterface;
+use Fusio\Engine\ContextInterface;
+use Fusio\Engine\RequestInterface;
 
 /**
  * ParserInterface

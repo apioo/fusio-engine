@@ -21,7 +21,7 @@
 
 namespace Fusio\Engine\Template\Parser;
 
-use Fusio\Template\ParserInterface;
+use Fusio\Engine\Template\ParserInterface;
 
 /**
  * TextInterface
