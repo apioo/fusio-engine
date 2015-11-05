@@ -22,17 +22,17 @@
 namespace Fusio\Engine\Factory;
 
 /**
- * ConnectionInterface
+ * FactoryInterface
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-interface ConnectionInterface extends FactoryInterface
+interface FactoryInterface
 {
     /**
      * @param string $className
-     * @return \Fusio\ConnectionInterface
+     * @return mixed
      */
     public function factory($className);
 }

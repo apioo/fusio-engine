@@ -28,7 +28,7 @@ namespace Fusio\Engine\Factory;
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-interface ActionInterface
+interface ActionInterface extends FactoryInterface
 {
     /**
      * @param string $className
