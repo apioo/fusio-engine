@@ -32,7 +32,7 @@ interface ConnectionInterface extends FactoryInterface
 {
     /**
      * @param string $className
-     * @return \Fusio\ConnectionInterface
+     * @return \Fusio\Engine\ConnectionInterface
      */
     public function factory($className);
 }

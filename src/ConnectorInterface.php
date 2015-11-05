@@ -35,7 +35,7 @@ interface ConnectorInterface
      * configured by the user
      *
      * @param integer $connectionId
-     * @return \Fusio\ConnectionInterface
+     * @return \Fusio\Engine\ConnectionInterface
      */
     public function getConnection($connectionId);
 }

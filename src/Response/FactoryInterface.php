@@ -36,7 +36,7 @@ interface FactoryInterface
      * @param integer $statusCode
      * @param array $headers
      * @param mixed $body
-     * @return \Fusio\ResponseInterface
+     * @return \Fusio\Engine\ResponseInterface
      */
     public function build($statusCode, array $headers, $body);
 }

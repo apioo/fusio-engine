@@ -32,9 +32,9 @@ interface ProcessorInterface
 {
     /**
      * @param integer $actionId
-     * @param \Fusio\RequestInterface $request
-     * @param \Fusio\ContextInterface $context
-     * @return \Fusio\ResponseInterface
+     * @param \Fusio\Engine\RequestInterface $request
+     * @param \Fusio\Engine\ContextInterface $context
+     * @return \Fusio\Engine\ResponseInterface
      */
     public function execute($actionId, RequestInterface $request, ContextInterface $context);
 }

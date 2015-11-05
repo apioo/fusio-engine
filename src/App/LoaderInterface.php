@@ -22,7 +22,6 @@
 namespace Fusio\Engine\App;
 
 use Doctrine\DBAL\Connection;
-use Fusio\App;
 
 /**
  * LoaderInterface
@@ -35,7 +34,7 @@ interface LoaderInterface
 {
     /**
      * @param integer $appId
-     * @return \Fusio\AppInterface
+     * @return \Fusio\Engine\Model\AppInterface
      */
     public function getById($appId);
 }

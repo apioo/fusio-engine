@@ -35,10 +35,10 @@ interface ActionInterface extends ConfigurableInterface
      * select which returns the result as array or a push of the incomming 
      * message to an mq
      *
-     * @param \Fusio\RequestInterface $request
-     * @param \Fusio\ParametersInterface $configuration
-     * @param \Fusio\ContextInterface $context
-     * @return \Fusio\ResponseInterface
+     * @param \Fusio\Engine\RequestInterface $request
+     * @param \Fusio\Engine\ParametersInterface $configuration
+     * @param \Fusio\Engine\ContextInterface $context
+     * @return \Fusio\Engine\ResponseInterface
      */
     public function handle(RequestInterface $request, ParametersInterface $configuration, ContextInterface $context);
 }

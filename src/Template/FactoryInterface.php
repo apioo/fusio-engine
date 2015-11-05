@@ -31,12 +31,12 @@ namespace Fusio\Engine\Template;
 interface FactoryInterface
 {
     /**
-     * @return \Fusio\Template\Parser\SqlInterface
+     * @return \Fusio\Engine\Template\Parser\SqlInterface
      */
     public function newSqlParser();
 
     /**
-     * @return \Fusio\Template\Parser\TextInterface
+     * @return \Fusio\Engine\Template\Parser\TextInterface
      */
     public function newTextParser();
 }

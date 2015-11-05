@@ -32,7 +32,7 @@ interface ActionInterface extends FactoryInterface
 {
     /**
      * @param string $className
-     * @return \Fusio\ActionInterface
+     * @return \Fusio\Engine\ActionInterface
      */
     public function factory($className);
 }

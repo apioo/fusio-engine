@@ -34,8 +34,8 @@ use Fusio\RequestInterface;
 interface ParserInterface
 {
     /**
-     * @param \Fusio\RequestInterface $request
-     * @param \Fusio\ContextInterface $context
+     * @param \Fusio\Engine\RequestInterface $request
+     * @param \Fusio\Engine\ContextInterface $context
      * @param string $template
      * @return string
      */

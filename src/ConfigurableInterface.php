@@ -44,8 +44,8 @@ interface ConfigurableInterface
      * Builds a form which the user can configure before. The entered values get 
      * then passed as configuration to the handle method
      *
-     * @param \Fusio\Form\BuilderInterface $builder
-     * @param \Fusio\Form\ElementFactoryInterface $elementFactory
+     * @param \Fusio\Engine\Form\BuilderInterface $builder
+     * @param \Fusio\Engine\Form\ElementFactoryInterface $elementFactory
      */
     public function configure(BuilderInterface $builder, ElementFactoryInterface $elementFactory);
 }
