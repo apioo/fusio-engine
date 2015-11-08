@@ -21,8 +21,6 @@
 
 namespace Fusio\Engine\App;
 
-use Doctrine\DBAL\Connection;
-
 /**
  * LoaderInterface
  *

@@ -75,6 +75,7 @@ interface AppInterface
     public function getScopes();
 
     /**
+     * @param string $name
      * @return boolean
      */
     public function hasScope($name);
