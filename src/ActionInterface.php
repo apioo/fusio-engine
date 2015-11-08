@@ -31,9 +31,10 @@ namespace Fusio\Engine;
 interface ActionInterface extends ConfigurableInterface
 {
     /**
-     * Executes a specific action and returns a response. This could be i.e. a 
-     * select which returns the result as array or a push of the incomming 
-     * message to an mq
+     * Executes a specific action and returns a response. This could be i.e. a
+     * select which returns the result as array or a push of the incoming
+     * message to a queue. Actions can be nested so that one action uses the
+     * result of another action
      *
      * @param \Fusio\Engine\RequestInterface $request
      * @param \Fusio\Engine\ParametersInterface $configuration

@@ -41,8 +41,8 @@ interface ConfigurableInterface
     public function getName();
 
     /**
-     * Builds a form which the user can configure before. The entered values get 
-     * then passed as configuration to the handle method
+     * Builds a form which the user can configure. The entered values get then
+     * passed as configuration to the handle method
      *
      * @param \Fusio\Engine\Form\BuilderInterface $builder
      * @param \Fusio\Engine\Form\ElementFactoryInterface $elementFactory
