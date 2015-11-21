@@ -48,5 +48,10 @@ interface ActionInterface
     /**
      * @return string
      */
+    public function getConfig();
+
+    /**
+     * @return string
+     */
     public function getDate();
 }
