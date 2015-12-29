@@ -22,7 +22,8 @@
 namespace Fusio\Engine\Template;
 
 /**
- * FactoryInterface
+ * Factory through which it is possible to obtain different parsers. The cache
+ * key is only necessary if you need to create multiple parsers in one action
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
@@ -31,12 +32,14 @@ namespace Fusio\Engine\Template;
 interface FactoryInterface
 {
     /**
+     * @param string $cacheKey
      * @return \Fusio\Engine\Template\Parser\SqlInterface
      */
-    public function newSqlParser();
+    public function newSqlParser($cacheKey = null);
 
     /**
+     * @param string $cacheKey
      * @return \Fusio\Engine\Template\Parser\TextInterface
      */
-    public function newTextParser();
+    public function newTextParser($cacheKey = null);
 }
