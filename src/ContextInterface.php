@@ -58,6 +58,7 @@ interface ContextInterface
      * Creates a new context containing the given action
      *
      * @param \Fusio\Engine\Model\ActionInterface $action
+     * @return \Fusio\Engine\ContextInterface
      */
     public function withAction(ModelActionInterface $action);
 
@@ -72,6 +73,7 @@ interface ContextInterface
      * Sets the currently used connection
      *
      * @param mixed $connection
+     * @return \Fusio\Engine\ContextInterface
      */
     public function withConnection($connection);
 }
