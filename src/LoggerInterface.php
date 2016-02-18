@@ -35,10 +35,11 @@ interface LoggerInterface
     /**
      * Logs an incoming request
      *
-     * @param integer $appId
      * @param integer $routeId
+     * @param integer $appId
+     * @param integer $userId
      * @param string $ip
      * @param \PSX\Http\RequestInterface $request
      */
-    public function log($appId, $routeId, $ip, HttpRequestInterface $request);
+    public function log($routeId, $appId, $userId, $ip, HttpRequestInterface $request);
 }
