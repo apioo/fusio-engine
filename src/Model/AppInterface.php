@@ -38,7 +38,7 @@ interface AppInterface
      * @return boolean
      */
     public function isAnonymous();
-    
+
     /**
      * @return integer
      */
@@ -48,27 +48,27 @@ interface AppInterface
      * @return integer
      */
     public function getUserId();
-    
+
     /**
      * @return integer
      */
     public function getStatus();
-    
+
     /**
      * @return string
      */
     public function getName();
-    
+
     /**
      * @return string
      */
     public function getUrl();
-    
+
     /**
      * @return string
      */
     public function getAppKey();
-    
+
     /**
      * @return array
      */
