@@ -30,9 +30,9 @@ namespace Fusio\Engine\Model;
  */
 interface AppInterface
 {
-    const STATUS_ACTIVE      = 0x1;
-    const STATUS_PENDING     = 0x2;
-    const STATUS_DEACTIVATED = 0x3;
+    const STATUS_ACTIVE      = 1;
+    const STATUS_PENDING     = 2;
+    const STATUS_DEACTIVATED = 3;
 
     /**
      * @return boolean
