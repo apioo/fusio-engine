@@ -36,15 +36,20 @@ interface UserInterface
     const STATUS_DELETED       = 3;
 
     /**
+     * @return boolean
+     */
+    public function isAnonymous();
+
+    /**
      * @return integer
      */
     public function getId();
-    
+
     /**
      * @return integer
      */
     public function getStatus();
-    
+
     /**
      * @return string
      */
