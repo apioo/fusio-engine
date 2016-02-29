@@ -79,4 +79,10 @@ interface AppInterface
      * @return boolean
      */
     public function hasScope($name);
+
+    /**
+     * @param string $name
+     * @return string
+     */
+    public function getParameter($name);
 }
