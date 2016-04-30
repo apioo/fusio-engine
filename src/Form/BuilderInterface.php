@@ -21,7 +21,7 @@
 
 namespace Fusio\Engine\Form;
 
-use PSX\Data\RecordInterface;
+use PSX\Record\RecordInterface;
 
 /**
  * BuilderInterface
@@ -35,14 +35,14 @@ interface BuilderInterface
     /**
      * Adds a new element to the form
      *
-     * @param \PSX\Data\RecordInterface $element
+     * @param \PSX\Record\RecordInterface $element
      */
     public function add(RecordInterface $element);
 
     /**
      * Returns the form
      *
-     * @return \PSX\Data\RecordInterface
+     * @return \PSX\Record\RecordInterface
      */
     public function getForm();
 }

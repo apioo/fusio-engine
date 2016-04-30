@@ -21,7 +21,7 @@
 
 namespace Fusio\Engine;
 
-use PSX\Data\RecordInterface;
+use PSX\Record\RecordInterface;
 
 /**
  * RequestInterface
@@ -61,12 +61,12 @@ interface RequestInterface
     public function getParameters();
 
     /**
-     * @return \PSX\Data\RecordInterface
+     * @return \PSX\Record\RecordInterface
      */
     public function getBody();
 
     /**
-     * @param \PSX\Data\RecordInterface $body
+     * @param \PSX\Record\RecordInterface $body
      */
     public function withBody(RecordInterface $body);
 }
