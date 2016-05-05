@@ -36,7 +36,7 @@ interface ElementFactoryInterface
      * @param string $name
      * @param string $title
      * @param string $help
-     * @return \PSX\Data\RecordInterface
+     * @return \PSX\Record\RecordInterface
      */
     public function newAction($name, $title, $help = null);
 
@@ -46,7 +46,7 @@ interface ElementFactoryInterface
      * @param string $name
      * @param string $title
      * @param string $help
-     * @return \PSX\Data\RecordInterface
+     * @return \PSX\Record\RecordInterface
      */
     public function newConnection($name, $title, $help = null);
 
@@ -58,7 +58,7 @@ interface ElementFactoryInterface
      * @param string $title
      * @param string $type
      * @param string $help
-     * @return \PSX\Data\RecordInterface
+     * @return \PSX\Record\RecordInterface
      */
     public function newInput($name, $title, $type = 'text', $help = null);
 
@@ -69,7 +69,7 @@ interface ElementFactoryInterface
      * @param string $title
      * @param array $options
      * @param string $help
-     * @return \PSX\Data\RecordInterface
+     * @return \PSX\Record\RecordInterface
      */
     public function newSelect($name, $title, array $options = array(), $help = null);
 
@@ -80,7 +80,7 @@ interface ElementFactoryInterface
      * @param string $title
      * @param string $mode
      * @param string $help
-     * @return \PSX\Data\RecordInterface
+     * @return \PSX\Record\RecordInterface
      */
     public function newTextArea($name, $title, $mode, $help = null);
 }

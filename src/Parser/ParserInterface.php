@@ -41,7 +41,7 @@ interface ParserInterface
      * Returns a form if the class is configurable
      *
      * @param string $className
-     * @return \PSX\Data\RecordInterface
+     * @return \PSX\Record\RecordInterface
      */
     public function getForm($className);
 }

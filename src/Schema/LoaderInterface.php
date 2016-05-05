@@ -32,7 +32,7 @@ interface LoaderInterface
 {
     /**
      * @param integer $schemaId
-     * @return \PSX\Data\SchemaInterface
+     * @return \PSX\Schema\SchemaInterface
      */
     public function getSchema($schemaId);
 }
