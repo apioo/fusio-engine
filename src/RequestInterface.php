@@ -33,6 +33,11 @@ use PSX\Record\RecordInterface;
 interface RequestInterface
 {
     /**
+     * @return string
+     */
+    public function getMethod();
+
+    /**
      * @param string $name
      * @return string
      */
