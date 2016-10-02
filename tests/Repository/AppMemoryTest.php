@@ -21,9 +21,9 @@
 
 namespace Fusio\Engine\Tests\Repository;
 
-use Fusio\Engine\Repository;
-use Fusio\Engine\Model\AppInterface;
 use Fusio\Engine\Model\App;
+use Fusio\Engine\Model\AppInterface;
+use Fusio\Engine\Repository;
 
 /**
  * AppMemoryTest

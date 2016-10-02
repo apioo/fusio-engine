@@ -21,20 +21,19 @@
 
 namespace Fusio\Engine\Tests\Test;
 
-use Fusio\Engine\ContextInterface;
-use Fusio\Engine\ParametersInterface;
-use Fusio\Engine\RequestInterface;
-use Fusio\Engine\Parser;
-use Fusio\Engine\Factory;
-use Fusio\Engine\Repository;
-use Fusio\Engine\ProcessorInterface;
 use Fusio\Engine\ConnectorInterface;
+use Fusio\Engine\ContextInterface;
+use Fusio\Engine\Factory;
+use Fusio\Engine\Form;
+use Fusio\Engine\ParametersInterface;
+use Fusio\Engine\Parser;
+use Fusio\Engine\ProcessorInterface;
+use Fusio\Engine\Repository;
+use Fusio\Engine\RequestInterface;
+use Fusio\Engine\Response;
 use Fusio\Engine\Schema;
 use Fusio\Engine\Template;
-use Fusio\Engine\Form;
-use Fusio\Engine\Response;
 use Fusio\Engine\Test\EngineTestCase;
-use Fusio\Engine\Test\EngineTestCaseTrait;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**

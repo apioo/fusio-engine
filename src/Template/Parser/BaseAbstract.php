@@ -23,8 +23,8 @@ namespace Fusio\Engine\Template\Parser;
 
 use Fusio\Engine\ContextInterface;
 use Fusio\Engine\RequestInterface;
-use Fusio\Engine\Template\ParserInterface;
 use Fusio\Engine\Template\Extension;
+use Fusio\Engine\Template\ParserInterface;
 use Fusio\Engine\Template\StackLoader;
 use PSX\Data\Accessor;
 use PSX\Validate\Validate;

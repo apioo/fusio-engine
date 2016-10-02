@@ -21,9 +21,9 @@
 
 namespace Fusio\Engine\Tests\Repository;
 
-use Fusio\Engine\Repository;
-use Fusio\Engine\Model\UserInterface;
 use Fusio\Engine\Model\User;
+use Fusio\Engine\Model\UserInterface;
+use Fusio\Engine\Repository;
 
 /**
  * UserMemoryTest

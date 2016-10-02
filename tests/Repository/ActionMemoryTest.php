@@ -21,9 +21,9 @@
 
 namespace Fusio\Engine\Tests\Repository;
 
-use Fusio\Engine\Repository;
 use Fusio\Engine\Model\Action;
 use Fusio\Engine\Model\ActionInterface;
+use Fusio\Engine\Repository;
 
 /**
  * ActionMemoryTest

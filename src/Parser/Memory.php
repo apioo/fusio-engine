@@ -21,8 +21,6 @@
 
 namespace Fusio\Engine\Parser;
 
-use Doctrine\DBAL\Connection;
-use FilesystemIterator;
 use Fusio\Engine\Factory\FactoryInterface;
 use Fusio\Engine\Form;
 

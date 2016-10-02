@@ -21,9 +21,9 @@
 
 namespace Fusio\Engine\Tests\Repository;
 
-use Fusio\Engine\Repository;
-use Fusio\Engine\Model\ConnectionInterface;
 use Fusio\Engine\Model\Connection;
+use Fusio\Engine\Model\ConnectionInterface;
+use Fusio\Engine\Repository;
 
 /**
  * ConnectionMemoryTest

@@ -21,10 +21,8 @@
 
 namespace Fusio\Engine\Parser;
 
-use Doctrine\DBAL\Connection;
 use Fusio\Engine\ConfigurableInterface;
 use Fusio\Engine\Factory\FactoryInterface;
-use Fusio\Engine\Parser\ParserInterface;
 use Fusio\Engine\Form;
 use Fusio\Engine\Repository;
 
