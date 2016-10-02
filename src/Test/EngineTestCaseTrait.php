@@ -112,7 +112,7 @@ trait EngineTestCaseTrait
      * @param string $class
      * @return \Fusio\Engine\ActionInterface
      */
-    protected function getAction($class)
+    protected function getActionFactory($class)
     {
         /** @var Factory\ActionInterface $actionFactory */
         $actionFactory = $this->getContainer()->get('action_factory');
@@ -124,7 +124,7 @@ trait EngineTestCaseTrait
      * @param string $class
      * @return \Fusio\Engine\ConnectionInterface
      */
-    protected function getConnection($class)
+    protected function getConnectionFactory($class)
     {
         /** @var Factory\ConnectionInterface $connectionFactory */
         $connectionFactory = $this->getContainer()->get('connection_factory');
