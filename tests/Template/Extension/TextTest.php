@@ -24,7 +24,7 @@ namespace Fusio\Engine\Tests\Template\Extension;
 use Fusio\Engine\Template\Extension as func;
 use Fusio\Engine\Template\Extension\Text;
 use Fusio\Engine\Template\Factory;
-use Fusio\Engine\Test\ActionTestCaseTrait;
+use Fusio\Engine\Test\EngineTestCaseTrait;
 use PSX\Record\Record;
 
 /**
@@ -36,7 +36,7 @@ use PSX\Record\Record;
  */
 class TextTest extends \PHPUnit_Framework_TestCase
 {
-    use ActionTestCaseTrait;
+    use EngineTestCaseTrait;
 
     protected function setUp()
     {

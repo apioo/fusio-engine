@@ -19,57 +19,65 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Fusio\Engine\Connector;
+namespace Fusio\Engine\Repository;
 
-use Fusio\Engine\Model\ConnectionInterface;
+use Fusio\Engine\Model;
 
 /**
- * MemoryRepository
+ * ActionMemory
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-class MemoryRepository implements RepositoryInterface
+class ActionMemory implements ActionInterface
 {
     /**
-     * @var \Fusio\Engine\Model\ConnectionInterface[]
+     * @var \Fusio\Engine\Model\ActionInterface[]
      */
-    protected $connections;
+    protected $actions;
 
     /**
-     * @param array $connections
+     * @param array $actions
      */
-    public function __construct(array $connections = array())
+    public function __construct(array $actions = array())
     {
-        $this->connections = $connections;
+        $this->actions = $actions;
     }
 
     /**
-     * @param \Fusio\Engine\Model\ConnectionInterface $connection
+     * @param \Fusio\Engine\Model\ActionInterface $action
      */
-    public function add(ConnectionInterface $connection)
+    public function add(Model\ActionInterface $action)
     {
-        $this->connections[$connection->getId()] = $connection;
+        $this->actions[$action->getId()] = $action;
     }
 
     /**
-     * @param integer|string $connectionId
-     * @return \Fusio\Engine\Model\ConnectionInterface|null
+     * @return \Fusio\Engine\Model\ActionInterface[]
      */
-    public function getConnection($connectionId)
+    public function getAll()
     {
-        if (empty($this->connections)) {
+        return $this->actions;
+    }
+
+    /**
+     * @param integer|string $actionId
+     * @return \Fusio\Engine\Model\ActionInterface|null
+     */
+    public function get($actionId)
+    {
+        if (empty($this->actions)) {
             return null;
         }
 
-        if (isset($this->connections[$connectionId])) {
-            return $this->connections[$connectionId];
+        if (isset($this->actions[$actionId])) {
+            return $this->actions[$actionId];
         }
 
-        foreach ($this->connections as $connection) {
-            if ($connection->getName() == $connectionId) {
-                return $connection;
+        foreach ($this->actions as $action) {
+            if ($action->getName() == $actionId) {
+                return $action;
             }
         }
 

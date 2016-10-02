@@ -19,20 +19,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Fusio\Engine\App;
+namespace Fusio\Engine\Form;
+
+use PSX\Record\RecordInterface;
+use PSX\Record\RecordObject;
 
 /**
- * LoaderInterface
+ * Container
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-interface LoaderInterface
+class Container extends RecordObject
 {
-    /**
-     * @param integer $appId
-     * @return \Fusio\Engine\Model\AppInterface
-     */
-    public function getById($appId);
+    protected $element = array();
+
+    public function add(RecordInterface $record)
+    {
+        $this->element[] = $record;
+    }
+    
+    public function getElements()
+    {
+        return $this->element;
+    }
 }

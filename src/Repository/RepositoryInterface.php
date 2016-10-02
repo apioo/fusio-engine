@@ -19,7 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Fusio\Engine\Connector;
+namespace Fusio\Engine\Repository;
 
 /**
  * RepositoryInterface
@@ -31,10 +31,13 @@ namespace Fusio\Engine\Connector;
 interface RepositoryInterface
 {
     /**
-     * Returns an connection with the provided id
-     *
-     * @param mixed $connectionId
-     * @return \Fusio\Engine\Model\ConnectionInterface
+     * @return array
      */
-    public function getConnection($connectionId);
+    public function getAll();
+
+    /**
+     * @param integer $id
+     * @return mixed
+     */
+    public function get($id);
 }

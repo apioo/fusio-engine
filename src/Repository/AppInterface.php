@@ -19,20 +19,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Fusio\Engine\User;
+namespace Fusio\Engine\Repository;
 
 /**
- * LoaderInterface
+ * AppInterface
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-interface LoaderInterface
+interface AppInterface extends RepositoryInterface
 {
     /**
-     * @param integer $userId
-     * @return \Fusio\Engine\Model\UserInterface
+     * @return \Fusio\Engine\Model\AppInterface[]
      */
-    public function getById($userId);
+    public function getAll();
+
+    /**
+     * @param integer $appId
+     * @return \Fusio\Engine\Model\AppInterface
+     */
+    public function get($appId);
 }

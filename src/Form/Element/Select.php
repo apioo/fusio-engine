@@ -19,22 +19,47 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Fusio\Engine\Processor;
+namespace Fusio\Engine\Form\Element;
+
+use Fusio\Engine\Form\Element;
 
 /**
- * RepositoryInterface
+ * Select
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-interface RepositoryInterface
+class Select extends Element
 {
-    /**
-     * Returns an action with the provided id
-     *
-     * @param mixed $actionId
-     * @return \Fusio\Engine\Model\ActionInterface
-     */
-    public function getAction($actionId);
+    protected $element = 'http://fusio-project.org/ns/2015/form/select';
+
+    protected $options;
+
+    public function __construct($name, $title, array $options = array(), $help = null)
+    {
+        parent::__construct($name, $title, $help);
+
+        foreach ($options as $key => $value) {
+            $this->addOption($key, $value);
+        }
+    }
+
+    public function setOptions(array $options)
+    {
+        $this->options = $options;
+    }
+
+    public function getOptions()
+    {
+        return $this->options;
+    }
+
+    public function addOption($key, $value)
+    {
+        $this->options[] = array(
+            'key'   => $key,
+            'value' => $value,
+        );
+    }
 }

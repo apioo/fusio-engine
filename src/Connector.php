@@ -21,7 +21,6 @@
 
 namespace Fusio\Engine;
 
-use Fusio\Engine\Connector\RepositoryInterface;
 use Fusio\Engine\Factory\ConnectionInterface;
 use RuntimeException;
 
@@ -35,7 +34,7 @@ use RuntimeException;
 class Connector implements ConnectorInterface
 {
     /**
-     * @var \Fusio\Engine\Connector\RepositoryInterface
+     * @var \Fusio\Engine\Repository\ConnectionInterface
      */
     protected $repository;
 
@@ -45,10 +44,10 @@ class Connector implements ConnectorInterface
     protected $factory;
 
     /**
-     * @param \Fusio\Engine\Connector\RepositoryInterface $repository
+     * @param \Fusio\Engine\Repository\ConnectionInterface $repository
      * @param \Fusio\Engine\Factory\ConnectionInterface $factory
      */
-    public function __construct(RepositoryInterface $repository, ConnectionInterface $factory)
+    public function __construct(Repository\ConnectionInterface $repository, ConnectionInterface $factory)
     {
         $this->repository = $repository;
         $this->factory    = $factory;
@@ -63,7 +62,7 @@ class Connector implements ConnectorInterface
      */
     public function getConnection($connectionId)
     {
-        $connection = $this->repository->getConnection($connectionId);
+        $connection = $this->repository->get($connectionId);
 
         if (empty($connection)) {
             throw new RuntimeException('Invalid connection');

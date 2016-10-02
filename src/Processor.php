@@ -45,10 +45,10 @@ class Processor implements ProcessorInterface
     protected $factory;
 
     /**
-     * @param \Fusio\Engine\Processor\RepositoryInterface $repository
+     * @param \Fusio\Engine\Repository\ActionInterface $repository
      * @param \Fusio\Engine\Factory\ActionInterface $factory
      */
-    public function __construct(Processor\RepositoryInterface $repository, Factory\ActionInterface $factory)
+    public function __construct(Repository\ActionInterface $repository, Factory\ActionInterface $factory)
     {
         $this->stack   = [];
         $this->factory = $factory;
@@ -64,8 +64,8 @@ class Processor implements ProcessorInterface
      */
     public function execute($actionId, RequestInterface $request, ContextInterface $context)
     {
-        $repository = end($this->stack);
-        $action     = $repository->getAction($actionId);
+        $repository = $this->getCurrentRepository();
+        $action     = $repository->get($actionId);
 
         if ($action instanceof ActionInterface) {
             $parameters = new Parameters($action->getConfig());
@@ -80,9 +80,9 @@ class Processor implements ProcessorInterface
      * Pushes another repository to the processor stack. Through this it is
      * possible to provide another action source
      *
-     * @param \Fusio\Engine\Processor\RepositoryInterface
+     * @param \Fusio\Engine\Action\RepositoryInterface
      */
-    public function push(Processor\RepositoryInterface $repository)
+    public function push(Repository\ActionInterface $repository)
     {
         array_push($this->stack, $repository);
     }
@@ -97,5 +97,13 @@ class Processor implements ProcessorInterface
         }
 
         array_pop($this->stack);
+    }
+
+    /**
+     * @return \Fusio\Engine\Repository\ActionInterface
+     */
+    protected function getCurrentRepository()
+    {
+        return end($this->stack);
     }
 }

@@ -19,48 +19,60 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Fusio\Engine\Processor;
+namespace Fusio\Engine\Repository;
 
-use Fusio\Engine\Model\ActionInterface;
+use Fusio\Engine\Model;
 
 /**
- * MemoryRepository
+ * UserMemory
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-class MemoryRepository implements RepositoryInterface
+class UserMemory implements UserInterface
 {
     /**
-     * @var \Fusio\Engine\Model\ActionInterface[]
+     * @var \Fusio\Engine\Model\UserInterface[]
      */
-    protected $actions;
+    protected $users;
 
-    public function __construct(array $actions = array())
+    /**
+     * @param array $connections
+     */
+    public function __construct(array $users = array())
     {
-        $this->actions = $actions;
+        $this->users = $users;
     }
 
-    public function add(ActionInterface $action)
+    /**
+     * @param \Fusio\Engine\Model\UserInterface $user
+     */
+    public function add(Model\UserInterface $user)
     {
-        $this->actions[$action->getId()] = $action;
+        $this->users[$user->getId()] = $user;
     }
 
-    public function getAction($actionId)
+    /**
+     * @return \Fusio\Engine\Model\UserInterface[]
+     */
+    public function getAll()
     {
-        if (empty($this->actions)) {
+        return $this->users;
+    }
+
+    /**
+     * @param integer|string $userId
+     * @return \Fusio\Engine\Model\UserInterface|null
+     */
+    public function get($userId)
+    {
+        if (empty($this->users)) {
             return null;
         }
 
-        if (isset($this->actions[$actionId])) {
-            return $this->actions[$actionId];
-        }
-
-        foreach ($this->actions as $action) {
-            if ($action->getName() == $actionId) {
-                return $action;
-            }
+        if (isset($this->users[$userId])) {
+            return $this->users[$userId];
         }
 
         return null;

@@ -13,6 +13,7 @@
   "require": {
     "php": ">=5.3",
     "twig/twig": "^1.18",
+    "doctrine/annotations": "^1.2",
     "psx/psx": "^2.0"
   },
   "require-dev": {

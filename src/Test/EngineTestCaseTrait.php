@@ -22,10 +22,13 @@
 namespace Fusio\Engine\Test;
 
 use Fusio\Engine\Context;
+use Fusio\Engine\Dependency\EngineContainer;
+use Fusio\Engine\Factory;
 use Fusio\Engine\Model\Action;
 use Fusio\Engine\Model\App;
 use Fusio\Engine\Model\User;
 use Fusio\Engine\Parameters;
+use Fusio\Engine\Repository;
 use Fusio\Engine\Request;
 use Psr\Http\Message\StreamInterface;
 use PSX\Http\Request as HttpRequest;
@@ -34,13 +37,13 @@ use PSX\Record\RecordInterface;
 use PSX\Uri\Uri;
 
 /**
- * ActionTestCaseTrait
+ * EngineTestCaseTrait
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-trait ActionTestCaseTrait
+trait EngineTestCaseTrait
 {
     protected function getRequest($method = null, array $uriFragments = array(), array $parameters = array(), array $headers = array(), RecordInterface $parsedBody = null, StreamInterface $rawBody = null)
     {
@@ -81,5 +84,10 @@ trait ActionTestCaseTrait
         $action->setDate(date('Y-m-d H:i:s'));
 
         return new Context(34, $app, $user, $action);
+    }
+
+    protected function newContainer()
+    {
+        return new EngineContainer();
     }
 }
