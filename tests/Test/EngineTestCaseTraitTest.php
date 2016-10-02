@@ -67,7 +67,7 @@ class EngineTestCaseTraitTest extends EngineTestCase
 
     public function testGetActionHandle()
     {
-        $action = $this->getAction(Action::class);
+        $action = $this->getActionFactory(Action::class);
 
         $this->assertInstanceOf(ActionInterface::class, $action);
 
@@ -89,7 +89,7 @@ JSON;
 
     public function testGetActionConfigure()
     {
-        $action  = $this->getAction(Action::class);
+        $action  = $this->getActionFactory(Action::class);
         $builder = new Form\Builder();
         $factory = $this->getFormElementFactory();
 
@@ -102,7 +102,7 @@ JSON;
 
     public function testGetConnection()
     {
-        $connection = $this->getConnection(Connection::class);
+        $connection = $this->getConnectionFactory(Connection::class);
         $parameters = new Parameters([]);
 
         $this->assertInstanceOf(ConnectionInterface::class, $connection);
@@ -114,7 +114,7 @@ JSON;
 
     public function testGetConnectionConfigure()
     {
-        $connection = $this->getConnection(Connection::class);
+        $connection = $this->getConnectionFactory(Connection::class);
         $builder    = new Form\Builder();
         $factory    = $this->getFormElementFactory();
 
