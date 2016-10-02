@@ -19,42 +19,40 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Fusio\Engine\Tests\Test;
+namespace Fusio\Engine\Test;
 
-use Fusio\Engine\ActionInterface;
-use Fusio\Engine\ContextInterface;
+use Fusio\Engine\ConnectionInterface;
+use Fusio\Engine\Exception\ConfigurationException;
 use Fusio\Engine\Form\BuilderInterface;
 use Fusio\Engine\Form\ElementFactoryInterface;
 use Fusio\Engine\ParametersInterface;
-use Fusio\Engine\RequestInterface;
 
 /**
- * Action
+ * CallbackConnection
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-class Action implements ActionInterface
+class CallbackConnection implements ConnectionInterface
 {
-    /**
-     * @Inject
-     * @var \Fusio\Engine\Response\FactoryInterface
-     */
-    protected $response;
-
     public function getName()
     {
-        return 'Action';
+        return 'Callback-Connection';
     }
 
-    public function handle(RequestInterface $request, ParametersInterface $configuration, ContextInterface $context)
+    public function getConnection(ParametersInterface $config)
     {
-        return $this->response->build(200, [], ['foo' => 'bar']);
+        $callback = $config->get('callback');
+
+        if (!is_callable($callback)) {
+            throw new ConfigurationException('Invalid callback provided');
+        }
+
+        return call_user_func_array($callback, []);
     }
 
     public function configure(BuilderInterface $builder, ElementFactoryInterface $elementFactory)
     {
-        $builder->add($elementFactory->newInput('foo', 'Foo', 'text', 'bar'));
     }
 }

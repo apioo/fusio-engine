@@ -21,32 +21,27 @@
 
 namespace Fusio\Engine\Tests\Test;
 
-use Fusio\Engine\ConnectionInterface;
-use Fusio\Engine\Form\BuilderInterface;
-use Fusio\Engine\Form\ElementFactoryInterface;
-use Fusio\Engine\ParametersInterface;
+use Fusio\Engine\Test\EngineTestCase;
+use Fusio\Engine\Test\CallbackConnection;
 
 /**
- * Connection
+ * CallbackConnectionTest
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-class Connection implements ConnectionInterface
+class CallbackConnectionTest extends EngineTestCase
 {
-    public function getName()
+    public function testGetConnection()
     {
-        return 'Connection';
-    }
+        $callback = function(){
+            return new \stdClass();
+        };
 
-    public function getConnection(ParametersInterface $config)
-    {
-        return new \stdClass();
-    }
+        $connection = $this->getConnectionFactory(CallbackConnection::class);
+        $result     = $connection->getConnection($this->getParameters(['callback' => $callback]));
 
-    public function configure(BuilderInterface $builder, ElementFactoryInterface $elementFactory)
-    {
-        $builder->add($elementFactory->newInput('foo', 'Foo', 'text', 'bar'));
+        $this->assertInstanceOf('stdClass', $result);
     }
 }
