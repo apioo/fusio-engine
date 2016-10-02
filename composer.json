@@ -15,9 +15,17 @@
     "twig/twig": "^1.18",
     "psx/psx": "^2.0"
   },
+  "require-dev": {
+    "phpunit/phpunit": "^4.1"
+  },
   "autoload": {
     "psr-4": {
       "Fusio\\Engine\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Fusio\\Engine\\Tests\\": "tests/"
     }
   }
 }

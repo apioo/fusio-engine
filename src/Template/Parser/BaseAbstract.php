@@ -55,15 +55,15 @@ abstract class BaseAbstract implements ParserInterface
 
     /**
      * @param boolean $debug
-     * @param boolean $cache
+     * @param string|false|\Twig_CacheInterface $cache
      * @param string|null $cacheKey
      */
-    public function __construct($debug, $cache = true, $cacheKey = null)
+    public function __construct($debug, $cache, $cacheKey = null)
     {
         $this->loader = new StackLoader();
         $this->twig   = new \Twig_Environment($this->loader, [
             'debug'            => $debug,
-            'cache'            => $cache ? PSX_PATH_CACHE : false,
+            'cache'            => $cache,
             'autoescape'       => false,
             'strict_variables' => false,
         ]);
