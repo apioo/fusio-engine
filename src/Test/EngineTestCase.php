@@ -34,14 +34,4 @@ use Fusio\Engine\Repository;
 class EngineTestCase extends \PHPUnit_Framework_TestCase
 {
     use EngineTestCaseTrait;
-
-    /**
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface
-     */
-    protected $container;
-
-    protected function setUp()
-    {
-        $this->container = $this->newContainer();
-    }
 }

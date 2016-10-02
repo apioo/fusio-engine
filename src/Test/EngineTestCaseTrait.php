@@ -45,6 +45,20 @@ use PSX\Uri\Uri;
  */
 trait EngineTestCaseTrait
 {
+    /**
+     * @var \Symfony\Component\DependencyInjection\ContainerInterface
+     */
+    protected static $container;
+
+    /**
+     * @param string $method
+     * @param array $uriFragments
+     * @param array $parameters
+     * @param array $headers
+     * @param \PSX\Record\RecordInterface|null $parsedBody
+     * @param \Psr\Http\Message\StreamInterface|null $rawBody
+     * @return \Fusio\Engine\Request
+     */
     protected function getRequest($method = null, array $uriFragments = array(), array $parameters = array(), array $headers = array(), RecordInterface $parsedBody = null, StreamInterface $rawBody = null)
     {
         return new Request(
@@ -55,11 +69,18 @@ trait EngineTestCaseTrait
         );
     }
 
+    /**
+     * @param array $parameters
+     * @return \Fusio\Engine\Parameters
+     */
     protected function getParameters(array $parameters = array())
     {
         return new Parameters($parameters);
     }
 
+    /**
+     * @return \Fusio\Engine\Context
+     */
     protected function getContext()
     {
         $app = new App();
@@ -86,6 +107,45 @@ trait EngineTestCaseTrait
         return new Context(34, $app, $user, $action);
     }
 
+    /**
+     * @param string $class
+     * @return \Fusio\Engine\ActionInterface
+     */
+    protected function getAction($class)
+    {
+        /** @var Factory\ActionInterface $actionFactory */
+        $actionFactory = $this->getContainer()->get('action_factory');
+
+        return $actionFactory->factory($class);
+    }
+
+    /**
+     * @param string $class
+     * @return \Fusio\Engine\ConnectionInterface
+     */
+    protected function getConnection($class)
+    {
+        /** @var Factory\ConnectionInterface $connectionFactory */
+        $connectionFactory = $this->getContainer()->get('connection_factory');
+
+        return $connectionFactory->factory($class);
+    }
+
+    /**
+     * @return \Symfony\Component\DependencyInjection\ContainerInterface
+     */
+    protected function getContainer()
+    {
+        if (self::$container) {
+            self::$container = $this->newContainer();
+        }
+
+        return self::$container;
+    }
+
+    /**
+     * @return \Symfony\Component\DependencyInjection\ContainerInterface
+     */
     protected function newContainer()
     {
         return new EngineContainer();
