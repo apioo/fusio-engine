@@ -100,6 +100,13 @@ JSON;
         $this->assertInstanceOf(Form\Container::class, $builder->getForm());
     }
 
+    public function testGetActionRepository()
+    {
+        $repository = $this->getActionRepository();
+
+        $this->assertInstanceOf(Repository\ActionInterface::class, $repository);
+    }
+
     public function testGetConnection()
     {
         $connection = $this->getConnectionFactory(Connection::class);
@@ -123,6 +130,13 @@ JSON;
         $connection->configure($builder, $factory);
 
         $this->assertInstanceOf(Form\Container::class, $builder->getForm());
+    }
+
+    public function testGetConnectionRepository()
+    {
+        $repository = $this->getConnectionRepository();
+
+        $this->assertInstanceOf(Repository\ConnectionInterface::class, $repository);
     }
 
     public function testGetFormElementFactory()

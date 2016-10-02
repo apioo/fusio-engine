@@ -114,10 +114,15 @@ trait EngineTestCaseTrait
      */
     protected function getActionFactory($class)
     {
-        /** @var Factory\ActionInterface $actionFactory */
-        $actionFactory = $this->getContainer()->get('action_factory');
+        return $this->getContainer()->get('action_factory')->factory($class);
+    }
 
-        return $actionFactory->factory($class);
+    /**
+     * @return \Fusio\Engine\Repository\ActionInterface
+     */
+    protected function getActionRepository()
+    {
+        return $this->getContainer()->get('action_repository');
     }
 
     /**
@@ -126,10 +131,15 @@ trait EngineTestCaseTrait
      */
     protected function getConnectionFactory($class)
     {
-        /** @var Factory\ConnectionInterface $connectionFactory */
-        $connectionFactory = $this->getContainer()->get('connection_factory');
+        return $this->getContainer()->get('connection_factory')->factory($class);
+    }
 
-        return $connectionFactory->factory($class);
+    /**
+     * @return \Fusio\Engine\Repository\ConnectionInterface
+     */
+    protected function getConnectionRepository()
+    {
+        return $this->getContainer()->get('connection_repository');
     }
 
     /**
