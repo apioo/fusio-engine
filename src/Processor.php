@@ -22,7 +22,6 @@
 namespace Fusio\Engine;
 
 use Fusio\Engine\Factory;
-use Fusio\Engine\Model\ActionInterface;
 use RuntimeException;
 
 /**

@@ -189,14 +189,14 @@ trait EngineTrait
     {
         return new ObjectBuilder(
             $this,
-            $this->get('annotation_reader_controller')
+            $this->get('annotation_reader')
         );
     }
 
     /**
      * @return \Doctrine\Common\Annotations\Reader
      */
-    public function getAnnotationReaderController()
+    public function getAnnotationReader()
     {
         return $this->newDoctrineAnnotationImpl([
             'PSX\Framework\Annotation',
@@ -209,12 +209,30 @@ trait EngineTrait
      */
     protected function newDoctrineAnnotationImpl(array $namespaces)
     {
-        $reader = new Annotations\SimpleAnnotationReader();
+        $this->registerAnnotationLoader($namespaces);
 
+        $reader = new Annotations\SimpleAnnotationReader();
         foreach ($namespaces as $namespace) {
             $reader->addNamespace($namespace);
         }
 
         return $reader;
+    }
+
+    /**
+     * @param array $namespaces
+     */
+    protected function registerAnnotationLoader(array $namespaces)
+    {
+        Annotations\AnnotationRegistry::reset();
+        Annotations\AnnotationRegistry::registerLoader(function ($class) use ($namespaces) {
+            foreach ($namespaces as $namespace) {
+                if (strpos($class, $namespace) === 0) {
+                    spl_autoload_call($class);
+
+                    return class_exists($class, false);
+                }
+            }
+        });
     }
 }

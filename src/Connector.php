@@ -21,7 +21,7 @@
 
 namespace Fusio\Engine;
 
-use Fusio\Engine\Factory\ConnectionInterface;
+use Fusio\Engine\Factory;
 use RuntimeException;
 
 /**
@@ -47,7 +47,7 @@ class Connector implements ConnectorInterface
      * @param \Fusio\Engine\Repository\ConnectionInterface $repository
      * @param \Fusio\Engine\Factory\ConnectionInterface $factory
      */
-    public function __construct(Repository\ConnectionInterface $repository, ConnectionInterface $factory)
+    public function __construct(Repository\ConnectionInterface $repository, Factory\ConnectionInterface $factory)
     {
         $this->repository = $repository;
         $this->factory    = $factory;

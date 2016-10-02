@@ -30,6 +30,7 @@ use Fusio\Engine\Model\User;
 use Fusio\Engine\Parameters;
 use Fusio\Engine\Repository;
 use Fusio\Engine\Request;
+use Fusio\Engine\Form;
 use Psr\Http\Message\StreamInterface;
 use PSX\Http\Request as HttpRequest;
 use PSX\Record\Record;
@@ -132,11 +133,19 @@ trait EngineTestCaseTrait
     }
 
     /**
+     * @return \Fusio\Engine\Form\ElementFactoryInterface
+     */
+    protected function getFormElementFactory()
+    {
+        return $this->getContainer()->get('form_element_factory');
+    }
+
+    /**
      * @return \Symfony\Component\DependencyInjection\ContainerInterface
      */
     protected function getContainer()
     {
-        if (self::$container) {
+        if (!self::$container) {
             self::$container = $this->newContainer();
         }
 

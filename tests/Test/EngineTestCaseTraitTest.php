@@ -21,19 +21,24 @@
 
 namespace Fusio\Engine\Tests\Test;
 
+use Fusio\Engine\ActionInterface;
+use Fusio\Engine\ConnectionInterface;
 use Fusio\Engine\ConnectorInterface;
 use Fusio\Engine\ContextInterface;
 use Fusio\Engine\Factory;
 use Fusio\Engine\Form;
+use Fusio\Engine\Parameters;
 use Fusio\Engine\ParametersInterface;
 use Fusio\Engine\Parser;
 use Fusio\Engine\ProcessorInterface;
 use Fusio\Engine\Repository;
 use Fusio\Engine\RequestInterface;
 use Fusio\Engine\Response;
+use Fusio\Engine\ResponseInterface;
 use Fusio\Engine\Schema;
 use Fusio\Engine\Template;
 use Fusio\Engine\Test\EngineTestCase;
+use PSX\Data\Record\Transformer;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -60,23 +65,88 @@ class EngineTestCaseTraitTest extends EngineTestCase
         $this->assertInstanceOf(ContextInterface::class, $this->getContext());
     }
 
+    public function testGetActionHandle()
+    {
+        $action = $this->getAction(Action::class);
+
+        $this->assertInstanceOf(ActionInterface::class, $action);
+
+        $parameters = $this->getParameters([]);
+        $response   = $action->handle($this->getRequest(), $parameters, $this->getContext());
+
+        $actual = json_encode(Transformer::toStdClass($response->getBody()), JSON_PRETTY_PRINT);
+        $expect = <<<JSON
+{
+    "foo": "bar"
+}
+JSON;
+
+        $this->assertInstanceOf(ResponseInterface::class, $response);
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals([], $response->getHeaders());
+        $this->assertJsonStringEqualsJsonString($expect, $actual, $actual);
+    }
+
+    public function testGetActionConfigure()
+    {
+        $action  = $this->getAction(Action::class);
+        $builder = new Form\Builder();
+        $factory = $this->getFormElementFactory();
+
+        $this->assertInstanceOf(ActionInterface::class, $action);
+
+        $action->configure($builder, $factory);
+
+        $this->assertInstanceOf(Form\Container::class, $builder->getForm());
+    }
+
+    public function testGetConnection()
+    {
+        $connection = $this->getConnection(Connection::class);
+        $parameters = new Parameters([]);
+
+        $this->assertInstanceOf(ConnectionInterface::class, $connection);
+
+        $result = $connection->getConnection($parameters);
+
+        $this->assertInstanceOf(\stdClass::class, $result);
+    }
+
+    public function testGetConnectionConfigure()
+    {
+        $connection = $this->getConnection(Connection::class);
+        $builder    = new Form\Builder();
+        $factory    = $this->getFormElementFactory();
+
+        $this->assertInstanceOf(ConnectionInterface::class, $connection);
+
+        $connection->configure($builder, $factory);
+
+        $this->assertInstanceOf(Form\Container::class, $builder->getForm());
+    }
+
+    public function testGetFormElementFactory()
+    {
+        $this->assertInstanceOf(Form\ElementFactoryInterface::class, $this->getFormElementFactory());
+    }
+
     public function testContainer()
     {
-        $this->assertInstanceOf(ContainerInterface::class, $this->container);
-        $this->assertInstanceOf(Parser\ParserInterface::class, $this->container->get('action_parser'));
-        $this->assertInstanceOf(Factory\ActionInterface::class, $this->container->get('action_factory'));
-        $this->assertInstanceOf(Repository\ActionInterface::class, $this->container->get('action_repository'));
-        $this->assertInstanceOf(ProcessorInterface::class, $this->container->get('processor'));
-        $this->assertInstanceOf(Parser\ParserInterface::class, $this->container->get('connection_parser'));
-        $this->assertInstanceOf(Factory\ConnectionInterface::class, $this->container->get('connection_factory'));
-        $this->assertInstanceOf(Repository\ConnectionInterface::class, $this->container->get('connection_repository'));
-        $this->assertInstanceOf(ConnectorInterface::class, $this->container->get('connector'));
-        $this->assertInstanceOf(Schema\ParserInterface::class, $this->container->get('schema_parser'));
-        $this->assertInstanceOf(Schema\LoaderInterface::class, $this->container->get('schema_loader'));
-        $this->assertInstanceOf(Repository\AppInterface::class, $this->container->get('app_repository'));
-        $this->assertInstanceOf(Repository\UserInterface::class, $this->container->get('user_repository'));
-        $this->assertInstanceOf(Template\FactoryInterface::class, $this->container->get('template_factory'));
-        $this->assertInstanceOf(Form\ElementFactoryInterface::class, $this->container->get('form_element_factory'));
-        $this->assertInstanceOf(Response\FactoryInterface::class, $this->container->get('response'));
+        $this->assertInstanceOf(ContainerInterface::class, $this->getContainer());
+        $this->assertInstanceOf(Parser\ParserInterface::class, $this->getContainer()->get('action_parser'));
+        $this->assertInstanceOf(Factory\ActionInterface::class, $this->getContainer()->get('action_factory'));
+        $this->assertInstanceOf(Repository\ActionInterface::class, $this->getContainer()->get('action_repository'));
+        $this->assertInstanceOf(ProcessorInterface::class, $this->getContainer()->get('processor'));
+        $this->assertInstanceOf(Parser\ParserInterface::class, $this->getContainer()->get('connection_parser'));
+        $this->assertInstanceOf(Factory\ConnectionInterface::class, $this->getContainer()->get('connection_factory'));
+        $this->assertInstanceOf(Repository\ConnectionInterface::class, $this->getContainer()->get('connection_repository'));
+        $this->assertInstanceOf(ConnectorInterface::class, $this->getContainer()->get('connector'));
+        $this->assertInstanceOf(Schema\ParserInterface::class, $this->getContainer()->get('schema_parser'));
+        $this->assertInstanceOf(Schema\LoaderInterface::class, $this->getContainer()->get('schema_loader'));
+        $this->assertInstanceOf(Repository\AppInterface::class, $this->getContainer()->get('app_repository'));
+        $this->assertInstanceOf(Repository\UserInterface::class, $this->getContainer()->get('user_repository'));
+        $this->assertInstanceOf(Template\FactoryInterface::class, $this->getContainer()->get('template_factory'));
+        $this->assertInstanceOf(Form\ElementFactoryInterface::class, $this->getContainer()->get('form_element_factory'));
+        $this->assertInstanceOf(Response\FactoryInterface::class, $this->getContainer()->get('response'));
     }
 }
