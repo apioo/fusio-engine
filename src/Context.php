@@ -21,9 +21,7 @@
 
 namespace Fusio\Engine;
 
-use Fusio\Engine\Model\ActionInterface;
-use Fusio\Engine\Model\AppInterface;
-use Fusio\Engine\Model\UserInterface;
+use Fusio\Engine\Model;
 
 /**
  * Context
@@ -65,7 +63,7 @@ class Context implements ContextInterface
      * @param \Fusio\Engine\Model\UserInterface $user
      * @param \Fusio\Engine\Model\ActionInterface|null $action
      */
-    public function __construct($routeId, AppInterface $app, UserInterface $user, ActionInterface $action = null)
+    public function __construct($routeId, Model\AppInterface $app, Model\UserInterface $user, Model\ActionInterface $action = null)
     {
         $this->routeId = $routeId;
         $this->app     = $app;
@@ -121,7 +119,7 @@ class Context implements ContextInterface
      * @param \Fusio\Engine\Model\ActionInterface $action
      * @return \Fusio\Engine\ContextInterface
      */
-    public function withAction(ActionInterface $action)
+    public function withAction(Model\ActionInterface $action)
     {
         $me = clone $this;
         $me->action = $action;
