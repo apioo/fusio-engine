@@ -37,7 +37,7 @@ interface AppInterface extends RepositoryInterface
 
     /**
      * @param integer $appId
-     * @return \Fusio\Engine\Model\AppInterface
+     * @return \Fusio\Engine\Model\AppInterface|null
      */
     public function get($appId);
 }

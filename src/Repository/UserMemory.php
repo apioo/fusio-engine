@@ -38,7 +38,7 @@ class UserMemory implements UserInterface
     protected $users;
 
     /**
-     * @param array $connections
+     * @param array $users
      */
     public function __construct(array $users = array())
     {

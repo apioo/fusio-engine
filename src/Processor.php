@@ -79,7 +79,7 @@ class Processor implements ProcessorInterface
      * Pushes another repository to the processor stack. Through this it is
      * possible to provide another action source
      *
-     * @param \Fusio\Engine\Action\RepositoryInterface
+     * @param \Fusio\Engine\Repository\ActionInterface
      */
     public function push(Repository\ActionInterface $repository)
     {

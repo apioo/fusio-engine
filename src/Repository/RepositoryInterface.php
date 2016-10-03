@@ -37,7 +37,7 @@ interface RepositoryInterface
 
     /**
      * @param integer $id
-     * @return mixed
+     * @return object|null
      */
     public function get($id);
 }

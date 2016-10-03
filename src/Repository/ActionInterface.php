@@ -37,7 +37,7 @@ interface ActionInterface extends RepositoryInterface
 
     /**
      * @param integer $actionId
-     * @return \Fusio\Engine\Model\ActionInterface
+     * @return \Fusio\Engine\Model\ActionInterface|null
      */
     public function get($actionId);
 }

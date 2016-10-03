@@ -46,7 +46,7 @@ class AppMemory implements AppInterface
     }
 
     /**
-     * @param \Fusio\Engine\Model\AppInterface $action
+     * @param \Fusio\Engine\Model\AppInterface $app
      */
     public function add(Model\AppInterface $app)
     {
@@ -62,7 +62,7 @@ class AppMemory implements AppInterface
     }
 
     /**
-     * @param integer|string $actionId
+     * @param integer $appId
      * @return \Fusio\Engine\Model\ActionInterface|null
      */
     public function get($appId)
