@@ -42,9 +42,9 @@ class Factory implements FactoryInterface
 
     /**
      * @param boolean $debug
-     * @param boolean $cache
+     * @param string|false|\Twig_CacheInterface $cache
      */
-    public function __construct($debug, $cache = true)
+    public function __construct($debug, $cache = false)
     {
         $this->debug = $debug;
         $this->cache = $cache;
