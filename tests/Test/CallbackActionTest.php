@@ -44,7 +44,7 @@ class CallbackActionTest extends EngineTestCase
             ]);
         };
 
-        $action   = $this->getActionFactory(CallbackAction::class);
+        $action   = $this->getActionFactory()->factory(CallbackAction::class);
         $response = $action->handle($this->getRequest(), $this->getParameters(['callback' => $callback]), $this->getContext());
 
         $actual = json_encode(Transformer::toStdClass($response->getBody()), JSON_PRETTY_PRINT);

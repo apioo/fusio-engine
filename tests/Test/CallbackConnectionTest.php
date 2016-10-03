@@ -39,7 +39,7 @@ class CallbackConnectionTest extends EngineTestCase
             return new \stdClass();
         };
 
-        $connection = $this->getConnectionFactory(CallbackConnection::class);
+        $connection = $this->getConnectionFactory()->factory(CallbackConnection::class);
         $result     = $connection->getConnection($this->getParameters(['callback' => $callback]));
 
         $this->assertInstanceOf('stdClass', $result);

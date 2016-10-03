@@ -110,11 +110,11 @@ trait EngineTestCaseTrait
 
     /**
      * @param string $class
-     * @return \Fusio\Engine\ActionInterface
+     * @return \Fusio\Engine\Factory\ActionInterface
      */
-    protected function getActionFactory($class)
+    protected function getActionFactory()
     {
-        return $this->getContainer()->get('action_factory')->factory($class);
+        return $this->getContainer()->get('action_factory');
     }
 
     /**
@@ -127,11 +127,11 @@ trait EngineTestCaseTrait
 
     /**
      * @param string $class
-     * @return \Fusio\Engine\ConnectionInterface
+     * @return \Fusio\Engine\Factory\ConnectionInterface
      */
-    protected function getConnectionFactory($class)
+    protected function getConnectionFactory()
     {
-        return $this->getContainer()->get('connection_factory')->factory($class);
+        return $this->getContainer()->get('connection_factory');
     }
 
     /**
