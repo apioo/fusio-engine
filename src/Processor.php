@@ -66,7 +66,7 @@ class Processor implements ProcessorInterface
         $repository = $this->getCurrentRepository();
         $action     = $repository->get($actionId);
 
-        if ($action instanceof ActionInterface) {
+        if ($action instanceof Model\ActionInterface) {
             $parameters = new Parameters($action->getConfig());
 
             return $this->factory->factory($action->getClass())->handle($request, $parameters, $context->withAction($action));

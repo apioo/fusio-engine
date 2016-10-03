@@ -64,12 +64,12 @@ class Connector implements ConnectorInterface
     {
         $connection = $this->repository->get($connectionId);
 
-        if (empty($connection)) {
-            throw new RuntimeException('Invalid connection');
+        if ($connection instanceof Model\ConnectionInterface) {
+            $parameters = new Parameters($connection->getConfig());
+
+            return $this->factory->factory($connection->getClass())->getConnection($parameters);
+        } else {
+            throw new RuntimeException('Could not found connection ' . $connectionId);
         }
-
-        $parameters = new Parameters($connection->getConfig());
-
-        return $this->factory->factory($connection->getClass())->getConnection($parameters);
     }
 }
