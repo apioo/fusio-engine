@@ -19,46 +19,35 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Fusio\Engine;
+namespace Fusio\Engine\Tests\Cache;
+
+use Doctrine\Common\Cache\ArrayCache;
+use Fusio\Engine\Cache\Provider;
 
 /**
- * ResponseInterface
+ * ProviderTest
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-interface ResponseInterface
+class ProviderTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * Returns the status code of the HTTP response
-     * 
-     * @see https://tools.ietf.org/html/rfc7231#section-6
-     * @return integer
-     */
-    public function getStatusCode();
+    public function testProvider()
+    {
+        $provider = new Provider(new ArrayCache());
 
-    /**
-     * Returns all available headers of the response. The header keys are all 
-     * lowercased
-     * 
-     * @return array
-     */
-    public function getHeaders();
+        $this->assertFalse($provider->contains('foo'));
+        $this->assertFalse($provider->fetch('foo'));
 
-    /**
-     * Returns a single header based on the provided header name or null if the
-     * header does not exist. The name is case insensitive
-     * 
-     * @param string $name
-     * @return string|null
-     */
-    public function getHeader($name);
+        $provider->save('foo', 'bar');
 
-    /**
-     * Returns the body of the response
-     * 
-     * @return mixed
-     */
-    public function getBody();
+        $this->assertTrue($provider->contains('foo'));
+        $this->assertSame('bar', $provider->fetch('foo'));
+
+        $provider->delete('foo');
+
+        $this->assertFalse($provider->contains('foo'));
+        $this->assertFalse($provider->fetch('foo'));
+    }
 }

@@ -21,7 +21,7 @@
 
 namespace Fusio\Engine\Test;
 
-use Fusio\Engine\ActionInterface;
+use Fusio\Engine\ActionAbstract;
 use Fusio\Engine\ContextInterface;
 use Fusio\Engine\Exception\ConfigurationException;
 use Fusio\Engine\Form\BuilderInterface;
@@ -36,14 +36,8 @@ use Fusio\Engine\RequestInterface;
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-class CallbackAction implements ActionInterface
+class CallbackAction extends ActionAbstract
 {
-    /**
-     * @Inject
-     * @var \Fusio\Engine\Response\FactoryInterface
-     */
-    protected $response;
-
     public function getName()
     {
         return 'Callback-Action';

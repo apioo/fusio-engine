@@ -1,0 +1,316 @@
+{
+  "$schema": "http:\/\/json-schema.org\/draft-04\/schema#",
+  "type": "object",
+  "definitions": {
+    "classList": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/className"
+      }
+    },
+    "className": {
+      "type": "string"
+    },
+    "entityName": {
+      "type": "string",
+      "pattern": "[A-z0-9\\-\\_]{3,64}"
+    },
+    "refcda321fb318e2ae84d7f78d3ef22b173": {
+      "title": "method",
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string"
+        },
+        "version": {
+          "type": "integer"
+        },
+        "status": {
+          "type": "integer"
+        },
+        "active": {
+          "type": "boolean"
+        },
+        "public": {
+          "type": "boolean"
+        },
+        "request": {
+          "type": "string"
+        },
+        "response": {
+          "type": "string"
+        },
+        "action": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "ref901d0be125ae38713932027537284782": {
+      "title": "methods",
+      "type": "object",
+      "patternProperties": {
+        "^(GET|POST|PUT|DELETE)$": {
+          "$ref": "#\/definitions\/refcda321fb318e2ae84d7f78d3ef22b173"
+        }
+      },
+      "additionalProperties": false
+    },
+    "ref7921718387dccbaae82f18f4c1b7d047": {
+      "title": "version",
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "integer"
+        },
+        "status": {
+          "type": "integer"
+        },
+        "methods": {
+          "$ref": "#\/definitions\/ref901d0be125ae38713932027537284782"
+        }
+      },
+      "additionalProperties": false
+    },
+    "ref5525537f7f38b6988025ca659a7b315d": {
+      "title": "config",
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "ref5d08e74148a1303824e5d6d0dc6ab70b": {
+      "title": "source",
+      "type": "object",
+      "additionalProperties": true
+    },
+    "ref8b71247eb1a6a8a0461be899ca68ee4f": {
+      "title": "column",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "smallint",
+            "integer",
+            "bigint",
+            "decimal",
+            "float",
+            "string",
+            "text",
+            "guid",
+            "binary",
+            "blob",
+            "boolean",
+            "date",
+            "datetime",
+            "time",
+            "dateinterval",
+            "array",
+            "simple_array",
+            "json",
+            "json_array",
+            "object"
+          ]
+        },
+        "length": {
+          "type": "integer"
+        },
+        "null": {
+          "type": "boolean"
+        },
+        "autoincrement": {
+          "type": "boolean"
+        },
+        "default": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "ref9afee66f50fd99d69deb0fac8ad4364e": {
+      "title": "index",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "columns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "primary": {
+          "type": "boolean"
+        },
+        "unique": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    },
+    "ref0a057c3923f2ee36914cbff54747bc99": {
+      "title": "foreignKey",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "columns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "foreignTable": {
+          "type": "string"
+        },
+        "foreignColumns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "properties": {
+    "actionClass": {
+      "$ref": "#/definitions/classList"
+    },
+    "connectionClass": {
+      "$ref": "#/definitions/classList"
+    },
+    "routes": {
+      "type": "array",
+      "items": {
+        "title": "routes",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "path": {
+            "type": "string"
+          },
+          "config": {
+            "type": "array",
+            "items": {
+              "$ref": "#\/definitions\/ref7921718387dccbaae82f18f4c1b7d047"
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "action": {
+      "type": "array",
+      "items": {
+        "title": "action",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "status": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string",
+            "pattern": "[A-z0-9\\-\\_]{3,64}"
+          },
+          "class": {
+            "type": "string"
+          },
+          "config": {
+            "$ref": "#\/definitions\/ref5525537f7f38b6988025ca659a7b315d"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "schema": {
+      "type": "array",
+      "items": {
+        "title": "schema",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "status": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string",
+            "pattern": "[A-z0-9\\-\\_]{3,64}"
+          },
+          "source": {
+            "$ref": "#\/definitions\/ref5d08e74148a1303824e5d6d0dc6ab70b"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "database": {
+      "type": "array",
+      "items": {
+        "title": "table",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "columns": {
+            "type": "array",
+            "items": {
+              "$ref": "#\/definitions\/ref8b71247eb1a6a8a0461be899ca68ee4f"
+            }
+          },
+          "indexes": {
+            "type": "array",
+            "items": {
+              "$ref": "#\/definitions\/ref9afee66f50fd99d69deb0fac8ad4364e"
+            }
+          },
+          "foreignKeys": {
+            "type": "array",
+            "items": {
+              "$ref": "#\/definitions\/ref0a057c3923f2ee36914cbff54747bc99"
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "connection": {
+      "type": "array",
+      "items": {
+        "title": "connection",
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string",
+            "pattern": "[A-z0-9\\-\\_]{3,64}"
+          },
+          "class": {
+            "type": "string"
+          },
+          "config": {
+            "$ref": "#\/definitions\/ref5525537f7f38b6988025ca659a7b315d"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

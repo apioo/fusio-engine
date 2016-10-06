@@ -1,0 +1,72 @@
+{
+    "actionClass": ["Fusio\\Engine\\Test\\CallbackAction"],
+    "connectionClass": ["Fusio\\Engine\\Test\\CallbackConnection"],
+    "routes": [{
+        "path": "/void",
+        "config": [{
+            "version": 1,
+            "status": 4,
+            "methods": {
+                "GET": {
+                    "active": true,
+                    "public": true,
+                    "action": "Void-Action",
+                    "request": "Adapter-Schema",
+                    "response": "Passthru"
+                }
+            }
+        }]
+    }],
+    "action": [{
+        "name": "Void-Action",
+        "class": "Fusio\\Engine\\Test\\CallbackAction",
+        "config": {
+            "foo": "bar",
+            "connection": "Adapter-Connection"
+        }
+    }],
+    "schema": [{
+        "name": "Adapter-Schema",
+        "source": {
+            "id": "http://fusio-project.org",
+            "title": "process",
+            "type": "object",
+            "properties": {
+                "logId": {
+                    "type": "integer"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "content": {
+                    "type": "string"
+                }
+            }
+        }
+    }],
+    "database": [{
+        "name": "app_todo",
+        "columns": [{
+            "name": "id",
+            "type": "integer"
+        },{
+            "name": "title",
+            "type": "string"
+        },{
+            "name": "insertDate",
+            "type": "datetime"
+        }],
+        "indexes": [{
+            "name": "PRIMARY",
+            "columns": ["id"],
+            "primary": true
+        }]
+    }],
+    "connection": [{
+        "name": "Adapter-Connection",
+        "class": "Fusio\\Engine\\Test\\CallbackConnection",
+        "config": {
+            "foo": "bar"
+        }
+    }]
+}

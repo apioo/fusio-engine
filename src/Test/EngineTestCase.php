@@ -25,7 +25,7 @@ use Fusio\Engine\Factory;
 use Fusio\Engine\Repository;
 
 /**
- * EngineTestCaseTrait
+ * EngineTestCase
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0

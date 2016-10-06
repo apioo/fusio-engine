@@ -19,46 +19,31 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Fusio\Engine;
+namespace Fusio\Engine\Json;
 
 /**
- * ResponseInterface
+ * Class to read and write json data
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-interface ResponseInterface
+interface ProcessorInterface
 {
     /**
-     * Returns the status code of the HTTP response
+     * Parses the provided json string and returns an object. This is the 
+     * preferred way to parse data from remote sources
      * 
-     * @see https://tools.ietf.org/html/rfc7231#section-6
-     * @return integer
+     * @param string $data
+     * @return \stdClass
      */
-    public function getStatusCode();
+    public function read($data);
 
     /**
-     * Returns all available headers of the response. The header keys are all 
-     * lowercased
+     * Writes the provided data object into a json string
      * 
-     * @return array
+     * @param mixed $data
+     * @return string
      */
-    public function getHeaders();
-
-    /**
-     * Returns a single header based on the provided header name or null if the
-     * header does not exist. The name is case insensitive
-     * 
-     * @param string $name
-     * @return string|null
-     */
-    public function getHeader($name);
-
-    /**
-     * Returns the body of the response
-     * 
-     * @return mixed
-     */
-    public function getBody();
+    public function write($data);
 }

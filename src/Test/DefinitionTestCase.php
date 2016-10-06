@@ -1,0 +1,104 @@
+<?php
+/*
+ * Fusio
+ * A web-application to create dynamically RESTful APIs
+ *
+ * Copyright (C) 2015-2016 Christoph Kappestein <k42b3.x@gmail.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+namespace Fusio\Engine\Test;
+
+use Doctrine\Common\Annotations\SimpleAnnotationReader;
+use Fusio\Engine\Factory;
+use Fusio\Engine\Repository;
+use PSX\Schema\SchemaManager;
+use PSX\Schema\SchemaTraverser;
+use PSX\Schema\Visitor\IncomingVisitor;
+
+/**
+ * DefinitionTestCase
+ *
+ * @author  Christoph Kappestein <k42b3.x@gmail.com>
+ * @license http://www.gnu.org/licenses/agpl-3.0
+ * @link    http://fusio-project.org
+ */
+abstract class DefinitionTestCase extends \PHPUnit_Framework_TestCase
+{
+    public function testDefinition()
+    {
+        $path = $this->getDefinition();
+
+        if (!is_file($path)) {
+            $this->fail('Adapter definition file ' . $path . ' does not exist');
+        }
+
+        $data = json_decode(file_get_contents($path));
+
+        $this->validateSchema($data);
+        $this->validateClassExistence($data);
+    }
+
+    private function validateSchema(\stdClass $data)
+    {
+        $manager = new SchemaManager(new SimpleAnnotationReader());
+        $schema  = $manager->getSchema(__DIR__ . '/definition_schema.json');
+
+        $traverser = new SchemaTraverser();
+        $traverser->traverse($data, $schema, new IncomingVisitor());
+    }
+
+    private function validateClassExistence(\stdClass $data)
+    {
+        if (isset($data->action_class)) {
+            foreach ($data->action_class as $class) {
+                if (!class_exists($class)) {
+                    $this->fail('Defined action class ' . $class . ' does not exist');
+                }
+            }
+        }
+
+        if (isset($data->connection_class)) {
+            foreach ($data->connection_class as $class) {
+                if (!class_exists($class)) {
+                    $this->fail('Defined connection class ' . $class . ' does not exist');
+                }
+            }
+        }
+
+        if (isset($data->action)) {
+            foreach ($data->action as $action) {
+                if (!class_exists($action->class)) {
+                    $this->fail('Action class ' . $action->class . ' does not exist');
+                }
+            }
+        }
+
+        if (isset($data->connection)) {
+            foreach ($data->connection as $connection) {
+                if (!class_exists($connection->class)) {
+                    $this->fail('Connection class ' . $connection->class . ' does not exist');
+                }
+            }
+        }
+    }
+
+    /**
+     * Returns the path to the definition file
+     * 
+     * @return string
+     */
+    abstract protected function getDefinition();
+}

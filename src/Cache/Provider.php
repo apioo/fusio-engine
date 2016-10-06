@@ -19,46 +19,49 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Fusio\Engine;
+namespace Fusio\Engine\Cache;
+
+use Doctrine\Common\Cache\CacheProvider;
 
 /**
- * ResponseInterface
+ * Provider
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-interface ResponseInterface
+class Provider implements ProviderInterface
 {
     /**
-     * Returns the status code of the HTTP response
-     * 
-     * @see https://tools.ietf.org/html/rfc7231#section-6
-     * @return integer
+     * @var \Doctrine\Common\Cache\CacheProvider
      */
-    public function getStatusCode();
+    protected $provider;
 
     /**
-     * Returns all available headers of the response. The header keys are all 
-     * lowercased
-     * 
-     * @return array
+     * @param \Doctrine\Common\Cache\CacheProvider $provider
      */
-    public function getHeaders();
+    public function __construct(CacheProvider $provider)
+    {
+        $this->provider = $provider;
+    }
 
-    /**
-     * Returns a single header based on the provided header name or null if the
-     * header does not exist. The name is case insensitive
-     * 
-     * @param string $name
-     * @return string|null
-     */
-    public function getHeader($name);
+    public function fetch($id)
+    {
+        return $this->provider->fetch($id);
+    }
 
-    /**
-     * Returns the body of the response
-     * 
-     * @return mixed
-     */
-    public function getBody();
+    public function contains($id)
+    {
+        return $this->provider->contains($id);
+    }
+
+    public function save($id, $data, $lifeTime = 0)
+    {
+        $this->provider->save($id, $data, $lifeTime);
+    }
+
+    public function delete($id)
+    {
+        $this->provider->delete($id);
+    }
 }

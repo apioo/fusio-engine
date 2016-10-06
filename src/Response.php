@@ -45,10 +45,15 @@ class Response implements ResponseInterface
      */
     protected $body;
 
+    /**
+     * @param integer $statusCode
+     * @param array $headers
+     * @param mixed $body
+     */
     public function __construct($statusCode, array $headers, $body)
     {
         $this->statusCode = $statusCode;
-        $this->headers    = $headers;
+        $this->headers    = array_change_key_case($headers, CASE_LOWER);
         $this->body       = $body;
     }
 
@@ -60,6 +65,14 @@ class Response implements ResponseInterface
     public function getHeaders()
     {
         return $this->headers;
+    }
+
+    public function getHeader($name)
+    {
+        $name  = strtolower($name);
+        $value = isset($this->headers[$name]) ? $this->headers[$name] : null;
+
+        return $value;
     }
 
     public function getBody()

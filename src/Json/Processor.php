@@ -19,46 +19,59 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Fusio\Engine;
+namespace Fusio\Engine\Json;
+
+use PSX\Data\Reader;
+use PSX\Data\ReaderInterface;
+use PSX\Data\Writer;
+use PSX\Data\WriterInterface;
 
 /**
- * ResponseInterface
+ * Processor
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-interface ResponseInterface
+class Processor implements ProcessorInterface
 {
     /**
-     * Returns the status code of the HTTP response
-     * 
-     * @see https://tools.ietf.org/html/rfc7231#section-6
-     * @return integer
+     * @var \PSX\Data\ReaderInterface
      */
-    public function getStatusCode();
+    protected $reader;
 
     /**
-     * Returns all available headers of the response. The header keys are all 
-     * lowercased
-     * 
-     * @return array
+     * @var \PSX\Data\WriterInterface
      */
-    public function getHeaders();
+    protected $writer;
 
     /**
-     * Returns a single header based on the provided header name or null if the
-     * header does not exist. The name is case insensitive
-     * 
-     * @param string $name
-     * @return string|null
+     * @param \PSX\Data\ReaderInterface $reader
+     * @param \PSX\Data\WriterInterface $writer
      */
-    public function getHeader($name);
+    public function __construct(ReaderInterface $reader, WriterInterface $writer)
+    {
+        $this->reader = $reader;
+        $this->writer = $writer;
+    }
 
     /**
-     * Returns the body of the response
-     * 
-     * @return mixed
+     * @param string $data
+     * @param string $contentType
+     * @return \stdClass
      */
-    public function getBody();
+    public function read($data)
+    {
+        return $this->reader->read($data);
+    }
+
+    /**
+     * @param mixed $data
+     * @param string $contentType
+     * @return string
+     */
+    public function write($data)
+    {
+        return $this->writer->write($data);
+    }
 }

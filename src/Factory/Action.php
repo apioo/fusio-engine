@@ -21,7 +21,11 @@
 
 namespace Fusio\Engine\Factory;
 
-use PSX\Framework\Dependency\ObjectBuilderInterface;
+use Fusio\Engine\Action\ServiceAwareInterface;
+use Fusio\Engine\ActionInterface as EngineActionInterface;
+use RuntimeException;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Action
@@ -33,16 +37,16 @@ use PSX\Framework\Dependency\ObjectBuilderInterface;
 class Action implements ActionInterface
 {
     /**
-     * @var \PSX\Framework\Dependency\ObjectBuilderInterface
+     * @var \Symfony\Component\DependencyInjection\ContainerInterface
      */
-    protected $objectBuilder;
+    protected $container;
 
     /**
-     * @param \PSX\Framework\Dependency\ObjectBuilderInterface $objectBuilder
+     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      */
-    public function __construct(ObjectBuilderInterface $objectBuilder)
+    public function __construct(ContainerInterface $container)
     {
-        $this->objectBuilder = $objectBuilder;
+        $this->container = $container;
     }
 
     /**
@@ -51,6 +55,26 @@ class Action implements ActionInterface
      */
     public function factory($className)
     {
-        return $this->objectBuilder->getObject($className, array(), 'Fusio\Engine\ActionInterface');
+        $action = new $className();
+
+        if (!$action instanceof EngineActionInterface) {
+            throw new RuntimeException('Action ' . $className . ' must implement the Fusio\Engine\ActionInterface interface');
+        }
+
+        if ($action instanceof ServiceAwareInterface) {
+            $action->setConnector($this->container->get('connector'));
+            $action->setResponse($this->container->get('response'));
+            $action->setProcessor($this->container->get('processor'));
+            $action->setTemplateFactory($this->container->get('template_factory'));
+            $action->setHttpClient($this->container->get('http_client'));
+            $action->setJsonProcessor($this->container->get('json_processor'));
+            $action->setCacheProvider($this->container->get('cache_provider'));
+        }
+
+        if ($action instanceof ContainerAwareInterface) {
+            $action->setContainer($this->container);
+        }
+
+        return $action;
     }
 }

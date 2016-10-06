@@ -22,9 +22,13 @@
 namespace Fusio\Engine\Dependency;
 
 use Doctrine\Common\Annotations;
+use Doctrine\Common\Cache as DoctrineCache;
+use Fusio\Engine\Cache;
 use Fusio\Engine\Connector;
 use Fusio\Engine\Factory;
 use Fusio\Engine\Form;
+use Fusio\Engine\Http;
+use Fusio\Engine\Json;
 use Fusio\Engine\Parser;
 use Fusio\Engine\Processor;
 use Fusio\Engine\Repository;
@@ -59,7 +63,7 @@ trait EngineTrait
      */
     public function getActionFactory()
     {
-        return new Factory\Action($this->get('object_builder'));
+        return new Factory\Action($this);
     }
 
     /**
@@ -98,7 +102,7 @@ trait EngineTrait
      */
     public function getConnectionFactory()
     {
-        return new Factory\Connection($this->get('object_builder'));
+        return new Factory\Connection($this);
     }
 
     /**
@@ -180,6 +184,38 @@ trait EngineTrait
     public function getResponse()
     {
         return new Response\Factory();
+    }
+
+    /**
+     * @return \Fusio\Engine\Json\ProcessorInterface
+     */
+    public function getJsonProcessor()
+    {
+        return new Json\Processor(
+            new \PSX\Data\Reader\Json(),
+            new \PSX\Data\Writer\Json()
+        );
+    }
+
+    /**
+     * @return \Fusio\Engine\Http\ClientInterface
+     */
+    public function getHttpClient()
+    {
+        return new Http\Client(
+            new \PSX\Http\Client()
+        );
+    }
+
+    /**
+     * @return \Fusio\Engine\Cache\ProviderInterface
+     */
+    public function getCacheProvider()
+    {
+        $tempDir  = sys_get_temp_dir() . DIRECTORY_SEPARATOR . 'Fusio';
+        $provider = new DoctrineCache\FilesystemCache($tempDir);
+
+        return new Cache\Provider($provider);
     }
 
     /**

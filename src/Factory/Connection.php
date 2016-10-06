@@ -21,7 +21,10 @@
 
 namespace Fusio\Engine\Factory;
 
-use PSX\Framework\Dependency\ObjectBuilderInterface;
+use Fusio\Engine\ConnectionInterface as EngineConnectionInterface;
+use RuntimeException;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Connection
@@ -33,16 +36,16 @@ use PSX\Framework\Dependency\ObjectBuilderInterface;
 class Connection implements ConnectionInterface
 {
     /**
-     * @var \PSX\Framework\Dependency\ObjectBuilderInterface
+     * @var \Symfony\Component\DependencyInjection\ContainerInterface
      */
-    protected $objectBuilder;
+    protected $container;
 
     /**
-     * @param \PSX\Framework\Dependency\ObjectBuilderInterface $objectBuilder
+     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      */
-    public function __construct(ObjectBuilderInterface $objectBuilder)
+    public function __construct(ContainerInterface $container)
     {
-        $this->objectBuilder = $objectBuilder;
+        $this->container = $container;
     }
 
     /**
@@ -51,6 +54,16 @@ class Connection implements ConnectionInterface
      */
     public function factory($className)
     {
-        return $this->objectBuilder->getObject($className, array(), 'Fusio\Engine\ConnectionInterface');
+        $connection = new $className();
+
+        if (!$connection instanceof EngineConnectionInterface) {
+            throw new RuntimeException('Connection ' . $className . ' must implement the Fusio\Engine\ConnectionInterface interface');
+        }
+
+        if ($connection instanceof ContainerAwareInterface) {
+            $connection->setContainer($this->container);
+        }
+
+        return $connection;
     }
 }

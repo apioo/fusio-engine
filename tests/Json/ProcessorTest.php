@@ -19,46 +19,48 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Fusio\Engine;
+namespace Fusio\Engine\Tests\Json;
+
+use Fusio\Engine\Json\Processor;
+use PSX\Data\Reader;
+use PSX\Data\Writer;
 
 /**
- * ResponseInterface
+ * ProcessorTest
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-interface ResponseInterface
+class ProcessorTest extends \PHPUnit_Framework_TestCase
 {
-    /**
-     * Returns the status code of the HTTP response
-     * 
-     * @see https://tools.ietf.org/html/rfc7231#section-6
-     * @return integer
-     */
-    public function getStatusCode();
+    public function testRead()
+    {
+        $data = <<<JSON
+{"foo": "bar"}
+JSON;
 
-    /**
-     * Returns all available headers of the response. The header keys are all 
-     * lowercased
-     * 
-     * @return array
-     */
-    public function getHeaders();
+        $processor = $this->newProcessor();
+        $result    = $processor->read($data);
 
-    /**
-     * Returns a single header based on the provided header name or null if the
-     * header does not exist. The name is case insensitive
-     * 
-     * @param string $name
-     * @return string|null
-     */
-    public function getHeader($name);
+        $this->assertEquals((object) ['foo' => 'bar'], $result);
+    }
 
-    /**
-     * Returns the body of the response
-     * 
-     * @return mixed
-     */
-    public function getBody();
+    public function testWrite()
+    {
+        $data = (object) ['foo' => 'bar'];
+
+        $processor = $this->newProcessor();
+        $result    = $processor->write($data);
+
+        $this->assertJsonStringEqualsJsonString('{"foo": "bar"}', $result);
+    }
+
+    protected function newProcessor()
+    {
+        return new Processor(
+            new Reader\Json(),
+            new Writer\Json()
+        );
+    }
 }

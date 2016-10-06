@@ -19,46 +19,48 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Fusio\Engine;
+namespace Fusio\Engine\Cache;
 
 /**
- * ResponseInterface
+ * Cache interface which is based on the doctrine dbal cache. It provides a 
+ * cache mechanism for each action
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-interface ResponseInterface
+interface ProviderInterface
 {
     /**
-     * Returns the status code of the HTTP response
+     * Returns a cache entry for the provided id or false if the entry does not 
+     * exist
      * 
-     * @see https://tools.ietf.org/html/rfc7231#section-6
-     * @return integer
-     */
-    public function getStatusCode();
-
-    /**
-     * Returns all available headers of the response. The header keys are all 
-     * lowercased
-     * 
-     * @return array
-     */
-    public function getHeaders();
-
-    /**
-     * Returns a single header based on the provided header name or null if the
-     * header does not exist. The name is case insensitive
-     * 
-     * @param string $name
-     * @return string|null
-     */
-    public function getHeader($name);
-
-    /**
-     * Returns the body of the response
-     * 
+     * @param string $id
      * @return mixed
      */
-    public function getBody();
+    public function fetch($id);
+
+    /**
+     * Returns whether a cache entry with the provided id exists
+     *
+     * @param string $id
+     * @return boolean
+     */
+    public function contains($id);
+
+    /**
+     * Saves a cache entry with a specific id
+     * 
+     * @param string $id
+     * @param mixed $data
+     * @param integer $lifeTime
+     */
+    public function save($id, $data, $lifeTime = 0);
+
+    /**
+     * Removes cache entry by its id
+     * 
+     * @param string $id
+     */
+    public function delete($id);
 }

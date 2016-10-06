@@ -19,46 +19,25 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Fusio\Engine;
+namespace Fusio\Engine\Http;
 
 /**
- * ResponseInterface
+ * ClientInterface
  *
  * @author  Christoph Kappestein <k42b3.x@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-interface ResponseInterface
+interface ClientInterface
 {
     /**
-     * Returns the status code of the HTTP response
+     * Sends a http request to the provided url and returns the response
      * 
-     * @see https://tools.ietf.org/html/rfc7231#section-6
-     * @return integer
+     * @param string $url
+     * @param string $method
+     * @param array $headers
+     * @param string $body
+     * @return \Fusio\Engine\ResponseInterface
      */
-    public function getStatusCode();
-
-    /**
-     * Returns all available headers of the response. The header keys are all 
-     * lowercased
-     * 
-     * @return array
-     */
-    public function getHeaders();
-
-    /**
-     * Returns a single header based on the provided header name or null if the
-     * header does not exist. The name is case insensitive
-     * 
-     * @param string $name
-     * @return string|null
-     */
-    public function getHeader($name);
-
-    /**
-     * Returns the body of the response
-     * 
-     * @return mixed
-     */
-    public function getBody();
+    public function request($url, $method, array $headers, $body);
 }
