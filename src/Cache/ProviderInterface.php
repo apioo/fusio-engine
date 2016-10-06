@@ -3,7 +3,7 @@
  * Fusio
  * A web-application to create dynamically RESTful APIs
  *
- * Copyright (C) 2015-2016 Christoph Kappestein <k42b3.x@gmail.com>
+ * Copyright (C) 2015-2016 Christoph Kappestein <christoph.kappestein@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -25,7 +25,7 @@ namespace Fusio\Engine\Cache;
  * Cache interface which is based on the doctrine dbal cache. It provides a 
  * cache mechanism for each action
  *
- * @author  Christoph Kappestein <k42b3.x@gmail.com>
+ * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */

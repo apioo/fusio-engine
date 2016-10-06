@@ -3,7 +3,7 @@
  * Fusio
  * A web-application to create dynamically RESTful APIs
  *
- * Copyright (C) 2015-2016 Christoph Kappestein <k42b3.x@gmail.com>
+ * Copyright (C) 2015-2016 Christoph Kappestein <christoph.kappestein@gmail.com>
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -21,20 +21,18 @@
 
 namespace Fusio\Engine\Tests;
 
-use Fusio\Engine\Connector;
 use Fusio\Engine\Model\Action;
 use Fusio\Engine\Processor;
-use Fusio\Engine\Response;
 use Fusio\Engine\Repository;
+use Fusio\Engine\Response;
 use Fusio\Engine\ResponseInterface;
 use Fusio\Engine\Test\CallbackAction;
-use Fusio\Engine\Test\CallbackConnection;
 use Fusio\Engine\Test\EngineTestCaseTrait;
 
 /**
  * ProcessorTest
  *
- * @author  Christoph Kappestein <k42b3.x@gmail.com>
+ * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
