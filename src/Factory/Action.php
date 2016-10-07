@@ -55,6 +55,7 @@ class Action implements ActionInterface
 
     /**
      * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+     * @param array $serviceNames
      */
     public function __construct(ContainerInterface $container, array $serviceNames)
     {
