@@ -42,6 +42,10 @@ class ElementFactory implements ElementFactoryInterface
      */
     protected $connectionRepository;
 
+    /**
+     * @param \Fusio\Engine\Repository\ActionInterface $actionRepository
+     * @param \Fusio\Engine\Repository\ConnectionInterface $connectionRepository
+     */
     public function __construct(Repository\ActionInterface $actionRepository, Repository\ConnectionInterface $connectionRepository)
     {
         $this->actionRepository     = $actionRepository;
