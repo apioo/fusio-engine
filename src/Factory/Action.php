@@ -23,6 +23,13 @@ namespace Fusio\Engine\Factory;
 
 use Fusio\Engine\Action\ServiceAwareInterface;
 use Fusio\Engine\ActionInterface as EngineActionInterface;
+use Fusio\Engine\ConnectorInterface;
+use Fusio\Engine\ProcessorInterface;
+use Fusio\Engine\Response;
+use Fusio\Engine\Template;
+use Fusio\Engine\Http;
+use Fusio\Engine\Json;
+use Fusio\Engine\Cache;
 use RuntimeException;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -42,11 +49,17 @@ class Action implements ActionInterface
     protected $container;
 
     /**
+     * @var array
+     */
+    protected $serviceNames;
+
+    /**
      * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(ContainerInterface $container, array $serviceNames)
     {
-        $this->container = $container;
+        $this->container    = $container;
+        $this->serviceNames = $serviceNames;
     }
 
     /**
@@ -62,13 +75,13 @@ class Action implements ActionInterface
         }
 
         if ($action instanceof ServiceAwareInterface) {
-            $action->setConnector($this->container->get('connector'));
-            $action->setResponse($this->container->get('response'));
-            $action->setProcessor($this->container->get('processor'));
-            $action->setTemplateFactory($this->container->get('template_factory'));
-            $action->setHttpClient($this->container->get('http_client'));
-            $action->setJsonProcessor($this->container->get('json_processor'));
-            $action->setCacheProvider($this->container->get('cache_provider'));
+            $action->setConnector($this->getServiceImplementation(ConnectorInterface::class));
+            $action->setResponse($this->getServiceImplementation(Response\FactoryInterface::class));
+            $action->setProcessor($this->getServiceImplementation(ProcessorInterface::class));
+            $action->setTemplateFactory($this->getServiceImplementation(Template\FactoryInterface::class));
+            $action->setHttpClient($this->getServiceImplementation(Http\ClientInterface::class));
+            $action->setJsonProcessor($this->getServiceImplementation(Json\ProcessorInterface::class));
+            $action->setCacheProvider($this->getServiceImplementation(Cache\ProviderInterface::class));
         }
 
         if ($action instanceof ContainerAwareInterface) {
@@ -76,5 +89,27 @@ class Action implements ActionInterface
         }
 
         return $action;
+    }
+
+    /**
+     * @param string $interface
+     * @return object
+     */
+    protected function getServiceImplementation($interface)
+    {
+        return $this->container->get($this->getServiceName($interface));
+    }
+
+    /**
+     * @param string $interface
+     * @return string
+     */
+    protected function getServiceName($interface)
+    {
+        if (isset($this->serviceNames[$interface])) {
+            return $this->serviceNames[$interface];
+        } else {
+            throw new RuntimeException('Service name not specified for interface ' . $interface);
+        }
     }
 }

@@ -25,12 +25,14 @@ use Doctrine\Common\Annotations;
 use Doctrine\Common\Cache as DoctrineCache;
 use Fusio\Engine\Cache;
 use Fusio\Engine\Connector;
+use Fusio\Engine\ConnectorInterface;
 use Fusio\Engine\Factory;
 use Fusio\Engine\Form;
 use Fusio\Engine\Http;
 use Fusio\Engine\Json;
 use Fusio\Engine\Parser;
 use Fusio\Engine\Processor;
+use Fusio\Engine\ProcessorInterface;
 use Fusio\Engine\Repository;
 use Fusio\Engine\Response;
 use Fusio\Engine\Schema;
@@ -63,7 +65,15 @@ trait EngineTrait
      */
     public function getActionFactory()
     {
-        return new Factory\Action($this);
+        return new Factory\Action($this, [
+            ConnectorInterface::class => 'connector',
+            Response\FactoryInterface::class => 'response',
+            ProcessorInterface::class => 'processor',
+            Template\FactoryInterface::class => 'template_factory',
+            Http\ClientInterface::class => 'http_client',
+            Json\ProcessorInterface::class => 'json_processor',
+            Cache\ProviderInterface::class => 'cache_provider',
+        ]);
     }
 
     /**
