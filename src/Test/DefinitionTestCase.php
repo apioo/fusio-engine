@@ -62,16 +62,16 @@ abstract class DefinitionTestCase extends \PHPUnit_Framework_TestCase
 
     private function validateClassExistence(\stdClass $data)
     {
-        if (isset($data->action_class)) {
-            foreach ($data->action_class as $class) {
+        if (isset($data->actionClass)) {
+            foreach ($data->actionClass as $class) {
                 if (!class_exists($class)) {
                     $this->fail('Defined action class ' . $class . ' does not exist');
                 }
             }
         }
 
-        if (isset($data->connection_class)) {
-            foreach ($data->connection_class as $class) {
+        if (isset($data->connectionClass)) {
+            foreach ($data->connectionClass as $class) {
                 if (!class_exists($class)) {
                     $this->fail('Defined connection class ' . $class . ' does not exist');
                 }
