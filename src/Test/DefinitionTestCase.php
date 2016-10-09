@@ -77,22 +77,6 @@ abstract class DefinitionTestCase extends \PHPUnit_Framework_TestCase
                 }
             }
         }
-
-        if (isset($data->action)) {
-            foreach ($data->action as $action) {
-                if (!class_exists($action->class)) {
-                    $this->fail('Action class ' . $action->class . ' does not exist');
-                }
-            }
-        }
-
-        if (isset($data->connection)) {
-            foreach ($data->connection as $connection) {
-                if (!class_exists($connection->class)) {
-                    $this->fail('Connection class ' . $connection->class . ' does not exist');
-                }
-            }
-        }
     }
 
     /**
