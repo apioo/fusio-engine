@@ -73,7 +73,7 @@ class App implements AppInterface
     /**
      * @var array
      */
-    protected $scopes;
+    protected $scopes = array();
 
     /**
      * @param boolean $anonymous
