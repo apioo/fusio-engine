@@ -26,7 +26,6 @@ use Fusio\Engine\ActionInterface as EngineActionInterface;
 use Fusio\Engine\ConnectorInterface;
 use Fusio\Engine\ProcessorInterface;
 use Fusio\Engine\Response;
-use Fusio\Engine\Template;
 use Fusio\Engine\Http;
 use Fusio\Engine\Json;
 use Fusio\Engine\Cache;
@@ -79,7 +78,6 @@ class Action implements ActionInterface
             $action->setConnector($this->getServiceImplementation(ConnectorInterface::class));
             $action->setResponse($this->getServiceImplementation(Response\FactoryInterface::class));
             $action->setProcessor($this->getServiceImplementation(ProcessorInterface::class));
-            $action->setTemplateFactory($this->getServiceImplementation(Template\FactoryInterface::class));
             $action->setHttpClient($this->getServiceImplementation(Http\ClientInterface::class));
             $action->setJsonProcessor($this->getServiceImplementation(Json\ProcessorInterface::class));
             $action->setCacheProvider($this->getServiceImplementation(Cache\ProviderInterface::class));

@@ -27,7 +27,6 @@ use Fusio\Engine\Http;
 use Fusio\Engine\Json;
 use Fusio\Engine\ProcessorInterface;
 use Fusio\Engine\Response;
-use Fusio\Engine\Template;
 
 /**
  * ServiceAwareInterface
@@ -52,11 +51,6 @@ interface ServiceAwareInterface
      * @param \Fusio\Engine\ProcessorInterface $processor
      */
     public function setProcessor(ProcessorInterface $processor);
-
-    /**
-     * @param \Fusio\Engine\Template\FactoryInterface $templateFactory
-     */
-    public function setTemplateFactory(Template\FactoryInterface $templateFactory);
 
     /**
      * @param \Fusio\Engine\Http\ClientInterface $httpClient

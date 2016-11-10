@@ -36,7 +36,6 @@ use Fusio\Engine\ProcessorInterface;
 use Fusio\Engine\Repository;
 use Fusio\Engine\Response;
 use Fusio\Engine\Schema;
-use Fusio\Engine\Template;
 use PSX\Framework\Dependency\ObjectBuilder;
 
 /**
@@ -69,7 +68,6 @@ trait EngineTrait
             ConnectorInterface::class => 'connector',
             Response\FactoryInterface::class => 'response',
             ProcessorInterface::class => 'processor',
-            Template\FactoryInterface::class => 'template_factory',
             Http\ClientInterface::class => 'http_client',
             Json\ProcessorInterface::class => 'json_processor',
             Cache\ProviderInterface::class => 'cache_provider',
@@ -164,17 +162,6 @@ trait EngineTrait
     public function getUserRepository()
     {
         return new Repository\UserMemory();
-    }
-
-    /**
-     * @return \Fusio\Engine\Template\FactoryInterface
-     */
-    public function getTemplateFactory()
-    {
-        return new Template\Factory(
-            true,
-            false
-        );
     }
 
     /**

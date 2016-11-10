@@ -48,11 +48,6 @@ abstract class ActionAbstract implements ActionInterface, ServiceAwareInterface
     protected $processor;
 
     /**
-     * @var \Fusio\Engine\Template\FactoryInterface
-     */
-    protected $templateFactory;
-
-    /**
      * @var \Fusio\Engine\Http\ClientInterface
      */
     protected $httpClient;
@@ -89,14 +84,6 @@ abstract class ActionAbstract implements ActionInterface, ServiceAwareInterface
     public function setProcessor(ProcessorInterface $processor)
     {
         $this->processor = $processor;
-    }
-
-    /**
-     * @param \Fusio\Engine\Template\FactoryInterface $templateFactory
-     */
-    public function setTemplateFactory(Template\FactoryInterface $templateFactory)
-    {
-        $this->templateFactory = $templateFactory;
     }
 
     /**

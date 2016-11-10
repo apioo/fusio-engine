@@ -36,7 +36,6 @@ use Fusio\Engine\RequestInterface;
 use Fusio\Engine\Response;
 use Fusio\Engine\ResponseInterface;
 use Fusio\Engine\Schema;
-use Fusio\Engine\Template;
 use Fusio\Engine\Test\EngineTestCase;
 use PSX\Data\Record\Transformer;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -159,7 +158,6 @@ JSON;
         $this->assertInstanceOf(Schema\LoaderInterface::class, $this->getContainer()->get('schema_loader'));
         $this->assertInstanceOf(Repository\AppInterface::class, $this->getContainer()->get('app_repository'));
         $this->assertInstanceOf(Repository\UserInterface::class, $this->getContainer()->get('user_repository'));
-        $this->assertInstanceOf(Template\FactoryInterface::class, $this->getContainer()->get('template_factory'));
         $this->assertInstanceOf(Form\ElementFactoryInterface::class, $this->getContainer()->get('form_element_factory'));
         $this->assertInstanceOf(Response\FactoryInterface::class, $this->getContainer()->get('response'));
     }
