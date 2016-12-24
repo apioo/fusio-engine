@@ -38,7 +38,9 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 {
     public function testRequest()
     {
-        $httpClient = $this->getMock(HttpClient::class, array('request'));
+        $httpClient = $this->getMockBuilder(HttpClient::class)
+            ->setMethods(['request'])
+            ->getMock();
         $httpClient->expects($this->once())
             ->method('request')
             ->with($this->callback(function ($request) {
