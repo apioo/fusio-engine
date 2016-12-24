@@ -26,7 +26,6 @@ use Fusio\Engine\Factory;
 use Fusio\Engine\Repository;
 use PSX\Schema\SchemaManager;
 use PSX\Schema\SchemaTraverser;
-use PSX\Schema\Visitor\IncomingVisitor;
 
 /**
  * DefinitionTestCase
@@ -57,7 +56,7 @@ abstract class DefinitionTestCase extends \PHPUnit_Framework_TestCase
         $schema  = $manager->getSchema(__DIR__ . '/definition_schema.json');
 
         $traverser = new SchemaTraverser();
-        $traverser->traverse($data, $schema, new IncomingVisitor());
+        $traverser->traverse($data, $schema);
     }
 
     private function validateClassExistence(\stdClass $data)
