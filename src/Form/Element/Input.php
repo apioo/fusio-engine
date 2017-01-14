@@ -32,7 +32,14 @@ use Fusio\Engine\Form\Element;
  */
 class Input extends Element
 {
+    /**
+     * @var string
+     */
     protected $element = 'http://fusio-project.org/ns/2015/form/input';
+
+    /**
+     * @var string
+     */
     protected $type;
 
     public function __construct($name, $title, $type = 'text', $help = null)

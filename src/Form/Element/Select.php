@@ -32,8 +32,14 @@ use Fusio\Engine\Form\Element;
  */
 class Select extends Element
 {
+    /**
+     * @var string
+     */
     protected $element = 'http://fusio-project.org/ns/2015/form/select';
 
+    /**
+     * @var array
+     */
     protected $options;
 
     public function __construct($name, $title, array $options = array(), $help = null)

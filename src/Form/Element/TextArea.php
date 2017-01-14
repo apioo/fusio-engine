@@ -32,7 +32,14 @@ use Fusio\Engine\Form\Element;
  */
 class TextArea extends Element
 {
+    /**
+     * @var string
+     */
     protected $element = 'http://fusio-project.org/ns/2015/form/textarea';
+
+    /**
+     * @var string
+     */
     protected $mode;
 
     public function __construct($name, $title, $mode, $help = null)
