@@ -24,18 +24,18 @@ namespace Fusio\Engine\Form\Element;
 use Fusio\Engine\Form\Element;
 
 /**
- * Tags
+ * Tag
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-class Tags extends Element
+class Tag extends Element
 {
     /**
      * @var string
      */
-    protected $element = 'http://fusio-project.org/ns/2015/form/tags';
+    protected $element = 'http://fusio-project.org/ns/2015/form/tag';
 
     public function __construct($name, $title, $help = null)
     {

@@ -76,4 +76,9 @@ class ElementFactory implements ElementFactoryInterface
     {
         return new Element\TextArea($name, $title, $mode, $help);
     }
+
+    public function newTag($name, $title, $help = null)
+    {
+        return new Element\Tag($name, $title, $help);
+    }
 }

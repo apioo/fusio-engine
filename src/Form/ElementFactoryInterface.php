@@ -83,4 +83,14 @@ interface ElementFactoryInterface
      * @return \PSX\Record\RecordInterface
      */
     public function newTextArea($name, $title, $mode, $help = null);
+
+    /**
+     * Creates a new tag input
+     *
+     * @param string $name
+     * @param string $title
+     * @param string $help
+     * @return \PSX\Record\RecordInterface
+     */
+    public function newTag($name, $title, $help = null);
 }
