@@ -32,23 +32,34 @@ use Fusio\Engine\Repository;
  */
 class Action extends Select
 {
-    protected $_repository;
+    /**
+     * @var \Fusio\Engine\Repository\ActionInterface
+     */
+    protected $repository;
 
-    public function __construct($name, $title, Repository\ActionInterface $repository, $help = null)
+    /**
+     * @var array
+     */
+    protected $allowedClasses;
+
+    public function __construct($name, $title, Repository\ActionInterface $repository, $help = null, array $allowedClasses = null)
     {
         parent::__construct($name, $title, array(), $help);
 
-        $this->_repository = $repository;
+        $this->repository     = $repository;
+        $this->allowedClasses = $allowedClasses;
 
         $this->load();
     }
 
     protected function load()
     {
-        $result = $this->_repository->getAll();
+        $result = $this->repository->getAll();
 
         foreach ($result as $row) {
-            $this->addOption($row->getId(), $row->getName());
+            if ($this->allowedClasses === null || in_array($row->getClass(), $this->allowedClasses)) {
+                $this->addOption($row->getId(), $row->getName());
+            }
         }
     }
 }
