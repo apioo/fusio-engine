@@ -78,9 +78,6 @@ class Action implements ActionInterface
             $action->setConnector($this->getServiceImplementation(ConnectorInterface::class));
             $action->setResponse($this->getServiceImplementation(Response\FactoryInterface::class));
             $action->setProcessor($this->getServiceImplementation(ProcessorInterface::class));
-            $action->setHttpClient($this->getServiceImplementation(Http\ClientInterface::class));
-            $action->setJsonProcessor($this->getServiceImplementation(Json\ProcessorInterface::class));
-            $action->setCacheProvider($this->getServiceImplementation(Cache\ProviderInterface::class));
         }
 
         if ($action instanceof ContainerAwareInterface) {

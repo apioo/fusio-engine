@@ -51,19 +51,4 @@ interface ServiceAwareInterface
      * @param \Fusio\Engine\ProcessorInterface $processor
      */
     public function setProcessor(ProcessorInterface $processor);
-
-    /**
-     * @param \Fusio\Engine\Http\ClientInterface $httpClient
-     */
-    public function setHttpClient(Http\ClientInterface $httpClient);
-
-    /**
-     * @param \Fusio\Engine\Json\ProcessorInterface $jsonProcessor
-     */
-    public function setJsonProcessor(Json\ProcessorInterface $jsonProcessor);
-
-    /**
-     * @param \Fusio\Engine\Cache\ProviderInterface $cacheProvider
-     */
-    public function setCacheProvider(Cache\ProviderInterface $cacheProvider);
 }

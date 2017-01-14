@@ -48,21 +48,6 @@ abstract class ActionAbstract implements ActionInterface, ServiceAwareInterface
     protected $processor;
 
     /**
-     * @var \Fusio\Engine\Http\ClientInterface
-     */
-    protected $httpClient;
-
-    /**
-     * @var \Fusio\Engine\Json\ProcessorInterface
-     */
-    protected $jsonProcessor;
-
-    /**
-     * @var \Fusio\Engine\Cache\ProviderInterface
-     */
-    protected $cacheProvider;
-
-    /**
      * @param \Fusio\Engine\ConnectorInterface $connector
      */
     public function setConnector(ConnectorInterface $connector)
@@ -84,29 +69,5 @@ abstract class ActionAbstract implements ActionInterface, ServiceAwareInterface
     public function setProcessor(ProcessorInterface $processor)
     {
         $this->processor = $processor;
-    }
-
-    /**
-     * @param \Fusio\Engine\Http\ClientInterface $httpClient
-     */
-    public function setHttpClient(Http\ClientInterface $httpClient)
-    {
-        $this->httpClient = $httpClient;
-    }
-
-    /**
-     * @param \Fusio\Engine\Json\ProcessorInterface $jsonProcessor
-     */
-    public function setJsonProcessor(Json\ProcessorInterface $jsonProcessor)
-    {
-        $this->jsonProcessor = $jsonProcessor;
-    }
-
-    /**
-     * @param \Fusio\Engine\Cache\ProviderInterface $cacheProvider
-     */
-    public function setCacheProvider(Cache\ProviderInterface $cacheProvider)
-    {
-        $this->cacheProvider = $cacheProvider;
     }
 }
