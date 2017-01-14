@@ -19,25 +19,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Fusio\Engine\Http;
+namespace Fusio\Engine\Form\Element;
+
+use Fusio\Engine\Form\Element;
 
 /**
- * ClientInterface
+ * Tags
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-interface ClientInterface
+class Tags extends Element
 {
     /**
-     * Sends a http request to the provided url and returns the response
-     * 
-     * @param string $url
-     * @param string $method
-     * @param array $headers
-     * @param string $body
-     * @return \Fusio\Engine\ResponseInterface
+     * @var string
      */
-    public function request($url, $method, array $headers, $body);
+    protected $element = 'http://fusio-project.org/ns/2015/form/tags';
+
+    public function __construct($name, $title, $help = null)
+    {
+        parent::__construct($name, $title, $help);
+    }
 }
