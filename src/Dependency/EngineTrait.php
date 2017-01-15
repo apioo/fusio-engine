@@ -22,7 +22,8 @@
 namespace Fusio\Engine\Dependency;
 
 use Doctrine\Common\Annotations;
-use Doctrine\Common\Cache as DoctrineCache;
+use Doctrine\Common\Cache;
+use Fusio\Engine\Cache\SimpleCache;
 use Fusio\Engine\Connector;
 use Fusio\Engine\ConnectorInterface;
 use Fusio\Engine\Factory;
@@ -33,6 +34,10 @@ use Fusio\Engine\ProcessorInterface;
 use Fusio\Engine\Repository;
 use Fusio\Engine\Response;
 use Fusio\Engine\Schema;
+use Monolog\Handler\NullHandler;
+use Monolog\Logger;
+use Psr\Log\LoggerInterface;
+use Psr\SimpleCache\CacheInterface;
 use PSX\Framework\Dependency\ObjectBuilder;
 
 /**
@@ -65,6 +70,8 @@ trait EngineTrait
             ConnectorInterface::class => 'connector',
             Response\FactoryInterface::class => 'response',
             ProcessorInterface::class => 'processor',
+            LoggerInterface::class => 'logger',
+            CacheInterface::class => 'cache',
         ]);
     }
 
@@ -196,6 +203,41 @@ trait EngineTrait
         return $this->newDoctrineAnnotationImpl([
             'PSX\Framework\Annotation',
         ]);
+    }
+
+    /**
+     * @return \Psr\Log\LoggerInterface
+     */
+    public function getLogger()
+    {
+        $logger = new Logger('psx');
+        $logger->pushHandler($this->newLoggerHandlerImpl());
+
+        return $logger;
+    }
+
+    /**
+     * @return \Psr\SimpleCache\CacheInterface
+     */
+    public function getCache()
+    {
+        return new SimpleCache($this->newDoctrineCacheImpl());
+    }
+
+    /**
+     * @return \Monolog\Handler\HandlerInterface
+     */
+    protected function newLoggerHandlerImpl()
+    {
+        return new NullHandler();
+    }
+
+    /**
+     * @return \Doctrine\Common\Cache\CacheProvider
+     */
+    protected function newDoctrineCacheImpl()
+    {
+        return new Cache\ArrayCache();
     }
 
     /**

@@ -26,9 +26,8 @@ use Fusio\Engine\ActionInterface as EngineActionInterface;
 use Fusio\Engine\ConnectorInterface;
 use Fusio\Engine\ProcessorInterface;
 use Fusio\Engine\Response;
-use Fusio\Engine\Http;
-use Fusio\Engine\Json;
-use Fusio\Engine\Cache;
+use Psr\Log\LoggerInterface;
+use Psr\SimpleCache\CacheInterface;
 use RuntimeException;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -75,9 +74,30 @@ class Action implements ActionInterface
         }
 
         if ($action instanceof ServiceAwareInterface) {
-            $action->setConnector($this->getServiceImplementation(ConnectorInterface::class));
-            $action->setResponse($this->getServiceImplementation(Response\FactoryInterface::class));
-            $action->setProcessor($this->getServiceImplementation(ProcessorInterface::class));
+            $service = $this->getServiceImplementation(ConnectorInterface::class);
+            if ($service instanceof ConnectorInterface) {
+                $action->setConnector($service);
+            }
+
+            $service = $this->getServiceImplementation(Response\FactoryInterface::class);
+            if ($service instanceof Response\FactoryInterface) {
+                $action->setResponse($service);
+            }
+
+            $service = $this->getServiceImplementation(ProcessorInterface::class);
+            if ($service instanceof ProcessorInterface) {
+                $action->setProcessor($service);
+            }
+
+            $service = $this->getServiceImplementation(LoggerInterface::class);
+            if ($service instanceof LoggerInterface) {
+                $action->setLogger($service);
+            }
+
+            $service = $this->getServiceImplementation(CacheInterface::class);
+            if ($service instanceof CacheInterface) {
+                $action->setCache($service);
+            }
         }
 
         if ($action instanceof ContainerAwareInterface) {
@@ -93,19 +113,10 @@ class Action implements ActionInterface
      */
     protected function getServiceImplementation($interface)
     {
-        return $this->container->get($this->getServiceName($interface));
-    }
-
-    /**
-     * @param string $interface
-     * @return string
-     */
-    protected function getServiceName($interface)
-    {
         if (isset($this->serviceNames[$interface])) {
-            return $this->serviceNames[$interface];
+            return $this->container->get($this->serviceNames[$interface]);
         } else {
-            throw new RuntimeException('Service name not specified for interface ' . $interface);
+            return null;
         }
     }
 }

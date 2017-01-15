@@ -22,6 +22,8 @@
 namespace Fusio\Engine;
 
 use Fusio\Engine\Action\ServiceAwareInterface;
+use Psr\Log\LoggerInterface;
+use Psr\SimpleCache\CacheInterface;
 
 /**
  * ActionAbstract
@@ -48,6 +50,16 @@ abstract class ActionAbstract implements ActionInterface, ServiceAwareInterface
     protected $processor;
 
     /**
+     * @var \Psr\Log\LoggerInterface
+     */
+    protected $logger;
+
+    /**
+     * @var \Psr\SimpleCache\CacheInterface
+     */
+    protected $cache;
+
+    /**
      * @param \Fusio\Engine\ConnectorInterface $connector
      */
     public function setConnector(ConnectorInterface $connector)
@@ -69,5 +81,21 @@ abstract class ActionAbstract implements ActionInterface, ServiceAwareInterface
     public function setProcessor(ProcessorInterface $processor)
     {
         $this->processor = $processor;
+    }
+
+    /**
+     * @param \Psr\Log\LoggerInterface $logger
+     */
+    public function setLogger(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
+
+    /**
+     * @param \Psr\SimpleCache\CacheInterface $cache
+     */
+    public function setCache(CacheInterface $cache)
+    {
+        $this->cache = $cache;
     }
 }

@@ -21,12 +21,11 @@
 
 namespace Fusio\Engine\Action;
 
-use Fusio\Engine\Cache;
 use Fusio\Engine\ConnectorInterface;
-use Fusio\Engine\Http;
-use Fusio\Engine\Json;
 use Fusio\Engine\ProcessorInterface;
 use Fusio\Engine\Response;
+use Psr\Log\LoggerInterface;
+use Psr\SimpleCache\CacheInterface;
 
 /**
  * ServiceAwareInterface
@@ -51,4 +50,14 @@ interface ServiceAwareInterface
      * @param \Fusio\Engine\ProcessorInterface $processor
      */
     public function setProcessor(ProcessorInterface $processor);
+
+    /**
+     * @param \Psr\Log\LoggerInterface
+     */
+    public function setLogger(LoggerInterface $logger);
+
+    /**
+     * @param \Psr\SimpleCache\CacheInterface $cache
+     */
+    public function setCache(CacheInterface $cache);
 }
