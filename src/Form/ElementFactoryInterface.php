@@ -36,9 +36,10 @@ interface ElementFactoryInterface
      * @param string $name
      * @param string $title
      * @param string $help
+     * @param array $allowedClasses
      * @return \PSX\Record\RecordInterface
      */
-    public function newAction($name, $title, $help = null);
+    public function newAction($name, $title, $help = null, array $allowedClasses = null);
 
     /**
      * Creates a select which contains all available connections
@@ -46,9 +47,10 @@ interface ElementFactoryInterface
      * @param string $name
      * @param string $title
      * @param string $help
+     * @param array $allowedClasses
      * @return \PSX\Record\RecordInterface
      */
-    public function newConnection($name, $title, $help = null);
+    public function newConnection($name, $title, $help = null, array $allowedClasses = null);
 
     /**
      * Creates a new input field. The type must be a valid html input type

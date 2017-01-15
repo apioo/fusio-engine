@@ -52,14 +52,14 @@ class ElementFactory implements ElementFactoryInterface
         $this->connectionRepository = $connectionRepository;
     }
 
-    public function newAction($name, $title, $help = null)
+    public function newAction($name, $title, $help = null, array $allowedClasses = null)
     {
-        return new Element\Action($name, $title, $this->actionRepository, $help);
+        return new Element\Action($name, $title, $this->actionRepository, $help, $allowedClasses);
     }
 
-    public function newConnection($name, $title, $help = null)
+    public function newConnection($name, $title, $help = null, array $allowedClasses = null)
     {
-        return new Element\Connection($name, $title, $this->connectionRepository, $help);
+        return new Element\Connection($name, $title, $this->connectionRepository, $help, $allowedClasses);
     }
 
     public function newInput($name, $title, $type = 'text', $help = null)
