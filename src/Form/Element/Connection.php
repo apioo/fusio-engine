@@ -35,29 +35,29 @@ class Connection extends Select
     /**
      * @var \Fusio\Engine\Repository\ConnectionInterface
      */
-    protected $repository;
+    protected $_repository;
 
     /**
      * @var array
      */
-    protected $allowedClasses;
+    protected $_allowedClasses;
 
     public function __construct($name, $title, Repository\ConnectionInterface $repository, $help = null, array $allowedClasses = null)
     {
         parent::__construct($name, $title, array(), $help);
 
-        $this->repository     = $repository;
-        $this->allowedClasses = $allowedClasses;
+        $this->_repository     = $repository;
+        $this->_allowedClasses = $allowedClasses;
 
         $this->load();
     }
 
     protected function load()
     {
-        $result = $this->repository->getAll();
+        $result = $this->_repository->getAll();
 
         foreach ($result as $row) {
-            if ($this->allowedClasses === null || in_array($row->getClass(), $this->allowedClasses)) {
+            if ($this->_allowedClasses === null || in_array($row->getClass(), $this->_allowedClasses)) {
                 $this->addOption($row->getId(), $row->getName());
             }
         }
