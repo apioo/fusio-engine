@@ -31,9 +31,10 @@ namespace Fusio\Engine\Connection;
 interface PingableInterface
 {
     /**
-     * Returns whether the connection could connect to the remote service 
+     * Test whether it is possible to connect to the remote service 
      *
+     * @param mixed $connection
      * @return boolean
      */
-    public function ping();
+    public function ping($connection);
 }
