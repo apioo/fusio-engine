@@ -22,6 +22,8 @@
 namespace Fusio\Engine;
 
 use Fusio\Engine\Action\ServiceAwareInterface;
+use Fusio\Engine\Form\BuilderInterface;
+use Fusio\Engine\Form\ElementFactoryInterface;
 use Psr\Log\LoggerInterface;
 use Psr\SimpleCache\CacheInterface;
 
@@ -97,5 +99,25 @@ abstract class ActionAbstract implements ActionInterface, ServiceAwareInterface
     public function setCache(CacheInterface $cache)
     {
         $this->cache = $cache;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        $className = get_class($this);
+        $lastPart  = substr($className, strrpos($className, '\\') + 1);
+        $name      = preg_replace(array('/([A-Z]+)([A-Z][a-z])/', '/([a-z\d])([A-Z])/'), array('\\1-\\2', '\\1-\\2'), strtr($lastPart, '_', '.'));
+
+        return $name;
+    }
+
+    /**
+     * @param \Fusio\Engine\Form\BuilderInterface $builder
+     * @param \Fusio\Engine\Form\ElementFactoryInterface $elementFactory
+     */
+    public function configure(BuilderInterface $builder, ElementFactoryInterface $elementFactory)
+    {
     }
 }
