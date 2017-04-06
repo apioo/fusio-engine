@@ -22,24 +22,33 @@
 namespace Fusio\Engine\Test;
 
 use Doctrine\Common\Annotations\SimpleAnnotationReader;
+use Fusio\Engine\AdapterInterface;
 use Fusio\Engine\Factory;
 use Fusio\Engine\Repository;
 use PSX\Schema\SchemaManager;
 use PSX\Schema\SchemaTraverser;
 
 /**
- * DefinitionTestCase
+ * AdapterTestCase
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-abstract class DefinitionTestCase extends \PHPUnit_Framework_TestCase
+abstract class AdapterTestCase extends \PHPUnit_Framework_TestCase
 {
     public function testDefinition()
     {
-        $path = $this->getDefinition();
+        $class = $this->getAdapterClass();
 
+        $this->assertTrue(class_exists($class));
+
+        /** @var AdapterInterface $adapter */
+        $adapter = new $class();
+
+        $this->assertInstanceOf(AdapterInterface::class, $adapter);
+
+        $path = $adapter->getDefinition();
         if (!is_file($path)) {
             $this->fail('Adapter definition file ' . $path . ' does not exist');
         }
@@ -79,9 +88,9 @@ abstract class DefinitionTestCase extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Returns the path to the definition file
+     * Returns the adapter class name
      * 
      * @return string
      */
-    abstract protected function getDefinition();
+    abstract protected function getAdapterClass();
 }
