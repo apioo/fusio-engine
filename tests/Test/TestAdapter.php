@@ -21,18 +21,18 @@
 
 namespace Fusio\Engine\Tests\Test;
 
-use Fusio\Engine\Test\DefinitionTestCase;
+use Fusio\Engine\AdapterInterface;
 
 /**
- * DefinitionTest
+ * TestAdapter
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-class DefinitionTest extends DefinitionTestCase
+class TestAdapter implements AdapterInterface
 {
-    protected function getDefinition()
+    public function getDefinition()
     {
         return __DIR__ . '/test_definition.json';
     }
