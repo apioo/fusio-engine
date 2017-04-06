@@ -257,37 +257,6 @@
         "additionalProperties": false
       }
     },
-    "database": {
-      "type": "array",
-      "items": {
-        "title": "table",
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "columns": {
-            "type": "array",
-            "items": {
-              "$ref": "#\/definitions\/ref8b71247eb1a6a8a0461be899ca68ee4f"
-            }
-          },
-          "indexes": {
-            "type": "array",
-            "items": {
-              "$ref": "#\/definitions\/ref9afee66f50fd99d69deb0fac8ad4364e"
-            }
-          },
-          "foreignKeys": {
-            "type": "array",
-            "items": {
-              "$ref": "#\/definitions\/ref0a057c3923f2ee36914cbff54747bc99"
-            }
-          }
-        },
-        "additionalProperties": false
-      }
-    },
     "connection": {
       "type": "array",
       "items": {
