@@ -38,7 +38,7 @@ use Fusio\Engine\ResponseInterface;
 use Fusio\Engine\Schema;
 use Fusio\Engine\Test\EngineTestCase;
 use PSX\Data\Record\Transformer;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 /**
  * EngineTestCaseTraitTest
