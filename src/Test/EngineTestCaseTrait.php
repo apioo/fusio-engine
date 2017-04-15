@@ -47,7 +47,7 @@ use PSX\Uri\Uri;
 trait EngineTestCaseTrait
 {
     /**
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface
+     * @var \Psr\Container\ContainerInterface
      */
     protected static $container;
 
@@ -152,7 +152,7 @@ trait EngineTestCaseTrait
     }
 
     /**
-     * @return \Symfony\Component\DependencyInjection\ContainerInterface
+     * @return \Psr\Container\ContainerInterface
      */
     protected function getContainer()
     {
@@ -164,7 +164,7 @@ trait EngineTestCaseTrait
     }
 
     /**
-     * @return \Symfony\Component\DependencyInjection\ContainerInterface
+     * @return \Psr\Container\ContainerInterface
      */
     protected function newContainer()
     {
