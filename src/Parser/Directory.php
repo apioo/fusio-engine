@@ -71,12 +71,22 @@ class Directory extends ParserAbstract
     public function getClasses()
     {
         $result = array();
+        $path   = realpath($this->directory);
 
-        if (is_dir($this->directory)) {
-            $iterator = new FilesystemIterator($this->directory);
+        if (is_dir($path)) {
+            $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($path));
             foreach ($iterator as $file) {
+                /** @var \SplFileInfo $file */
                 if ($file->getExtension() == 'php') {
-                    $class      = $this->namespace . '\\' . $file->getBasename('.php');
+                    $namespace = substr($file->getPath(), strlen($path) + 1);
+                    $namespace = str_replace('/', '\\', $namespace);
+
+                    if (!empty($namespace)) {
+                        $class = $this->namespace . '\\' . $namespace . '\\' . $file->getBasename('.php');
+                    } else {
+                        $class = $this->namespace . '\\' . $file->getBasename('.php');
+                    }
+
                     $object     = $this->getObject($class);
                     $instanceOf = $this->instanceOf;
 
