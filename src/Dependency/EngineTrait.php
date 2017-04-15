@@ -23,7 +23,6 @@ namespace Fusio\Engine\Dependency;
 
 use Doctrine\Common\Annotations;
 use Doctrine\Common\Cache;
-use Fusio\Engine\Cache\SimpleCache;
 use Fusio\Engine\Connector;
 use Fusio\Engine\ConnectorInterface;
 use Fusio\Engine\Factory;
@@ -38,6 +37,7 @@ use Monolog\Handler\NullHandler;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 use Psr\SimpleCache\CacheInterface;
+use PSX\Cache\SimpleCache;
 use PSX\Framework\Dependency\ObjectBuilder;
 
 /**
@@ -191,7 +191,9 @@ trait EngineTrait
     {
         return new ObjectBuilder(
             $this,
-            $this->get('annotation_reader')
+            $this->get('annotation_reader'),
+            $this->get('cache'),
+            true
         );
     }
 
