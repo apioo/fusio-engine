@@ -26,11 +26,10 @@ use Fusio\Engine\ActionInterface as EngineActionInterface;
 use Fusio\Engine\ConnectorInterface;
 use Fusio\Engine\ProcessorInterface;
 use Fusio\Engine\Response;
+use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 use Psr\SimpleCache\CacheInterface;
 use RuntimeException;
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Action
@@ -42,7 +41,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class Action implements ActionInterface
 {
     /**
-     * @var \Symfony\Component\DependencyInjection\ContainerInterface
+     * @var \Psr\Container\ContainerInterface
      */
     protected $container;
 
@@ -52,7 +51,7 @@ class Action implements ActionInterface
     protected $serviceNames;
 
     /**
-     * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
+     * @param \Psr\Container\ContainerInterface $container
      * @param array $serviceNames
      */
     public function __construct(ContainerInterface $container, array $serviceNames)

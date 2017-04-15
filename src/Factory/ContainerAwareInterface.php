@@ -21,48 +21,22 @@
 
 namespace Fusio\Engine\Factory;
 
-use Fusio\Engine\ConnectionInterface as EngineConnectionInterface;
 use Psr\Container\ContainerInterface;
-use RuntimeException;
 
 /**
- * Connection
+ * If an action or connection implements this method the factory will inject the
+ * used DI container. Note usually this is bad practice since your action/
+ * connection accesses hard coded service keys which might be not available in
+ * a different environment
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-class Connection implements ConnectionInterface
+interface ContainerAwareInterface
 {
-    /**
-     * @var \Psr\Container\ContainerInterface
-     */
-    protected $container;
-
     /**
      * @param \Psr\Container\ContainerInterface $container
      */
-    public function __construct(ContainerInterface $container)
-    {
-        $this->container = $container;
-    }
-
-    /**
-     * @param string $className
-     * @return \Fusio\Engine\ConnectionInterface
-     */
-    public function factory($className)
-    {
-        $connection = new $className();
-
-        if (!$connection instanceof EngineConnectionInterface) {
-            throw new RuntimeException('Connection ' . $className . ' must implement the Fusio\Engine\ConnectionInterface interface');
-        }
-
-        if ($connection instanceof ContainerAwareInterface) {
-            $connection->setContainer($this->container);
-        }
-
-        return $connection;
-    }
+    public function setContainer(ContainerInterface $container);
 }
