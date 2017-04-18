@@ -22,7 +22,6 @@
 namespace Fusio\Engine\Tests\Parser;
 
 use Fusio\Engine\ActionInterface;
-use Fusio\Engine\Factory\Action;
 use Fusio\Engine\Parser\Directory;
 use Fusio\Engine\Test\EngineTestCaseTrait;
 

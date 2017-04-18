@@ -23,8 +23,6 @@ namespace Fusio\Engine\Test;
 
 use Doctrine\Common\Annotations\SimpleAnnotationReader;
 use Fusio\Engine\AdapterInterface;
-use Fusio\Engine\Factory;
-use Fusio\Engine\Repository;
 use PSX\Schema\SchemaManager;
 use PSX\Schema\SchemaTraverser;
 

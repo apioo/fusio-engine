@@ -23,7 +23,6 @@ namespace Fusio\Engine\Tests;
 
 use Fusio\Engine\Model\Action;
 use Fusio\Engine\Processor;
-use Fusio\Engine\Repository;
 use Fusio\Engine\Response;
 use Fusio\Engine\ResponseInterface;
 use Fusio\Engine\Test\CallbackAction;

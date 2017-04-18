@@ -23,13 +23,10 @@ namespace Fusio\Engine\Test;
 
 use Fusio\Engine\Context;
 use Fusio\Engine\Dependency\EngineContainer;
-use Fusio\Engine\Factory;
-use Fusio\Engine\Form;
 use Fusio\Engine\Model\Action;
 use Fusio\Engine\Model\App;
 use Fusio\Engine\Model\User;
 use Fusio\Engine\Parameters;
-use Fusio\Engine\Repository;
 use Fusio\Engine\Request;
 use Psr\Http\Message\StreamInterface;
 use PSX\Http\Request as HttpRequest;

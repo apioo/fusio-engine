@@ -24,7 +24,6 @@ namespace Fusio\Engine\Parser;
 use Fusio\Engine\ConfigurableInterface;
 use Fusio\Engine\Factory\FactoryInterface;
 use Fusio\Engine\Form;
-use Fusio\Engine\Repository;
 
 /**
  * ParserAbstract

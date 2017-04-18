@@ -21,7 +21,6 @@
 
 namespace Fusio\Engine\Parser;
 
-use FilesystemIterator;
 use Fusio\Engine\Factory\FactoryInterface;
 use Fusio\Engine\Form;
 

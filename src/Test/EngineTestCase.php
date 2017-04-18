@@ -21,9 +21,6 @@
 
 namespace Fusio\Engine\Test;
 
-use Fusio\Engine\Factory;
-use Fusio\Engine\Repository;
-
 /**
  * EngineTestCase
  *

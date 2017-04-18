@@ -23,7 +23,6 @@ namespace Fusio\Engine\Tests;
 
 use Fusio\Engine\Connector;
 use Fusio\Engine\Model\Connection;
-use Fusio\Engine\Repository;
 use Fusio\Engine\Test\CallbackConnection;
 use Fusio\Engine\Test\EngineTestCaseTrait;
 

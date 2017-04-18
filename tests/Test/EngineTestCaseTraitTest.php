@@ -37,8 +37,8 @@ use Fusio\Engine\Response;
 use Fusio\Engine\ResponseInterface;
 use Fusio\Engine\Schema;
 use Fusio\Engine\Test\EngineTestCase;
-use PSX\Data\Record\Transformer;
 use Psr\Container\ContainerInterface;
+use PSX\Data\Record\Transformer;
 
 /**
  * EngineTestCaseTraitTest
