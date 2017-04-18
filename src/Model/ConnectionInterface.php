@@ -46,7 +46,7 @@ interface ConnectionInterface
     public function getClass();
 
     /**
-     * @return string
+     * @return array
      */
     public function getConfig();
 }
