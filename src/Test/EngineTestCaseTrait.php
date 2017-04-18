@@ -110,7 +110,6 @@ trait EngineTestCaseTrait
     }
 
     /**
-     * @param string $class
      * @return \Fusio\Engine\Factory\ActionInterface
      */
     protected function getActionFactory()
@@ -127,7 +126,6 @@ trait EngineTestCaseTrait
     }
 
     /**
-     * @param string $class
      * @return \Fusio\Engine\Factory\ConnectionInterface
      */
     protected function getConnectionFactory()
