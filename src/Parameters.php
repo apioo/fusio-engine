@@ -69,7 +69,7 @@ class Parameters implements ParametersInterface
      */
     public function set($key, $value)
     {
-        return $this->container[$key] = $value;
+        $this->container[$key] = $value;
     }
 
     /**
