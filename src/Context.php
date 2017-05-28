@@ -38,6 +38,11 @@ class Context implements ContextInterface
     protected $routeId;
 
     /**
+     * @var string
+     */
+    protected $baseUrl;
+
+    /**
      * @var \Fusio\Engine\Model\AppInterface
      */
     protected $app;
@@ -59,16 +64,16 @@ class Context implements ContextInterface
 
     /**
      * @param integer $routeId
+     * @param string $baseUrl
      * @param \Fusio\Engine\Model\AppInterface $app
      * @param \Fusio\Engine\Model\UserInterface $user
-     * @param \Fusio\Engine\Model\ActionInterface|null $action
      */
-    public function __construct($routeId, Model\AppInterface $app, Model\UserInterface $user, Model\ActionInterface $action = null)
+    public function __construct($routeId, $baseUrl, Model\AppInterface $app, Model\UserInterface $user)
     {
         $this->routeId = $routeId;
+        $this->baseUrl = $baseUrl;
         $this->app     = $app;
         $this->user    = $user;
-        $this->action  = $action;
     }
 
     /**
@@ -79,6 +84,17 @@ class Context implements ContextInterface
     public function getRouteId()
     {
         return $this->routeId;
+    }
+
+    /**
+     * Returns the base url of the system to generate i.e. HATEOAS links. The 
+     * url has a trailing slash
+     * 
+     * @return string
+     */
+    public function getBaseUrl()
+    {
+        return $this->baseUrl;
     }
 
     /**
