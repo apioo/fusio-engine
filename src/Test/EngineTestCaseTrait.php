@@ -103,7 +103,7 @@ trait EngineTestCaseTrait
         $action->setName('foo');
         $action->setDate(date('Y-m-d H:i:s'));
 
-        return new Context(34, $app, $user, $action);
+        return new Context(34, 'http://127.0.0.1', $app, $user);
     }
 
     /**
