@@ -52,20 +52,20 @@ class Action implements ActionInterface
     protected $serviceNames;
 
     /**
-     * @var \Fusio\Engine\Factory\ResolverInterface[]
+     * @var \Fusio\Engine\Factory\ResolverInterface
      */
-    protected $resolvers;
+    protected $resolver;
 
     /**
      * @param \Psr\Container\ContainerInterface $container
      * @param array $serviceNames
-     * @param array $resolvers
+     * @param \Fusio\Engine\Factory\ResolverInterface $resolver
      */
-    public function __construct(ContainerInterface $container, array $serviceNames, array $resolvers = null)
+    public function __construct(ContainerInterface $container, array $serviceNames, ResolverInterface $resolver = null)
     {
         $this->container    = $container;
         $this->serviceNames = $serviceNames;
-        $this->resolvers    = $resolvers === null ? [new PhpClass()] : $resolvers;
+        $this->resolver     = $resolver === null ? new PhpClass() : $resolver;
     }
 
     /**
@@ -133,12 +133,10 @@ class Action implements ActionInterface
      */
     private function getAction($className)
     {
-        foreach ($this->resolvers as $resolver) {
-            if ($resolver->canResolve($className)) {
-                return $resolver->resolve($className);
-            }
+        if ($this->resolver->canResolve($className)) {
+            return $this->resolver->resolve($className);
+        } else {
+            throw new RuntimeException('Could not resolve ' . $className . ' to an action instance');
         }
-
-        throw new RuntimeException('Could not resolve ' . $className . ' to an action instance');
     }
 }
