@@ -74,7 +74,7 @@ class Action implements ActionInterface
      */
     public function factory($className)
     {
-        $action = $this->getAction($className);
+        $action = $this->resolver->resolve($className);
 
         if (!$action instanceof EngineActionInterface) {
             throw new RuntimeException('Action ' . $className . ' must implement the Fusio\Engine\ActionInterface interface');
@@ -124,19 +124,6 @@ class Action implements ActionInterface
             return $this->container->get($this->serviceNames[$interface]);
         } else {
             return null;
-        }
-    }
-
-    /**
-     * @param string $className
-     * @return EngineActionInterface
-     */
-    private function getAction($className)
-    {
-        if ($this->resolver->canResolve($className)) {
-            return $this->resolver->resolve($className);
-        } else {
-            throw new RuntimeException('Could not resolve ' . $className . ' to an action instance');
         }
     }
 }

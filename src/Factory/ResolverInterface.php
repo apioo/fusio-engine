@@ -31,15 +31,6 @@ namespace Fusio\Engine\Factory;
 interface ResolverInterface
 {
     /**
-     * Returns whether a resolver can handle the provided string which might be
-     * i.e. a class or file name
-     * 
-     * @param string $className
-     * @return boolean
-     */
-    public function canResolve($className);
-
-    /**
      * Resolves the provided string to an action instance
      * 
      * @param string $className

@@ -34,15 +34,6 @@ class PhpClass implements ResolverInterface
 {
     /**
      * @param string $className
-     * @return boolean
-     */
-    public function canResolve($className)
-    {
-        return class_exists($className);
-    }
-
-    /**
-     * @param string $className
      * @return \Fusio\Engine\ActionInterface
      */
     public function resolve($className)
