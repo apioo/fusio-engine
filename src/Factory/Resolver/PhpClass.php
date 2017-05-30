@@ -19,24 +19,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Fusio\Engine\Factory;
+namespace Fusio\Engine\Factory\Resolver;
+
+use Fusio\Engine\Factory\ResolverInterface;
 
 /**
- * ActionInterface
+ * PhpClass
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-interface ActionInterface extends FactoryInterface
+class PhpClass implements ResolverInterface
 {
-    /**
-     * Tries to create an action interface based on the provided class name. 
-     * Note the class name can also be a string to a php or javascript file
-     * which is the then resolved by the factory
-     * 
-     * @param string $className
-     * @return \Fusio\Engine\ActionInterface
-     */
-    public function factory($className);
+    public function canResolve($className)
+    {
+        return class_exists($className);
+    }
+
+    public function resolve($className)
+    {
+        return new $className();
+    }
 }

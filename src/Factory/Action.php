@@ -24,6 +24,7 @@ namespace Fusio\Engine\Factory;
 use Fusio\Engine\Action\ServiceAwareInterface;
 use Fusio\Engine\ActionInterface as EngineActionInterface;
 use Fusio\Engine\ConnectorInterface;
+use Fusio\Engine\Factory\Resolver\PhpClass;
 use Fusio\Engine\ProcessorInterface;
 use Fusio\Engine\Response;
 use Psr\Container\ContainerInterface;
@@ -51,13 +52,20 @@ class Action implements ActionInterface
     protected $serviceNames;
 
     /**
+     * @var \Fusio\Engine\Factory\ResolverInterface[]
+     */
+    protected $resolvers;
+
+    /**
      * @param \Psr\Container\ContainerInterface $container
      * @param array $serviceNames
+     * @param array $resolvers
      */
-    public function __construct(ContainerInterface $container, array $serviceNames)
+    public function __construct(ContainerInterface $container, array $serviceNames, array $resolvers = null)
     {
         $this->container    = $container;
         $this->serviceNames = $serviceNames;
+        $this->resolvers    = $resolvers === null ? [new PhpClass()] : $resolvers;
     }
 
     /**
@@ -66,7 +74,7 @@ class Action implements ActionInterface
      */
     public function factory($className)
     {
-        $action = new $className();
+        $action = $this->getAction($className);
 
         if (!$action instanceof EngineActionInterface) {
             throw new RuntimeException('Action ' . $className . ' must implement the Fusio\Engine\ActionInterface interface');
@@ -110,12 +118,27 @@ class Action implements ActionInterface
      * @param string $interface
      * @return object
      */
-    protected function getServiceImplementation($interface)
+    private function getServiceImplementation($interface)
     {
         if (isset($this->serviceNames[$interface])) {
             return $this->container->get($this->serviceNames[$interface]);
         } else {
             return null;
         }
+    }
+
+    /**
+     * @param string $className
+     * @return EngineActionInterface
+     */
+    private function getAction($className)
+    {
+        foreach ($this->resolvers as $resolver) {
+            if ($resolver->canResolve($className)) {
+                return $resolver->resolve($className);
+            }
+        }
+
+        throw new RuntimeException('Could not resolve ' . $className . ' to an action instance');
     }
 }
