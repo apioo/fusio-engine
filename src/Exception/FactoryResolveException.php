@@ -19,30 +19,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Fusio\Engine\Factory\Resolver;
-
-use Fusio\Engine\Exception\FactoryResolveException;
-use Fusio\Engine\Factory\ResolverInterface;
+namespace Fusio\Engine\Exception;
 
 /**
- * PhpClass
+ * FactoryResolveException
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-class PhpClass implements ResolverInterface
+class FactoryResolveException extends \InvalidArgumentException
 {
-    /**
-     * @param string $className
-     * @return \Fusio\Engine\ActionInterface
-     */
-    public function resolve($className)
-    {
-        if (!class_exists($className)) {
-            throw new FactoryResolveException('Could not resolve class ' . $className);
-        }
-
-        return new $className();
-    }
 }
