@@ -69,7 +69,7 @@ class Processor implements ProcessorInterface
         if ($action instanceof Model\ActionInterface) {
             $parameters = new Parameters($action->getConfig());
 
-            return $this->factory->factory($action->getClass())->handle($request, $parameters, $context->withAction($action));
+            return $this->factory->factory($action->getClass(), $action->getEngine())->handle($request, $parameters, $context->withAction($action));
         } else {
             throw new RuntimeException('Could not found action ' . $actionId);
         }

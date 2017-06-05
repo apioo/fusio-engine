@@ -36,7 +36,8 @@ interface ActionInterface extends FactoryInterface
      * which is the then resolved by the factory
      * 
      * @param string $className
+     * @param string $engine
      * @return \Fusio\Engine\ActionInterface
      */
-    public function factory($className);
+    public function factory($className, $engine = null);
 }

@@ -52,29 +52,37 @@ class Action implements ActionInterface
     protected $serviceNames;
 
     /**
-     * @var \Fusio\Engine\Factory\ResolverInterface
+     * @var array
      */
-    protected $resolver;
+    protected $resolvers;
 
     /**
      * @param \Psr\Container\ContainerInterface $container
      * @param array $serviceNames
-     * @param \Fusio\Engine\Factory\ResolverInterface $resolver
      */
-    public function __construct(ContainerInterface $container, array $serviceNames, ResolverInterface $resolver = null)
+    public function __construct(ContainerInterface $container, array $serviceNames)
     {
         $this->container    = $container;
         $this->serviceNames = $serviceNames;
-        $this->resolver     = $resolver === null ? new PhpClass() : $resolver;
+        $this->resolvers    = [];
+
+        $this->addResolver(new PhpClass());
     }
 
     /**
      * @param string $className
+     * @param string $engine
      * @return \Fusio\Engine\ActionInterface
      */
-    public function factory($className)
+    public function factory($className, $engine = null)
     {
-        $action = $this->resolver->resolve($className);
+        if (!empty($engine) && isset($this->resolvers[$engine])) {
+            $resolver = $this->resolvers[$engine];
+        } else {
+            $resolver = $this->resolvers[PhpClass::class];
+        }
+
+        $action = $resolver->resolve($className);
 
         if (!$action instanceof EngineActionInterface) {
             throw new RuntimeException('Action ' . $className . ' must implement the Fusio\Engine\ActionInterface interface');
@@ -112,6 +120,14 @@ class Action implements ActionInterface
         }
 
         return $action;
+    }
+
+    /**
+     * @param \Fusio\Engine\Factory\ResolverInterface $resolver
+     */
+    public function addResolver(ResolverInterface $resolver)
+    {
+        $this->resolvers[get_class($resolver)] = $resolver;
     }
 
     /**

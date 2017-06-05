@@ -46,6 +46,11 @@ interface ActionInterface
     public function getClass();
 
     /**
+     * @return string
+     */
+    public function getEngine();
+
+    /**
      * @return array
      */
     public function getConfig();

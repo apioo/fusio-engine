@@ -46,6 +46,11 @@ class Action implements ActionInterface
     protected $class;
 
     /**
+     * @var string
+     */
+    protected $engine;
+
+    /**
      * @var array
      */
     protected $config;
@@ -101,6 +106,22 @@ class Action implements ActionInterface
     public function setClass($class)
     {
         $this->class = $class;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEngine()
+    {
+        return $this->engine;
+    }
+
+    /**
+     * @param string $engine
+     */
+    public function setEngine($engine)
+    {
+        $this->engine = $engine;
     }
 
     /**
