@@ -40,6 +40,14 @@ interface ContextInterface
     public function getRouteId();
 
     /**
+     * Returns the base url of the system to generate i.e. HATEOAS links. The
+     * url has a trailing slash
+     *
+     * @return string
+     */
+    public function getBaseUrl();
+
+    /**
      * Returns the app which was used for this request. Can also be an anonymous
      * app if authorization is not required for the endpoint
      *
