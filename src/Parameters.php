@@ -47,7 +47,7 @@ class Parameters implements ParametersInterface
 
     /**
      * @param string $key
-     * @return string
+     * @return mixed
      */
     public function get($key)
     {
@@ -65,7 +65,7 @@ class Parameters implements ParametersInterface
 
     /**
      * @param string $key
-     * @param string $value
+     * @param mixed $value
      */
     public function set($key, $value)
     {
