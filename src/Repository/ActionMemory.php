@@ -30,7 +30,7 @@ use Fusio\Engine\Model;
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-class ActionMemory implements ActionInterface
+class ActionMemory implements ActionInterface, \JsonSerializable
 {
     /**
      * @var \Fusio\Engine\Model\ActionInterface[]
@@ -82,5 +82,48 @@ class ActionMemory implements ActionInterface
         }
 
         return null;
+    }
+
+    public function jsonSerialize()
+    {
+        if (empty($this->actions)) {
+            return null;
+        }
+
+        $result = [];
+        foreach ($this->actions as $action) {
+            $result[] = [
+                'id'     => $action->getId(),
+                'name'   => $action->getName(),
+                'class'  => $action->getClass(),
+                'engine' => $action->getEngine(),
+                'config' => $action->getConfig(),
+                'date'   => $action->getDate(),
+            ];
+        }
+
+        return $result;
+    }
+
+    public static function fromJson($json)
+    {
+        $data = json_decode($json, true);
+        $repo = new static();
+
+        if (is_array($data)) {
+            foreach ($data as $row) {
+                $action = new Model\Action();
+                $action->setId($row['id']);
+                $action->setName($row['name']);
+                $action->setClass($row['class']);
+                $action->setEngine($row['engine']);
+                $action->setConfig($row['config']);
+                $action->setDate($row['date']);
+
+                $repo->add($action);
+            }
+        }
+
+        return $repo;
     }
 }

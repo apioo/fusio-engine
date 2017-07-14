@@ -63,6 +63,59 @@ class ActionMemoryTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('foo', $action->getName());
     }
 
+    public function testJsonSerialize()
+    {
+        $repository = $this->createRepository();
+
+        $actual = json_encode($repository, JSON_PRETTY_PRINT);
+        $expect = <<<'JSON'
+[
+    {
+        "id": 1,
+        "name": "foo",
+        "class": "\\stdClass",
+        "engine": null,
+        "config": {
+            "foo": "bar"
+        },
+        "date": null
+    }
+]
+JSON;
+
+        $this->assertJsonStringEqualsJsonString($expect, $actual, $actual);
+    }
+
+    public function testJsonSerializeEmpty()
+    {
+        $repository = new Repository\ActionMemory();
+
+        $this->assertSame(null, $repository->jsonSerialize());
+    }
+
+    public function testFromJson()
+    {
+        $json = <<<'JSON'
+[
+    {
+        "id": 1,
+        "name": "foo",
+        "class": "\\stdClass",
+        "engine": null,
+        "config": {
+            "foo": "bar"
+        },
+        "date": null
+    }
+]
+JSON;
+
+        $actual = Repository\ActionMemory::fromJson($json);
+        $expect = $this->createRepository();
+
+        $this->assertEquals($expect, $actual);
+    }
+
     /**
      * @return \Fusio\Engine\Repository\ActionInterface
      */
@@ -72,6 +125,7 @@ class ActionMemoryTest extends \PHPUnit_Framework_TestCase
         $action->setId(1);
         $action->setName('foo');
         $action->setClass('\stdClass');
+        $action->setConfig(['foo' => 'bar']);
 
         $repository = new Repository\ActionMemory();
         $repository->add($action);
