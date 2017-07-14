@@ -30,7 +30,7 @@ use Fusio\Engine\Model;
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-class ActionMemory implements ActionInterface, \JsonSerializable
+class ActionMemory implements ActionInterface, \JsonSerializable, \Countable
 {
     /**
      * @var \Fusio\Engine\Model\ActionInterface[]
@@ -84,12 +84,13 @@ class ActionMemory implements ActionInterface, \JsonSerializable
         return null;
     }
 
+    public function count()
+    {
+        return count($this->actions);
+    }
+
     public function jsonSerialize()
     {
-        if (empty($this->actions)) {
-            return null;
-        }
-
         $result = [];
         foreach ($this->actions as $action) {
             $result[] = [

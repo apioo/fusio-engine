@@ -63,6 +63,13 @@ class ActionMemoryTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('foo', $action->getName());
     }
 
+    public function testCount()
+    {
+        $repository = $this->createRepository();
+
+        $this->assertEquals(1, count($repository));
+    }
+
     public function testJsonSerialize()
     {
         $repository = $this->createRepository();
@@ -90,7 +97,7 @@ JSON;
     {
         $repository = new Repository\ActionMemory();
 
-        $this->assertSame(null, $repository->jsonSerialize());
+        $this->assertSame([], $repository->jsonSerialize());
     }
 
     public function testFromJson()
