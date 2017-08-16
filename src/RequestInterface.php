@@ -55,7 +55,7 @@ interface RequestInterface
     public function getUriFragment($name);
 
     /**
-     * @return array
+     * @return \Fusio\Engine\Parameters
      */
     public function getUriFragments();
 
@@ -66,7 +66,7 @@ interface RequestInterface
     public function getParameter($name);
 
     /**
-     * @return array
+     * @return \Fusio\Engine\Parameters
      */
     public function getParameters();
 
