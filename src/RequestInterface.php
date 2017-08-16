@@ -44,6 +44,11 @@ interface RequestInterface
     public function getHeader($name);
 
     /**
+     * @return array
+     */
+    public function getHeaders();
+
+    /**
      * @param string $name
      * @return string
      */
