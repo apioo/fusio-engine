@@ -86,6 +86,14 @@ class Request implements RequestInterface
     }
 
     /**
+     * @return array
+     */
+    public function getHeaders()
+    {
+        return $this->request->getHeaders();
+    }
+
+    /**
      * @param string $name
      * @return string
      */
