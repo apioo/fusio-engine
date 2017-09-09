@@ -2,22 +2,27 @@
   "$schema": "http:\/\/json-schema.org\/draft-04\/schema#",
   "type": "object",
   "definitions": {
-    "classList": {
+    "ClassList": {
       "type": "array",
       "items": {
-        "$ref": "#/definitions/className"
+        "$ref": "#\/definitions\/ClassName"
       }
     },
-    "className": {
+    "ClassName": {
       "type": "string"
     },
-    "entityName": {
-      "type": "string",
-      "pattern": "[A-z0-9\\-\\_]{3,64}"
-    },
-    "refcda321fb318e2ae84d7f78d3ef22b173": {
-      "title": "method",
+    "Responses": {
       "type": "object",
+      "title": "responses",
+      "patternProperties": {
+        "^([0-9]{3})$": {
+          "type": "string"
+        }
+      }
+    },
+    "Method": {
+      "type": "object",
+      "title": "method",
       "properties": {
         "method": {
           "type": "string"
@@ -34,31 +39,35 @@
         "public": {
           "type": "boolean"
         },
+        "parameters": {
+          "type": "string"
+        },
         "request": {
           "type": "string"
         },
         "response": {
           "type": "string"
         },
+        "responses": {
+          "$ref": "#\/definitions\/Responses"
+        },
         "action": {
           "type": "string"
         }
-      },
-      "additionalProperties": false
+      }
     },
-    "ref901d0be125ae38713932027537284782": {
-      "title": "methods",
+    "Methods": {
       "type": "object",
+      "title": "methods",
       "patternProperties": {
         "^(GET|POST|PUT|DELETE)$": {
-          "$ref": "#\/definitions\/refcda321fb318e2ae84d7f78d3ef22b173"
+          "$ref": "#\/definitions\/Method"
         }
-      },
-      "additionalProperties": false
+      }
     },
-    "ref7921718387dccbaae82f18f4c1b7d047": {
-      "title": "version",
+    "Version": {
       "type": "object",
+      "title": "version",
       "properties": {
         "version": {
           "type": "integer"
@@ -66,218 +75,177 @@
         "status": {
           "type": "integer"
         },
+        "scopes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
         "methods": {
-          "$ref": "#\/definitions\/ref901d0be125ae38713932027537284782"
+          "$ref": "#\/definitions\/Methods"
         }
-      },
-      "additionalProperties": false
-    },
-    "ref5525537f7f38b6988025ca659a7b315d": {
-      "title": "config",
-      "type": "object",
-      "additionalProperties": {
-        "type": "string"
       }
     },
-    "ref5d08e74148a1303824e5d6d0dc6ab70b": {
-      "title": "source",
+    "Config": {
       "type": "object",
+      "title": "config",
+      "additionalProperties": {
+        "oneOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "number"
+          },
+          {
+            "type": "boolean"
+          },
+          {
+            "type": "null"
+          },
+          {
+            "type": "array",
+            "items": {
+              "oneOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "boolean"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "maxItems": 16
+          }
+        ]
+      },
+      "maxProperties": 16
+    },
+    "Source": {
+      "type": "object",
+      "title": "source",
       "additionalProperties": true
     },
-    "ref8b71247eb1a6a8a0461be899ca68ee4f": {
-      "title": "column",
+    "Routes": {
       "type": "object",
+      "title": "routes",
       "properties": {
-        "name": {
-          "type": "string"
-        },
-        "type": {
-          "type": "string",
-          "enum": [
-            "smallint",
-            "integer",
-            "bigint",
-            "decimal",
-            "float",
-            "string",
-            "text",
-            "guid",
-            "binary",
-            "blob",
-            "boolean",
-            "date",
-            "datetime",
-            "time",
-            "dateinterval",
-            "array",
-            "simple_array",
-            "json",
-            "json_array",
-            "object"
-          ]
-        },
-        "length": {
+        "id": {
           "type": "integer"
         },
-        "null": {
-          "type": "boolean"
-        },
-        "autoincrement": {
-          "type": "boolean"
-        },
-        "default": {
+        "path": {
           "type": "string"
+        },
+        "config": {
+          "type": "array",
+          "items": {
+            "$ref": "#\/definitions\/Version"
+          }
         }
       },
-      "additionalProperties": false
+      "required": [
+        "config"
+      ]
     },
-    "ref9afee66f50fd99d69deb0fac8ad4364e": {
-      "title": "index",
+    "Action": {
       "type": "object",
+      "title": "action",
       "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "status": {
+          "type": "integer"
+        },
         "name": {
+          "type": "string",
+          "pattern": "[a-zA-Z0-9\\-\\_]{3,64}"
+        },
+        "class": {
           "type": "string"
         },
-        "columns": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+        "engine": {
+          "type": "string"
         },
-        "primary": {
-          "type": "boolean"
-        },
-        "unique": {
-          "type": "boolean"
+        "config": {
+          "$ref": "#\/definitions\/Config"
         }
-      },
-      "additionalProperties": false
+      }
     },
-    "ref0a057c3923f2ee36914cbff54747bc99": {
-      "title": "foreignKey",
+    "Schema": {
       "type": "object",
+      "title": "schema",
       "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "status": {
+          "type": "integer"
+        },
         "name": {
-          "type": "string"
+          "type": "string",
+          "pattern": "[a-zA-Z0-9\\-\\_]{3,64}"
         },
-        "columns": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "foreignTable": {
-          "type": "string"
-        },
-        "foreignColumns": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
+        "source": {
+          "$ref": "#\/definitions\/Source"
         }
-      },
-      "additionalProperties": false
+      }
+    },
+    "Connection": {
+      "type": "object",
+      "title": "connection",
+      "properties": {
+        "id": {
+          "type": "integer"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "[a-zA-Z0-9\\-\\_]{3,64}"
+        },
+        "class": {
+          "type": "string"
+        },
+        "config": {
+          "$ref": "#\/definitions\/Config"
+        }
+      }
     }
   },
   "properties": {
     "actionClass": {
-      "$ref": "#/definitions/classList"
+      "$ref": "#\/definitions\/ClassList"
     },
     "connectionClass": {
-      "$ref": "#/definitions/classList"
+      "$ref": "#\/definitions\/ClassList"
     },
     "routes": {
       "type": "array",
       "items": {
-        "title": "routes",
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer"
-          },
-          "path": {
-            "type": "string"
-          },
-          "config": {
-            "type": "array",
-            "items": {
-              "$ref": "#\/definitions\/ref7921718387dccbaae82f18f4c1b7d047"
-            }
-          }
-        },
-        "additionalProperties": false
+        "$ref": "#\/definitions\/Routes"
       }
     },
     "action": {
       "type": "array",
       "items": {
-        "title": "action",
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer"
-          },
-          "status": {
-            "type": "integer"
-          },
-          "name": {
-            "type": "string",
-            "pattern": "[A-z0-9\\-\\_]{3,64}"
-          },
-          "class": {
-            "type": "string"
-          },
-          "config": {
-            "$ref": "#\/definitions\/ref5525537f7f38b6988025ca659a7b315d"
-          }
-        },
-        "additionalProperties": false
+        "$ref": "#\/definitions\/Action"
       }
     },
     "schema": {
       "type": "array",
       "items": {
-        "title": "schema",
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer"
-          },
-          "status": {
-            "type": "integer"
-          },
-          "name": {
-            "type": "string",
-            "pattern": "[A-z0-9\\-\\_]{3,64}"
-          },
-          "source": {
-            "$ref": "#\/definitions\/ref5d08e74148a1303824e5d6d0dc6ab70b"
-          }
-        },
-        "additionalProperties": false
+        "$ref": "#\/definitions\/Schema"
       }
     },
     "connection": {
       "type": "array",
       "items": {
-        "title": "connection",
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer"
-          },
-          "name": {
-            "type": "string",
-            "pattern": "[A-z0-9\\-\\_]{3,64}"
-          },
-          "class": {
-            "type": "string"
-          },
-          "config": {
-            "$ref": "#\/definitions\/ref5525537f7f38b6988025ca659a7b315d"
-          }
-        },
-        "additionalProperties": false
+        "$ref": "#\/definitions\/Connection"
       }
     }
   },
