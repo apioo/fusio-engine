@@ -60,7 +60,7 @@
       "type": "object",
       "title": "methods",
       "patternProperties": {
-        "^(GET|POST|PUT|DELETE)$": {
+        "^(GET|POST|PUT|PATCH|DELETE)$": {
           "$ref": "#\/definitions\/Method"
         }
       }
