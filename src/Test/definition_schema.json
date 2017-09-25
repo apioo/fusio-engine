@@ -148,10 +148,7 @@
             "$ref": "#\/definitions\/Version"
           }
         }
-      },
-      "required": [
-        "config"
-      ]
+      }
     },
     "Action": {
       "type": "object",
@@ -218,34 +215,38 @@
     }
   },
   "properties": {
-    "actionClass": {
-      "$ref": "#\/definitions\/ClassList"
-    },
-    "connectionClass": {
-      "$ref": "#\/definitions\/ClassList"
-    },
-    "routes": {
-      "type": "array",
-      "items": {
-        "$ref": "#\/definitions\/Routes"
-      }
-    },
-    "action": {
-      "type": "array",
-      "items": {
-        "$ref": "#\/definitions\/Action"
-      }
-    },
-    "schema": {
-      "type": "array",
-      "items": {
-        "$ref": "#\/definitions\/Schema"
-      }
-    },
-    "connection": {
-      "type": "array",
-      "items": {
-        "$ref": "#\/definitions\/Connection"
+    "type": "object",
+    "title": "adapter",
+    "properties": {
+      "actionClass": {
+        "$ref": "#\/definitions\/ClassList"
+      },
+      "connectionClass": {
+        "$ref": "#\/definitions\/ClassList"
+      },
+      "routes": {
+        "type": "array",
+        "items": {
+          "$ref": "#\/definitions\/Routes"
+        }
+      },
+      "action": {
+        "type": "array",
+        "items": {
+          "$ref": "#\/definitions\/Action"
+        }
+      },
+      "schema": {
+        "type": "array",
+        "items": {
+          "$ref": "#\/definitions\/Schema"
+        }
+      },
+      "connection": {
+        "type": "array",
+        "items": {
+          "$ref": "#\/definitions\/Connection"
+        }
       }
     }
   },
