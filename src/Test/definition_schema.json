@@ -1,6 +1,7 @@
 {
   "$schema": "http:\/\/json-schema.org\/draft-04\/schema#",
   "type": "object",
+  "title": "adapter",
   "definitions": {
     "ClassList": {
       "type": "array",
@@ -215,38 +216,34 @@
     }
   },
   "properties": {
-    "type": "object",
-    "title": "adapter",
-    "properties": {
-      "actionClass": {
-        "$ref": "#\/definitions\/ClassList"
-      },
-      "connectionClass": {
-        "$ref": "#\/definitions\/ClassList"
-      },
-      "routes": {
-        "type": "array",
-        "items": {
-          "$ref": "#\/definitions\/Routes"
-        }
-      },
-      "action": {
-        "type": "array",
-        "items": {
-          "$ref": "#\/definitions\/Action"
-        }
-      },
-      "schema": {
-        "type": "array",
-        "items": {
-          "$ref": "#\/definitions\/Schema"
-        }
-      },
-      "connection": {
-        "type": "array",
-        "items": {
-          "$ref": "#\/definitions\/Connection"
-        }
+    "actionClass": {
+      "$ref": "#\/definitions\/ClassList"
+    },
+    "connectionClass": {
+      "$ref": "#\/definitions\/ClassList"
+    },
+    "routes": {
+      "type": "array",
+      "items": {
+        "$ref": "#\/definitions\/Routes"
+      }
+    },
+    "action": {
+      "type": "array",
+      "items": {
+        "$ref": "#\/definitions\/Action"
+      }
+    },
+    "schema": {
+      "type": "array",
+      "items": {
+        "$ref": "#\/definitions\/Schema"
+      }
+    },
+    "connection": {
+      "type": "array",
+      "items": {
+        "$ref": "#\/definitions\/Connection"
       }
     }
   },
