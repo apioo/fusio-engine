@@ -34,11 +34,7 @@ use PSX\Schema\Parser\JsonSchema\RefResolver;
 class Parser implements ParserInterface
 {
     /**
-     * Parses and resolves the json schema source and returns the object
-     * presentation of the schema
-     *
-     * @param string $source
-     * @return string
+     * @inheritdoc
      */
     public function parse($source)
     {

@@ -33,18 +33,31 @@ use RuntimeException;
  */
 class Loader implements LoaderInterface
 {
+    /**
+     * @var array
+     */
     protected $schemas;
 
+    /**
+     * @param array $schemas
+     */
     public function __construct(array $schemas = array())
     {
         $this->schemas = $schemas;
     }
 
+    /**
+     * @param string $id
+     * @param \PSX\Schema\SchemaInterface $schema
+     */
     public function add($id, SchemaInterface $schema)
     {
         $this->schemas[$id] = $schema;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getSchema($schemaId)
     {
         if (isset($this->schemas[$schemaId])) {

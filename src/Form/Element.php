@@ -32,10 +32,26 @@ use PSX\Record\RecordObject;
  */
 class Element extends RecordObject
 {
+    /**
+     * @var string
+     */
     protected $name;
+
+    /**
+     * @var string
+     */
     protected $title;
+
+    /**
+     * @var string
+     */
     protected $help;
 
+    /**
+     * @param string $name
+     * @param string $title
+     * @param string $help
+     */
     public function __construct($name, $title, $help = null)
     {
         parent::__construct();
@@ -45,31 +61,49 @@ class Element extends RecordObject
         $this->help  = $help;
     }
 
+    /**
+     * @param string $name
+     */
     public function setName($name)
     {
         $this->name = $name;
     }
-    
+
+    /**
+     * @return string
+     */
     public function getName()
     {
         return $this->name;
     }
 
+    /**
+     * @param string $title
+     */
     public function setTitle($title)
     {
         $this->title = $title;
     }
-    
+
+    /**
+     * @return string
+     */
     public function getTitle()
     {
         return $this->title;
     }
 
+    /**
+     * @param string $help
+     */
     public function setHelp($help)
     {
         $this->help = $help;
     }
-    
+
+    /**
+     * @return string
+     */
     public function getHelp()
     {
         return $this->help;

@@ -32,6 +32,9 @@ use Fusio\Engine\Response;
  */
 class Factory implements FactoryInterface
 {
+    /**
+     * @inheritdoc
+     */
     public function build($statusCode, array $headers, $body)
     {
         return new Response($statusCode, $headers, $body);

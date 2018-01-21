@@ -32,7 +32,7 @@ interface ParserInterface
 {
     /**
      * Parses and resolves the json schema source and returns the object
-     * presentation of the schema
+     * presentation of the schema as string
      *
      * @param string $source
      * @return string

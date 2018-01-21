@@ -52,31 +52,49 @@ class ElementFactory implements ElementFactoryInterface
         $this->connectionRepository = $connectionRepository;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function newAction($name, $title, $help = null, array $allowedClasses = null)
     {
         return new Element\Action($name, $title, $this->actionRepository, $help, $allowedClasses);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function newConnection($name, $title, $help = null, array $allowedClasses = null)
     {
         return new Element\Connection($name, $title, $this->connectionRepository, $help, $allowedClasses);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function newInput($name, $title, $type = 'text', $help = null)
     {
         return new Element\Input($name, $title, $type, $help);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function newSelect($name, $title, array $options = array(), $help = null)
     {
         return new Element\Select($name, $title, $options, $help);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function newTextArea($name, $title, $mode, $help = null)
     {
         return new Element\TextArea($name, $title, $mode, $help);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function newTag($name, $title, $help = null)
     {
         return new Element\Tag($name, $title, $help);

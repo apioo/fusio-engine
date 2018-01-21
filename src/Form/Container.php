@@ -33,13 +33,22 @@ use PSX\Record\RecordObject;
  */
 class Container extends RecordObject
 {
+    /**
+     * @var array
+     */
     protected $element = array();
 
+    /**
+     * @param \PSX\Record\RecordInterface $record
+     */
     public function add(RecordInterface $record)
     {
         $this->element[] = $record;
     }
-    
+
+    /**
+     * @return array
+     */
     public function getElements()
     {
         return $this->element;

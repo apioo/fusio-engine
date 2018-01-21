@@ -39,11 +39,17 @@ class Builder implements BuilderInterface
         $this->container = new Container();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function add(RecordInterface $element)
     {
         $this->container->add($element);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getForm()
     {
         return $this->container;

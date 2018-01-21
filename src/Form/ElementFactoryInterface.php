@@ -76,7 +76,7 @@ interface ElementFactoryInterface
     public function newSelect($name, $title, array $options = array(), $help = null);
 
     /**
-     * Creates a new textarea. The mode indicates the syntax highliting
+     * Creates a new textarea. The mode indicates the syntax highlighting
      *
      * @param string $name
      * @param string $title

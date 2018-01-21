@@ -51,7 +51,7 @@ class User implements UserInterface
     protected $name;
 
     /**
-     * @return boolean
+     * @inheritdoc
      */
     public function isAnonymous()
     {
@@ -67,7 +67,7 @@ class User implements UserInterface
     }
 
     /**
-     * @return int
+     * @inheritdoc
      */
     public function getId()
     {
@@ -83,7 +83,7 @@ class User implements UserInterface
     }
 
     /**
-     * @return int
+     * @inheritdoc
      */
     public function getStatus()
     {
@@ -99,7 +99,7 @@ class User implements UserInterface
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function getName()
     {

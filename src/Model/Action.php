@@ -61,7 +61,7 @@ class Action implements ActionInterface
     protected $date;
 
     /**
-     * @return int
+     * @inheritdoc
      */
     public function getId()
     {
@@ -77,7 +77,7 @@ class Action implements ActionInterface
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function getName()
     {
@@ -93,7 +93,7 @@ class Action implements ActionInterface
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function getClass()
     {
@@ -109,7 +109,7 @@ class Action implements ActionInterface
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function getEngine()
     {
@@ -125,7 +125,7 @@ class Action implements ActionInterface
     }
 
     /**
-     * @return array
+     * @inheritdoc
      */
     public function getConfig()
     {
@@ -141,7 +141,7 @@ class Action implements ActionInterface
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function getDate()
     {

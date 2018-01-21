@@ -70,9 +70,7 @@ class Action implements ActionInterface
     }
 
     /**
-     * @param string $className
-     * @param string $engine
-     * @return \Fusio\Engine\ActionInterface
+     * @inheritdoc
      */
     public function factory($className, $engine = null)
     {

@@ -84,7 +84,7 @@ class App implements AppInterface
     }
 
     /**
-     * @return boolean
+     * @inheritdoc
      */
     public function isAnonymous()
     {
@@ -100,7 +100,7 @@ class App implements AppInterface
     }
 
     /**
-     * @return integer
+     * @inheritdoc
      */
     public function getId()
     {
@@ -116,7 +116,7 @@ class App implements AppInterface
     }
 
     /**
-     * @return integer
+     * @inheritdoc
      */
     public function getUserId()
     {
@@ -132,7 +132,7 @@ class App implements AppInterface
     }
 
     /**
-     * @return integer
+     * @inheritdoc
      */
     public function getStatus()
     {
@@ -148,7 +148,7 @@ class App implements AppInterface
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function getName()
     {
@@ -164,7 +164,7 @@ class App implements AppInterface
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function getUrl()
     {
@@ -180,7 +180,7 @@ class App implements AppInterface
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function getAppKey()
     {
@@ -196,7 +196,7 @@ class App implements AppInterface
     }
 
     /**
-     * @return array
+     * @inheritdoc
      */
     public function getScopes()
     {
@@ -204,8 +204,7 @@ class App implements AppInterface
     }
 
     /**
-     * @param string $name
-     * @return boolean
+     * @inheritdoc
      */
     public function hasScope($name)
     {
@@ -221,7 +220,7 @@ class App implements AppInterface
     }
 
     /**
-     * @return array
+     * @inheritdoc
      */
     public function getParameters()
     {
@@ -229,8 +228,7 @@ class App implements AppInterface
     }
 
     /**
-     * @param string $name
-     * @return string
+     * @inheritdoc
      */
     public function getParameter($name)
     {

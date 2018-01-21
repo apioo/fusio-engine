@@ -48,8 +48,7 @@ class Connection implements ConnectionInterface
     }
 
     /**
-     * @param string $className
-     * @return \Fusio\Engine\ConnectionInterface
+     * @inheritdoc
      */
     public function factory($className)
     {

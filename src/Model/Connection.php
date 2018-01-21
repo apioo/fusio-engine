@@ -51,7 +51,7 @@ class Connection implements ConnectionInterface
     protected $config;
 
     /**
-     * @return integer
+     * @inheritdoc
      */
     public function getId()
     {
@@ -67,7 +67,7 @@ class Connection implements ConnectionInterface
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function getName()
     {
@@ -83,7 +83,7 @@ class Connection implements ConnectionInterface
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function getClass()
     {
@@ -99,7 +99,7 @@ class Connection implements ConnectionInterface
     }
 
     /**
-     * @return array
+     * @inheritdoc
      */
     public function getConfig()
     {
