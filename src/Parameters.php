@@ -46,8 +46,7 @@ class Parameters implements ParametersInterface
     }
 
     /**
-     * @param string $key
-     * @return mixed
+     * @inheritdoc
      */
     public function get($key)
     {
@@ -55,8 +54,7 @@ class Parameters implements ParametersInterface
     }
 
     /**
-     * @param string $key
-     * @return boolean
+     * @inheritdoc
      */
     public function has($key)
     {
@@ -64,8 +62,7 @@ class Parameters implements ParametersInterface
     }
 
     /**
-     * @param string $key
-     * @param mixed $value
+     * @inheritdoc
      */
     public function set($key, $value)
     {
@@ -73,7 +70,7 @@ class Parameters implements ParametersInterface
     }
 
     /**
-     * @return boolean
+     * @inheritdoc
      */
     public function isEmpty()
     {
@@ -81,7 +78,7 @@ class Parameters implements ParametersInterface
     }
 
     /**
-     * @return \ArrayIterator
+     * @inheritdoc
      */
     public function getIterator()
     {
@@ -89,7 +86,7 @@ class Parameters implements ParametersInterface
     }
 
     /**
-     * @return array
+     * @inheritdoc
      */
     public function toArray()
     {

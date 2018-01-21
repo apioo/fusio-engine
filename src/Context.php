@@ -77,9 +77,7 @@ class Context implements ContextInterface
     }
 
     /**
-     * Returns the id of the route
-     *
-     * @return integer
+     * @inheritdoc
      */
     public function getRouteId()
     {
@@ -87,10 +85,7 @@ class Context implements ContextInterface
     }
 
     /**
-     * Returns the base url of the system to generate i.e. HATEOAS links. The 
-     * url has a trailing slash
-     * 
-     * @return string
+     * @inheritdoc
      */
     public function getBaseUrl()
     {
@@ -98,10 +93,7 @@ class Context implements ContextInterface
     }
 
     /**
-     * Returns the app which was used for this request. Can also be an anonymous
-     * app if authorization is not required for the endpoint
-     *
-     * @return \Fusio\Engine\Model\AppInterface
+     * @inheritdoc
      */
     public function getApp()
     {
@@ -109,10 +101,7 @@ class Context implements ContextInterface
     }
 
     /**
-     * Returns the user which has authenticated through the app. Can also be an
-     * anonymous user if authorization is not required for the endpoint
-     *
-     * @return \Fusio\Engine\Model\UserInterface
+     * @inheritdoc
      */
     public function getUser()
     {
@@ -120,9 +109,7 @@ class Context implements ContextInterface
     }
 
     /**
-     * Returns the current action
-     *
-     * @return \Fusio\Engine\Model\ActionInterface
+     * @inheritdoc
      */
     public function getAction()
     {
@@ -130,10 +117,7 @@ class Context implements ContextInterface
     }
 
     /**
-     * Creates a new context containing the given action
-     *
-     * @param \Fusio\Engine\Model\ActionInterface $action
-     * @return \Fusio\Engine\ContextInterface
+     * @inheritdoc
      */
     public function withAction(Model\ActionInterface $action)
     {
@@ -144,9 +128,7 @@ class Context implements ContextInterface
     }
 
     /**
-     * Returns the connection which is currently used by the action
-     *
-     * @return mixed
+     * @inheritdoc
      */
     public function getConnection()
     {
@@ -154,11 +136,7 @@ class Context implements ContextInterface
     }
 
     /**
-     * Creates a new context containing the given connection. This can be i.e.
-     * a PDO or MongoDB connection
-     *
-     * @param mixed $connection
-     * @return \Fusio\Engine\ContextInterface
+     * @inheritdoc
      */
     public function withConnection($connection)
     {

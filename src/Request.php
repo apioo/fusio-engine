@@ -69,7 +69,7 @@ class Request implements RequestInterface
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function getMethod()
     {
@@ -77,8 +77,7 @@ class Request implements RequestInterface
     }
 
     /**
-     * @param string $name
-     * @return null|string
+     * @inheritdoc
      */
     public function getHeader($name)
     {
@@ -86,7 +85,7 @@ class Request implements RequestInterface
     }
 
     /**
-     * @return array
+     * @inheritdoc
      */
     public function getHeaders()
     {
@@ -94,8 +93,7 @@ class Request implements RequestInterface
     }
 
     /**
-     * @param string $name
-     * @return string
+     * @inheritdoc
      */
     public function getUriFragment($name)
     {
@@ -103,7 +101,7 @@ class Request implements RequestInterface
     }
 
     /**
-     * @return \Fusio\Engine\Parameters
+     * @inheritdoc
      */
     public function getUriFragments()
     {
@@ -111,8 +109,7 @@ class Request implements RequestInterface
     }
 
     /**
-     * @param string $name
-     * @return string
+     * @inheritdoc
      */
     public function getParameter($name)
     {
@@ -120,7 +117,7 @@ class Request implements RequestInterface
     }
 
     /**
-     * @return \Fusio\Engine\Parameters
+     * @inheritdoc
      */
     public function getParameters()
     {
@@ -128,7 +125,7 @@ class Request implements RequestInterface
     }
 
     /**
-     * @return \PSX\Record\RecordInterface
+     * @inheritdoc
      */
     public function getBody()
     {
@@ -136,8 +133,7 @@ class Request implements RequestInterface
     }
 
     /**
-     * @param \PSX\Record\RecordInterface $body
-     * @return \Fusio\Engine\Request
+     * @inheritdoc
      */
     public function withBody(RecordInterface $body)
     {

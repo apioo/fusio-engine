@@ -57,16 +57,25 @@ class Response implements ResponseInterface
         $this->body       = $body;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getStatusCode()
     {
         return $this->statusCode;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getHeaders()
     {
         return $this->headers;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getHeader($name)
     {
         $name  = strtolower($name);
@@ -75,6 +84,9 @@ class Response implements ResponseInterface
         return $value;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getBody()
     {
         return $this->body;

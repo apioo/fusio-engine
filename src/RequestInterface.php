@@ -33,50 +33,71 @@ use PSX\Record\RecordInterface;
 interface RequestInterface
 {
     /**
+     * Returns the HTTP request method i.e. GET
+     * 
      * @return string
      */
     public function getMethod();
 
     /**
+     * Returns a specific header
+     * 
      * @param string $name
-     * @return string
+     * @return string|null
      */
     public function getHeader($name);
 
     /**
+     * Returns all available headers
+     * 
      * @return array
      */
     public function getHeaders();
 
     /**
+     * Returns a specific fragment from the uri
+     * 
      * @param string $name
      * @return string
      */
     public function getUriFragment($name);
 
     /**
+     * Returns all available uri fragments
+     * 
      * @return \Fusio\Engine\Parameters
      */
     public function getUriFragments();
 
     /**
+     * Returns a query parameter from the uri. Those are parsed by the parse_str
+     * function so the value is either a string or an array in case the
+     * parameter uses a "[]" notation
+     * 
      * @param string $name
-     * @return string
+     * @return string|array
      */
     public function getParameter($name);
 
     /**
+     * Returns all available query parameters
+     * 
      * @return \Fusio\Engine\Parameters
      */
     public function getParameters();
 
     /**
+     * Returns the parsed body
+     * 
      * @return \PSX\Record\RecordInterface
      */
     public function getBody();
 
     /**
+     * Returns a copy of the request object with the provided body
+     * 
      * @param \PSX\Record\RecordInterface $body
+     * @return self
      */
     public function withBody(RecordInterface $body);
 }

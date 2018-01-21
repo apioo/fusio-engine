@@ -33,29 +33,39 @@ use IteratorAggregate;
 interface ParametersInterface extends IteratorAggregate
 {
     /**
+     * Returns a specific parameter
+     * 
      * @param string $key
      * @return mixed
      */
     public function get($key);
 
     /**
+     * Checks whether a parameter is available
+     * 
      * @param string $key
      * @return boolean
      */
     public function has($key);
 
     /**
+     * Sets a specific parameter
+     * 
      * @param string $key
      * @param mixed $value
      */
     public function set($key, $value);
 
     /**
+     * Returns whether no parameter is available
+     * 
      * @return boolean
      */
     public function isEmpty();
 
     /**
+     * Returns an array representation of this collection
+     * 
      * @return array
      */
     public function toArray();

@@ -31,6 +31,9 @@ namespace Fusio\Engine;
 interface ProcessorInterface
 {
     /**
+     * Executes a specific action using the request and context and returns a 
+     * response
+     * 
      * @param integer $actionId
      * @param \Fusio\Engine\RequestInterface $request
      * @param \Fusio\Engine\ContextInterface $context

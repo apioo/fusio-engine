@@ -54,11 +54,7 @@ class Connector implements ConnectorInterface
     }
 
     /**
-     * Returns an arbitrary connection to a system which was previously
-     * configured by the user
-     *
-     * @param integer $connectionId
-     * @return \Fusio\Engine\ConnectionInterface
+     * @inheritdoc
      */
     public function getConnection($connectionId)
     {
