@@ -24,9 +24,9 @@ namespace Fusio\Engine\Connection;
 use Fusio\Engine\ParametersInterface;
 
 /**
- * If a connection implements this interface those methods are called on create,
- * update and delete of an connection object. This can be used to execute 
- * additional tasks i.e. generate code or create a database
+ * If a connection implements this interface those callback methods are called 
+ * on the corresponding lifecycle event. This can be used to execute additional 
+ * tasks i.e. generate code or create a database
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
@@ -35,6 +35,36 @@ use Fusio\Engine\ParametersInterface;
 interface LifecycleInterface
 {
     /**
+     * Is called if a connection gets created. Note this method is called before
+     * a connection is established to the remote service because of that the 
+     * method is also called if the connection to the remote service fails. So 
+     * it is recommended to implement it in an idempotent way that means that 
+     * the side-effects of N > 0 method calls is the same as for a single call
+     * 
+     * @param string $name
+     * @param \Fusio\Engine\ParametersInterface $config
+     * @return void
+     */
+    public function onSetup($name, ParametersInterface $config);
+
+    /**
+     * Is called every time a connection gets deleted. Note this method is 
+     * called before a connection is established to the remote service because 
+     * of that the method is also called if the connection to the remote service 
+     * fails. So it is recommended to implement it in an idempotent way that 
+     * means that the side-effects of N > 0 method calls is the same as for a 
+     * single call
+     * 
+     * @param string $name
+     * @param \Fusio\Engine\ParametersInterface $config
+     * @return void
+     */
+    public function onTeardown($name, ParametersInterface $config);
+
+    /**
+     * Is called if a connection gets created. The connection contains the 
+     * object to interact with the remote service
+     * 
      * @param string $name
      * @param \Fusio\Engine\ParametersInterface $config
      * @param mixed $connection
@@ -43,6 +73,9 @@ interface LifecycleInterface
     public function onCreate($name, ParametersInterface $config, $connection);
 
     /**
+     * Is called if a connection gets updated. The connection contains the
+     * object to interact with the remote service
+     * 
      * @param string $name
      * @param \Fusio\Engine\ParametersInterface $config
      * @param mixed $connection
@@ -51,6 +84,9 @@ interface LifecycleInterface
     public function onUpdate($name, ParametersInterface $config, $connection);
 
     /**
+     * Is called if a connection gets deleted. The connection contains the
+     * object to interact with the remote service
+     * 
      * @param string $name
      * @param \Fusio\Engine\ParametersInterface $config
      * @param mixed $connection
