@@ -2,7 +2,7 @@
   "name": "fusio/engine",
   "description": "Abstract definition of the Fusio system",
   "homepage": "http://fusio-project.org",
-  "license": "AGPL-3.0",
+  "license": "AGPL-3.0-only",
   "authors": [
     {
       "name": "Christoph Kappestein",
