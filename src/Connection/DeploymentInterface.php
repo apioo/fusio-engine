@@ -24,47 +24,34 @@ namespace Fusio\Engine\Connection;
 use Fusio\Engine\ParametersInterface;
 
 /**
- * If a connection implements this interface those callback methods are called 
- * on the corresponding lifecycle event. This can be used to execute additional
- * logic on the connection. Note the methods are only called if a connection 
- * could be established to the remote service
+ * If a connection implements this interface those callback methods are called
+ * if a connection gets created or is removed. Those methods can not work with
+ * the corresponding connection and it is guaranteed that they are called even
+ * if the connection later on fails. It is recommended to implement it in an 
+ * idempotent way that means that the side-effects of N > 0 method calls is the 
+ * same as for a single call
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-interface LifecycleInterface
+interface DeploymentInterface
 {
     /**
-     * Is called if a connection gets created. The connection contains the 
-     * object to interact with the remote service
-     * 
+     * Is called on creation of a connection
+     *
      * @param string $name
      * @param \Fusio\Engine\ParametersInterface $config
-     * @param mixed $connection
      * @return void
      */
-    public function onCreate($name, ParametersInterface $config, $connection);
+    public function onUp($name, ParametersInterface $config);
 
     /**
-     * Is called if a connection gets updated. The connection contains the
-     * object to interact with the remote service
-     * 
+     * Is called on deletion of a connection
+     *
      * @param string $name
      * @param \Fusio\Engine\ParametersInterface $config
-     * @param mixed $connection
      * @return void
      */
-    public function onUpdate($name, ParametersInterface $config, $connection);
-
-    /**
-     * Is called if a connection gets deleted. The connection contains the
-     * object to interact with the remote service
-     * 
-     * @param string $name
-     * @param \Fusio\Engine\ParametersInterface $config
-     * @param mixed $connection
-     * @return void
-     */
-    public function onDelete($name, ParametersInterface $config, $connection);
+    public function onDown($name, ParametersInterface $config);
 }
