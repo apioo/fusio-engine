@@ -29,6 +29,7 @@ use Fusio\Engine\Model\User;
 use Fusio\Engine\Parameters;
 use Fusio\Engine\Request;
 use Psr\Http\Message\StreamInterface;
+use PSX\Http\Environment\HttpContext;
 use PSX\Http\Request as HttpRequest;
 use PSX\Record\Record;
 use PSX\Record\RecordInterface;
@@ -57,12 +58,16 @@ trait EngineTestCaseTrait
      * @param \Psr\Http\Message\StreamInterface|null $rawBody
      * @return \Fusio\Engine\Request
      */
-    protected function getRequest($method = null, array $uriFragments = array(), array $parameters = array(), array $headers = array(), RecordInterface $parsedBody = null, StreamInterface $rawBody = null)
+    protected function getRequest($method = null, array $uriFragments = [], array $parameters = [], array $headers = [], RecordInterface $parsedBody = null, StreamInterface $rawBody = null)
     {
+        $uri = new Uri('http://127.0.0.1/foo');
+        $uri = $uri->withParameters($parameters);
+
+        $request = new HttpRequest($uri, $method === null ? 'GET' : $method, $headers, $rawBody);
+        $context = new HttpContext($request, $uriFragments);
+
         return new Request(
-            new HttpRequest(new Uri('http://127.0.0.1/foo'), $method === null ? 'GET' : $method, $headers, $rawBody),
-            $uriFragments,
-            $parameters,
+            $context,
             $parsedBody === null ? new Record() : $parsedBody
         );
     }
