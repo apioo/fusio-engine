@@ -33,12 +33,11 @@ use Fusio\Engine\Parser;
 use Fusio\Engine\ProcessorInterface;
 use Fusio\Engine\Repository;
 use Fusio\Engine\RequestInterface;
-use Fusio\Engine\Response;
-use Fusio\Engine\ResponseInterface;
+use Fusio\Engine\Response\FactoryInterface;
 use Fusio\Engine\Schema;
 use Fusio\Engine\Test\EngineTestCase;
 use Psr\Container\ContainerInterface;
-use PSX\Data\Record\Transformer;
+use PSX\Http\Environment\HttpResponseInterface;
 
 /**
  * EngineTestCaseTraitTest
@@ -73,14 +72,14 @@ class EngineTestCaseTraitTest extends EngineTestCase
         $parameters = $this->getParameters([]);
         $response   = $action->handle($this->getRequest(), $parameters, $this->getContext());
 
-        $actual = json_encode(Transformer::toStdClass($response->getBody()), JSON_PRETTY_PRINT);
+        $actual = json_encode($response->getBody(), JSON_PRETTY_PRINT);
         $expect = <<<JSON
 {
     "foo": "bar"
 }
 JSON;
 
-        $this->assertInstanceOf(ResponseInterface::class, $response);
+        $this->assertInstanceOf(HttpResponseInterface::class, $response);
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals([], $response->getHeaders());
         $this->assertJsonStringEqualsJsonString($expect, $actual, $actual);
@@ -159,6 +158,6 @@ JSON;
         $this->assertInstanceOf(Repository\AppInterface::class, $this->getContainer()->get('app_repository'));
         $this->assertInstanceOf(Repository\UserInterface::class, $this->getContainer()->get('user_repository'));
         $this->assertInstanceOf(Form\ElementFactoryInterface::class, $this->getContainer()->get('form_element_factory'));
-        $this->assertInstanceOf(Response\FactoryInterface::class, $this->getContainer()->get('response'));
+        $this->assertInstanceOf(FactoryInterface::class, $this->getContainer()->get('response'));
     }
 }

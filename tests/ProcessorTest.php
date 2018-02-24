@@ -23,10 +23,10 @@ namespace Fusio\Engine\Tests;
 
 use Fusio\Engine\Model\Action;
 use Fusio\Engine\Processor;
-use Fusio\Engine\Response;
-use Fusio\Engine\ResponseInterface;
+use Fusio\Engine\Response\FactoryInterface;
 use Fusio\Engine\Test\CallbackAction;
 use Fusio\Engine\Test\EngineTestCaseTrait;
+use PSX\Http\Environment\HttpResponseInterface;
 
 /**
  * ProcessorTest
@@ -47,7 +47,7 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
 
         $response = $processor->execute(1, $this->getRequest(), $this->getContext());
 
-        $this->assertInstanceOf(ResponseInterface::class, $response);
+        $this->assertInstanceOf(HttpResponseInterface::class, $response);
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals([], $response->getHeaders());
         $this->assertEquals(['foo' => 'bar'], $response->getBody());
@@ -61,7 +61,7 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
 
         $response = $processor->execute('foo', $this->getRequest(), $this->getContext());
 
-        $this->assertInstanceOf(ResponseInterface::class, $response);
+        $this->assertInstanceOf(HttpResponseInterface::class, $response);
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals([], $response->getHeaders());
         $this->assertEquals(['foo' => 'bar'], $response->getBody());
@@ -87,7 +87,7 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
         $action->setId(1);
         $action->setName('foo');
         $action->setClass(CallbackAction::class);
-        $action->setConfig(['callback' => function(Response\FactoryInterface $response){
+        $action->setConfig(['callback' => function(FactoryInterface $response){
             return $response->build(200, [], ['foo' => 'bar']);
         }]);
 

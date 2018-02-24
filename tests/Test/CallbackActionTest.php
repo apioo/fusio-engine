@@ -21,11 +21,10 @@
 
 namespace Fusio\Engine\Tests\Test;
 
-use Fusio\Engine\Response;
-use Fusio\Engine\ResponseInterface;
+use Fusio\Engine\Response\FactoryInterface;
 use Fusio\Engine\Test\CallbackAction;
 use Fusio\Engine\Test\EngineTestCase;
-use PSX\Data\Record\Transformer;
+use PSX\Http\Environment\HttpResponseInterface;
 
 /**
  * CallbackActionTest
@@ -38,7 +37,7 @@ class CallbackActionTest extends EngineTestCase
 {
     public function testHandle()
     {
-        $callback = function(Response\FactoryInterface $response){
+        $callback = function(FactoryInterface $response){
             return $response->build(200, [], [
                 'foo' => 'bar'
             ]);
@@ -47,14 +46,14 @@ class CallbackActionTest extends EngineTestCase
         $action   = $this->getActionFactory()->factory(CallbackAction::class);
         $response = $action->handle($this->getRequest(), $this->getParameters(['callback' => $callback]), $this->getContext());
 
-        $actual = json_encode(Transformer::toStdClass($response->getBody()), JSON_PRETTY_PRINT);
+        $actual = json_encode($response->getBody(), JSON_PRETTY_PRINT);
         $expect = <<<JSON
 {
     "foo": "bar"
 }
 JSON;
 
-        $this->assertInstanceOf(ResponseInterface::class, $response);
+        $this->assertInstanceOf(HttpResponseInterface::class, $response);
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals([], $response->getHeaders());
         $this->assertJsonStringEqualsJsonString($expect, $actual, $actual);
