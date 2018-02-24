@@ -21,7 +21,7 @@
 
 namespace Fusio\Engine\Dependency;
 
-use PSX\Framework\Dependency\Container;
+use PSX\Dependency\Container;
 
 /**
  * EngineContainer
