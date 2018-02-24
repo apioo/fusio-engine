@@ -37,7 +37,7 @@ interface ProcessorInterface
      * @param integer $actionId
      * @param \Fusio\Engine\RequestInterface $request
      * @param \Fusio\Engine\ContextInterface $context
-     * @return \Fusio\Engine\ResponseInterface
+     * @return \PSX\Http\Environment\HttpResponseInterface
      */
     public function execute($actionId, RequestInterface $request, ContextInterface $context);
 }
