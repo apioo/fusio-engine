@@ -21,8 +21,7 @@
 
 namespace Fusio\Engine;
 
-use PSX\Http\RequestInterface as HttpRequestInterface;
-use PSX\Json\Pointer;
+use PSX\Http\Environment\HttpContextInterface;
 use PSX\Record\RecordInterface;
 
 /**
@@ -35,19 +34,9 @@ use PSX\Record\RecordInterface;
 class Request implements RequestInterface
 {
     /**
-     * @var \PSX\Http\RequestInterface
+     * @var \PSX\Http\Environment\HttpContextInterface
      */
-    protected $request;
-
-    /**
-     * @var \Fusio\Engine\Parameters
-     */
-    protected $uriFragments;
-
-    /**
-     * @var \Fusio\Engine\Parameters
-     */
-    protected $parameters;
+    protected $context;
 
     /**
      * @var \PSX\Record\RecordInterface
@@ -55,17 +44,13 @@ class Request implements RequestInterface
     protected $body;
 
     /**
-     * @param \PSX\Http\RequestInterface $request
-     * @param array $uriFragments
-     * @param array $parameters
+     * @param \PSX\Http\Environment\HttpContextInterface $context
      * @param \PSX\Record\RecordInterface $body
      */
-    public function __construct(HttpRequestInterface $request, array $uriFragments, array $parameters, RecordInterface $body)
+    public function __construct(HttpContextInterface $context, RecordInterface $body)
     {
-        $this->request      = $request;
-        $this->uriFragments = new Parameters($uriFragments);
-        $this->parameters   = new Parameters($parameters);
-        $this->body         = $body;
+        $this->context = $context;
+        $this->body    = $body;
     }
 
     /**
@@ -73,7 +58,7 @@ class Request implements RequestInterface
      */
     public function getMethod()
     {
-        return $this->request->getMethod();
+        return $this->context->getMethod();
     }
 
     /**
@@ -81,7 +66,7 @@ class Request implements RequestInterface
      */
     public function getHeader($name)
     {
-        return $this->request->getHeader($name);
+        return $this->context->getHeader($name);
     }
 
     /**
@@ -89,7 +74,7 @@ class Request implements RequestInterface
      */
     public function getHeaders()
     {
-        return $this->request->getHeaders();
+        return $this->context->getHeaders();
     }
 
     /**
@@ -97,7 +82,7 @@ class Request implements RequestInterface
      */
     public function getUriFragment($name)
     {
-        return $this->uriFragments->get($name);
+        return $this->context->getUriFragment($name);
     }
 
     /**
@@ -105,7 +90,7 @@ class Request implements RequestInterface
      */
     public function getUriFragments()
     {
-        return $this->uriFragments;
+        return $this->context->getUriFragments();
     }
 
     /**
@@ -113,7 +98,7 @@ class Request implements RequestInterface
      */
     public function getParameter($name)
     {
-        return $this->parameters->get($name);
+        return $this->context->getParameter($name);
     }
 
     /**
@@ -121,7 +106,7 @@ class Request implements RequestInterface
      */
     public function getParameters()
     {
-        return $this->parameters;
+        return $this->context->getParameters();
     }
 
     /**
@@ -141,20 +126,5 @@ class Request implements RequestInterface
         $self->body = $body;
 
         return $self;
-    }
-
-    /**
-     * Queries the request body with a json pointer selector and returns the 
-     * response
-     * 
-     * @param string $pointer
-     * @return mixed|null
-     */
-    public function queryPointer($pointer)
-    {
-        $pointer = new Pointer('/' . ltrim($pointer, '/'));
-        $value   = $pointer->evaluate($this->body);
-
-        return $value;
     }
 }
