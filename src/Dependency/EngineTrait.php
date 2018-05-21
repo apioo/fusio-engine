@@ -25,6 +25,8 @@ use Doctrine\Common\Annotations;
 use Doctrine\Common\Cache;
 use Fusio\Engine\Connector;
 use Fusio\Engine\ConnectorInterface;
+use Fusio\Engine\Dispatcher;
+use Fusio\Engine\DispatcherInterface;
 use Fusio\Engine\Factory;
 use Fusio\Engine\Form;
 use Fusio\Engine\Parser;
@@ -38,7 +40,7 @@ use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 use Psr\SimpleCache\CacheInterface;
 use PSX\Cache\SimpleCache;
-use PSX\Framework\Dependency\ObjectBuilder;
+use PSX\Dependency\ObjectBuilder;
 
 /**
  * EngineTrait
@@ -70,6 +72,7 @@ trait EngineTrait
             ConnectorInterface::class => 'connector',
             Response\FactoryInterface::class => 'response',
             ProcessorInterface::class => 'processor',
+            DispatcherInterface::class => 'dispatcher',
             LoggerInterface::class => 'logger',
             CacheInterface::class => 'cache',
         ]);
@@ -92,6 +95,14 @@ trait EngineTrait
             $this->get('action_repository'),
             $this->get('action_factory')
         );
+    }
+
+    /**
+     * @return \Fusio\Engine\DispatcherInterface
+     */
+    public function getDispatcher()
+    {
+        return new Dispatcher();
     }
 
     /**
@@ -185,7 +196,7 @@ trait EngineTrait
     }
 
     /**
-     * @return \PSX\Framework\Dependency\ObjectBuilderInterface
+     * @return \PSX\Dependency\ObjectBuilderInterface
      */
     public function getObjectBuilder()
     {

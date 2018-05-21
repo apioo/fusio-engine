@@ -24,6 +24,7 @@ namespace Fusio\Engine\Factory;
 use Fusio\Engine\Action\ServiceAwareInterface;
 use Fusio\Engine\ActionInterface as EngineActionInterface;
 use Fusio\Engine\ConnectorInterface;
+use Fusio\Engine\DispatcherInterface;
 use Fusio\Engine\Factory\Resolver\PhpClass;
 use Fusio\Engine\ProcessorInterface;
 use Fusio\Engine\Response;
@@ -100,6 +101,11 @@ class Action implements ActionInterface
             $service = $this->getServiceImplementation(ProcessorInterface::class);
             if ($service instanceof ProcessorInterface) {
                 $action->setProcessor($service);
+            }
+
+            $service = $this->getServiceImplementation(DispatcherInterface::class);
+            if ($service instanceof DispatcherInterface) {
+                $action->setDispatcher($service);
             }
 
             $service = $this->getServiceImplementation(LoggerInterface::class);
