@@ -22,6 +22,7 @@
 namespace Fusio\Engine\Action;
 
 use Fusio\Engine\ConnectorInterface;
+use Fusio\Engine\DispatcherInterface;
 use Fusio\Engine\ProcessorInterface;
 use Fusio\Engine\Response;
 use Psr\Log\LoggerInterface;
@@ -50,6 +51,11 @@ interface ServiceAwareInterface
      * @param \Fusio\Engine\ProcessorInterface $processor
      */
     public function setProcessor(ProcessorInterface $processor);
+
+    /**
+     * @param \Fusio\Engine\DispatcherInterface $dispatcher
+     */
+    public function setDispatcher(DispatcherInterface $dispatcher);
 
     /**
      * @param \Psr\Log\LoggerInterface

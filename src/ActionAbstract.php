@@ -52,6 +52,11 @@ abstract class ActionAbstract implements ActionInterface, ServiceAwareInterface
     protected $processor;
 
     /**
+     * @var \Fusio\Engine\DispatcherInterface
+     */
+    protected $dispatcher;
+
+    /**
      * @var \Psr\Log\LoggerInterface
      */
     protected $logger;
@@ -83,6 +88,14 @@ abstract class ActionAbstract implements ActionInterface, ServiceAwareInterface
     public function setProcessor(ProcessorInterface $processor)
     {
         $this->processor = $processor;
+    }
+
+    /**
+     * @param \Fusio\Engine\DispatcherInterface $dispatcher
+     */
+    public function setDispatcher(DispatcherInterface $dispatcher)
+    {
+        $this->dispatcher = $dispatcher;
     }
 
     /**
