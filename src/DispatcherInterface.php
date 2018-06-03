@@ -22,7 +22,10 @@
 namespace Fusio\Engine;
 
 /**
- * DispatcherInterface
+ * The dispatcher can be used to trigger specific events. A consumer can
+ * subscribe to such events and they will receive a HTTP POST call to the
+ * defined endpoint in case you dispatch an event. The call happens in the
+ * background through a cronjob so the dispatch operation is not expensive
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
@@ -31,7 +34,9 @@ namespace Fusio\Engine;
 interface DispatcherInterface
 {
     /**
-     * Dispatches a specific event and sends the payload to all subscribers
+     * Dispatches a specific event and sends the payload to all subscribers. The
+     * payload gets json encoded so it is recommended to use i.e. an array or
+     * stdClass data type
      * 
      * @param string $eventName
      * @param mixed $payload

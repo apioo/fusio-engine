@@ -22,7 +22,10 @@
 namespace Fusio\Engine\Response;
 
 /**
- * FactoryInterface
+ * The response factory MUST be used to create a response for an action. It is
+ * a factory method which returns a specific response object. Please always use
+ * this factory since this gives us the freedom to change the response
+ * implementation
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
@@ -31,7 +34,7 @@ namespace Fusio\Engine\Response;
 interface FactoryInterface
 {
     /**
-     * Create a new response
+     * Creates a new response object
      *
      * @param integer $statusCode
      * @param array $headers

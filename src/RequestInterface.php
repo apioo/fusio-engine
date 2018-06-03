@@ -24,7 +24,8 @@ namespace Fusio\Engine;
 use PSX\Record\RecordInterface;
 
 /**
- * RequestInterface
+ * Represents an incoming HTTP request. This object can be used to access all
+ * values from an incoming request
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
@@ -33,14 +34,15 @@ use PSX\Record\RecordInterface;
 interface RequestInterface
 {
     /**
-     * Returns the HTTP request method i.e. GET
+     * Returns the HTTP request method i.e. GET, POST
      * 
      * @return string
      */
     public function getMethod();
 
     /**
-     * Returns a specific header
+     * Returns a specific header or return null in case the header is not 
+     * available
      * 
      * @param string $name
      * @return string|null
@@ -55,7 +57,9 @@ interface RequestInterface
     public function getHeaders();
 
     /**
-     * Returns a specific fragment from the uri
+     * Returns a specific fragment from the uri. To specify a fragment your 
+     * route must contain a variable fragment i.e. /foo/:bar, then it is
+     * possible to access the bar fragment through this method
      * 
      * @param string $name
      * @return string
@@ -87,7 +91,8 @@ interface RequestInterface
     public function getParameters();
 
     /**
-     * Returns the parsed body
+     * Returns the parsed body. If the body arrives at the action it is already
+     * valid against the defined JSON schema (if provided)
      * 
      * @return \PSX\Record\RecordInterface
      */

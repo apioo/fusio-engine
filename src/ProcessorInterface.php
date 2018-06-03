@@ -22,7 +22,9 @@
 namespace Fusio\Engine;
 
 /**
- * ProcessorInterface
+ * The processor can be used to invoke another action. Normally an action should
+ * only contain simple logic but in some cases you may want to invoke an
+ * existing action
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
@@ -32,9 +34,10 @@ interface ProcessorInterface
 {
     /**
      * Executes a specific action using the request and context and returns a 
-     * response
+     * response. It is recommended to use the action name but you can also use
+     * the actual database id of the action
      * 
-     * @param integer $actionId
+     * @param string|integer $actionId
      * @param \Fusio\Engine\RequestInterface $request
      * @param \Fusio\Engine\ContextInterface $context
      * @return \PSX\Http\Environment\HttpResponseInterface

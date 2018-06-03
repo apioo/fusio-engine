@@ -22,8 +22,15 @@
 namespace Fusio\Engine;
 
 /**
- * ConnectorInterface
- *
+ * Through the connector it is possible to access configured connection objects.
+ * A connection is i.e. a MYSQL connection which can be configured at the admin
+ * panel. Inside an action it is possible to access this connection through this
+ * class. Which objects is returned depends on the connection type i.e. the
+ * MYSQL connection returns a Doctrine DBAL Connection instance and the HTTP
+ * connection returns a Guzzle instance. There are already many adapters
+ * available which allow many different kind of services i.e. ElasticSearch,
+ * MongoDB, AMQP, etc.
+ * 
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
@@ -31,11 +38,10 @@ namespace Fusio\Engine;
 interface ConnectorInterface
 {
     /**
-     * Returns an arbitrary connection to a system which was previously
-     * configured by the user
+     * Returns an arbitrary connection to a remote service
      *
      * @param integer $connectionId
-     * @return \Fusio\Engine\ConnectionInterface
+     * @return mixed
      */
     public function getConnection($connectionId);
 }
