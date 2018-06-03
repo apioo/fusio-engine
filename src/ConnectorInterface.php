@@ -38,9 +38,11 @@ namespace Fusio\Engine;
 interface ConnectorInterface
 {
     /**
-     * Returns an arbitrary connection to a remote service
+     * Returns an arbitrary connection to a remote service. It is recommended to
+     * use the connection name but you can also use the actual database id of
+     * the connection
      *
-     * @param integer $connectionId
+     * @param string|integer $connectionId
      * @return mixed
      */
     public function getConnection($connectionId);
