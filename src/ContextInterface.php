@@ -24,7 +24,9 @@ namespace Fusio\Engine;
 use Fusio\Engine\Model\ActionInterface as ModelActionInterface;
 
 /**
- * ContextInterface
+ * The context contains all information about the incoming request which is not
+ * HTTP related i.e. it contains the authenticated user and app or also the
+ * route id which was used
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0

@@ -24,7 +24,10 @@ namespace Fusio\Engine;
 use IteratorAggregate;
 
 /**
- * ParametersInterface
+ * The parameters represent a general set of key values which is used in various
+ * places. As argument to the action method it contains the configuration
+ * parameters of the action. At the request object it contains the query and uri
+ * fragment parameters
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
