@@ -22,33 +22,23 @@
 namespace Fusio\Engine\Model;
 
 /**
- * UserInterface
+ * ProductInterface
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-interface UserInterface
+interface ProductInterface
 {
-    const STATUS_CONSUMER      = 0;
-    const STATUS_ADMINISTRATOR = 1;
-    const STATUS_DISABLED      = 2;
-    const STATUS_DELETED       = 3;
-
-    /**
-     * @return boolean
-     */
-    public function isAnonymous();
-
     /**
      * @return integer
      */
     public function getId();
 
     /**
-     * @return integer
+     * @param integer $id
      */
-    public function getStatus();
+    public function setId($id);
 
     /**
      * @return string
@@ -56,7 +46,27 @@ interface UserInterface
     public function getName();
 
     /**
-     * @return integer
+     * @param string $name
+     */
+    public function setName($name);
+
+    /**
+     * @return float
+     */
+    public function getPrice();
+
+    /**
+     * @param float $price
+     */
+    public function setPrice($price);
+
+    /**
+     * @return int
      */
     public function getPoints();
+
+    /**
+     * @param int $points
+     */
+    public function setPoints($points);
 }

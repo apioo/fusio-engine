@@ -22,28 +22,18 @@
 namespace Fusio\Engine\Model;
 
 /**
- * User
+ * Product
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-class User implements UserInterface
+class Product implements ProductInterface
 {
-    /**
-     * @var boolean
-     */
-    protected $anonymous;
-
     /**
      * @var integer
      */
     protected $id;
-
-    /**
-     * @var integer
-     */
-    protected $status;
 
     /**
      * @var string
@@ -51,28 +41,17 @@ class User implements UserInterface
     protected $name;
 
     /**
+     * @var float
+     */
+    protected $price;
+
+    /**
      * @var integer
      */
     protected $points;
 
     /**
-     * @inheritdoc
-     */
-    public function isAnonymous()
-    {
-        return $this->anonymous;
-    }
-
-    /**
-     * @param boolean $anonymous
-     */
-    public function setAnonymous($anonymous)
-    {
-        $this->anonymous = $anonymous;
-    }
-
-    /**
-     * @inheritdoc
+     * @return integer
      */
     public function getId()
     {
@@ -80,7 +59,7 @@ class User implements UserInterface
     }
 
     /**
-     * @param int $id
+     * @param integer $id
      */
     public function setId($id)
     {
@@ -88,23 +67,7 @@ class User implements UserInterface
     }
 
     /**
-     * @inheritdoc
-     */
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    /**
-     * @param int $status
-     */
-    public function setStatus($status)
-    {
-        $this->status = $status;
-    }
-
-    /**
-     * @inheritdoc
+     * @return string
      */
     public function getName()
     {
@@ -117,6 +80,22 @@ class User implements UserInterface
     public function setName($name)
     {
         $this->name = $name;
+    }
+
+    /**
+     * @return float
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * @param float $price
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
     }
 
     /**

@@ -22,23 +22,23 @@
 namespace Fusio\Engine\Model;
 
 /**
- * User
+ * Transaction
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-class User implements UserInterface
+class Transaction implements TransactionInterface
 {
-    /**
-     * @var boolean
-     */
-    protected $anonymous;
-
     /**
      * @var integer
      */
     protected $id;
+
+    /**
+     * @var integer
+     */
+    protected $planId;
 
     /**
      * @var integer
@@ -48,31 +48,25 @@ class User implements UserInterface
     /**
      * @var string
      */
-    protected $name;
+    protected $transactionId;
 
     /**
-     * @var integer
+     * @var float
      */
-    protected $points;
+    protected $amount;
 
     /**
-     * @inheritdoc
+     * @var \DateTime
      */
-    public function isAnonymous()
-    {
-        return $this->anonymous;
-    }
+    protected $createDate;
 
     /**
-     * @param boolean $anonymous
+     * @var array
      */
-    public function setAnonymous($anonymous)
-    {
-        $this->anonymous = $anonymous;
-    }
+    protected $parameters = [];
 
     /**
-     * @inheritdoc
+     * @return int
      */
     public function getId()
     {
@@ -88,7 +82,23 @@ class User implements UserInterface
     }
 
     /**
-     * @inheritdoc
+     * @return int
+     */
+    public function getPlanId()
+    {
+        return $this->planId;
+    }
+
+    /**
+     * @param int $planId
+     */
+    public function setPlanId($planId)
+    {
+        $this->planId = $planId;
+    }
+
+    /**
+     * @return int
      */
     public function getStatus()
     {
@@ -104,34 +114,76 @@ class User implements UserInterface
     }
 
     /**
-     * @inheritdoc
+     * @return string
      */
-    public function getName()
+    public function getTransactionId()
     {
-        return $this->name;
+        return $this->transactionId;
+    }
+
+    /**
+     * @param string $transactionId
+     */
+    public function setTransactionId($transactionId)
+    {
+        $this->transactionId = $transactionId;
+    }
+    
+    /**
+     * @return int
+     */
+    public function getAmount()
+    {
+        return $this->amount;
+    }
+
+    /**
+     * @param int $amount
+     */
+    public function setAmount($amount)
+    {
+        $this->amount = $amount;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreateDate()
+    {
+        return $this->createDate;
+    }
+
+    /**
+     * @param \DateTime $createDate
+     */
+    public function setCreateDate(\DateTime $createDate)
+    {
+        $this->createDate = $createDate;
     }
 
     /**
      * @param string $name
+     * @param mixed $value
      */
-    public function setName($name)
+    public function setParameter($name, $value)
     {
-        $this->name = $name;
+        $this->parameters[$name] = $value;
     }
 
     /**
-     * @return int
+     * @param string $name
+     * @return mixed|null
      */
-    public function getPoints()
+    public function getParameter($name)
     {
-        return $this->points;
+        return $this->parameters[$name] ?? null;
     }
 
     /**
-     * @param int $points
+     * @return array
      */
-    public function setPoints($points)
+    public function getParameters()
     {
-        $this->points = $points;
+        return $this->parameters;
     }
 }

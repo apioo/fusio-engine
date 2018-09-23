@@ -22,116 +22,93 @@
 namespace Fusio\Engine\Model;
 
 /**
- * User
+ * TransactionInterface
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-class User implements UserInterface
+interface TransactionInterface
 {
-    /**
-     * @var boolean
-     */
-    protected $anonymous;
-
-    /**
-     * @var integer
-     */
-    protected $id;
-
-    /**
-     * @var integer
-     */
-    protected $status;
-
-    /**
-     * @var string
-     */
-    protected $name;
-
-    /**
-     * @var integer
-     */
-    protected $points;
-
-    /**
-     * @inheritdoc
-     */
-    public function isAnonymous()
-    {
-        return $this->anonymous;
-    }
-
-    /**
-     * @param boolean $anonymous
-     */
-    public function setAnonymous($anonymous)
-    {
-        $this->anonymous = $anonymous;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    /**
-     * @param int $status
-     */
-    public function setStatus($status)
-    {
-        $this->status = $status;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
+    const STATUS_CREATED  = 0;
+    const STATUS_APPROVED = 1;
+    const STATUS_FAILED   = 2;
+    const STATUS_UNKNOWN  = 3;
 
     /**
      * @return int
      */
-    public function getPoints()
-    {
-        return $this->points;
-    }
+    public function getId();
 
     /**
-     * @param int $points
+     * @param int $id
      */
-    public function setPoints($points)
-    {
-        $this->points = $points;
-    }
+    public function setId($id);
+
+    /**
+     * @return int
+     */
+    public function getPlanId();
+
+    /**
+     * @param int $planId
+     */
+    public function setPlanId($planId);
+
+    /**
+     * @return int
+     */
+    public function getStatus();
+
+    /**
+     * @param int $status
+     */
+    public function setStatus($status);
+
+    /**
+     * @return string
+     */
+    public function getTransactionId();
+
+    /**
+     * @param string $transactionId
+     */
+    public function setTransactionId($transactionId);
+    
+    /**
+     * @return int
+     */
+    public function getAmount();
+
+    /**
+     * @param int $amount
+     */
+    public function setAmount($amount);
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreateDate();
+
+    /**
+     * @param \DateTime $createDate
+     */
+    public function setCreateDate(\DateTime $createDate);
+
+    /**
+     * @param string $name
+     * @param mixed $value
+     */
+    public function setParameter($name, $value);
+
+    /**
+     * @param string $name
+     * @return mixed|null
+     */
+    public function getParameter($name);
+
+    /**
+     * @return array
+     */
+    public function getParameters();
 }
