@@ -56,6 +56,11 @@ interface UserInterface
     public function getName();
 
     /**
+     * @return string
+     */
+    public function getEmail();
+
+    /**
      * @return integer
      */
     public function getPoints();
