@@ -51,6 +51,11 @@ class User implements UserInterface
     protected $name;
 
     /**
+     * @var string
+     */
+    protected $email;
+
+    /**
      * @var integer
      */
     protected $points;
@@ -117,6 +122,22 @@ class User implements UserInterface
     public function setName($name)
     {
         $this->name = $name;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param string $email
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
     }
 
     /**
