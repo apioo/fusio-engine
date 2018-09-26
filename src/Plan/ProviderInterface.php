@@ -34,13 +34,6 @@ use Fusio\Engine\Model\TransactionInterface;
 interface ProviderInterface
 {
     /**
-     * Returns the name of the provider
-     * 
-     * @return string
-     */
-    public function getName();
-
-    /**
      * Creates a transaction and returns it with the fitting parameter which can
      * i.e. include an approval url to authorize this transaction
      * 
