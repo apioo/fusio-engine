@@ -23,7 +23,6 @@ namespace Fusio\Engine\User;
 
 use Fusio\Engine\Factory\ContainerAwareInterface;
 use Psr\Container\ContainerInterface;
-use PSX\Http\Client\ClientInterface;
 
 /**
  * ProviderAbstract
