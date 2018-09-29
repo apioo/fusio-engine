@@ -22,7 +22,16 @@
 namespace Fusio\Engine\User;
 
 /**
- * ProviderInterface
+ * Describes a remote identity provider which can be used to authorize an user
+ * through a remote system so that the developer dont need to create an account.
+ * Usually this is done through OAuth2, which has the following flow:
+ * 
+ * - The App redirects the user to the authorization endpoint of the remote
+ *   provider (i.e. Google)
+ * - The user authenticates and returns via redirect to the App
+ * - The App calls the API endpoint and provides the fitting data to Fusio
+ * - If everything is ok Fusio will get additional information and create a new
+ *   account
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
