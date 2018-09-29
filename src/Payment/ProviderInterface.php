@@ -19,13 +19,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Fusio\Engine\Plan;
+namespace Fusio\Engine\Payment;
 
 use Fusio\Engine\Model\ProductInterface;
 use Fusio\Engine\Model\TransactionInterface;
 
 /**
- * ProviderInterface
+ * Describes a payment provider which can be used to execute payments. Through
+ * the developer app the user has the possibility to buy points which can be
+ * used to call specific routes which cost points. To buy those points Fusio
+ * these payment providers to execute the payment. Usually the flow is:
+ * 
+ * - App calls the API endpoint to prepare a product which returns an 
+ *   redirect url
+ * - App uses the url to redirect the user to the payment provider
+ * - User returns to the App, the app calls the API endpoint to execute the
+ *   transaction
+ * - If everything is ok Fusio will credit the points to the user so that he can
+ *   start calling specific endpoints
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
