@@ -23,6 +23,7 @@ namespace Fusio\Engine\Payment;
 
 use Fusio\Engine\Model\ProductInterface;
 use Fusio\Engine\Model\TransactionInterface;
+use PSX\Record\RecordInterface;
 
 /**
  * Describes a payment provider which can be used to execute payments. Through
@@ -50,9 +51,10 @@ interface ProviderInterface
      * 
      * @param mixed $connection
      * @param \Fusio\Engine\Model\ProductInterface $product
+     * @param \Fusio\Engine\Payment\RedirectUrls $redirectUrls
      * @return \Fusio\Engine\Model\TransactionInterface
      */
-    public function prepare($connection, ProductInterface $product);
+    public function prepare($connection, ProductInterface $product, RedirectUrls $redirectUrls);
 
     /**
      * Is called after the user has approved the transaction. Checks whether the
@@ -61,7 +63,8 @@ interface ProviderInterface
      * @param mixed $connection
      * @param \Fusio\Engine\Model\ProductInterface $product
      * @param \Fusio\Engine\Model\TransactionInterface $transaction
+     * @param \PSX\Record\RecordInterface $parameters
      * @return \Fusio\Engine\Model\TransactionInterface
      */
-    public function execute($connection, ProductInterface $product, TransactionInterface $transaction);
+    public function execute($connection, ProductInterface $product, TransactionInterface $transaction, RecordInterface $parameters);
 }
