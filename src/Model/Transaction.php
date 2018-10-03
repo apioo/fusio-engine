@@ -43,7 +43,17 @@ class Transaction implements TransactionInterface
     /**
      * @var integer
      */
+    protected $userId;
+
+    /**
+     * @var integer
+     */
     protected $status;
+
+    /**
+     * @var string
+     */
+    protected $provider;
 
     /**
      * @var string
@@ -54,6 +64,11 @@ class Transaction implements TransactionInterface
      * @var float
      */
     protected $amount;
+
+    /**
+     * @var \DateTime
+     */
+    protected $updateDate;
 
     /**
      * @var \DateTime
@@ -100,6 +115,22 @@ class Transaction implements TransactionInterface
     /**
      * @return int
      */
+    public function getUserId()
+    {
+        return $this->userId;
+    }
+
+    /**
+     * @param int $userId
+     */
+    public function setUserId($userId)
+    {
+        $this->userId = $userId;
+    }
+
+    /**
+     * @return int
+     */
     public function getStatus()
     {
         return $this->status;
@@ -111,6 +142,22 @@ class Transaction implements TransactionInterface
     public function setStatus($status)
     {
         $this->status = $status;
+    }
+
+    /**
+     * @return string
+     */
+    public function getProvider()
+    {
+        return $this->provider;
+    }
+
+    /**
+     * @param string $provider
+     */
+    public function setProvider($provider)
+    {
+        $this->provider = $provider;
     }
 
     /**
@@ -143,6 +190,22 @@ class Transaction implements TransactionInterface
     public function setAmount($amount)
     {
         $this->amount = $amount;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getUpdateDate()
+    {
+        return $this->updateDate;
+    }
+
+    /**
+     * @param \DateTime $updateDate
+     */
+    public function setUpdateDate(\DateTime $updateDate)
+    {
+        $this->updateDate = $updateDate;
     }
 
     /**

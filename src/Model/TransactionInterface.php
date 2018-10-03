@@ -58,12 +58,32 @@ interface TransactionInterface
     /**
      * @return int
      */
+    public function getUserId();
+
+    /**
+     * @param int $userId
+     */
+    public function setUserId($userId);
+
+    /**
+     * @return int
+     */
     public function getStatus();
 
     /**
      * @param int $status
      */
     public function setStatus($status);
+
+    /**
+     * @return string
+     */
+    public function getProvider();
+
+    /**
+     * @param string $provider
+     */
+    public function setProvider($provider);
 
     /**
      * @return string
@@ -88,27 +108,20 @@ interface TransactionInterface
     /**
      * @return \DateTime
      */
+    public function getUpdateDate();
+
+    /**
+     * @param \DateTime $updateDate
+     */
+    public function setUpdateDate(\DateTime $updateDate);
+
+    /**
+     * @return \DateTime
+     */
     public function getCreateDate();
 
     /**
      * @param \DateTime $createDate
      */
     public function setCreateDate(\DateTime $createDate);
-
-    /**
-     * @param string $name
-     * @param mixed $value
-     */
-    public function setParameter($name, $value);
-
-    /**
-     * @param string $name
-     * @return mixed|null
-     */
-    public function getParameter($name);
-
-    /**
-     * @return array
-     */
-    public function getParameters();
 }
