@@ -29,13 +29,14 @@ use PSX\Record\RecordInterface;
  * Describes a payment provider which can be used to execute payments. Through
  * the developer app the user has the possibility to buy points which can be
  * used to call specific routes which cost points. To buy those points Fusio
- * these payment providers to execute the payment. Usually the flow is:
+ * uses these payment providers to execute a payment. Usually the flow is:
  * 
- * - App calls the API endpoint to prepare a product which returns an 
- *   redirect url
- * - App uses the url to redirect the user to the payment provider
- * - User returns to the App, the app calls the API endpoint to execute the
- *   transaction
+ * - App calls the API endpoint to prepare a specific product, it provides an
+ *   plan and a return url. The call returns an approval url
+ * - App redirects the user to the approval url. The user has to approve the
+ *   payment at the payment provider
+ * - User returns to the App, the url contains the id of the transaction so the
+ *   app can call the API endpoint to get details about the transaction
  * - If everything is ok Fusio will credit the points to the user so that he can
  *   start calling specific endpoints
  *
@@ -46,25 +47,27 @@ use PSX\Record\RecordInterface;
 interface ProviderInterface
 {
     /**
-     * Creates a transaction and returns it with the fitting parameter which can
-     * i.e. include an approval url to authorize this transaction
-     * 
-     * @param mixed $connection
-     * @param \Fusio\Engine\Model\ProductInterface $product
-     * @param \Fusio\Engine\Payment\RedirectUrls $redirectUrls
-     * @return \Fusio\Engine\Model\TransactionInterface
-     */
-    public function prepare($connection, ProductInterface $product, RedirectUrls $redirectUrls);
-
-    /**
-     * Is called after the user has approved the transaction. Checks whether the
-     * transaction was successful and credits the points to the user
+     * Creates a transaction at the payment provider and updates the transaction
+     * fields. The redirect urls contains the urls where the user should be
+     * redirected after payment completion. The method returns an approval url
      * 
      * @param mixed $connection
      * @param \Fusio\Engine\Model\ProductInterface $product
      * @param \Fusio\Engine\Model\TransactionInterface $transaction
-     * @param \PSX\Record\RecordInterface $parameters
-     * @return \Fusio\Engine\Model\TransactionInterface
+     * @param \Fusio\Engine\Payment\RedirectUrls $redirectUrls
+     * @return string
      */
-    public function execute($connection, ProductInterface $product, TransactionInterface $transaction, RecordInterface $parameters);
+    public function prepare($connection, ProductInterface $product, TransactionInterface $transaction, RedirectUrls $redirectUrls);
+
+    /**
+     * Is called after the user has approved the transaction. The parameters
+     * contains all query parameters from the callback call
+     * 
+     * @param mixed $connection
+     * @param \Fusio\Engine\Model\ProductInterface $product
+     * @param \Fusio\Engine\Model\TransactionInterface $transaction
+     * @param array $parameters
+     * @return void
+     */
+    public function execute($connection, ProductInterface $product, TransactionInterface $transaction, array $parameters);
 }
