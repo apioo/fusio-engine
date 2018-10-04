@@ -106,6 +106,16 @@ interface TransactionInterface
     public function setAmount($amount);
 
     /**
+     * @return string
+     */
+    public function getReturnUrl();
+
+    /**
+     * @param string $returnUrl
+     */
+    public function setReturnUrl($returnUrl);
+
+    /**
      * @return \DateTime
      */
     public function getUpdateDate();

@@ -66,6 +66,11 @@ class Transaction implements TransactionInterface
     protected $amount;
 
     /**
+     * @var string
+     */
+    protected $returnUrl;
+
+    /**
      * @var \DateTime
      */
     protected $updateDate;
@@ -190,6 +195,22 @@ class Transaction implements TransactionInterface
     public function setAmount($amount)
     {
         $this->amount = $amount;
+    }
+
+    /**
+     * @return string
+     */
+    public function getReturnUrl()
+    {
+        return $this->returnUrl;
+    }
+
+    /**
+     * @param string $returnUrl
+     */
+    public function setReturnUrl($returnUrl)
+    {
+        $this->returnUrl = $returnUrl;
     }
 
     /**
