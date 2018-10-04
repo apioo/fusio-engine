@@ -30,8 +30,8 @@ namespace Fusio\Engine\Model;
  */
 interface TransactionInterface
 {
-    const STATUS_CREATED  = 0;
-    const STATUS_PENDING  = 1;
+    const STATUS_PREPARED = 0;
+    const STATUS_CREATED  = 1;
     const STATUS_APPROVED = 2;
     const STATUS_FAILED   = 3;
     const STATUS_UNKNOWN  = 4;
