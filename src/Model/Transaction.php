@@ -61,6 +61,11 @@ class Transaction implements TransactionInterface
     protected $transactionId;
 
     /**
+     * @var string
+     */
+    protected $remoteId;
+
+    /**
      * @var float
      */
     protected $amount;
@@ -79,11 +84,6 @@ class Transaction implements TransactionInterface
      * @var \DateTime
      */
     protected $createDate;
-
-    /**
-     * @var array
-     */
-    protected $parameters = [];
 
     /**
      * @return int
@@ -180,6 +180,22 @@ class Transaction implements TransactionInterface
     {
         $this->transactionId = $transactionId;
     }
+
+    /**
+     * @return string
+     */
+    public function getRemoteId()
+    {
+        return $this->remoteId;
+    }
+
+    /**
+     * @param string $remoteId
+     */
+    public function setRemoteId($remoteId)
+    {
+        $this->remoteId = $remoteId;
+    }
     
     /**
      * @return int
@@ -243,31 +259,5 @@ class Transaction implements TransactionInterface
     public function setCreateDate(\DateTime $createDate)
     {
         $this->createDate = $createDate;
-    }
-
-    /**
-     * @param string $name
-     * @param mixed $value
-     */
-    public function setParameter($name, $value)
-    {
-        $this->parameters[$name] = $value;
-    }
-
-    /**
-     * @param string $name
-     * @return mixed|null
-     */
-    public function getParameter($name)
-    {
-        return $this->parameters[$name] ?? null;
-    }
-
-    /**
-     * @return array
-     */
-    public function getParameters()
-    {
-        return $this->parameters;
     }
 }

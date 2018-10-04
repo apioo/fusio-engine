@@ -31,9 +31,10 @@ namespace Fusio\Engine\Model;
 interface TransactionInterface
 {
     const STATUS_CREATED  = 0;
-    const STATUS_APPROVED = 1;
-    const STATUS_FAILED   = 2;
-    const STATUS_UNKNOWN  = 3;
+    const STATUS_PENDING  = 1;
+    const STATUS_APPROVED = 2;
+    const STATUS_FAILED   = 3;
+    const STATUS_UNKNOWN  = 4;
 
     /**
      * @return int
@@ -94,7 +95,17 @@ interface TransactionInterface
      * @param string $transactionId
      */
     public function setTransactionId($transactionId);
-    
+
+    /**
+     * @return string
+     */
+    public function getRemoteId();
+
+    /**
+     * @param string $remoteId
+     */
+    public function setRemoteId($remoteId);
+
     /**
      * @return int
      */
