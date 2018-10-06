@@ -48,6 +48,11 @@ class Transaction implements TransactionInterface
     /**
      * @var integer
      */
+    protected $appId;
+
+    /**
+     * @var integer
+     */
     protected $status;
 
     /**
@@ -131,6 +136,22 @@ class Transaction implements TransactionInterface
     public function setUserId($userId)
     {
         $this->userId = $userId;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAppId()
+    {
+        return $this->appId;
+    }
+
+    /**
+     * @param int $appId
+     */
+    public function setAppId($appId)
+    {
+        $this->appId = $appId;
     }
 
     /**

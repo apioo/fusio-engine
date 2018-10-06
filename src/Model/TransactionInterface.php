@@ -69,6 +69,16 @@ interface TransactionInterface
     /**
      * @return int
      */
+    public function getAppId();
+
+    /**
+     * @param int $appId
+     */
+    public function setAppId($appId);
+
+    /**
+     * @return int
+     */
     public function getStatus();
 
     /**
