@@ -222,6 +222,12 @@
     "connectionClass": {
       "$ref": "#\/definitions\/ClassList"
     },
+    "userClass": {
+      "$ref": "#\/definitions\/ClassList"
+    },
+    "paymentClass": {
+      "$ref": "#\/definitions\/ClassList"
+    },
     "routes": {
       "type": "array",
       "items": {

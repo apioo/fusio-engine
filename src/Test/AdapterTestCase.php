@@ -68,18 +68,15 @@ abstract class AdapterTestCase extends \PHPUnit_Framework_TestCase
 
     private function validateClassExistence(\stdClass $data)
     {
-        if (isset($data->actionClass)) {
-            foreach ($data->actionClass as $class) {
-                if (!class_exists($class)) {
-                    $this->fail('Defined action class ' . $class . ' does not exist');
-                }
-            }
-        }
+        $types = ['action', 'connection', 'user', 'payment'];
 
-        if (isset($data->connectionClass)) {
-            foreach ($data->connectionClass as $class) {
-                if (!class_exists($class)) {
-                    $this->fail('Defined connection class ' . $class . ' does not exist');
+        foreach ($types as $type) {
+            $key = $type . 'Class';
+            if (isset($data->{$key})) {
+                foreach ($data->{$key} as $class) {
+                    if (!class_exists($class)) {
+                        $this->fail('Defined ' . $key . ' class ' . $class . ' does not exist');
+                    }
                 }
             }
         }
