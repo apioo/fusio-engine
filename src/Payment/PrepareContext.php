@@ -22,13 +22,13 @@
 namespace Fusio\Engine\Payment;
 
 /**
- * RedirectUrls
+ * PrepareContext
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-class RedirectUrls
+class PrepareContext
 {
     /**
      * @var string
@@ -39,6 +39,11 @@ class RedirectUrls
      * @var string
      */
     protected $cancelUrl;
+
+    /**
+     * @var string
+     */
+    protected $currency;
 
     /**
      * @return string
@@ -70,5 +75,21 @@ class RedirectUrls
     public function setCancelUrl($cancelUrl)
     {
         $this->cancelUrl = $cancelUrl;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCurrency()
+    {
+        return $this->currency;
+    }
+
+    /**
+     * @param string $currency
+     */
+    public function setCurrency($currency)
+    {
+        $this->currency = $currency;
     }
 }
