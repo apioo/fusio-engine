@@ -21,6 +21,7 @@
 
 namespace Fusio\Engine;
 
+use Fusio\Engine\Exception\ActionNotFoundException;
 use Fusio\Engine\Factory;
 use RuntimeException;
 
@@ -68,7 +69,7 @@ class Processor implements ProcessorInterface
 
             return $this->factory->factory($action->getClass(), $action->getEngine())->handle($request, $parameters, $context->withAction($action));
         } else {
-            throw new RuntimeException('Could not found action ' . $actionId);
+            throw new ActionNotFoundException('Could not found action ' . $actionId);
         }
     }
 

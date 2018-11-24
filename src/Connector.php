@@ -21,8 +21,8 @@
 
 namespace Fusio\Engine;
 
+use Fusio\Engine\Exception\ConnectionNotFoundException;
 use Fusio\Engine\Factory;
-use RuntimeException;
 
 /**
  * Connector
@@ -65,7 +65,7 @@ class Connector implements ConnectorInterface
 
             return $this->factory->factory($connection->getClass())->getConnection($parameters);
         } else {
-            throw new RuntimeException('Could not found connection ' . $connectionId);
+            throw new ConnectionNotFoundException('Could not found connection ' . $connectionId);
         }
     }
 }
