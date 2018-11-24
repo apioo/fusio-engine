@@ -56,7 +56,7 @@ class ConnectorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \RuntimeException
+     * @expectedException \Fusio\Engine\Exception\ConnectionNotFoundException
      */
     public function testGetConnectionInvalid()
     {

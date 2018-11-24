@@ -68,7 +68,7 @@ class ProcessorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \RuntimeException
+     * @expectedException \Fusio\Engine\Exception\ActionNotFoundException
      */
     public function testGetConnectionInvalid()
     {
