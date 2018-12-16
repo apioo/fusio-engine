@@ -24,6 +24,7 @@ namespace Fusio\Engine\Tests\Parser;
 use Fusio\Engine\ActionInterface;
 use Fusio\Engine\Parser\Directory;
 use Fusio\Engine\Test\EngineTestCaseTrait;
+use PHPUnit\Framework\TestCase;
 
 /**
  * DirectoryTest
@@ -32,7 +33,7 @@ use Fusio\Engine\Test\EngineTestCaseTrait;
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-class DirectoryTest extends \PHPUnit_Framework_TestCase
+class DirectoryTest extends TestCase
 {
     use EngineTestCaseTrait;
 

@@ -24,6 +24,7 @@ namespace Fusio\Engine\Tests\Repository;
 use Fusio\Engine\Model\Connection;
 use Fusio\Engine\Model\ConnectionInterface;
 use Fusio\Engine\Repository;
+use PHPUnit\Framework\TestCase;
 
 /**
  * ConnectionMemoryTest
@@ -32,7 +33,7 @@ use Fusio\Engine\Repository;
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-class ConnectionMemoryTest extends \PHPUnit_Framework_TestCase
+class ConnectionMemoryTest extends TestCase
 {
     public function testGet()
     {

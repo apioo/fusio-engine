@@ -26,6 +26,7 @@ use Fusio\Engine\Processor;
 use Fusio\Engine\Response\FactoryInterface;
 use Fusio\Engine\Test\CallbackAction;
 use Fusio\Engine\Test\EngineTestCaseTrait;
+use PHPUnit\Framework\TestCase;
 use PSX\Http\Environment\HttpResponseInterface;
 
 /**
@@ -35,7 +36,7 @@ use PSX\Http\Environment\HttpResponseInterface;
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-class ProcessorTest extends \PHPUnit_Framework_TestCase
+class ProcessorTest extends TestCase
 {
     use EngineTestCaseTrait;
 

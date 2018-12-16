@@ -24,6 +24,7 @@ namespace Fusio\Engine\Tests\Repository;
 use Fusio\Engine\Model\Action;
 use Fusio\Engine\Model\ActionInterface;
 use Fusio\Engine\Repository;
+use PHPUnit\Framework\TestCase;
 
 /**
  * ActionMemoryTest
@@ -32,7 +33,7 @@ use Fusio\Engine\Repository;
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-class ActionMemoryTest extends \PHPUnit_Framework_TestCase
+class ActionMemoryTest extends TestCase
 {
     public function testGet()
     {

@@ -24,6 +24,7 @@ namespace Fusio\Engine\Tests\Repository;
 use Fusio\Engine\Model\User;
 use Fusio\Engine\Model\UserInterface;
 use Fusio\Engine\Repository;
+use PHPUnit\Framework\TestCase;
 
 /**
  * UserMemoryTest
@@ -32,7 +33,7 @@ use Fusio\Engine\Repository;
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-class UserMemoryTest extends \PHPUnit_Framework_TestCase
+class UserMemoryTest extends TestCase
 {
     public function testGet()
     {

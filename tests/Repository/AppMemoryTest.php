@@ -24,6 +24,7 @@ namespace Fusio\Engine\Tests\Repository;
 use Fusio\Engine\Model\App;
 use Fusio\Engine\Model\AppInterface;
 use Fusio\Engine\Repository;
+use PHPUnit\Framework\TestCase;
 
 /**
  * AppMemoryTest
@@ -32,7 +33,7 @@ use Fusio\Engine\Repository;
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-class AppMemoryTest extends \PHPUnit_Framework_TestCase
+class AppMemoryTest extends TestCase
 {
     public function testGet()
     {

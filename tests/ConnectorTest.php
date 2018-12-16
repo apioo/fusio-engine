@@ -25,6 +25,7 @@ use Fusio\Engine\Connector;
 use Fusio\Engine\Model\Connection;
 use Fusio\Engine\Test\CallbackConnection;
 use Fusio\Engine\Test\EngineTestCaseTrait;
+use PHPUnit\Framework\TestCase;
 
 /**
  * ConnectorTest
@@ -33,7 +34,7 @@ use Fusio\Engine\Test\EngineTestCaseTrait;
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-class ConnectorTest extends \PHPUnit_Framework_TestCase
+class ConnectorTest extends TestCase
 {
     use EngineTestCaseTrait;
 
