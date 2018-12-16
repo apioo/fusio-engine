@@ -23,6 +23,7 @@ namespace Fusio\Engine\Test;
 
 use Doctrine\Common\Annotations\SimpleAnnotationReader;
 use Fusio\Engine\AdapterInterface;
+use PHPUnit\Framework\TestCase;
 use PSX\Schema\SchemaManager;
 use PSX\Schema\SchemaTraverser;
 
@@ -33,7 +34,7 @@ use PSX\Schema\SchemaTraverser;
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-abstract class AdapterTestCase extends \PHPUnit_Framework_TestCase
+abstract class AdapterTestCase extends TestCase
 {
     public function testDefinition()
     {

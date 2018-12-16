@@ -21,6 +21,8 @@
 
 namespace Fusio\Engine\Test;
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * EngineTestCase
  *
@@ -28,7 +30,7 @@ namespace Fusio\Engine\Test;
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
  */
-class EngineTestCase extends \PHPUnit_Framework_TestCase
+class EngineTestCase extends TestCase
 {
     use EngineTestCaseTrait;
 }
