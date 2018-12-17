@@ -99,6 +99,8 @@ class Directory extends ParserAbstract
             }
         }
 
+        array_multisort($result, SORT_ASC, array_column($result, 'name'));
+
         return $result;
     }
 }
