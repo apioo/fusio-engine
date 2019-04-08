@@ -36,9 +36,19 @@ class Token implements TokenInterface
     protected $id;
 
     /**
-     * @var string
+     * @var integer
      */
-    protected $scope;
+    protected $appId;
+
+    /**
+     * @var integer
+     */
+    protected $userId;
+
+    /**
+     * @var array
+     */
+    protected $scopes;
 
     /**
      * @var string
@@ -67,19 +77,51 @@ class Token implements TokenInterface
     }
 
     /**
-     * @return string
+     * @return integer
      */
-    public function getScope()
+    public function getAppId()
     {
-        return $this->scope;
+        return $this->appId;
     }
 
     /**
-     * @param string $scope
+     * @param integer $appId
      */
-    public function setScope($scope)
+    public function setAppId($appId)
     {
-        $this->scope = $scope;
+        $this->appId = $appId;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getUserId()
+    {
+        return $this->userId;
+    }
+
+    /**
+     * @param integer $userId
+     */
+    public function setUserId($userId)
+    {
+        $this->userId = $userId;
+    }
+
+    /**
+     * @return array
+     */
+    public function getScopes()
+    {
+        return $this->scopes;
+    }
+
+    /**
+     * @param array $scopes
+     */
+    public function setScopes(array $scopes)
+    {
+        $this->scopes = $scopes;
     }
 
     /**

@@ -36,9 +36,19 @@ interface TokenInterface
     public function getId();
 
     /**
-     * @return string
+     * @return integer
      */
-    public function getScope();
+    public function getAppId();
+
+    /**
+     * @return integer
+     */
+    public function getUserId();
+
+    /**
+     * @return array
+     */
+    public function getScopes();
 
     /**
      * @return string
