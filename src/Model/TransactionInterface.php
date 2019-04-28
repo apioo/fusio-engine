@@ -49,32 +49,12 @@ interface TransactionInterface
     /**
      * @return int
      */
-    public function getPlanId();
+    public function getInvoiceId();
 
     /**
-     * @param int $planId
+     * @param int $invoiceId
      */
-    public function setPlanId($planId);
-
-    /**
-     * @return int
-     */
-    public function getUserId();
-
-    /**
-     * @param int $userId
-     */
-    public function setUserId($userId);
-
-    /**
-     * @return int
-     */
-    public function getAppId();
-
-    /**
-     * @param int $appId
-     */
-    public function setAppId($appId);
+    public function setInvoiceId($invoiceId);
 
     /**
      * @return int

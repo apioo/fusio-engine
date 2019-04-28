@@ -38,17 +38,7 @@ class Transaction implements TransactionInterface
     /**
      * @var integer
      */
-    protected $planId;
-
-    /**
-     * @var integer
-     */
-    protected $userId;
-
-    /**
-     * @var integer
-     */
-    protected $appId;
+    protected $invoiceId;
 
     /**
      * @var integer
@@ -109,49 +99,17 @@ class Transaction implements TransactionInterface
     /**
      * @return int
      */
-    public function getPlanId()
+    public function getInvoiceId()
     {
-        return $this->planId;
+        return $this->invoiceId;
     }
 
     /**
-     * @param int $planId
+     * @param int $invoiceId
      */
-    public function setPlanId($planId)
+    public function setInvoiceId($invoiceId)
     {
-        $this->planId = $planId;
-    }
-
-    /**
-     * @return int
-     */
-    public function getUserId()
-    {
-        return $this->userId;
-    }
-
-    /**
-     * @param int $userId
-     */
-    public function setUserId($userId)
-    {
-        $this->userId = $userId;
-    }
-
-    /**
-     * @return int
-     */
-    public function getAppId()
-    {
-        return $this->appId;
-    }
-
-    /**
-     * @param int $appId
-     */
-    public function setAppId($appId)
-    {
-        $this->appId = $appId;
+        $this->invoiceId = $invoiceId;
     }
 
     /**
