@@ -30,6 +30,11 @@ namespace Fusio\Engine\Model;
  */
 interface ProductInterface
 {
+    const INTERVAL_1MONTH = 1;
+    const INTERVAL_3MONTH = 2;
+    const INTERVAL_6MONTH = 3;
+    const INTERVAL_12MONTH = 4;
+
     /**
      * @return integer
      */
@@ -61,12 +66,22 @@ interface ProductInterface
     public function setPrice($price);
 
     /**
-     * @return int
+     * @return integer
      */
     public function getPoints();
 
     /**
-     * @param int $points
+     * @param integer $points
      */
     public function setPoints($points);
+
+    /**
+     * @return integer
+     */
+    public function getInterval();
+
+    /**
+     * @param integer $interval
+     */
+    public function setInterval($interval);
 }

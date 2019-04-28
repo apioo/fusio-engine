@@ -51,6 +51,11 @@ class Product implements ProductInterface
     protected $points;
 
     /**
+     * @var integer
+     */
+    protected $interval;
+
+    /**
      * @return integer
      */
     public function getId()
@@ -99,7 +104,7 @@ class Product implements ProductInterface
     }
 
     /**
-     * @return int
+     * @return integer
      */
     public function getPoints()
     {
@@ -107,10 +112,26 @@ class Product implements ProductInterface
     }
 
     /**
-     * @param int $points
+     * @param integer $points
      */
     public function setPoints($points)
     {
         $this->points = $points;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getInterval()
+    {
+        return $this->interval;
+    }
+
+    /**
+     * @param integer $interval
+     */
+    public function setInterval($interval)
+    {
+        $this->interval = $interval;
     }
 }
