@@ -31,16 +31,8 @@ namespace Fusio\Engine\Routes;
 interface SetupInterface
 {
     /**
-     * @param integer $priority
-     * @param string $path
-     * @param string $controller
-     * @param array $scopes
-     * @param array $config
-     * @return integer
-     */
-    public function addRoutes($priority, $path, $controller, $scopes, $config);
-
-    /**
+     * Adds a new schema
+     * 
      * @param string $name
      * @param array $source
      * @return integer
@@ -48,6 +40,8 @@ interface SetupInterface
     public function addSchema($name, $source);
 
     /**
+     * Adds a new action
+     * 
      * @param string $name
      * @param string $class
      * @param string $engine
@@ -55,4 +49,16 @@ interface SetupInterface
      * @return integer
      */
     public function addAction($name, $class, $engine, $config);
+
+    /**
+     * Adds a new route
+     * 
+     * @param integer $priority
+     * @param string $path
+     * @param string $controller
+     * @param array $scopes
+     * @param array $config
+     * @return integer
+     */
+    public function addRoute($priority, $path, $controller, $scopes, $config);
 }

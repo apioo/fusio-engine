@@ -30,31 +30,35 @@ namespace Fusio\Engine\Routes;
  */
 class Setup implements SetupInterface
 {
-    private $routes = [];
-    private $schema = [];
-    private $action = [];
+    /**
+     * @var array
+     */
+    private $schemas = [];
 
-    private $routesIndex = -1;
+    /**
+     * @var array 
+     */
+    private $actions = [];
+
+    /**
+     * @var array 
+     */
+    private $routes = [];
+
+    /**
+     * @var int 
+     */
     private $schemaIndex = -1;
+
+    /**
+     * @var int 
+     */
     private $actionIndex = -1;
 
     /**
-     * @inheritDoc
+     * @var int 
      */
-    public function addRoutes($priority, $path, $controller, $scopes, $config)
-    {
-        $this->routesIndex++;
-
-        $this->routes[$this->routesIndex] = (object) [
-            'priority' => $priority,
-            'path' => $path,
-            'controller' => $controller,
-            'scopes' => $scopes,
-            'config' => $config,
-        ];
-
-        return $this->routesIndex;
-    }
+    private $routesIndex = -1;
 
     /**
      * @inheritDoc
@@ -63,7 +67,7 @@ class Setup implements SetupInterface
     {
         $this->schemaIndex++;
 
-        $this->schema[$this->schemaIndex] = (object) [
+        $this->schemas[$this->schemaIndex] = (object) [
             'name' => $name,
             'source' => (object) $source,
         ];
@@ -78,7 +82,7 @@ class Setup implements SetupInterface
     {
         $this->actionIndex++;
 
-        $this->action[$this->actionIndex] = (object) [
+        $this->actions[$this->actionIndex] = (object) [
             'name' => $name,
             'class' => $class,
             'engine' => $engine,
@@ -88,18 +92,36 @@ class Setup implements SetupInterface
         return $this->actionIndex;
     }
 
+    /**
+     * @inheritDoc
+     */
+    public function addRoute($priority, $path, $controller, $scopes, $config)
+    {
+        $this->routesIndex++;
+
+        $this->routes[$this->routesIndex] = (object) [
+            'priority' => $priority,
+            'path' => $path,
+            'controller' => $controller,
+            'scopes' => $scopes,
+            'config' => $config,
+        ];
+
+        return $this->routesIndex;
+    }
+
+    public function getSchemas()
+    {
+        return $this->schemas;
+    }
+    
+    public function getActions()
+    {
+        return $this->actions;
+    }
+
     public function getRoutes()
     {
         return $this->routes;
-    }
-    
-    public function getSchema()
-    {
-        return $this->schema;
-    }
-    
-    public function getAction()
-    {
-        return $this->action;
     }
 }
