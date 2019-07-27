@@ -41,8 +41,9 @@ interface ProviderInterface extends ConfigurableInterface
      * and validates all provided data
      * 
      * @param \Fusio\Engine\Routes\SetupInterface $setup
+     * @param string $basePath
      * @param \Fusio\Engine\ParametersInterface $configuration
      * @return void
      */
-    public function setup(SetupInterface $setup, ParametersInterface $configuration);
+    public function setup(SetupInterface $setup, string $basePath, ParametersInterface $configuration);
 }
