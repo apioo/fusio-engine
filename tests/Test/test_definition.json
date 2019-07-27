@@ -28,7 +28,7 @@
     "schema": [{
         "name": "Adapter-Schema",
         "source": {
-            "id": "http://fusio-project.org",
+            "id": "https://www.fusio-project.org",
             "title": "process",
             "type": "object",
             "properties": {

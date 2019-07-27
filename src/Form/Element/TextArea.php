@@ -28,14 +28,14 @@ use Fusio\Engine\Form\Element;
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
- * @link    http://fusio-project.org
+ * @link    https://www.fusio-project.org
  */
 class TextArea extends Element
 {
     /**
      * @var string
      */
-    protected $element = 'http://fusio-project.org/ns/2015/form/textarea';
+    protected $element = 'https://www.fusio-project.org/ns/2015/form/textarea';
 
     /**
      * @var string

@@ -28,14 +28,14 @@ use Fusio\Engine\Form\Element;
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
- * @link    http://fusio-project.org
+ * @link    https://www.fusio-project.org
  */
 class Tag extends Element
 {
     /**
      * @var string
      */
-    protected $element = 'http://fusio-project.org/ns/2015/form/tag';
+    protected $element = 'https://www.fusio-project.org/ns/2015/form/tag';
 
     public function __construct($name, $title, $help = null)
     {
