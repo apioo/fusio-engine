@@ -228,6 +228,9 @@
     "paymentClass": {
       "$ref": "#\/definitions\/ClassList"
     },
+    "routesClass": {
+      "$ref": "#\/definitions\/ClassList"
+    },
     "routes": {
       "type": "array",
       "items": {
