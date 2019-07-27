@@ -36,9 +36,12 @@ use Fusio\Engine\ParametersInterface;
 interface ProviderInterface extends ConfigurableInterface
 {
     /**
-     * The provider needs to add the schemas, action and routes to the setup
+     * The provider needs to add the schemas, actions and routes to the setup
      * using the provided configuration. The system then automatically creates
-     * and validates all provided data
+     * and validates all provided data. The base path is path which was chosen
+     * by the user, all routes are automatically registered under the base path
+     * so there is no need to add it manually, it is there to build schema and
+     * action names based on the base path
      * 
      * @param \Fusio\Engine\Routes\SetupInterface $setup
      * @param string $basePath
