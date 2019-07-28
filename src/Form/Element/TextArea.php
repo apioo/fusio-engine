@@ -35,7 +35,7 @@ class TextArea extends Element
     /**
      * @var string
      */
-    protected $element = 'https://www.fusio-project.org/ns/2015/form/textarea';
+    protected $element = 'http://fusio-project.org/ns/2015/form/textarea';
 
     /**
      * @var string

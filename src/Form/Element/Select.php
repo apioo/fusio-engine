@@ -35,7 +35,7 @@ class Select extends Element
     /**
      * @var string
      */
-    protected $element = 'https://www.fusio-project.org/ns/2015/form/select';
+    protected $element = 'http://fusio-project.org/ns/2015/form/select';
 
     /**
      * @var array
