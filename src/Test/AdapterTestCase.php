@@ -22,7 +22,14 @@
 namespace Fusio\Engine\Test;
 
 use Doctrine\Common\Annotations\SimpleAnnotationReader;
+use Fusio\Engine\ActionInterface;
 use Fusio\Engine\AdapterInterface;
+use Fusio\Engine\ConnectionInterface;
+use Fusio\Engine\Parameters;
+use Fusio\Engine\Payment;
+use Fusio\Engine\Routes;
+use Fusio\Engine\Routes\Setup;
+use Fusio\Engine\User;
 use PHPUnit\Framework\TestCase;
 use PSX\Schema\SchemaManager;
 use PSX\Schema\SchemaTraverser;
@@ -36,6 +43,8 @@ use PSX\Schema\SchemaTraverser;
  */
 abstract class AdapterTestCase extends TestCase
 {
+    use EngineTestCaseTrait;
+
     public function testDefinition()
     {
         $class = $this->getAdapterClass();
@@ -54,8 +63,10 @@ abstract class AdapterTestCase extends TestCase
 
         $data = json_decode(file_get_contents($path));
 
+        $this->assertInstanceOf(\stdClass::class, $data);
+
         $this->validateSchema($data);
-        $this->validateClassExistence($data);
+        $this->validateClassTypes($data);
     }
 
     private function validateSchema(\stdClass $data)
@@ -67,9 +78,9 @@ abstract class AdapterTestCase extends TestCase
         $traverser->traverse($data, $schema);
     }
 
-    private function validateClassExistence(\stdClass $data)
+    private function validateClassTypes(\stdClass $data)
     {
-        $types = ['action', 'connection', 'user', 'payment'];
+        $types = ['action', 'connection', 'user', 'payment', 'routes'];
 
         foreach ($types as $type) {
             $key = $type . 'Class';
@@ -77,6 +88,35 @@ abstract class AdapterTestCase extends TestCase
                 foreach ($data->{$key} as $class) {
                     if (!class_exists($class)) {
                         $this->fail('Defined ' . $key . ' class ' . $class . ' does not exist');
+                    }
+
+                    if ($type === 'action') {
+                        $action = $this->getActionFactory()->factory($class);
+                        if (!$action instanceof ActionInterface) {
+                            $this->fail('Defined action ' . $class . ' must be an instance of ' . ActionInterface::class);
+                        }
+                    } elseif ($type === 'connection') {
+                        $connection = $this->getConnectionFactory()->factory($class);
+                        if (!$connection instanceof ConnectionInterface) {
+                            $this->fail('Defined connection ' . $class . ' must be an instance of ' . ConnectionInterface::class);
+                        }
+                    } elseif ($type === 'user') {
+                        $provider = new $class('google');
+                        if (!$provider instanceof User\ProviderInterface) {
+                            $this->fail('Defined user ' . $class . ' must be an instance of ' . User\ProviderInterface::class);
+                        }
+                    } elseif ($type === 'payment') {
+                        $provider = new $class();
+                        if (!$provider instanceof Payment\ProviderInterface) {
+                            $this->fail('Defined payment ' . $class . ' must be an instance of ' . Payment\ProviderInterface::class);
+                        }
+                    } elseif ($type === 'routes') {
+                        $provider = new $class();
+                        if (!$provider instanceof Routes\ProviderInterface) {
+                            $this->fail('Defined routes ' . $class . ' must be an instance of ' . Routes\ProviderInterface::class);
+                        }
+
+                        $this->validateRoutesProvider($provider);
                     }
                 }
             }
@@ -89,4 +129,44 @@ abstract class AdapterTestCase extends TestCase
      * @return string
      */
     abstract protected function getAdapterClass();
+
+    private function validateRoutesProvider(Routes\ProviderInterface $provider)
+    {
+        $this->assertNotEmpty($provider->getName());
+        $this->assertTrue(is_string($provider->getName()));
+
+        $setup = new Setup();
+        $configuration = new Parameters([]);
+
+        $provider->setup($setup, '/foo', $configuration);
+
+        $this->validateRoutesSchema($setup);
+        $this->validateRoutesAction($setup);
+        $this->validateRoutesRoute($setup);
+    }
+
+    private function validateRoutesSchema(Setup $setup)
+    {
+        $schemas = $setup->getSchemas();
+        foreach ($schemas as $schema) {
+            $this->assertNotEmpty($schema->name);
+            $this->assertInstanceOf(\stdClass::class, $schema->source); // source contains the JSON schema
+        }
+    }
+
+    private function validateRoutesAction(Setup $setup)
+    {
+        $actions = $setup->getActions();
+        foreach ($actions as $action) {
+            $this->assertNotEmpty($action->name);
+        }
+    }
+
+    private function validateRoutesRoute(Setup $setup)
+    {
+        $routes = $setup->getRoutes();
+        foreach ($routes as $route) {
+            $this->assertNotEmpty($route->path);
+        }
+    }
 }
