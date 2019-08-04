@@ -26,6 +26,7 @@ use Fusio\Engine\ActionInterface;
 use Fusio\Engine\AdapterInterface;
 use Fusio\Engine\ConfigurableInterface;
 use Fusio\Engine\ConnectionInterface;
+use Fusio\Engine\Factory\ResolverInterface;
 use Fusio\Engine\Form\Builder;
 use Fusio\Engine\Form\Container;
 use Fusio\Engine\Parameters;
@@ -212,6 +213,14 @@ abstract class AdapterTestCase extends TestCase
             $this->assertNotEmpty($action->name);
             $this->assertNotEmpty($action->class);
             $this->assertNotEmpty($action->engine);
+
+            $this->assertTrue(class_exists($action->class));
+            $instance = $this->getActionFactory()->factory($action->class);
+            $this->assertInstanceOf(ActionInterface::class, $instance);
+
+            $this->assertTrue(class_exists($action->engine));
+            $engine = $action->engine;
+            $this->assertInstanceOf(ResolverInterface::class, new $engine());
         }
     }
 
@@ -222,6 +231,8 @@ abstract class AdapterTestCase extends TestCase
             $this->assertNotEmpty($route->path);
             $this->assertNotEmpty($route->controller);
             $this->assertNotEmpty($route->config);
+
+            // @TODO check whether the config is correct
         }
     }
 }
