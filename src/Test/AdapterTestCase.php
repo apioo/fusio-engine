@@ -24,7 +24,10 @@ namespace Fusio\Engine\Test;
 use Doctrine\Common\Annotations\SimpleAnnotationReader;
 use Fusio\Engine\ActionInterface;
 use Fusio\Engine\AdapterInterface;
+use Fusio\Engine\ConfigurableInterface;
 use Fusio\Engine\ConnectionInterface;
+use Fusio\Engine\Form\Builder;
+use Fusio\Engine\Form\Container;
 use Fusio\Engine\Parameters;
 use Fusio\Engine\Payment;
 use Fusio\Engine\Routes;
@@ -95,28 +98,36 @@ abstract class AdapterTestCase extends TestCase
                         if (!$action instanceof ActionInterface) {
                             $this->fail('Defined action ' . $class . ' must be an instance of ' . ActionInterface::class);
                         }
+
+                        $this->validateAction($action);
                     } elseif ($type === 'connection') {
                         $connection = $this->getConnectionFactory()->factory($class);
                         if (!$connection instanceof ConnectionInterface) {
                             $this->fail('Defined connection ' . $class . ' must be an instance of ' . ConnectionInterface::class);
                         }
+
+                        $this->validateConnection($connection);
                     } elseif ($type === 'user') {
                         $provider = new $class('google');
                         if (!$provider instanceof User\ProviderInterface) {
                             $this->fail('Defined user ' . $class . ' must be an instance of ' . User\ProviderInterface::class);
                         }
+
+                        $this->validateUser($provider);
                     } elseif ($type === 'payment') {
                         $provider = new $class();
                         if (!$provider instanceof Payment\ProviderInterface) {
                             $this->fail('Defined payment ' . $class . ' must be an instance of ' . Payment\ProviderInterface::class);
                         }
+
+                        $this->validatePayment($provider);
                     } elseif ($type === 'routes') {
                         $provider = new $class();
                         if (!$provider instanceof Routes\ProviderInterface) {
                             $this->fail('Defined routes ' . $class . ' must be an instance of ' . Routes\ProviderInterface::class);
                         }
 
-                        $this->validateRoutesProvider($provider);
+                        $this->validateRoutes($provider);
                     }
                 }
             }
@@ -130,7 +141,47 @@ abstract class AdapterTestCase extends TestCase
      */
     abstract protected function getAdapterClass();
 
-    private function validateRoutesProvider(Routes\ProviderInterface $provider)
+    private function validateAction(ActionInterface $action)
+    {
+        $this->assertNotEmpty($action->getName());
+        $this->assertTrue(is_string($action->getName()));
+
+        if ($action instanceof ConfigurableInterface) {
+            $this->validateConfigurable($action);
+        }
+    }
+
+    private function validateConnection(ConnectionInterface $connection)
+    {
+        $this->assertNotEmpty($connection->getName());
+        $this->assertTrue(is_string($connection->getName()));
+
+        if ($connection instanceof ConfigurableInterface) {
+            $this->validateConfigurable($connection);
+        }
+    }
+
+    private function validateConfigurable(ConfigurableInterface $object)
+    {
+        $builder = new Builder();
+        $factory = $this->getFormElementFactory();
+
+        $object->configure($builder, $factory);
+
+        $this->assertInstanceOf(Container::class, $builder->getForm());
+    }
+
+    private function validateUser(User\ProviderInterface $provider)
+    {
+        $this->assertNotEmpty($provider->getId());
+        $this->assertTrue(is_int($provider->getId()));
+    }
+
+    private function validatePayment(Payment\ProviderInterface $provider)
+    {
+    }
+
+    private function validateRoutes(Routes\ProviderInterface $provider)
     {
         $this->assertNotEmpty($provider->getName());
         $this->assertTrue(is_string($provider->getName()));
@@ -159,6 +210,8 @@ abstract class AdapterTestCase extends TestCase
         $actions = $setup->getActions();
         foreach ($actions as $action) {
             $this->assertNotEmpty($action->name);
+            $this->assertNotEmpty($action->class);
+            $this->assertNotEmpty($action->engine);
         }
     }
 
@@ -167,6 +220,8 @@ abstract class AdapterTestCase extends TestCase
         $routes = $setup->getRoutes();
         foreach ($routes as $route) {
             $this->assertNotEmpty($route->path);
+            $this->assertNotEmpty($route->controller);
+            $this->assertNotEmpty($route->config);
         }
     }
 }
