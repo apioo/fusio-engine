@@ -27,13 +27,10 @@ use Fusio\Engine\AdapterInterface;
 use Fusio\Engine\ConfigurableInterface;
 use Fusio\Engine\ConnectionInterface;
 use Fusio\Engine\Factory\ContainerAwareInterface;
-use Fusio\Engine\Factory\ResolverInterface;
 use Fusio\Engine\Form\Builder;
 use Fusio\Engine\Form\Container;
-use Fusio\Engine\Parameters;
 use Fusio\Engine\Payment;
 use Fusio\Engine\Routes;
-use Fusio\Engine\Routes\Setup;
 use Fusio\Engine\User;
 use PHPUnit\Framework\TestCase;
 use PSX\Schema\SchemaManager;
@@ -191,53 +188,5 @@ abstract class AdapterTestCase extends TestCase
     {
         $this->assertNotEmpty($provider->getName());
         $this->assertTrue(is_string($provider->getName()));
-
-        $setup = new Setup();
-        $configuration = new Parameters([]);
-
-        $provider->setup($setup, '/foo', $configuration);
-
-        $this->validateRoutesSchema($setup);
-        $this->validateRoutesAction($setup);
-        $this->validateRoutesRoute($setup);
-    }
-
-    private function validateRoutesSchema(Setup $setup)
-    {
-        $schemas = $setup->getSchemas();
-        foreach ($schemas as $schema) {
-            $this->assertNotEmpty($schema->name);
-            $this->assertInstanceOf(\stdClass::class, $schema->source); // source contains the JSON schema
-        }
-    }
-
-    private function validateRoutesAction(Setup $setup)
-    {
-        $actions = $setup->getActions();
-        foreach ($actions as $action) {
-            $this->assertNotEmpty($action->name);
-            $this->assertNotEmpty($action->class);
-            $this->assertNotEmpty($action->engine);
-
-            $this->assertTrue(class_exists($action->class));
-            $instance = $this->getActionFactory()->factory($action->class);
-            $this->assertInstanceOf(ActionInterface::class, $instance);
-
-            $this->assertTrue(class_exists($action->engine));
-            $engine = $action->engine;
-            $this->assertInstanceOf(ResolverInterface::class, new $engine());
-        }
-    }
-
-    private function validateRoutesRoute(Setup $setup)
-    {
-        $routes = $setup->getRoutes();
-        foreach ($routes as $route) {
-            $this->assertNotEmpty($route->path);
-            $this->assertNotEmpty($route->controller);
-            $this->assertNotEmpty($route->config);
-
-            // @TODO check whether the config is correct
-        }
     }
 }
