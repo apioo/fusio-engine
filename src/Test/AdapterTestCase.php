@@ -26,6 +26,7 @@ use Fusio\Engine\ActionInterface;
 use Fusio\Engine\AdapterInterface;
 use Fusio\Engine\ConfigurableInterface;
 use Fusio\Engine\ConnectionInterface;
+use Fusio\Engine\Factory\ContainerAwareInterface;
 use Fusio\Engine\Factory\ResolverInterface;
 use Fusio\Engine\Form\Builder;
 use Fusio\Engine\Form\Container;
@@ -126,6 +127,10 @@ abstract class AdapterTestCase extends TestCase
                         $provider = new $class();
                         if (!$provider instanceof Routes\ProviderInterface) {
                             $this->fail('Defined routes ' . $class . ' must be an instance of ' . Routes\ProviderInterface::class);
+                        }
+
+                        if ($provider instanceof ContainerAwareInterface) {
+                            $provider->setContainer($this->getContainer());
                         }
 
                         $this->validateRoutes($provider);
