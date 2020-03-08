@@ -86,35 +86,12 @@ class Action implements ActionInterface
         }
 
         if ($action instanceof ServiceAwareInterface) {
-            $service = $this->typeResolver->getServiceByType(ConnectorInterface::class);
-            if ($service instanceof ConnectorInterface) {
-                $action->setConnector($service);
-            }
-
-            $service = $this->typeResolver->getServiceByType(Response\FactoryInterface::class);
-            if ($service instanceof Response\FactoryInterface) {
-                $action->setResponse($service);
-            }
-
-            $service = $this->typeResolver->getServiceByType(ProcessorInterface::class);
-            if ($service instanceof ProcessorInterface) {
-                $action->setProcessor($service);
-            }
-
-            $service = $this->typeResolver->getServiceByType(DispatcherInterface::class);
-            if ($service instanceof DispatcherInterface) {
-                $action->setDispatcher($service);
-            }
-
-            $service = $this->typeResolver->getServiceByType(LoggerInterface::class);
-            if ($service instanceof LoggerInterface) {
-                $action->setLogger($service);
-            }
-
-            $service = $this->typeResolver->getServiceByType(CacheInterface::class);
-            if ($service instanceof CacheInterface) {
-                $action->setCache($service);
-            }
+            $action->setConnector($this->typeResolver->getServiceByType(ConnectorInterface::class));
+            $action->setResponse($this->typeResolver->getServiceByType(Response\FactoryInterface::class));
+            $action->setProcessor($this->typeResolver->getServiceByType(ProcessorInterface::class));
+            $action->setDispatcher($this->typeResolver->getServiceByType(DispatcherInterface::class));
+            $action->setLogger($this->typeResolver->getServiceByType(LoggerInterface::class));
+            $action->setCache($this->typeResolver->getServiceByType(CacheInterface::class));
         }
 
         if ($action instanceof ContainerAwareInterface) {
