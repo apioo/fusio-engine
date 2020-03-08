@@ -22,13 +22,17 @@
 namespace Fusio\Engine\Dependency;
 
 use Doctrine\Common\Annotations;
-use Doctrine\Common\Cache;
+use Doctrine\Common\Cache\ArrayCache;
+use Fusio\Engine\Cache;
+use Fusio\Engine\CacheInterface;
 use Fusio\Engine\Connector;
 use Fusio\Engine\ConnectorInterface;
 use Fusio\Engine\Dispatcher;
 use Fusio\Engine\DispatcherInterface;
 use Fusio\Engine\Factory;
 use Fusio\Engine\Form;
+use Fusio\Engine\Logger;
+use Fusio\Engine\LoggerInterface;
 use Fusio\Engine\Parser;
 use Fusio\Engine\Processor;
 use Fusio\Engine\ProcessorInterface;
@@ -36,11 +40,12 @@ use Fusio\Engine\Repository;
 use Fusio\Engine\Response;
 use Fusio\Engine\Schema;
 use Monolog\Handler\NullHandler;
-use Monolog\Logger;
-use Psr\Log\LoggerInterface;
-use Psr\SimpleCache\CacheInterface;
-use PSX\Cache\SimpleCache;
+use PSX\Cache\Pool;
+use PSX\Dependency\AutowireResolver;
+use PSX\Dependency\Inspector\ContainerInspector;
 use PSX\Dependency\ObjectBuilder;
+use PSX\Dependency\ObjectBuilderInterface;
+use PSX\Dependency\TypeResolver;
 
 /**
  * EngineTrait
@@ -51,10 +56,7 @@ use PSX\Dependency\ObjectBuilder;
  */
 trait EngineTrait
 {
-    /**
-     * @return \Fusio\Engine\Parser\ParserInterface
-     */
-    public function getActionParser()
+    public function getActionParser(): Parser\ParserInterface
     {
         return new Parser\Memory(
             $this->get('action_factory'),
@@ -63,33 +65,24 @@ trait EngineTrait
         );
     }
 
-    /**
-     * @return \Fusio\Engine\Factory\ActionInterface
-     */
-    public function getActionFactory()
+    public function getActionFactory(): Factory\ActionInterface
     {
-        return new Factory\Action($this, [
-            ConnectorInterface::class => 'connector',
-            Response\FactoryInterface::class => 'response',
-            ProcessorInterface::class => 'processor',
-            DispatcherInterface::class => 'dispatcher',
-            LoggerInterface::class => 'logger',
-            CacheInterface::class => 'cache',
-        ]);
+        $inspector = new ContainerInspector($this, $this->get('annotation_reader'));
+        $typeResolver = new TypeResolver($this, $inspector);
+        $autowire = new AutowireResolver($typeResolver);
+
+        $factory = new Factory\Action($this, $typeResolver);
+        $factory->addResolver(new Factory\Resolver\PhpClass($autowire));
+
+        return $factory;
     }
 
-    /**
-     * @return \Fusio\Engine\Repository\ActionInterface
-     */
-    public function getActionRepository()
+    public function getActionRepository(): Repository\ActionInterface
     {
         return new Repository\ActionMemory();
     }
 
-    /**
-     * @return \Fusio\Engine\ProcessorInterface
-     */
-    public function getProcessor()
+    public function getProcessor(): ProcessorInterface
     {
         return new Processor(
             $this->get('action_repository'),
@@ -97,18 +90,12 @@ trait EngineTrait
         );
     }
 
-    /**
-     * @return \Fusio\Engine\DispatcherInterface
-     */
-    public function getDispatcher()
+    public function getDispatcher(): DispatcherInterface
     {
         return new Dispatcher();
     }
 
-    /**
-     * @return \Fusio\Engine\Parser\ParserInterface
-     */
-    public function getConnectionParser()
+    public function getConnectionParser(): Parser\ParserInterface
     {
         return new Parser\Memory(
             $this->get('connection_factory'),
@@ -117,26 +104,17 @@ trait EngineTrait
         );
     }
 
-    /**
-     * @return \Fusio\Engine\Factory\ConnectionInterface
-     */
-    public function getConnectionFactory()
+    public function getConnectionFactory(): Factory\ConnectionInterface
     {
         return new Factory\Connection($this);
     }
 
-    /**
-     * @return \Fusio\Engine\Repository\ConnectionInterface
-     */
-    public function getConnectionRepository()
+    public function getConnectionRepository(): Repository\ConnectionInterface
     {
         return new Repository\ConnectionMemory();
     }
 
-    /**
-     * @return \Fusio\Engine\ConnectorInterface
-     */
-    public function getConnector()
+    public function getConnector(): ConnectorInterface
     {
         return new Connector(
             $this->get('connection_repository'),
@@ -144,42 +122,27 @@ trait EngineTrait
         );
     }
 
-    /**
-     * @return \Fusio\Engine\Schema\ParserInterface
-     */
-    public function getSchemaParser()
+    public function getSchemaParser(): Schema\ParserInterface
     {
         return new Schema\Parser();
     }
 
-    /**
-     * @return \Fusio\Engine\Schema\LoaderInterface
-     */
-    public function getSchemaLoader()
+    public function getSchemaLoader(): Schema\LoaderInterface
     {
         return new Schema\Loader();
     }
 
-    /**
-     * @return \Fusio\Engine\Repository\AppInterface
-     */
-    public function getAppRepository()
+    public function getAppRepository(): Repository\AppInterface
     {
         return new Repository\AppMemory();
     }
 
-    /**
-     * @return \Fusio\Engine\Repository\UserInterface
-     */
-    public function getUserRepository()
+    public function getUserRepository(): Repository\UserInterface
     {
         return new Repository\UserMemory();
     }
 
-    /**
-     * @return \Fusio\Engine\Form\ElementFactoryInterface
-     */
-    public function getFormElementFactory()
+    public function getFormElementFactory(): Form\ElementFactoryInterface
     {
         return new Form\ElementFactory(
             $this->get('action_repository'),
@@ -187,78 +150,27 @@ trait EngineTrait
         );
     }
 
-    /**
-     * @return \Fusio\Engine\Response\FactoryInterface
-     */
-    public function getResponse()
+    public function getResponse(): Response\FactoryInterface
     {
         return new Response\Factory();
     }
 
-    /**
-     * @return \PSX\Dependency\ObjectBuilderInterface
-     */
-    public function getObjectBuilder()
+    public function getObjectBuilder(): ObjectBuilderInterface
     {
         return new ObjectBuilder(
             $this,
             $this->get('annotation_reader'),
-            $this->get('cache'),
+            new Pool(new ArrayCache()),
             true
         );
     }
 
-    /**
-     * @return \Doctrine\Common\Annotations\Reader
-     */
-    public function getAnnotationReader()
+    public function getAnnotationReader(): Annotations\Reader
     {
-        return $this->newDoctrineAnnotationImpl([
-            'PSX\Framework\Annotation',
-        ]);
-    }
+        $namespaces = [
+            'PSX\Dependency\Annotation',
+        ];
 
-    /**
-     * @return \Psr\Log\LoggerInterface
-     */
-    public function getLogger()
-    {
-        $logger = new Logger('psx');
-        $logger->pushHandler($this->newLoggerHandlerImpl());
-
-        return $logger;
-    }
-
-    /**
-     * @return \Psr\SimpleCache\CacheInterface
-     */
-    public function getCache()
-    {
-        return new SimpleCache($this->newDoctrineCacheImpl());
-    }
-
-    /**
-     * @return \Monolog\Handler\HandlerInterface
-     */
-    protected function newLoggerHandlerImpl()
-    {
-        return new NullHandler();
-    }
-
-    /**
-     * @return \Doctrine\Common\Cache\CacheProvider
-     */
-    protected function newDoctrineCacheImpl()
-    {
-        return new Cache\ArrayCache();
-    }
-
-    /**
-     * @param array $namespaces
-     * @return \Doctrine\Common\Annotations\Reader
-     */
-    protected function newDoctrineAnnotationImpl(array $namespaces)
-    {
         $this->registerAnnotationLoader($namespaces);
 
         $reader = new Annotations\SimpleAnnotationReader();
@@ -267,6 +179,19 @@ trait EngineTrait
         }
 
         return $reader;
+    }
+
+    public function getLogger(): LoggerInterface
+    {
+        $logger = new Logger('engine');
+        $logger->pushHandler(new NullHandler());
+
+        return $logger;
+    }
+
+    public function getCache(): CacheInterface
+    {
+        return new Cache(new ArrayCache());
     }
 
     /**
