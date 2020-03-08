@@ -42,10 +42,13 @@ use Fusio\Engine\Schema;
 use Monolog\Handler\NullHandler;
 use PSX\Cache\Pool;
 use PSX\Dependency\AutowireResolver;
+use PSX\Dependency\AutowireResolverInterface;
 use PSX\Dependency\Inspector\ContainerInspector;
+use PSX\Dependency\InspectorInterface;
 use PSX\Dependency\ObjectBuilder;
 use PSX\Dependency\ObjectBuilderInterface;
 use PSX\Dependency\TypeResolver;
+use PSX\Dependency\TypeResolverInterface;
 
 /**
  * EngineTrait
@@ -67,12 +70,8 @@ trait EngineTrait
 
     public function getActionFactory(): Factory\ActionInterface
     {
-        $inspector = new ContainerInspector($this, $this->get('annotation_reader'));
-        $typeResolver = new TypeResolver($this, $inspector);
-        $autowire = new AutowireResolver($typeResolver);
-
-        $factory = new Factory\Action($this, $typeResolver);
-        $factory->addResolver(new Factory\Resolver\PhpClass($autowire));
+        $factory = new Factory\Action($this, $this->get('container_type_resolver'));
+        $factory->addResolver(new Factory\Resolver\PhpClass($this->get('container_autowire_resolver')));
 
         return $factory;
     }
@@ -106,7 +105,7 @@ trait EngineTrait
 
     public function getConnectionFactory(): Factory\ConnectionInterface
     {
-        return new Factory\Connection($this);
+        return new Factory\Connection($this, $this->get('container_autowire_resolver'));
     }
 
     public function getConnectionRepository(): Repository\ConnectionInterface
@@ -155,6 +154,19 @@ trait EngineTrait
         return new Response\Factory();
     }
 
+    public function getLogger(): LoggerInterface
+    {
+        $logger = new Logger('engine');
+        $logger->pushHandler(new NullHandler());
+
+        return $logger;
+    }
+
+    public function getCache(): CacheInterface
+    {
+        return new Cache(new ArrayCache());
+    }
+
     public function getObjectBuilder(): ObjectBuilderInterface
     {
         return new ObjectBuilder(
@@ -181,17 +193,19 @@ trait EngineTrait
         return $reader;
     }
 
-    public function getLogger(): LoggerInterface
+    public function getContainerInspector(): InspectorInterface
     {
-        $logger = new Logger('engine');
-        $logger->pushHandler(new NullHandler());
-
-        return $logger;
+        return new ContainerInspector($this, $this->get('annotation_reader'));
     }
 
-    public function getCache(): CacheInterface
+    public function getContainerTypeResolver(): TypeResolverInterface
     {
-        return new Cache(new ArrayCache());
+        return new TypeResolver($this, $this->get('container_inspector'));
+    }
+
+    public function getContainerAutowireResolver(): AutowireResolverInterface
+    {
+        return new AutowireResolver($this->get('container_type_resolver'));
     }
 
     /**
