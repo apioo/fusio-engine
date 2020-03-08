@@ -23,14 +23,14 @@ namespace Fusio\Engine\Factory;
 
 use Fusio\Engine\Action\ServiceAwareInterface;
 use Fusio\Engine\ActionInterface as EngineActionInterface;
+use Fusio\Engine\CacheInterface;
 use Fusio\Engine\ConnectorInterface;
 use Fusio\Engine\DispatcherInterface;
-use Fusio\Engine\Factory\Resolver\PhpClass;
+use Fusio\Engine\LoggerInterface;
 use Fusio\Engine\ProcessorInterface;
 use Fusio\Engine\Response;
 use Psr\Container\ContainerInterface;
-use Psr\Log\LoggerInterface;
-use Psr\SimpleCache\CacheInterface;
+use PSX\Dependency\TypeResolverInterface;
 use RuntimeException;
 
 /**
@@ -48,26 +48,20 @@ class Action implements ActionInterface
     protected $container;
 
     /**
-     * @var array
+     * @var \PSX\Dependency\TypeResolverInterface
      */
-    protected $serviceNames;
+    protected $typeResolver;
 
     /**
      * @var array
      */
     protected $resolvers;
 
-    /**
-     * @param \Psr\Container\ContainerInterface $container
-     * @param array $serviceNames
-     */
-    public function __construct(ContainerInterface $container, array $serviceNames)
+    public function __construct(ContainerInterface $container, TypeResolverInterface $typeResolver)
     {
         $this->container    = $container;
-        $this->serviceNames = $serviceNames;
+        $this->typeResolver = $typeResolver;
         $this->resolvers    = [];
-
-        $this->addResolver(new PhpClass());
     }
 
     /**
@@ -78,7 +72,11 @@ class Action implements ActionInterface
         if (!empty($engine) && isset($this->resolvers[$engine])) {
             $resolver = $this->resolvers[$engine];
         } else {
-            $resolver = $this->resolvers[PhpClass::class];
+            $resolver = reset($this->resolvers);
+
+            if (!$resolver instanceof ResolverInterface) {
+                throw new RuntimeException('No resolver was configured');
+            }
         }
 
         $action = $resolver->resolve($className);
@@ -88,32 +86,32 @@ class Action implements ActionInterface
         }
 
         if ($action instanceof ServiceAwareInterface) {
-            $service = $this->getServiceImplementation(ConnectorInterface::class);
+            $service = $this->typeResolver->getServiceByType(ConnectorInterface::class);
             if ($service instanceof ConnectorInterface) {
                 $action->setConnector($service);
             }
 
-            $service = $this->getServiceImplementation(Response\FactoryInterface::class);
+            $service = $this->typeResolver->getServiceByType(Response\FactoryInterface::class);
             if ($service instanceof Response\FactoryInterface) {
                 $action->setResponse($service);
             }
 
-            $service = $this->getServiceImplementation(ProcessorInterface::class);
+            $service = $this->typeResolver->getServiceByType(ProcessorInterface::class);
             if ($service instanceof ProcessorInterface) {
                 $action->setProcessor($service);
             }
 
-            $service = $this->getServiceImplementation(DispatcherInterface::class);
+            $service = $this->typeResolver->getServiceByType(DispatcherInterface::class);
             if ($service instanceof DispatcherInterface) {
                 $action->setDispatcher($service);
             }
 
-            $service = $this->getServiceImplementation(LoggerInterface::class);
+            $service = $this->typeResolver->getServiceByType(LoggerInterface::class);
             if ($service instanceof LoggerInterface) {
                 $action->setLogger($service);
             }
 
-            $service = $this->getServiceImplementation(CacheInterface::class);
+            $service = $this->typeResolver->getServiceByType(CacheInterface::class);
             if ($service instanceof CacheInterface) {
                 $action->setCache($service);
             }
@@ -132,18 +130,5 @@ class Action implements ActionInterface
     public function addResolver(ResolverInterface $resolver)
     {
         $this->resolvers[get_class($resolver)] = $resolver;
-    }
-
-    /**
-     * @param string $interface
-     * @return object
-     */
-    private function getServiceImplementation($interface)
-    {
-        if (isset($this->serviceNames[$interface])) {
-            return $this->container->get($this->serviceNames[$interface]);
-        } else {
-            return null;
-        }
     }
 }
