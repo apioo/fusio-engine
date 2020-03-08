@@ -23,6 +23,7 @@ namespace Fusio\Engine\Factory\Resolver;
 
 use Fusio\Engine\Exception\FactoryResolveException;
 use Fusio\Engine\Factory\ResolverInterface;
+use PSX\Dependency\AutowireResolverInterface;
 
 /**
  * PhpClass
@@ -34,8 +35,17 @@ use Fusio\Engine\Factory\ResolverInterface;
 class PhpClass implements ResolverInterface
 {
     /**
-     * @param string $className
-     * @return \Fusio\Engine\ActionInterface
+     * @var \PSX\Dependency\AutowireResolverInterface
+     */
+    private $autowireResolver;
+
+    public function __construct(AutowireResolverInterface $autowireResolver)
+    {
+        $this->autowireResolver = $autowireResolver;
+    }
+
+    /**
+     * @inheritDoc
      */
     public function resolve($className)
     {
@@ -43,6 +53,6 @@ class PhpClass implements ResolverInterface
             throw new FactoryResolveException('Could not resolve class ' . $className);
         }
 
-        return new $className();
+        return $this->autowireResolver->getObject($className);
     }
 }
