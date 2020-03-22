@@ -32,11 +32,13 @@ use Psr\Container\ContainerInterface;
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    https://www.fusio-project.org
+ * @deprecated - please use autowiring and constructor injection
  */
 interface ContainerAwareInterface
 {
     /**
      * @param \Psr\Container\ContainerInterface $container
+     * @deprecated - please use autowiring and constructor injection
      */
     public function setContainer(ContainerInterface $container);
 }
