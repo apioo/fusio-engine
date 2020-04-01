@@ -23,12 +23,17 @@ namespace Fusio\Engine\Test;
 
 use Fusio\Engine\Context;
 use Fusio\Engine\Dependency\EngineContainer;
+use Fusio\Engine\Factory;
+use Fusio\Engine\Form\ElementFactoryInterface;
 use Fusio\Engine\Model\Action;
 use Fusio\Engine\Model\App;
 use Fusio\Engine\Model\User;
 use Fusio\Engine\Parameters;
+use Fusio\Engine\Repository;
 use Fusio\Engine\Request;
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\StreamInterface;
+use PSX\Dependency\AutowireResolverInterface;
 use PSX\Http\Environment\HttpContext;
 use PSX\Http\Request as HttpRequest;
 use PSX\Record\Record;
@@ -72,19 +77,12 @@ trait EngineTestCaseTrait
         );
     }
 
-    /**
-     * @param array $parameters
-     * @return \Fusio\Engine\Parameters
-     */
-    protected function getParameters(array $parameters = array())
+    protected function getParameters(array $parameters = array()): Parameters
     {
         return new Parameters($parameters);
     }
 
-    /**
-     * @return \Fusio\Engine\Context
-     */
-    protected function getContext()
+    protected function getContext(): Context
     {
         $app = new App();
         $app->setAnonymous(false);
@@ -111,50 +109,37 @@ trait EngineTestCaseTrait
         return new Context(34, 'http://127.0.0.1', $app, $user);
     }
 
-    /**
-     * @return \Fusio\Engine\Factory\ActionInterface
-     */
-    protected function getActionFactory()
+    protected function getActionFactory(): Factory\ActionInterface
     {
         return $this->getContainer()->get('action_factory');
     }
 
-    /**
-     * @return \Fusio\Engine\Repository\ActionInterface
-     */
-    protected function getActionRepository()
+    protected function getActionRepository(): Repository\ActionInterface
     {
         return $this->getContainer()->get('action_repository');
     }
 
-    /**
-     * @return \Fusio\Engine\Factory\ConnectionInterface
-     */
-    protected function getConnectionFactory()
+    protected function getConnectionFactory(): Factory\ConnectionInterface
     {
         return $this->getContainer()->get('connection_factory');
     }
 
-    /**
-     * @return \Fusio\Engine\Repository\ConnectionInterface
-     */
-    protected function getConnectionRepository()
+    protected function getConnectionRepository(): Repository\ConnectionInterface
     {
         return $this->getContainer()->get('connection_repository');
     }
 
-    /**
-     * @return \Fusio\Engine\Form\ElementFactoryInterface
-     */
-    protected function getFormElementFactory()
+    protected function getFormElementFactory(): ElementFactoryInterface
     {
         return $this->getContainer()->get('form_element_factory');
     }
 
-    /**
-     * @return \Psr\Container\ContainerInterface
-     */
-    protected function getContainer()
+    protected function getContainerAutowireResolver(): AutowireResolverInterface
+    {
+        return $this->getContainer()->get('container_autowire_resolver');
+    }
+
+    protected function getContainer(): ContainerInterface
     {
         if (!self::$container) {
             self::$container = $this->newContainer();

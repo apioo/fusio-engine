@@ -107,27 +107,23 @@ abstract class AdapterTestCase extends TestCase
 
                         $this->validateConnection($connection);
                     } elseif ($type === 'user') {
-                        $provider = new $class('google');
+                        $provider = $this->getContainerAutowireResolver()->getObject($class);
                         if (!$provider instanceof User\ProviderInterface) {
                             $this->fail('Defined user ' . $class . ' must be an instance of ' . User\ProviderInterface::class);
                         }
 
                         $this->validateUser($provider);
                     } elseif ($type === 'payment') {
-                        $provider = new $class();
+                        $provider = $this->getContainerAutowireResolver()->getObject($class);
                         if (!$provider instanceof Payment\ProviderInterface) {
                             $this->fail('Defined payment ' . $class . ' must be an instance of ' . Payment\ProviderInterface::class);
                         }
 
                         $this->validatePayment($provider);
                     } elseif ($type === 'routes') {
-                        $provider = new $class();
+                        $provider = $this->getContainerAutowireResolver()->getObject($class);
                         if (!$provider instanceof Routes\ProviderInterface) {
                             $this->fail('Defined routes ' . $class . ' must be an instance of ' . Routes\ProviderInterface::class);
-                        }
-
-                        if ($provider instanceof ContainerAwareInterface) {
-                            $provider->setContainer($this->getContainer());
                         }
 
                         $this->validateRoutes($provider);
