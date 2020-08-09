@@ -1,29 +1,19 @@
 {
-  "$schema": "http:\/\/json-schema.org\/draft-04\/schema#",
-  "type": "object",
-  "title": "adapter",
   "definitions": {
     "ClassList": {
       "type": "array",
       "items": {
-        "$ref": "#\/definitions\/ClassName"
+        "type": "string"
       }
-    },
-    "ClassName": {
-      "type": "string"
     },
     "Responses": {
       "type": "object",
-      "title": "responses",
-      "patternProperties": {
-        "^([0-9]{3})$": {
-          "type": "string"
-        }
+      "additionalProperties": {
+        "type": "string"
       }
     },
     "Method": {
       "type": "object",
-      "title": "method",
       "properties": {
         "method": {
           "type": "string"
@@ -50,7 +40,7 @@
           "type": "string"
         },
         "responses": {
-          "$ref": "#\/definitions\/Responses"
+          "$ref": "Responses"
         },
         "action": {
           "type": "string"
@@ -59,16 +49,12 @@
     },
     "Methods": {
       "type": "object",
-      "title": "methods",
-      "patternProperties": {
-        "^(GET|POST|PUT|PATCH|DELETE)$": {
-          "$ref": "#\/definitions\/Method"
-        }
+      "additionalProperties": {
+        "$ref": "Method"
       }
     },
     "Version": {
       "type": "object",
-      "title": "version",
       "properties": {
         "version": {
           "type": "integer"
@@ -83,59 +69,20 @@
           }
         },
         "methods": {
-          "$ref": "#\/definitions\/Methods"
+          "$ref": "Methods"
         }
       }
     },
     "Config": {
       "type": "object",
-      "title": "config",
-      "additionalProperties": {
-        "oneOf": [
-          {
-            "type": "string"
-          },
-          {
-            "type": "number"
-          },
-          {
-            "type": "boolean"
-          },
-          {
-            "type": "null"
-          },
-          {
-            "type": "array",
-            "items": {
-              "oneOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "number"
-                },
-                {
-                  "type": "boolean"
-                },
-                {
-                  "type": "null"
-                }
-              ]
-            },
-            "maxItems": 16
-          }
-        ]
-      },
+      "additionalProperties": true,
       "maxProperties": 16
     },
     "Source": {
-      "type": "object",
-      "title": "source",
-      "additionalProperties": true
+      "type": "object"
     },
     "Routes": {
       "type": "object",
-      "title": "routes",
       "properties": {
         "id": {
           "type": "integer"
@@ -146,14 +93,13 @@
         "config": {
           "type": "array",
           "items": {
-            "$ref": "#\/definitions\/Version"
+            "$ref": "Version"
           }
         }
       }
     },
     "Action": {
       "type": "object",
-      "title": "action",
       "properties": {
         "id": {
           "type": "integer"
@@ -172,13 +118,12 @@
           "type": "string"
         },
         "config": {
-          "$ref": "#\/definitions\/Config"
+          "$ref": "Config"
         }
       }
     },
     "Schema": {
       "type": "object",
-      "title": "schema",
       "properties": {
         "id": {
           "type": "integer"
@@ -191,13 +136,12 @@
           "pattern": "[a-zA-Z0-9\\-\\_]{3,64}"
         },
         "source": {
-          "$ref": "#\/definitions\/Source"
+          "$ref": "Source"
         }
       }
     },
     "Connection": {
       "type": "object",
-      "title": "connection",
       "properties": {
         "id": {
           "type": "integer"
@@ -210,51 +154,54 @@
           "type": "string"
         },
         "config": {
-          "$ref": "#\/definitions\/Config"
+          "$ref": "Config"
+        }
+      }
+    },
+    "Definitions": {
+      "type": "object",
+      "properties": {
+        "actionClass": {
+          "$ref": "ClassList"
+        },
+        "connectionClass": {
+          "$ref": "ClassList"
+        },
+        "userClass": {
+          "$ref": "ClassList"
+        },
+        "paymentClass": {
+          "$ref": "ClassList"
+        },
+        "routesClass": {
+          "$ref": "ClassList"
+        },
+        "routes": {
+          "type": "array",
+          "items": {
+            "$ref": "Routes"
+          }
+        },
+        "action": {
+          "type": "array",
+          "items": {
+            "$ref": "Action"
+          }
+        },
+        "schema": {
+          "type": "array",
+          "items": {
+            "$ref": "Schema"
+          }
+        },
+        "connection": {
+          "type": "array",
+          "items": {
+            "$ref": "Connection"
+          }
         }
       }
     }
   },
-  "properties": {
-    "actionClass": {
-      "$ref": "#\/definitions\/ClassList"
-    },
-    "connectionClass": {
-      "$ref": "#\/definitions\/ClassList"
-    },
-    "userClass": {
-      "$ref": "#\/definitions\/ClassList"
-    },
-    "paymentClass": {
-      "$ref": "#\/definitions\/ClassList"
-    },
-    "routesClass": {
-      "$ref": "#\/definitions\/ClassList"
-    },
-    "routes": {
-      "type": "array",
-      "items": {
-        "$ref": "#\/definitions\/Routes"
-      }
-    },
-    "action": {
-      "type": "array",
-      "items": {
-        "$ref": "#\/definitions\/Action"
-      }
-    },
-    "schema": {
-      "type": "array",
-      "items": {
-        "$ref": "#\/definitions\/Schema"
-      }
-    },
-    "connection": {
-      "type": "array",
-      "items": {
-        "$ref": "#\/definitions\/Connection"
-      }
-    }
-  },
-  "additionalProperties": false
+  "$ref": "Definitions"
 }
