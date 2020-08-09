@@ -22,6 +22,7 @@
 namespace Fusio\Engine\Tests;
 
 use Fusio\Engine\Connector;
+use Fusio\Engine\Exception\ConnectionNotFoundException;
 use Fusio\Engine\Model\Connection;
 use Fusio\Engine\Test\CallbackConnection;
 use Fusio\Engine\Test\EngineTestCaseTrait;
@@ -56,11 +57,10 @@ class ConnectorTest extends TestCase
         $this->assertInstanceOf(\stdClass::class, $connector->getConnection('foo'));
     }
 
-    /**
-     * @expectedException \Fusio\Engine\Exception\ConnectionNotFoundException
-     */
     public function testGetConnectionInvalid()
     {
+        $this->expectException(ConnectionNotFoundException::class);
+
         $repository = $this->getConnectionRepository();
         $factory    = $this->getConnectionFactory();
         $connector  = new Connector($repository, $factory);

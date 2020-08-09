@@ -21,6 +21,7 @@
 
 namespace Fusio\Engine\Tests;
 
+use Fusio\Engine\Exception\ActionNotFoundException;
 use Fusio\Engine\Model\Action;
 use Fusio\Engine\Processor;
 use Fusio\Engine\Response\FactoryInterface;
@@ -68,11 +69,10 @@ class ProcessorTest extends TestCase
         $this->assertEquals(['foo' => 'bar'], $response->getBody());
     }
 
-    /**
-     * @expectedException \Fusio\Engine\Exception\ActionNotFoundException
-     */
     public function testGetConnectionInvalid()
     {
+        $this->expectException(ActionNotFoundException::class);
+
         $repository = $this->getActionRepository();
         $factory    = $this->getActionFactory();
         $processor  = new Processor($repository, $factory);
