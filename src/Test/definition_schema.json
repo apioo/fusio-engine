@@ -79,7 +79,8 @@
       "maxProperties": 16
     },
     "Source": {
-      "type": "object"
+      "type": "object",
+      "additionalProperties": true
     },
     "Routes": {
       "type": "object",
