@@ -21,8 +21,8 @@
 
 namespace Fusio\Engine\Schema;
 
+use PSX\Schema\Parser\TypeSchema;
 use PSX\Schema\Parser\JsonSchema;
-use PSX\Schema\Parser\JsonSchema\RefResolver;
 
 /**
  * Parser
@@ -38,10 +38,18 @@ class Parser implements ParserInterface
      */
     public function parse($source)
     {
-        $resolver = new RefResolver();
-        $parser   = new JsonSchema(null, $resolver);
-        $schema   = $parser->parse($source);
+        if (class_exists(TypeSchema::class)) {
+            $resolver = new TypeSchema\ImportResolver();
+            $parser   = new TypeSchema($resolver);
+            $schema   = $parser->parse($source);
 
-        return serialize($schema);
+            return serialize($schema);
+        } else {
+            $resolver = new JsonSchema\RefResolver();
+            $parser   = new JsonSchema(null, $resolver);
+            $schema   = $parser->parse($source);
+
+            return serialize($schema);
+        }
     }
 }
