@@ -26,7 +26,6 @@ use Fusio\Engine\ActionInterface;
 use Fusio\Engine\AdapterInterface;
 use Fusio\Engine\ConfigurableInterface;
 use Fusio\Engine\ConnectionInterface;
-use Fusio\Engine\Factory\ContainerAwareInterface;
 use Fusio\Engine\Form\Builder;
 use Fusio\Engine\Form\Container;
 use Fusio\Engine\Payment;
