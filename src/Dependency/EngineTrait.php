@@ -121,16 +121,6 @@ trait EngineTrait
         );
     }
 
-    public function getSchemaParser(): Schema\ParserInterface
-    {
-        return new Schema\Parser();
-    }
-
-    public function getSchemaLoader(): Schema\LoaderInterface
-    {
-        return new Schema\Loader();
-    }
-
     public function getAppRepository(): Repository\AppInterface
     {
         return new Repository\AppMemory();
