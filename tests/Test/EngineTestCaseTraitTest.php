@@ -153,8 +153,6 @@ JSON;
         $this->assertInstanceOf(Factory\ConnectionInterface::class, $this->getContainer()->get('connection_factory'));
         $this->assertInstanceOf(Repository\ConnectionInterface::class, $this->getContainer()->get('connection_repository'));
         $this->assertInstanceOf(ConnectorInterface::class, $this->getContainer()->get('connector'));
-        $this->assertInstanceOf(Schema\ParserInterface::class, $this->getContainer()->get('schema_parser'));
-        $this->assertInstanceOf(Schema\LoaderInterface::class, $this->getContainer()->get('schema_loader'));
         $this->assertInstanceOf(Repository\AppInterface::class, $this->getContainer()->get('app_repository'));
         $this->assertInstanceOf(Repository\UserInterface::class, $this->getContainer()->get('user_repository'));
         $this->assertInstanceOf(Form\ElementFactoryInterface::class, $this->getContainer()->get('form_element_factory'));
