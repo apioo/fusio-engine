@@ -30,12 +30,12 @@ use Fusio\Engine\Model\App;
 use Fusio\Engine\Model\User;
 use Fusio\Engine\Parameters;
 use Fusio\Engine\Repository;
-use Fusio\Engine\Request;
+use Fusio\Engine\Request\HttpRequest;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\StreamInterface;
 use PSX\Dependency\AutowireResolverInterface;
 use PSX\Http\Environment\HttpContext;
-use PSX\Http\Request as HttpRequest;
+use PSX\Http\Request;
 use PSX\Record\Record;
 use PSX\Record\RecordInterface;
 use PSX\Uri\Uri;
@@ -61,17 +61,17 @@ trait EngineTestCaseTrait
      * @param array $headers
      * @param \PSX\Record\RecordInterface|null $parsedBody
      * @param \Psr\Http\Message\StreamInterface|null $rawBody
-     * @return \Fusio\Engine\Request
+     * @return \Fusio\Engine\Request\HttpInterface
      */
     protected function getRequest($method = null, array $uriFragments = [], array $parameters = [], array $headers = [], RecordInterface $parsedBody = null, StreamInterface $rawBody = null)
     {
         $uri = new Uri('http://127.0.0.1/foo');
         $uri = $uri->withParameters($parameters);
 
-        $request = new HttpRequest($uri, $method === null ? 'GET' : $method, $headers, $rawBody);
+        $request = new Request($uri, $method === null ? 'GET' : $method, $headers, $rawBody);
         $context = new HttpContext($request, $uriFragments);
 
-        return new Request(
+        return new HttpRequest(
             $context,
             $parsedBody === null ? new Record() : $parsedBody
         );

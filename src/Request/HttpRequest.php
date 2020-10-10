@@ -19,7 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Fusio\Engine;
+namespace Fusio\Engine\Request;
 
 use PSX\Http\Environment\HttpContextInterface;
 use PSX\Record\RecordInterface;
@@ -31,7 +31,7 @@ use PSX\Record\RecordInterface;
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    https://www.fusio-project.org
  */
-class Request implements RequestInterface
+class HttpRequest implements HttpInterface
 {
     /**
      * @var \PSX\Http\Environment\HttpContextInterface
@@ -51,6 +51,14 @@ class Request implements RequestInterface
     {
         $this->context = $context;
         $this->body    = $body;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function get($name)
+    {
+        return $this->getUriFragment($name) ?? ($this->getParameter($name) ?? $this->getBody()->getProperty($name));
     }
 
     /**

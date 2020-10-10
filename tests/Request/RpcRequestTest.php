@@ -19,25 +19,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Fusio\Engine;
+namespace Fusio\Engine\Tests\Request;
+
+use Fusio\Engine\Request\RpcRequest;
+use Fusio\Engine\RequestInterface;
+use PHPUnit\Framework\TestCase;
+use PSX\Record\Record;
 
 /**
- * Represents an incoming request, this is either an HTTP or RPC request. This
- * object can be used to access all values from an incoming request
+ * RpcRequestTest
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    https://www.fusio-project.org
  */
-interface RequestInterface
+class RpcRequestTest extends TestCase
 {
-    /**
-     * Returns a value from the request. To make your action independent of the
-     * request context i.e. HTTP or RPC use only this method. Otherwise you can
-     * get also values from the specific request instance 
-     * 
-     * @param string $name
-     * @return mixed
-     */
-    public function get($name);
+    public function testRequest()
+    {
+        $request = new RpcRequest(Record::fromArray(['foo' => 'bar']));
+
+        $this->assertInstanceOf(RequestInterface::class, $request);
+        $this->assertEquals('bar', $request->get('foo'));
+    }
 }

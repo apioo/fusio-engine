@@ -19,25 +19,31 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Fusio\Engine;
+namespace Fusio\Engine\Tests\Request;
+
+use Fusio\Engine\Request\HttpRequest;
+use Fusio\Engine\RequestInterface;
+use PHPUnit\Framework\TestCase;
+use PSX\Http\Environment\HttpContext;
+use PSX\Http\Request;
+use PSX\Record\Record;
+use PSX\Uri\Uri;
 
 /**
- * Represents an incoming request, this is either an HTTP or RPC request. This
- * object can be used to access all values from an incoming request
+ * HttpRequestTest
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    https://www.fusio-project.org
  */
-interface RequestInterface
+class HttpRequestTest extends TestCase
 {
-    /**
-     * Returns a value from the request. To make your action independent of the
-     * request context i.e. HTTP or RPC use only this method. Otherwise you can
-     * get also values from the specific request instance 
-     * 
-     * @param string $name
-     * @return mixed
-     */
-    public function get($name);
+    public function testRequest()
+    {
+        $context = new HttpContext(new Request(new Uri('/'), 'GET'), []);
+        $request = new HttpRequest($context, Record::fromArray(['foo' => 'bar']));
+
+        $this->assertInstanceOf(RequestInterface::class, $request);
+        $this->assertEquals('bar', $request->get('foo'));
+    }
 }

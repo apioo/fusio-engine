@@ -19,25 +19,32 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Fusio\Engine;
+namespace Fusio\Engine\Request;
+
+use Fusio\Engine\RequestInterface;
 
 /**
- * Represents an incoming request, this is either an HTTP or RPC request. This
- * object can be used to access all values from an incoming request
+ * RpcInterface
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    https://www.fusio-project.org
  */
-interface RequestInterface
+interface RpcInterface extends RequestInterface
 {
     /**
-     * Returns a value from the request. To make your action independent of the
-     * request context i.e. HTTP or RPC use only this method. Otherwise you can
-     * get also values from the specific request instance 
-     * 
+     * Returns an argument of the RPC invocation, this is either an named or
+     * indexed based key
+     *
      * @param string $name
-     * @return mixed
+     * @return string|array
      */
-    public function get($name);
+    public function getArgument($name);
+
+    /**
+     * Returns all available query parameters
+     *
+     * @return \PSX\Record\RecordInterface
+     */
+    public function getArguments();
 }

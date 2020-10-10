@@ -19,25 +19,64 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Fusio\Engine;
+namespace Fusio\Engine\Request;
+
+use PSX\Record\RecordInterface;
 
 /**
- * Represents an incoming request, this is either an HTTP or RPC request. This
- * object can be used to access all values from an incoming request
+ * RpcRequest
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    https://www.fusio-project.org
  */
-interface RequestInterface
+class RpcRequest implements RpcInterface
 {
     /**
-     * Returns a value from the request. To make your action independent of the
-     * request context i.e. HTTP or RPC use only this method. Otherwise you can
-     * get also values from the specific request instance 
-     * 
-     * @param string $name
-     * @return mixed
+     * @var \PSX\Record\RecordInterface
      */
-    public function get($name);
+    private $arguments;
+
+    /**
+     * @param \PSX\Record\RecordInterface $arguments
+     */
+    public function __construct(RecordInterface $arguments)
+    {
+        $this->arguments = $arguments;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function get($name)
+    {
+        return $this->arguments->getProperty($name);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getArgument($name)
+    {
+        return $this->arguments->getProperty($name);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getArguments()
+    {
+        return $this->arguments;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function withArguments(RecordInterface $arguments)
+    {
+        $self = clone $this;
+        $self->arguments = $arguments;
+
+        return $self;
+    }
 }
