@@ -40,4 +40,11 @@ interface RequestInterface
      * @return mixed
      */
     public function get($name);
+
+    /**
+     * Returns the complete request payload
+     * 
+     * @return mixed
+     */
+    public function getPayload();
 }

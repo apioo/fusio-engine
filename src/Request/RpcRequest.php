@@ -21,6 +21,7 @@
 
 namespace Fusio\Engine\Request;
 
+use Fusio\Engine\Record\PassthruRecord;
 use PSX\Record\RecordInterface;
 
 /**
@@ -51,6 +52,19 @@ class RpcRequest implements RpcInterface
     public function get($name)
     {
         return $this->arguments->getProperty($name);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getPayload()
+    {
+        $body = $this->getArguments();
+        if ($body instanceof PassthruRecord) {
+            return $body->getPayload();
+        } else {
+            return $body;
+        }
     }
 
     /**

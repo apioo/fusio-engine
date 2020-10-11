@@ -21,6 +21,7 @@
 
 namespace Fusio\Engine\Request;
 
+use Fusio\Engine\Record\PassthruRecord;
 use PSX\Http\Environment\HttpContextInterface;
 use PSX\Record\RecordInterface;
 
@@ -59,6 +60,19 @@ class HttpRequest implements HttpInterface
     public function get($name)
     {
         return $this->getUriFragment($name) ?? ($this->getParameter($name) ?? $this->getBody()->getProperty($name));
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getPayload()
+    {
+        $body = $this->getBody();
+        if ($body instanceof PassthruRecord) {
+            return $body->getPayload();
+        } else {
+            return $body;
+        }
     }
 
     /**
