@@ -39,7 +39,7 @@ interface ActionInterface extends ConfigurableInterface
      * @param \Fusio\Engine\RequestInterface $request
      * @param \Fusio\Engine\ParametersInterface $configuration
      * @param \Fusio\Engine\ContextInterface $context
-     * @return \PSX\Http\Environment\HttpResponseInterface
+     * @return mixed
      */
     public function handle(RequestInterface $request, ParametersInterface $configuration, ContextInterface $context);
 }
