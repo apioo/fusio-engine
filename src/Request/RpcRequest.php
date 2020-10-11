@@ -59,7 +59,7 @@ class RpcRequest implements RpcInterface
      */
     public function getPayload()
     {
-        $body = $this->getArguments();
+        $body = $this->arguments->getProperty('payload');
         if ($body instanceof PassthruRecord) {
             return $body->getPayload();
         } else {
