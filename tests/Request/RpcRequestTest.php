@@ -37,7 +37,7 @@ class RpcRequestTest extends TestCase
 {
     public function testRequest()
     {
-        $request = new RpcRequest(Record::fromArray(['foo' => 'bar']));
+        $request = new RpcRequest('myAction', Record::fromArray(['foo' => 'bar']));
 
         $this->assertInstanceOf(RequestInterface::class, $request);
         $this->assertEquals('bar', $request->get('foo'));

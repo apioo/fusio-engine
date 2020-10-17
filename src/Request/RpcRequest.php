@@ -34,15 +34,22 @@ use PSX\Record\RecordInterface;
 class RpcRequest implements RpcInterface
 {
     /**
+     * @var string
+     */
+    private $method;
+
+    /**
      * @var \PSX\Record\RecordInterface
      */
     private $arguments;
 
     /**
+     * @param string $method
      * @param \PSX\Record\RecordInterface $arguments
      */
-    public function __construct(RecordInterface $arguments)
+    public function __construct(string $method, RecordInterface $arguments)
     {
+        $this->method    = $method;
         $this->arguments = $arguments;
     }
 
@@ -65,6 +72,14 @@ class RpcRequest implements RpcInterface
         } else {
             return $body;
         }
+    }
+
+    /**
+     * @return string
+     */
+    public function getMethod(): string
+    {
+        return $this->method;
     }
 
     /**
