@@ -19,49 +19,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Fusio\Engine\Model;
+namespace Fusio\Engine\Action;
+
+use Fusio\Engine\ContextInterface;
+use Fusio\Engine\RequestInterface;
 
 /**
- * ActionInterface
- *
+ * Queue to execute an request async
+ * 
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    https://www.fusio-project.org
  */
-interface ActionInterface
+interface QueueInterface
 {
     /**
-     * @return integer
+     * Pushes an action request to a queue to execute it later on
+     *
+     * @param string $actionId
+     * @param \Fusio\Engine\RequestInterface $request
+     * @param \Fusio\Engine\ContextInterface $context
+     * @return void
      */
-    public function getId();
-
-    /**
-     * @return string
-     */
-    public function getName();
-
-    /**
-     * @return string
-     */
-    public function getClass();
-
-    /**
-     * @return string
-     */
-    public function getEngine();
-
-    /**
-     * @return bool
-     */
-    public function isAsync(): bool;
-
-    /**
-     * @return array
-     */
-    public function getConfig();
-
-    /**
-     * @return string
-     */
-    public function getDate();
+    public function push($actionId, RequestInterface $request, ContextInterface $context);
 }

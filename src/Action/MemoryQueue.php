@@ -19,49 +19,37 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Fusio\Engine\Model;
+namespace Fusio\Engine\Action;
+
+use Fusio\Engine\ContextInterface;
+use Fusio\Engine\RequestInterface;
 
 /**
- * ActionInterface
+ * MemoryQueue
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    https://www.fusio-project.org
  */
-interface ActionInterface
+class MemoryQueue implements QueueInterface
 {
-    /**
-     * @return integer
-     */
-    public function getId();
+    private $container;
+
+    public function __construct()
+    {
+        $this->container = [];
+    }
 
     /**
-     * @return string
+     * @inheritDoc
      */
-    public function getName();
+    public function push($actionId, RequestInterface $request, ContextInterface $context)
+    {
+        $this->container[] = [$actionId, $request, $context];
+    }
 
-    /**
-     * @return string
-     */
-    public function getClass();
-
-    /**
-     * @return string
-     */
-    public function getEngine();
-
-    /**
-     * @return bool
-     */
-    public function isAsync(): bool;
-
-    /**
-     * @return array
-     */
-    public function getConfig();
-
-    /**
-     * @return string
-     */
-    public function getDate();
+    public function pop()
+    {
+        return array_pop($this->container);
+    }
 }

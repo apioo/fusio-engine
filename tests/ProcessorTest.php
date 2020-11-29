@@ -21,9 +21,14 @@
 
 namespace Fusio\Engine\Tests;
 
+use Fusio\Engine\Action\MemoryQueue;
+use Fusio\Engine\ContextInterface;
 use Fusio\Engine\Exception\ActionNotFoundException;
 use Fusio\Engine\Model\Action;
 use Fusio\Engine\Processor;
+use Fusio\Engine\ProcessorInterface;
+use Fusio\Engine\Repository;
+use Fusio\Engine\RequestInterface;
 use Fusio\Engine\Response\FactoryInterface;
 use Fusio\Engine\Test\CallbackAction;
 use Fusio\Engine\Test\EngineTestCaseTrait;
@@ -43,9 +48,8 @@ class ProcessorTest extends TestCase
 
     public function testExecute()
     {
-        $repository = $this->getRepository();
-        $factory    = $this->getActionFactory();
-        $processor  = new Processor($repository, $factory);
+        $repository = $this->newRepository();
+        $processor  = $this->newProcessor($repository);
 
         $response = $processor->execute(1, $this->getRequest(), $this->getContext());
 
@@ -55,11 +59,32 @@ class ProcessorTest extends TestCase
         $this->assertEquals(['foo' => 'bar'], $response->getBody());
     }
 
+    public function testExecuteAsync()
+    {
+        $repository = $this->newRepository(true);
+        $processor  = $this->newProcessor($repository);
+
+        $response = $processor->execute(1, $this->getRequest(), $this->getContext());
+
+        $this->assertInstanceOf(HttpResponseInterface::class, $response);
+        $this->assertEquals(202, $response->getStatusCode());
+        $this->assertEquals([], $response->getHeaders());
+        $this->assertEquals(['success' => true, 'message' => 'Request was queued for execution'], $response->getBody());
+        
+        /** @var MemoryQueue $queue */
+        $queue = $this->getActionQueue();
+
+        [$actionId, $request, $context] = $queue->pop();
+
+        $this->assertEquals(1, $actionId);
+        $this->assertInstanceOf(RequestInterface::class, $request);
+        $this->assertInstanceOf(ContextInterface::class, $context);
+    }
+
     public function testGetConnectionNamed()
     {
-        $repository = $this->getRepository();
-        $factory    = $this->getActionFactory();
-        $processor  = new Processor($repository, $factory);
+        $repository = $this->newRepository();
+        $processor  = $this->newProcessor($repository);
 
         $response = $processor->execute('foo', $this->getRequest(), $this->getContext());
 
@@ -74,13 +99,12 @@ class ProcessorTest extends TestCase
         $this->expectException(ActionNotFoundException::class);
 
         $repository = $this->getActionRepository();
-        $factory    = $this->getActionFactory();
-        $processor  = new Processor($repository, $factory);
+        $processor  = $this->newProcessor($repository);
 
         $processor->execute(2, $this->getRequest(), $this->getContext());
     }
 
-    protected function getRepository()
+    private function newRepository(bool $async = false): Repository\ActionInterface
     {
         $repository = $this->getActionRepository();
 
@@ -88,6 +112,7 @@ class ProcessorTest extends TestCase
         $action->setId(1);
         $action->setName('foo');
         $action->setClass(CallbackAction::class);
+        $action->setAsync($async);
         $action->setConfig(['callback' => function(FactoryInterface $response){
             return $response->build(200, [], ['foo' => 'bar']);
         }]);
@@ -95,5 +120,10 @@ class ProcessorTest extends TestCase
         $repository->add($action);
 
         return $repository;
+    }
+
+    private function newProcessor(Repository\ActionInterface $repository): ProcessorInterface
+    {
+        return new Processor($repository, $this->getActionFactory(), $this->getActionQueue());
     }
 }

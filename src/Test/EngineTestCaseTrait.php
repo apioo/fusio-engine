@@ -21,6 +21,7 @@
 
 namespace Fusio\Engine\Test;
 
+use Fusio\Engine\Action\QueueInterface;
 use Fusio\Engine\Context;
 use Fusio\Engine\Dependency\EngineContainer;
 use Fusio\Engine\Factory;
@@ -112,6 +113,11 @@ trait EngineTestCaseTrait
     protected function getActionFactory(): Factory\ActionInterface
     {
         return $this->getContainer()->get('action_factory');
+    }
+
+    protected function getActionQueue(): QueueInterface
+    {
+        return $this->getContainer()->get('action_queue');
     }
 
     protected function getActionRepository(): Repository\ActionInterface

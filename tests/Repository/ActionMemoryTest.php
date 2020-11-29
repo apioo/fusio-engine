@@ -83,6 +83,7 @@ class ActionMemoryTest extends TestCase
         "name": "foo",
         "class": "\\stdClass",
         "engine": null,
+        "async": false,
         "config": {
             "foo": "bar"
         },
@@ -110,6 +111,7 @@ JSON;
         "name": "foo",
         "class": "\\stdClass",
         "engine": null,
+        "async": false,
         "config": {
             "foo": "bar"
         },

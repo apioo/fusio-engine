@@ -23,6 +23,7 @@ namespace Fusio\Engine;
 
 use Fusio\Engine\Exception\ActionNotFoundException;
 use Fusio\Engine\Factory;
+use PSX\Http\Environment\HttpResponse;
 use RuntimeException;
 
 /**
@@ -37,21 +38,28 @@ class Processor implements ProcessorInterface
     /**
      * @var array
      */
-    protected $stack;
+    private $stack;
 
     /**
      * @var \Fusio\Engine\Factory\ActionInterface
      */
-    protected $factory;
+    private $factory;
+
+    /**
+     * @var \Fusio\Engine\Action\QueueInterface
+     */
+    private $queue;
 
     /**
      * @param \Fusio\Engine\Repository\ActionInterface $repository
      * @param \Fusio\Engine\Factory\ActionInterface $factory
+     * @param \Fusio\Engine\Action\QueueInterface $queue
      */
-    public function __construct(Repository\ActionInterface $repository, Factory\ActionInterface $factory)
+    public function __construct(Repository\ActionInterface $repository, Factory\ActionInterface $factory, Action\QueueInterface $queue)
     {
         $this->stack   = [];
         $this->factory = $factory;
+        $this->queue   = $queue;
 
         $this->push($repository);
     }
@@ -67,7 +75,16 @@ class Processor implements ProcessorInterface
         if ($action instanceof Model\ActionInterface) {
             $parameters = new Parameters($action->getConfig());
 
-            return $this->factory->factory($action->getClass(), $action->getEngine())->handle($request, $parameters, $context->withAction($action));
+            if ($action->isAsync()) {
+                $this->queue->push($actionId, $request, $context);
+
+                return new HttpResponse(202, [], [
+                    'success' => true,
+                    'message' => 'Request was queued for execution',
+                ]);
+            } else {
+                return $this->factory->factory($action->getClass(), $action->getEngine())->handle($request, $parameters, $context->withAction($action));
+            }
         } else {
             throw new ActionNotFoundException('Could not found action ' . $actionId);
         }

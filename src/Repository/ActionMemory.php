@@ -98,6 +98,7 @@ class ActionMemory implements ActionInterface, \JsonSerializable, \Countable
                 'name'   => $action->getName(),
                 'class'  => $action->getClass(),
                 'engine' => $action->getEngine(),
+                'async'  => $action->isAsync(),
                 'config' => $action->getConfig(),
                 'date'   => $action->getDate(),
             ];
@@ -114,10 +115,11 @@ class ActionMemory implements ActionInterface, \JsonSerializable, \Countable
         if (is_array($data)) {
             foreach ($data as $row) {
                 $action = new Model\Action();
-                $action->setId($row['id']);
+                $action->setId((int) $row['id']);
                 $action->setName($row['name']);
                 $action->setClass($row['class']);
                 $action->setEngine($row['engine']);
+                $action->setAsync((bool) $row['async']);
                 $action->setConfig($row['config']);
                 $action->setDate($row['date']);
 

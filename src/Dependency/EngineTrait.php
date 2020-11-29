@@ -23,6 +23,7 @@ namespace Fusio\Engine\Dependency;
 
 use Doctrine\Common\Annotations;
 use Doctrine\Common\Cache\ArrayCache;
+use Fusio\Engine\Action;
 use Fusio\Engine\Cache;
 use Fusio\Engine\CacheInterface;
 use Fusio\Engine\Connector;
@@ -38,7 +39,6 @@ use Fusio\Engine\Processor;
 use Fusio\Engine\ProcessorInterface;
 use Fusio\Engine\Repository;
 use Fusio\Engine\Response;
-use Fusio\Engine\Schema;
 use Monolog\Handler\NullHandler;
 use PSX\Cache\Pool;
 use PSX\Dependency\AutowireResolver;
@@ -76,6 +76,11 @@ trait EngineTrait
         return $factory;
     }
 
+    public function getActionQueue(): Action\QueueInterface
+    {
+        return new Action\MemoryQueue();
+    }
+
     public function getActionRepository(): Repository\ActionInterface
     {
         return new Repository\ActionMemory();
@@ -85,7 +90,8 @@ trait EngineTrait
     {
         return new Processor(
             $this->get('action_repository'),
-            $this->get('action_factory')
+            $this->get('action_factory'),
+            $this->get('action_queue')
         );
     }
 

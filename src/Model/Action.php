@@ -51,6 +51,11 @@ class Action implements ActionInterface
     protected $engine;
 
     /**
+     * @var boolean
+     */
+    protected $async;
+
+    /**
      * @var array
      */
     protected $config;
@@ -122,6 +127,22 @@ class Action implements ActionInterface
     public function setEngine($engine)
     {
         $this->engine = $engine;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isAsync(): bool
+    {
+        return $this->async !== null ? $this->async : false;
+    }
+
+    /**
+     * @param bool $async
+     */
+    public function setAsync(bool $async): void
+    {
+        $this->async = $async;
     }
 
     /**
