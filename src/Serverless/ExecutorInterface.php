@@ -25,8 +25,8 @@ use PSX\Http\ResponseInterface;
 
 /**
  * The serverless executor is used inside a specific handler to invoke the
- * framework logic for a specific route. This means the method gets called i.e.
- * inside a lambda function
+ * framework logic for a specific method. This means the execute method gets
+ * called i.e. inside a lambda function
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
@@ -35,13 +35,13 @@ use PSX\Http\ResponseInterface;
 interface ExecutorInterface
 {
     /**
-     * @param int $routeId
-     * @param string $method
+     * @param array $method
+     * @param string $httpMethod
      * @param string $path
      * @param array $uriFragments
      * @param array $headers
      * @param string|null $body
      * @return ResponseInterface
      */
-    public function execute(int $routeId, string $method, string $path, array $uriFragments, array $headers, ?string $body = null): ResponseInterface;
+    public function execute(array $method, string $httpMethod, string $path, array $uriFragments, array $headers, ?string $body = null): ResponseInterface;
 }
