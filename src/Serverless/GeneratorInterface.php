@@ -34,8 +34,8 @@ interface GeneratorInterface
     /**
      * @param string $basePath
      * @param Config $config
-     * @param string $handlerClass
+     * @param string $stub
      * @return \Generator
      */
-    public function generate(string $basePath, Config $config, string $handlerClass): \Generator;
+    public function generate(string $basePath, Config $config, string $stub): \Generator;
 }
