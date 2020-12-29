@@ -30,11 +30,6 @@ namespace Fusio\Engine\Model;
  */
 interface UserInterface
 {
-    const STATUS_CONSUMER      = 0;
-    const STATUS_ADMINISTRATOR = 1;
-    const STATUS_DISABLED      = 2;
-    const STATUS_DELETED       = 3;
-
     /**
      * @return boolean
      */
@@ -44,6 +39,16 @@ interface UserInterface
      * @return integer
      */
     public function getId();
+
+    /**
+     * @return integer
+     */
+    public function getRoleId();
+
+    /**
+     * @return integer
+     */
+    public function getCategoryId();
 
     /**
      * @return integer

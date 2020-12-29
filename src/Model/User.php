@@ -43,6 +43,16 @@ class User implements UserInterface
     /**
      * @var integer
      */
+    protected $roleId;
+
+    /**
+     * @var integer
+     */
+    protected $categoryId;
+
+    /**
+     * @var integer
+     */
     protected $status;
 
     /**
@@ -90,6 +100,38 @@ class User implements UserInterface
     public function setId($id)
     {
         $this->id = $id;
+    }
+
+    /**
+     * @return int
+     */
+    public function getRoleId()
+    {
+        return $this->roleId;
+    }
+
+    /**
+     * @param int $roleId
+     */
+    public function setRoleId($roleId)
+    {
+        $this->roleId = $roleId;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCategoryId()
+    {
+        return $this->categoryId;
+    }
+
+    /**
+     * @param int $categoryId
+     */
+    public function setCategoryId($categoryId)
+    {
+        $this->categoryId = $categoryId;
     }
 
     /**
