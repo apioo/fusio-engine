@@ -6,159 +6,6 @@
         "type": "string"
       }
     },
-    "Responses": {
-      "type": "object",
-      "additionalProperties": {
-        "type": "string"
-      }
-    },
-    "Method": {
-      "type": "object",
-      "properties": {
-        "method": {
-          "type": "string"
-        },
-        "version": {
-          "type": "integer"
-        },
-        "status": {
-          "type": "integer"
-        },
-        "active": {
-          "type": "boolean"
-        },
-        "public": {
-          "type": "boolean"
-        },
-        "parameters": {
-          "type": "string"
-        },
-        "request": {
-          "type": "string"
-        },
-        "response": {
-          "type": "string"
-        },
-        "responses": {
-          "$ref": "Responses"
-        },
-        "action": {
-          "type": "string"
-        }
-      }
-    },
-    "Methods": {
-      "type": "object",
-      "additionalProperties": {
-        "$ref": "Method"
-      }
-    },
-    "Version": {
-      "type": "object",
-      "properties": {
-        "version": {
-          "type": "integer"
-        },
-        "status": {
-          "type": "integer"
-        },
-        "scopes": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "methods": {
-          "$ref": "Methods"
-        }
-      }
-    },
-    "Config": {
-      "type": "object",
-      "additionalProperties": true,
-      "maxProperties": 16
-    },
-    "Source": {
-      "type": "object",
-      "additionalProperties": true
-    },
-    "Routes": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer"
-        },
-        "path": {
-          "type": "string"
-        },
-        "config": {
-          "type": "array",
-          "items": {
-            "$ref": "Version"
-          }
-        }
-      }
-    },
-    "Action": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer"
-        },
-        "status": {
-          "type": "integer"
-        },
-        "name": {
-          "type": "string",
-          "pattern": "[a-zA-Z0-9\\-\\_]{3,64}"
-        },
-        "class": {
-          "type": "string"
-        },
-        "engine": {
-          "type": "string"
-        },
-        "config": {
-          "$ref": "Config"
-        }
-      }
-    },
-    "Schema": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer"
-        },
-        "status": {
-          "type": "integer"
-        },
-        "name": {
-          "type": "string",
-          "pattern": "[a-zA-Z0-9\\-\\_]{3,64}"
-        },
-        "source": {
-          "$ref": "Source"
-        }
-      }
-    },
-    "Connection": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer"
-        },
-        "name": {
-          "type": "string",
-          "pattern": "[a-zA-Z0-9\\-\\_]{3,64}"
-        },
-        "class": {
-          "type": "string"
-        },
-        "config": {
-          "$ref": "Config"
-        }
-      }
-    },
     "Definitions": {
       "type": "object",
       "properties": {
@@ -168,38 +15,17 @@
         "connectionClass": {
           "$ref": "ClassList"
         },
-        "userClass": {
+        "paymentClass": {
           "$ref": "ClassList"
         },
-        "paymentClass": {
+        "userClass": {
           "$ref": "ClassList"
         },
         "routesClass": {
           "$ref": "ClassList"
         },
-        "routes": {
-          "type": "array",
-          "items": {
-            "$ref": "Routes"
-          }
-        },
-        "action": {
-          "type": "array",
-          "items": {
-            "$ref": "Action"
-          }
-        },
-        "schema": {
-          "type": "array",
-          "items": {
-            "$ref": "Schema"
-          }
-        },
-        "connection": {
-          "type": "array",
-          "items": {
-            "$ref": "Connection"
-          }
+        "pushClass": {
+          "$ref": "ClassList"
         }
       }
     }
