@@ -36,8 +36,8 @@ interface UserInterface extends RepositoryInterface
     public function getAll();
 
     /**
-     * @param integer $userId
+     * @param integer|string $id
      * @return \Fusio\Engine\Model\UserInterface|null
      */
-    public function get($userId);
+    public function get($id);
 }

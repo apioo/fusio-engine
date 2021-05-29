@@ -62,21 +62,21 @@ class ActionMemory implements ActionInterface, \JsonSerializable, \Countable
     }
 
     /**
-     * @param integer|string $actionId
+     * @param integer|string $id
      * @return \Fusio\Engine\Model\ActionInterface|null
      */
-    public function get($actionId)
+    public function get($id)
     {
         if (empty($this->actions)) {
             return null;
         }
 
-        if (isset($this->actions[$actionId])) {
-            return $this->actions[$actionId];
+        if (isset($this->actions[$id])) {
+            return $this->actions[$id];
         }
 
         foreach ($this->actions as $action) {
-            if ($action->getName() == $actionId) {
+            if ($action->getName() == $id) {
                 return $action;
             }
         }

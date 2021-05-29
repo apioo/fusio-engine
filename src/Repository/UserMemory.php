@@ -62,17 +62,17 @@ class UserMemory implements UserInterface
     }
 
     /**
-     * @param integer|string $userId
+     * @param integer|string $id
      * @return \Fusio\Engine\Model\UserInterface|null
      */
-    public function get($userId)
+    public function get($id)
     {
         if (empty($this->users)) {
             return null;
         }
 
-        if (isset($this->users[$userId])) {
-            return $this->users[$userId];
+        if (isset($this->users[$id])) {
+            return $this->users[$id];
         }
 
         return null;

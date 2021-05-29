@@ -36,7 +36,7 @@ interface RepositoryInterface
     public function getAll();
 
     /**
-     * @param integer $id
+     * @param integer|string $id
      * @return object|null
      */
     public function get($id);

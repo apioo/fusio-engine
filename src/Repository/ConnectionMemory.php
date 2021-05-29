@@ -62,21 +62,21 @@ class ConnectionMemory implements ConnectionInterface
     }
 
     /**
-     * @param integer|string $connectionId
+     * @param integer|string $id
      * @return \Fusio\Engine\Model\ConnectionInterface|null
      */
-    public function get($connectionId)
+    public function get($id)
     {
         if (empty($this->connections)) {
             return null;
         }
 
-        if (isset($this->connections[$connectionId])) {
-            return $this->connections[$connectionId];
+        if (isset($this->connections[$id])) {
+            return $this->connections[$id];
         }
 
         foreach ($this->connections as $connection) {
-            if ($connection->getName() == $connectionId) {
+            if ($connection->getName() == $id) {
                 return $connection;
             }
         }

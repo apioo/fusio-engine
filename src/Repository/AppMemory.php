@@ -62,17 +62,17 @@ class AppMemory implements AppInterface
     }
 
     /**
-     * @param integer $appId
+     * @param integer|string $id
      * @return \Fusio\Engine\Model\ActionInterface|null
      */
-    public function get($appId)
+    public function get($id)
     {
         if (empty($this->apps)) {
             return null;
         }
 
-        if (isset($this->apps[$appId])) {
-            return $this->apps[$appId];
+        if (isset($this->apps[$id])) {
+            return $this->apps[$id];
         }
 
         return null;

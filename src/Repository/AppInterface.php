@@ -36,8 +36,8 @@ interface AppInterface extends RepositoryInterface
     public function getAll();
 
     /**
-     * @param integer $appId
+     * @param integer|string $id
      * @return \Fusio\Engine\Model\AppInterface|null
      */
-    public function get($appId);
+    public function get($id);
 }

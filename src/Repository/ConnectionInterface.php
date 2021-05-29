@@ -38,8 +38,8 @@ interface ConnectionInterface extends RepositoryInterface
     /**
      * Returns an connection with the provided id
      *
-     * @param integer $connectionId
+     * @param integer|string $id
      * @return \Fusio\Engine\Model\ConnectionInterface|null
      */
-    public function get($connectionId);
+    public function get($id);
 }
