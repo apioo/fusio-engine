@@ -30,150 +30,50 @@ namespace Fusio\Engine\Model;
  */
 class Action implements ActionInterface
 {
-    /**
-     * @var integer
-     */
-    protected $id;
+    private int $id;
+    private string $name;
+    private string $class;
+    private string $engine;
+    private bool $async;
+    private array $config;
 
-    /**
-     * @var string
-     */
-    protected $name;
+    public function __construct(int $id, string $name, string $class, string $engine, bool $async, array $config)
+    {
+        $this->id = $id;
+        $this->name = $name;
+        $this->class = $class;
+        $this->engine = $engine;
+        $this->async = $async;
+        $this->config = $config;
+    }
 
-    /**
-     * @var string
-     */
-    protected $class;
-
-    /**
-     * @var string
-     */
-    protected $engine;
-
-    /**
-     * @var boolean
-     */
-    protected $async;
-
-    /**
-     * @var array
-     */
-    protected $config;
-
-    /**
-     * @var string
-     */
-    protected $date;
-
-    /**
-     * @inheritdoc
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getClass()
+    public function getClass(): string
     {
         return $this->class;
     }
 
-    /**
-     * @param string $class
-     */
-    public function setClass($class)
-    {
-        $this->class = $class;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getEngine()
+    public function getEngine(): string
     {
         return $this->engine;
     }
 
-    /**
-     * @param string $engine
-     */
-    public function setEngine($engine)
-    {
-        $this->engine = $engine;
-    }
-
-    /**
-     * @return bool
-     */
     public function isAsync(): bool
     {
-        return $this->async !== null ? $this->async : false;
+        return $this->async;
     }
 
-    /**
-     * @param bool $async
-     */
-    public function setAsync(bool $async): void
-    {
-        $this->async = $async;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getConfig()
+    public function getConfig(): array
     {
         return $this->config;
-    }
-
-    /**
-     * @param array $config
-     */
-    public function setConfig(array $config)
-    {
-        $this->config = $config;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getDate()
-    {
-        return $this->date;
-    }
-
-    /**
-     * @param string $date
-     */
-    public function setDate($date)
-    {
-        $this->date = $date;
     }
 }

@@ -21,9 +21,6 @@
 
 namespace Fusio\Engine\Form;
 
-use PSX\Record\RecordInterface;
-use PSX\Record\RecordObject;
-
 /**
  * Container
  *
@@ -31,26 +28,24 @@ use PSX\Record\RecordObject;
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    https://www.fusio-project.org
  */
-class Container extends RecordObject
+class Container implements \JsonSerializable
 {
-    /**
-     * @var array
-     */
-    protected $element = array();
+    private array $elements = [];
 
-    /**
-     * @param \PSX\Record\RecordInterface $record
-     */
-    public function add(RecordInterface $record)
+    public function add(Element $element)
     {
-        $this->element[] = $record;
+        $this->elements[] = $element;
     }
 
-    /**
-     * @return array
-     */
-    public function getElements()
+    public function getElements(): array
     {
-        return $this->element;
+        return $this->elements;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'elements' => $this->elements
+        ];
     }
 }

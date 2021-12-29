@@ -35,11 +35,6 @@ interface QueueInterface
 {
     /**
      * Pushes an action request to a queue to execute it later on
-     *
-     * @param string $actionId
-     * @param \Fusio\Engine\RequestInterface $request
-     * @param \Fusio\Engine\ContextInterface $context
-     * @return void
      */
-    public function push($actionId, RequestInterface $request, ContextInterface $context);
+    public function push(string|int $actionId, RequestInterface $request, ContextInterface $context): void;
 }

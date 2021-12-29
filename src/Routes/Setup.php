@@ -30,40 +30,14 @@ namespace Fusio\Engine\Routes;
  */
 class Setup implements SetupInterface
 {
-    /**
-     * @var array
-     */
-    private $schemas = [];
+    private array $schemas = [];
+    private array $actions = [];
+    private array $routes = [];
+    private int $schemaIndex = -1;
+    private int $actionIndex = -1;
+    private int $routesIndex = -1;
 
-    /**
-     * @var array 
-     */
-    private $actions = [];
-
-    /**
-     * @var array 
-     */
-    private $routes = [];
-
-    /**
-     * @var int 
-     */
-    private $schemaIndex = -1;
-
-    /**
-     * @var int 
-     */
-    private $actionIndex = -1;
-
-    /**
-     * @var int 
-     */
-    private $routesIndex = -1;
-
-    /**
-     * @inheritDoc
-     */
-    public function addSchema($name, $source)
+    public function addSchema(string $name, array $source): int
     {
         $this->schemaIndex++;
 
@@ -75,10 +49,7 @@ class Setup implements SetupInterface
         return $this->schemaIndex;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function addAction($name, $class, $engine, $config)
+    public function addAction(string $name, string $class, string $engine, array $config): int
     {
         $this->actionIndex++;
 
@@ -92,10 +63,7 @@ class Setup implements SetupInterface
         return $this->actionIndex;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function addRoute($priority, $path, $controller, $scopes, $config)
+    public function addRoute(int $priority, string $path, string $controller, array $scopes, array $config): int
     {
         $this->routesIndex++;
 
@@ -110,17 +78,17 @@ class Setup implements SetupInterface
         return $this->routesIndex;
     }
 
-    public function getSchemas()
+    public function getSchemas(): array
     {
         return $this->schemas;
     }
     
-    public function getActions()
+    public function getActions(): array
     {
         return $this->actions;
     }
 
-    public function getRoutes()
+    public function getRoutes(): array
     {
         return $this->routes;
     }

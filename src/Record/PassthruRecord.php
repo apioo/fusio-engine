@@ -23,11 +23,11 @@ namespace Fusio\Engine\Record;
 
 use PSX\Record\Record;
 use Symfony\Component\PropertyAccess\PropertyAccess;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
 
 /**
- * This record is used if a route has specified the passthru schema that means
- * that we redirect the result from the reader to the action. I.e. in case of
- * json this contains a stdClass and for xml a DOMDocument
+ * This record is used if a route has specified the passthru schema that means that we redirect the result from the
+ * reader to the action. I.e. in case of json this contains a stdClass and for xml a DOMDocument
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
@@ -35,19 +35,12 @@ use Symfony\Component\PropertyAccess\PropertyAccess;
  */
 class PassthruRecord extends Record
 {
-    /**
-     * @var mixed
-     */
-    private $payload;
-
-    /**
-     * @var PropertyAccess
-     */
-    private $accessor;
+    private mixed $payload;
+    private PropertyAccessor $accessor;
 
     public function __construct($payload)
     {
-        parent::__construct('record', (array) $payload);
+        parent::__construct((array) $payload);
 
         $this->payload  = $payload;
         $this->accessor = PropertyAccess::createPropertyAccessor();
@@ -58,21 +51,21 @@ class PassthruRecord extends Record
         return $this->payload;
     }
 
-    public function getProperty($name)
+    public function getProperty(string $name): mixed
     {
         return $this->accessor->getValue($this->payload, $name);
     }
 
-    public function setProperty($name, $value)
+    public function setProperty(string $name, mixed $value): void
     {
         $this->accessor->setValue($this->payload, $name, $value);
     }
 
-    public function removeProperty($name)
+    public function removeProperty(string $name): void
     {
     }
 
-    public function hasProperty($name)
+    public function hasProperty(string $name): bool
     {
         return $this->accessor->isReadable($this->payload, $name);
     }

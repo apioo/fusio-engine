@@ -30,108 +30,43 @@ namespace Fusio\Engine\Model;
  */
 class Product implements ProductInterface
 {
-    /**
-     * @var integer
-     */
-    protected $id;
+    private int $id;
+    private string $name;
+    private float $price;
+    private int $points;
+    private int $interval;
 
-    /**
-     * @var string
-     */
-    protected $name;
+    public function __construct(int $id, string $name, float $price, int $points, int $interval)
+    {
+        $this->id = $id;
+        $this->name = $name;
+        $this->price = $price;
+        $this->points = $points;
+        $this->interval = $interval;
+    }
 
-    /**
-     * @var float
-     */
-    protected $price;
-
-    /**
-     * @var integer
-     */
-    protected $points;
-
-    /**
-     * @var integer
-     */
-    protected $interval;
-
-    /**
-     * @return integer
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @param integer $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @return float
-     */
-    public function getPrice()
+    public function getPrice(): float
     {
         return $this->price;
     }
 
-    /**
-     * @param float $price
-     */
-    public function setPrice($price)
-    {
-        $this->price = $price;
-    }
-
-    /**
-     * @return integer
-     */
-    public function getPoints()
+    public function getPoints(): int
     {
         return $this->points;
     }
 
-    /**
-     * @param integer $points
-     */
-    public function setPoints($points)
-    {
-        $this->points = $points;
-    }
-
-    /**
-     * @return integer
-     */
-    public function getInterval()
+    public function getInterval(): int
     {
         return $this->interval;
-    }
-
-    /**
-     * @param integer $interval
-     */
-    public function setInterval($interval)
-    {
-        $this->interval = $interval;
     }
 }

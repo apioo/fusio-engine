@@ -32,30 +32,36 @@ use Fusio\Engine\Form\Element;
  */
 class Input extends Element
 {
-    /**
-     * @var string
-     */
-    protected $element = 'http://fusio-project.org/ns/2015/form/input';
+    private const NAMESPACE = 'http://fusio-project.org/ns/2015/form/input';
 
-    /**
-     * @var string
-     */
-    protected $type;
+    private string $type;
 
-    public function __construct($name, $title, $type = 'text', $help = null)
+    public function __construct(string $name, string $title, string $type = 'text', ?string $help = null)
     {
         parent::__construct($name, $title, $help);
 
         $this->type = $type;
     }
 
-    public function setType($type)
+    public function setType(string $type): void
     {
         $this->type = $type;
     }
     
-    public function getType()
+    public function getType(): string
     {
         return $this->type;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return array_merge(parent::jsonSerialize(), [
+            'type' => $this->type,
+        ]);
+    }
+
+    protected function getNamespace(): string
+    {
+        return self::NAMESPACE;
     }
 }

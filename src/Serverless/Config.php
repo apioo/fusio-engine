@@ -31,109 +31,60 @@ namespace Fusio\Engine\Serverless;
  */
 class Config
 {
-    /**
-     * @var string|null
-     */
-    private $providerName;
+    private ?string $providerName;
+    private ?string $providerRuntime;
+    private ?array $plugins;
+    private ?array $layers;
+    private ?\Closure $handlerGenerator;
 
-    /**
-     * @var string|null
-     */
-    private $providerRuntime;
-
-    /**
-     * @var array|null
-     */
-    private $plugins;
-
-    /**
-     * @var array|null
-     */
-    private $layers;
-
-    /**
-     * @var \Closure|null
-     */
-    private $handlerGenerator;
-
-    /**
-     * @return string|null
-     */
     public function getProviderName(): ?string
     {
         return $this->providerName;
     }
 
-    /**
-     * @param string|null $providerName
-     */
     public function setProviderName(?string $providerName): void
     {
         $this->providerName = $providerName;
     }
 
-    /**
-     * @return string|null
-     */
     public function getProviderRuntime(): ?string
     {
         return $this->providerRuntime;
     }
 
-    /**
-     * @param string|null $providerRuntime
-     */
     public function setProviderRuntime(?string $providerRuntime): void
     {
         $this->providerRuntime = $providerRuntime;
     }
 
-    /**
-     * @return array|null
-     */
     public function getPlugins(): ?array
     {
         return $this->plugins;
     }
 
-    /**
-     * @param array|null $plugins
-     */
     public function setPlugins(?array $plugins): void
     {
         $this->plugins = $plugins;
     }
 
-    /**
-     * @return array|null
-     */
     public function getLayers(): ?array
     {
         return $this->layers;
     }
 
-    /**
-     * @param array|null $layers
-     */
     public function setLayers(?array $layers): void
     {
         $this->layers = $layers;
     }
 
-    /**
-     * @return \Closure|null
-     */
     public function getHandlerGenerator(): ?\Closure
     {
         return $this->handlerGenerator;
     }
 
     /**
-     * Provides an option to customize the value which is inserted as handler
-     * at the serverless.yaml file. By default we simply use the path to the
-     * handler file. The closure has the following signature (basePath, actionName)
-     * 
-     * @param \Closure|null $handlerGenerator
+     * Provides an option to customize the value which is inserted as handler at the serverless.yaml file. By default we
+     * simply use the path to the handler file. The closure has the following signature (basePath, actionName)
      */
     public function setHandlerGenerator(?\Closure $handlerGenerator): void
     {

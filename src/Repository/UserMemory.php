@@ -33,39 +33,29 @@ use Fusio\Engine\Model;
 class UserMemory implements UserInterface
 {
     /**
-     * @var \Fusio\Engine\Model\UserInterface[]
+     * @var Model\UserInterface[]
      */
-    protected $users;
+    private array $users;
 
-    /**
-     * @param array $users
-     */
     public function __construct(array $users = array())
     {
         $this->users = $users;
     }
 
-    /**
-     * @param \Fusio\Engine\Model\UserInterface $user
-     */
-    public function add(Model\UserInterface $user)
+    public function add(Model\UserInterface $user): void
     {
         $this->users[$user->getId()] = $user;
     }
 
     /**
-     * @return \Fusio\Engine\Model\UserInterface[]
+     * @return Model\UserInterface[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->users;
     }
 
-    /**
-     * @param integer|string $id
-     * @return \Fusio\Engine\Model\UserInterface|null
-     */
-    public function get($id)
+    public function get(string|int $id): ?Model\UserInterface
     {
         if (empty($this->users)) {
             return null;

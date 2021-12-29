@@ -26,9 +26,8 @@ use Fusio\Engine\Model\TransactionInterface;
 use Fusio\Engine\ParametersInterface;
 
 /**
- * Describes a payment provider which can be used to execute payments. Through
- * the developer app the user has the possibility to buy points which can be
- * used to call specific routes which cost points. To buy those points Fusio
+ * Describes a payment provider which can be used to execute payments. Through the developer app the user has the
+ * possibility to buy points which can be used to call specific routes which cost points. To buy those points Fusio
  * uses these payment providers to execute a payment. Usually the flow is:
  * 
  * - App calls the API endpoint to prepare a specific product, it provides an
@@ -47,27 +46,14 @@ use Fusio\Engine\ParametersInterface;
 interface ProviderInterface
 {
     /**
-     * Creates a transaction at the payment provider and updates the transaction
-     * fields. The redirect urls contains the urls where the user should be
-     * redirected after payment completion. The method returns an approval url
-     * 
-     * @param mixed $connection
-     * @param \Fusio\Engine\Model\ProductInterface $product
-     * @param \Fusio\Engine\Model\TransactionInterface $transaction
-     * @param \Fusio\Engine\Payment\PrepareContext $context
-     * @return string
+     * Creates a transaction at the payment provider and updates the transaction fields. The redirect urls contains the
+     * urls where the user should be redirected after payment completion. The method returns an approval url
      */
-    public function prepare($connection, ProductInterface $product, TransactionInterface $transaction, PrepareContext $context);
+    public function prepare(mixed $connection, ProductInterface $product, TransactionInterface $transaction, PrepareContext $context): string;
 
     /**
-     * Is called after the user has approved the transaction. The parameters
-     * contains all query parameters from the callback call
-     * 
-     * @param mixed $connection
-     * @param \Fusio\Engine\Model\ProductInterface $product
-     * @param \Fusio\Engine\Model\TransactionInterface $transaction
-     * @param \Fusio\Engine\ParametersInterface $parameters
-     * @return void
+     * Is called after the user has approved the transaction. The parameters contain all query parameters from the
+     * callback call
      */
-    public function execute($connection, ProductInterface $product, TransactionInterface $transaction, ParametersInterface $parameters);
+    public function execute(mixed $connection, ProductInterface $product, TransactionInterface $transaction, ParametersInterface $parameters): void;
 }

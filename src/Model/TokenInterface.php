@@ -30,33 +30,15 @@ namespace Fusio\Engine\Model;
  */
 interface TokenInterface
 {
-    /**
-     * @return integer
-     */
-    public function getId();
+    public function getId(): int;
 
-    /**
-     * @return integer
-     */
-    public function getAppId();
+    public function getAppId(): int;
 
-    /**
-     * @return integer
-     */
-    public function getUserId();
+    public function getUserId(): int;
 
-    /**
-     * @return array
-     */
-    public function getScopes();
+    public function getScopes(): array;
 
-    /**
-     * @return string
-     */
-    public function getExpire();
+    public function getExpire(): string;
 
-    /**
-     * @return string
-     */
-    public function getDate();
+    public function getDate(): string;
 }

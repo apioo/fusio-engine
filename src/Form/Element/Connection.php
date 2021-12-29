@@ -32,33 +32,26 @@ use Fusio\Engine\Repository;
  */
 class Connection extends Select
 {
-    /**
-     * @var \Fusio\Engine\Repository\ConnectionInterface
-     */
-    protected $_repository;
+    private Repository\ConnectionInterface $repository;
+    private ?array $allowedClasses;
 
-    /**
-     * @var array
-     */
-    protected $_allowedClasses;
-
-    public function __construct($name, $title, Repository\ConnectionInterface $repository, $help = null, array $allowedClasses = null)
+    public function __construct(string $name, string $title, Repository\ConnectionInterface $repository, ?string $help = null, ?array $allowedClasses = null)
     {
-        parent::__construct($name, $title, array(), $help);
+        parent::__construct($name, $title, [], $help);
 
-        $this->_repository     = $repository;
-        $this->_allowedClasses = $allowedClasses;
+        $this->repository     = $repository;
+        $this->allowedClasses = $allowedClasses;
 
         $this->load();
     }
 
     protected function load()
     {
-        $result = $this->_repository->getAll();
+        $result = $this->repository->getAll();
 
         foreach ($result as $row) {
-            if ($this->_allowedClasses === null || in_array($row->getClass(), $this->_allowedClasses)) {
-                $this->addOption($row->getId(), $row->getName());
+            if ($this->allowedClasses === null || in_array($row->getClass(), $this->allowedClasses)) {
+                $this->addOption((string) $row->getId(), $row->getName());
             }
         }
     }

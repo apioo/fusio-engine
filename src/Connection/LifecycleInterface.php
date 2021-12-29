@@ -36,35 +36,17 @@ use Fusio\Engine\ParametersInterface;
 interface LifecycleInterface
 {
     /**
-     * Is called if a connection gets created. The connection contains the 
-     * object to interact with the remote service
-     * 
-     * @param string $name
-     * @param \Fusio\Engine\ParametersInterface $config
-     * @param mixed $connection
-     * @return void
+     * Is called if a connection gets created. The connection contains the object to interact with the remote service
      */
-    public function onCreate($name, ParametersInterface $config, $connection);
+    public function onCreate(string $name, ParametersInterface $config, mixed $connection): void;
 
     /**
-     * Is called if a connection gets updated. The connection contains the
-     * object to interact with the remote service
-     * 
-     * @param string $name
-     * @param \Fusio\Engine\ParametersInterface $config
-     * @param mixed $connection
-     * @return void
+     * Is called if a connection gets updated. The connection contains the object to interact with the remote service
      */
-    public function onUpdate($name, ParametersInterface $config, $connection);
+    public function onUpdate(string $name, ParametersInterface $config, mixed $connection): void;
 
     /**
-     * Is called if a connection gets deleted. The connection contains the
-     * object to interact with the remote service
-     * 
-     * @param string $name
-     * @param \Fusio\Engine\ParametersInterface $config
-     * @param mixed $connection
-     * @return void
+     * Is called if a connection gets deleted. The connection contains the object to interact with the remote service
      */
-    public function onDelete($name, ParametersInterface $config, $connection);
+    public function onDelete(string $name, ParametersInterface $config, mixed $connection): void;
 }

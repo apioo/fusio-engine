@@ -22,6 +22,7 @@
 namespace Fusio\Engine\Response;
 
 use PSX\Http\Environment\HttpResponse;
+use PSX\Http\Environment\HttpResponseInterface;
 
 /**
  * Factory
@@ -32,10 +33,7 @@ use PSX\Http\Environment\HttpResponse;
  */
 class Factory implements FactoryInterface
 {
-    /**
-     * @inheritdoc
-     */
-    public function build($statusCode, array $headers, $body)
+    public function build(int $statusCode, array $headers, mixed $body): HttpResponseInterface
     {
         return new HttpResponse($statusCode, $headers, $body);
     }

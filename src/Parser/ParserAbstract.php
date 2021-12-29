@@ -24,6 +24,7 @@ namespace Fusio\Engine\Parser;
 use Fusio\Engine\ConfigurableInterface;
 use Fusio\Engine\Factory\FactoryInterface;
 use Fusio\Engine\Form;
+use PSX\Dependency\Exception\NotFoundException;
 
 /**
  * ParserAbstract
@@ -34,31 +35,16 @@ use Fusio\Engine\Form;
  */
 abstract class ParserAbstract implements ParserInterface
 {
-    /**
-     * @var \Fusio\Engine\Factory\FactoryInterface
-     */
-    protected $factory;
+    private FactoryInterface $factory;
+    private Form\ElementFactoryInterface $elementFactory;
 
-    /**
-     * @var \Fusio\Engine\Form\ElementFactoryInterface
-     */
-    protected $elementFactory;
-
-    /**
-     * @param \Fusio\Engine\Factory\FactoryInterface $factory
-     * @param \Fusio\Engine\Form\ElementFactoryInterface $elementFactory
-     */
     public function __construct(FactoryInterface $factory, Form\ElementFactoryInterface $elementFactory)
     {
         $this->factory        = $factory;
         $this->elementFactory = $elementFactory;
     }
 
-    /**
-     * @param string $className
-     * @return Form\Container
-     */
-    public function getForm($className)
+    public function getForm(string $className): ?Form\Container
     {
         $object = $this->getObject($className);
 
@@ -74,12 +60,11 @@ abstract class ParserAbstract implements ParserInterface
     }
 
     /**
-     * @param string $className
-     * @return mixed
+     * @throws NotFoundException
      */
-    protected function getObject($className)
+    protected function getObject(string $className): mixed
     {
-        if (empty($className) || !is_string($className)) {
+        if (empty($className)) {
             throw new \RuntimeException('Invalid class name');
         }
 

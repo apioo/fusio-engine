@@ -32,70 +32,41 @@ use Fusio\Engine\Repository;
  */
 class ElementFactory implements ElementFactoryInterface
 {
-    /**
-     * @var \Fusio\Engine\Repository\ActionInterface
-     */
-    protected $actionRepository;
+    private Repository\ActionInterface $actionRepository;
+    private Repository\ConnectionInterface $connectionRepository;
 
-    /**
-     * @var \Fusio\Engine\Repository\ConnectionInterface
-     */
-    protected $connectionRepository;
-
-    /**
-     * @param \Fusio\Engine\Repository\ActionInterface $actionRepository
-     * @param \Fusio\Engine\Repository\ConnectionInterface $connectionRepository
-     */
     public function __construct(Repository\ActionInterface $actionRepository, Repository\ConnectionInterface $connectionRepository)
     {
         $this->actionRepository     = $actionRepository;
         $this->connectionRepository = $connectionRepository;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function newAction($name, $title, $help = null, array $allowedClasses = null)
+    public function newAction(string $name, string $title, ?string $help = null, ?array $allowedClasses = null): Element\Action
     {
         return new Element\Action($name, $title, $this->actionRepository, $help, $allowedClasses);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function newConnection($name, $title, $help = null, array $allowedClasses = null)
+    public function newConnection(string $name, string $title, ?string $help = null, ?array $allowedClasses = null): Element\Connection
     {
         return new Element\Connection($name, $title, $this->connectionRepository, $help, $allowedClasses);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function newInput($name, $title, $type = 'text', $help = null)
+    public function newInput(string $name, string $title, string $type = 'text', ?string $help = null): Element\Input
     {
         return new Element\Input($name, $title, $type, $help);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function newSelect($name, $title, array $options = array(), $help = null)
+    public function newSelect(string $name, string $title, array $options = [], ?string $help = null): Element\Select
     {
         return new Element\Select($name, $title, $options, $help);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function newTextArea($name, $title, $mode, $help = null)
+    public function newTextArea(string $name, string $title, string $mode, ?string $help = null): Element\TextArea
     {
         return new Element\TextArea($name, $title, $mode, $help);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function newTag($name, $title, $help = null)
+    public function newTag(string $name, string $title, ?string $help = null): Element\Tag
     {
         return new Element\Tag($name, $title, $help);
     }

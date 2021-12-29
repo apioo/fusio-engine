@@ -25,9 +25,8 @@ use Fusio\Engine\ConfigurableInterface;
 use Fusio\Engine\ParametersInterface;
 
 /**
- * Preconfigured route provider which helps to create automatically schemas,
- * actions and routes for the user. This can be used to create complete
- * applications
+ * Preconfigured route provider which helps to create automatically schemas, actions and routes for the user. This can
+ * be used to create complete applications
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
@@ -36,17 +35,10 @@ use Fusio\Engine\ParametersInterface;
 interface ProviderInterface extends ConfigurableInterface
 {
     /**
-     * The provider needs to add the schemas, actions and routes to the setup
-     * using the provided configuration. The system then automatically creates
-     * and validates all provided data. The base path is path which was chosen
-     * by the user, all routes are automatically registered under the base path
-     * so there is no need to add it manually, it is there to build schema and
-     * action names based on the base path
-     * 
-     * @param \Fusio\Engine\Routes\SetupInterface $setup
-     * @param string $basePath
-     * @param \Fusio\Engine\ParametersInterface $configuration
-     * @return void
+     * The provider needs to add the schemas, actions and routes to the setup using the provided configuration. The
+     * system then automatically creates and validates all provided data. The base path is path which was chosen by the
+     * user, all routes are automatically registered under the base path so there is no need to add it manually, it is
+     * there to build schema and action names based on the base path
      */
-    public function setup(SetupInterface $setup, string $basePath, ParametersInterface $configuration);
+    public function setup(SetupInterface $setup, string $basePath, ParametersInterface $configuration): void;
 }

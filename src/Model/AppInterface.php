@@ -30,64 +30,29 @@ namespace Fusio\Engine\Model;
  */
 interface AppInterface
 {
-    const STATUS_ACTIVE      = 1;
-    const STATUS_PENDING     = 2;
-    const STATUS_DEACTIVATED = 3;
+    public const STATUS_ACTIVE      = 1;
+    public const STATUS_PENDING     = 2;
+    public const STATUS_DEACTIVATED = 3;
 
-    /**
-     * @return boolean
-     */
-    public function isAnonymous();
+    public function isAnonymous(): bool;
 
-    /**
-     * @return integer
-     */
-    public function getId();
+    public function getId(): int;
 
-    /**
-     * @return integer
-     */
-    public function getUserId();
+    public function getUserId(): int;
 
-    /**
-     * @return integer
-     */
-    public function getStatus();
+    public function getStatus(): int;
 
-    /**
-     * @return string
-     */
-    public function getName();
+    public function getName(): string;
 
-    /**
-     * @return string
-     */
-    public function getUrl();
+    public function getUrl(): string;
 
-    /**
-     * @return string
-     */
-    public function getAppKey();
+    public function getAppKey(): string;
 
-    /**
-     * @return array
-     */
-    public function getScopes();
+    public function getScopes(): array;
 
-    /**
-     * @param string $name
-     * @return boolean
-     */
-    public function hasScope($name);
+    public function hasScope(string $name): bool;
 
-    /**
-     * @return array
-     */
-    public function getParameters();
+    public function getParameters(): array;
 
-    /**
-     * @param string $name
-     * @return string
-     */
-    public function getParameter($name);
+    public function getParameter(string $name): mixed;
 }

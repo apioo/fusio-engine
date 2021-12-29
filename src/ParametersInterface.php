@@ -24,9 +24,8 @@ namespace Fusio\Engine;
 use IteratorAggregate;
 
 /**
- * The parameters represent a general set of key values which is used in various
- * places. As argument to the action method it contains the configuration
- * parameters of the action. At the request object it contains the query and uri
+ * The parameters represent a general set of key values which is used in various places. As argument to the action
+ * method it contains the configuration parameters of the action. At the request object it contains the query and uri
  * fragment parameters
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
@@ -37,39 +36,26 @@ interface ParametersInterface extends IteratorAggregate
 {
     /**
      * Returns a specific parameter
-     * 
-     * @param string $key
-     * @return mixed
      */
-    public function get($key);
+    public function get(string $key): mixed;
 
     /**
      * Checks whether a parameter is available
-     * 
-     * @param string $key
-     * @return boolean
      */
-    public function has($key);
+    public function has(string $key): bool;
 
     /**
      * Sets a specific parameter
-     * 
-     * @param string $key
-     * @param mixed $value
      */
-    public function set($key, $value);
+    public function set(string $key, mixed $value);
 
     /**
      * Returns whether no parameter is available
-     * 
-     * @return boolean
      */
-    public function isEmpty();
+    public function isEmpty(): bool;
 
     /**
      * Returns an array representation of this collection
-     * 
-     * @return array
      */
-    public function toArray();
+    public function toArray(): array;
 }

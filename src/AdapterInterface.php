@@ -32,8 +32,6 @@ interface AdapterInterface
 {
     /**
      * Returns the absolute file path of the definition.json file
-     *
-     * @return string
      */
-    public function getDefinition();
+    public function getDefinition(): string;
 }

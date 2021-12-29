@@ -21,6 +21,8 @@
 
 namespace Fusio\Engine\Factory;
 
+use PSX\Dependency\Exception\NotFoundException;
+
 /**
  * FactoryInterface
  *
@@ -31,8 +33,7 @@ namespace Fusio\Engine\Factory;
 interface FactoryInterface
 {
     /**
-     * @param string $className
-     * @return mixed
+     * @throws NotFoundException
      */
-    public function factory($className);
+    public function factory(string $className): mixed;
 }

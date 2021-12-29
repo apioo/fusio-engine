@@ -32,67 +32,33 @@ interface ElementFactoryInterface
 {
     /**
      * Creates a select which contains all available actions
-     *
-     * @param string $name
-     * @param string $title
-     * @param string $help
-     * @param array $allowedClasses
-     * @return \PSX\Record\RecordInterface
      */
-    public function newAction($name, $title, $help = null, array $allowedClasses = null);
+    public function newAction(string $name, string $title, ?string $help = null, ?array $allowedClasses = null): Element\Action;
 
     /**
      * Creates a select which contains all available connections
-     *
-     * @param string $name
-     * @param string $title
-     * @param string $help
-     * @param array $allowedClasses
-     * @return \PSX\Record\RecordInterface
      */
-    public function newConnection($name, $title, $help = null, array $allowedClasses = null);
+    public function newConnection(string $name, string $title, ?string $help = null, ?array $allowedClasses = null): Element\Connection;
 
     /**
      * Creates a new input field. The type must be a valid html input type
      *
      * @see http://www.w3.org/TR/html5/forms.html#attr-input-type
-     * @param string $name
-     * @param string $title
-     * @param string $type
-     * @param string $help
-     * @return \PSX\Record\RecordInterface
      */
-    public function newInput($name, $title, $type = 'text', $help = null);
+    public function newInput(string $name, string $title, string $type = 'text', ?string $help = null): Element\Input;
 
     /**
      * Creates a new select
-     *
-     * @param string $name
-     * @param string $title
-     * @param array $options
-     * @param string $help
-     * @return \PSX\Record\RecordInterface
      */
-    public function newSelect($name, $title, array $options = array(), $help = null);
+    public function newSelect(string $name, string $title, array $options = [], ?string $help = null): Element\Select;
 
     /**
      * Creates a new textarea. The mode indicates the syntax highlighting
-     *
-     * @param string $name
-     * @param string $title
-     * @param string $mode
-     * @param string $help
-     * @return \PSX\Record\RecordInterface
      */
-    public function newTextArea($name, $title, $mode, $help = null);
+    public function newTextArea(string $name, string $title, string $mode, ?string $help = null): Element\TextArea;
 
     /**
      * Creates a new tag input
-     *
-     * @param string $name
-     * @param string $title
-     * @param string $help
-     * @return \PSX\Record\RecordInterface
      */
-    public function newTag($name, $title, $help = null);
+    public function newTag(string $name, string $title, ?string $help = null): Element\Tag;
 }

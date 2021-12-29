@@ -21,6 +21,8 @@
 
 namespace Fusio\Engine;
 
+use Fusio\Engine\Exception\ConnectionNotFoundException;
+
 /**
  * Through the connector it is possible to access configured connection objects.
  * A connection is i.e. a MYSQL connection which can be configured at the admin
@@ -38,12 +40,10 @@ namespace Fusio\Engine;
 interface ConnectorInterface
 {
     /**
-     * Returns an arbitrary connection to a remote service. It is recommended to
-     * use the connection name but you can also use the actual database id of
-     * the connection
+     * Returns an arbitrary connection to a remote service. It is recommended to use the connection name but you can
+     * also use the actual database id of the connection
      *
-     * @param string|integer $connectionId
-     * @return mixed
+     * @throws ConnectionNotFoundException
      */
-    public function getConnection($connectionId);
+    public function getConnection(string|int $connectionId): mixed;
 }

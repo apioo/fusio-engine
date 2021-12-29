@@ -21,6 +21,8 @@
 
 namespace Fusio\Engine\Repository;
 
+use Fusio\Engine\Model;
+
 /**
  * AppInterface
  *
@@ -31,13 +33,9 @@ namespace Fusio\Engine\Repository;
 interface AppInterface extends RepositoryInterface
 {
     /**
-     * @return \Fusio\Engine\Model\AppInterface[]
+     * @return Model\AppInterface[]
      */
-    public function getAll();
+    public function getAll(): array;
 
-    /**
-     * @param integer|string $id
-     * @return \Fusio\Engine\Model\AppInterface|null
-     */
-    public function get($id);
+    public function get(string|int $id): ?Model\AppInterface;
 }

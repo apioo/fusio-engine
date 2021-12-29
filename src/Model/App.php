@@ -30,208 +30,81 @@ namespace Fusio\Engine\Model;
  */
 class App implements AppInterface
 {
-    /**
-     * @var boolean
-     */
-    protected $anonymous;
+    private bool $anonymous;
+    private int $id;
+    private int $userId;
+    private int $status;
+    private string $name;
+    private string $url;
+    private string $appKey;
+    private array $parameters;
+    private array $scopes;
 
-    /**
-     * @var integer
-     */
-    protected $id;
-
-    /**
-     * @var integer
-     */
-    protected $userId;
-
-    /**
-     * @var integer
-     */
-    protected $status;
-
-    /**
-     * @var string
-     */
-    protected $name;
-
-    /**
-     * @var string
-     */
-    protected $url;
-
-    /**
-     * @var array
-     */
-    protected $parameters;
-
-    /**
-     * @var string
-     */
-    protected $appKey;
-
-    /**
-     * @var array
-     */
-    protected $scopes = array();
-
-    /**
-     * @param boolean $anonymous
-     */
-    public function setAnonymous($anonymous)
+    public function __construct(bool $anonymous, int $id, int $userId, int $status, string $name, string $url, string $appKey, array $parameters, array $scopes)
     {
         $this->anonymous = $anonymous;
+        $this->id = $id;
+        $this->userId = $userId;
+        $this->status = $status;
+        $this->name = $name;
+        $this->url = $url;
+        $this->parameters = $parameters;
+        $this->appKey = $appKey;
+        $this->scopes = $scopes;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function isAnonymous()
+    public function isAnonymous(): bool
     {
         return $this->anonymous;
     }
 
-    /**
-     * @param integer $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @param integer $userId
-     */
-    public function setUserId($userId)
-    {
-        $this->userId = $userId;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getUserId()
+    public function getUserId(): int
     {
         return $this->userId;
     }
 
-    /**
-     * @param integer $status
-     */
-    public function setStatus($status)
-    {
-        $this->status = $status;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getStatus()
+    public function getStatus(): int
     {
         return $this->status;
     }
 
-    /**
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $url
-     */
-    public function setUrl($url)
-    {
-        $this->url = $url;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getUrl()
+    public function getUrl(): string
     {
         return $this->url;
     }
 
-    /**
-     * @param string $appKey
-     */
-    public function setAppKey($appKey)
-    {
-        $this->appKey = $appKey;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getAppKey()
+    public function getAppKey(): string
     {
         return $this->appKey;
     }
 
-    /**
-     * @param array $scopes
-     */
-    public function setScopes(array $scopes)
-    {
-        $this->scopes = $scopes;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getScopes()
+    public function getScopes(): array
     {
         return $this->scopes;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function hasScope($name)
+    public function hasScope(string $name): bool
     {
         return in_array($name, $this->scopes);
     }
 
-    /**
-     * @param array $parameters
-     */
-    public function setParameters(array $parameters)
-    {
-        $this->parameters = $parameters;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getParameters()
+    public function getParameters(): array
     {
         return $this->parameters;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getParameter($name)
+    public function getParameter(string $name): mixed
     {
-        return isset($this->parameters[$name]) ? $this->parameters[$name] : null;
+        return $this->parameters[$name] ?? null;
     }
 }

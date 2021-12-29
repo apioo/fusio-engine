@@ -36,12 +36,12 @@ use Fusio\Engine\ParametersInterface;
  */
 class CallbackConnection implements ConnectionInterface
 {
-    public function getName()
+    public function getName(): string
     {
         return 'Callback-Connection';
     }
 
-    public function getConnection(ParametersInterface $config)
+    public function getConnection(ParametersInterface $config): mixed
     {
         $callback = $config->get('callback');
 
@@ -52,7 +52,7 @@ class CallbackConnection implements ConnectionInterface
         return call_user_func_array($callback, []);
     }
 
-    public function configure(BuilderInterface $builder, ElementFactoryInterface $elementFactory)
+    public function configure(BuilderInterface $builder, ElementFactoryInterface $elementFactory): void
     {
     }
 }

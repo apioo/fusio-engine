@@ -35,39 +35,21 @@ use RuntimeException;
  */
 class Connection implements ConnectionInterface
 {
-    /**
-     * @var \Psr\Container\ContainerInterface
-     */
-    protected $container;
+    protected ContainerInterface $container;
+    private AutowireResolverInterface $autowireResolver;
 
-    /**
-     * @var \PSX\Dependency\AutowireResolverInterface
-     */
-    private $autowireResolver;
-
-    /**
-     * @param \Psr\Container\ContainerInterface $container
-     * @param \PSX\Dependency\AutowireResolverInterface $autowireResolver
-     */
     public function __construct(ContainerInterface $container, AutowireResolverInterface $autowireResolver)
     {
         $this->container = $container;
         $this->autowireResolver = $autowireResolver;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function factory($className)
+    public function factory(string $className): EngineConnectionInterface
     {
         $connection = $this->autowireResolver->getObject($className);
 
         if (!$connection instanceof EngineConnectionInterface) {
             throw new RuntimeException('Connection ' . $className . ' must implement the Fusio\Engine\ConnectionInterface interface');
-        }
-
-        if ($connection instanceof ContainerAwareInterface) {
-            $connection->setContainer($this->container);
         }
 
         return $connection;

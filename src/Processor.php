@@ -24,6 +24,7 @@ namespace Fusio\Engine;
 use Fusio\Engine\Exception\ActionNotFoundException;
 use Fusio\Engine\Factory;
 use PSX\Http\Environment\HttpResponse;
+use PSX\Http\Environment\HttpResponseInterface;
 use RuntimeException;
 
 /**
@@ -36,25 +37,12 @@ use RuntimeException;
 class Processor implements ProcessorInterface
 {
     /**
-     * @var array
+     * @var Repository\ActionInterface[]
      */
-    private $stack;
+    private array $stack;
+    private Factory\ActionInterface $factory;
+    private Action\QueueInterface $queue;
 
-    /**
-     * @var \Fusio\Engine\Factory\ActionInterface
-     */
-    private $factory;
-
-    /**
-     * @var \Fusio\Engine\Action\QueueInterface
-     */
-    private $queue;
-
-    /**
-     * @param \Fusio\Engine\Repository\ActionInterface $repository
-     * @param \Fusio\Engine\Factory\ActionInterface $factory
-     * @param \Fusio\Engine\Action\QueueInterface $queue
-     */
     public function __construct(Repository\ActionInterface $repository, Factory\ActionInterface $factory, Action\QueueInterface $queue)
     {
         $this->stack   = [];
@@ -64,10 +52,7 @@ class Processor implements ProcessorInterface
         $this->push($repository);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function execute($actionId, RequestInterface $request, ContextInterface $context)
+    public function execute(string|int $actionId, RequestInterface $request, ContextInterface $context): HttpResponseInterface
     {
         $repository = $this->getCurrentRepository();
         $action     = $repository->get($actionId);
@@ -91,20 +76,17 @@ class Processor implements ProcessorInterface
     }
 
     /**
-     * Pushes another repository to the processor stack. Through this it is
-     * possible to provide another action source
-     *
-     * @param \Fusio\Engine\Repository\ActionInterface
+     * Pushes another repository to the processor stack. Through this it is possible to provide another action source
      */
-    public function push(Repository\ActionInterface $repository)
+    public function push(Repository\ActionInterface $repository): void
     {
-        array_push($this->stack, $repository);
+        $this->stack[] = $repository;
     }
 
     /**
      * Removes the processor from the top of the stack
      */
-    public function pop()
+    public function pop(): void
     {
         if (count($this->stack) === 1) {
             throw new RuntimeException('One repository must be at least available');
@@ -113,11 +95,8 @@ class Processor implements ProcessorInterface
         array_pop($this->stack);
     }
 
-    /**
-     * @return \Fusio\Engine\Repository\ActionInterface
-     */
-    protected function getCurrentRepository()
+    protected function getCurrentRepository(): ?Repository\ActionInterface
     {
-        return end($this->stack);
+        return end($this->stack) ?: null;
     }
 }

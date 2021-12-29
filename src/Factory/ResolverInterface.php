@@ -21,6 +21,10 @@
 
 namespace Fusio\Engine\Factory;
 
+use Fusio\Engine\Exception\FactoryResolveException;
+use PSX\Dependency\Exception\AutowiredException;
+use PSX\Dependency\Exception\NotFoundException;
+
 /**
  * ResolverInterface
  *
@@ -32,9 +36,10 @@ interface ResolverInterface
 {
     /**
      * Resolves the provided string to an action instance
-     * 
-     * @param string $className
-     * @return \Fusio\Engine\ActionInterface
+     *
+     * @throws FactoryResolveException
+     * @throws NotFoundException
+     * @throws AutowiredException
      */
-    public function resolve($className);
+    public function resolve(string $className): ActionInterface;
 }

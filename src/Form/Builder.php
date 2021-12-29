@@ -21,8 +21,6 @@
 
 namespace Fusio\Engine\Form;
 
-use PSX\Record\RecordInterface;
-
 /**
  * Builder
  *
@@ -32,25 +30,19 @@ use PSX\Record\RecordInterface;
  */
 class Builder implements BuilderInterface
 {
-    protected $container;
+    protected Container $container;
 
     public function __construct()
     {
         $this->container = new Container();
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function add(RecordInterface $element)
+    public function add(Element $element): void
     {
         $this->container->add($element);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getForm()
+    public function getForm(): Container
     {
         return $this->container;
     }

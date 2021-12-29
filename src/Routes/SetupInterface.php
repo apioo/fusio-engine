@@ -32,33 +32,16 @@ interface SetupInterface
 {
     /**
      * Adds a new schema
-     * 
-     * @param string $name
-     * @param array $source
-     * @return integer
      */
-    public function addSchema($name, $source);
+    public function addSchema(string $name, array $source): int;
 
     /**
      * Adds a new action
-     * 
-     * @param string $name
-     * @param string $class
-     * @param string $engine
-     * @param array $config
-     * @return integer
      */
-    public function addAction($name, $class, $engine, $config);
+    public function addAction(string $name, string $class, string $engine, array $config): int;
 
     /**
      * Adds a new route
-     * 
-     * @param integer $priority
-     * @param string $path
-     * @param string $controller
-     * @param array $scopes
-     * @param array $config
-     * @return integer
      */
-    public function addRoute($priority, $path, $controller, $scopes, $config);
+    public function addRoute(int $priority, string $path, string $controller, array $scopes, array $config): int;
 }

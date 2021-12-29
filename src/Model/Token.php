@@ -30,129 +30,50 @@ namespace Fusio\Engine\Model;
  */
 class Token implements TokenInterface
 {
-    /**
-     * @var integer
-     */
-    protected $id;
+    private int $id;
+    private int $appId;
+    private int $userId;
+    private array $scopes;
+    private string $expire;
+    private string $date;
 
-    /**
-     * @var integer
-     */
-    protected $appId;
+    public function __construct(int $id, int $appId, int $userId, array $scopes, string $expire, string $date)
+    {
+        $this->id = $id;
+        $this->appId = $appId;
+        $this->userId = $userId;
+        $this->scopes = $scopes;
+        $this->expire = $expire;
+        $this->date = $date;
+    }
 
-    /**
-     * @var integer
-     */
-    protected $userId;
-
-    /**
-     * @var array
-     */
-    protected $scopes;
-
-    /**
-     * @var string
-     */
-    protected $expire;
-
-    /**
-     * @var string
-     */
-    protected $date;
-
-    /**
-     * @return integer
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @param integer $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return integer
-     */
-    public function getAppId()
+    public function getAppId(): int
     {
         return $this->appId;
     }
 
-    /**
-     * @param integer $appId
-     */
-    public function setAppId($appId)
-    {
-        $this->appId = $appId;
-    }
-
-    /**
-     * @return integer
-     */
-    public function getUserId()
+    public function getUserId(): int
     {
         return $this->userId;
     }
 
-    /**
-     * @param integer $userId
-     */
-    public function setUserId($userId)
-    {
-        $this->userId = $userId;
-    }
-
-    /**
-     * @return array
-     */
-    public function getScopes()
+    public function getScopes(): array
     {
         return $this->scopes;
     }
 
-    /**
-     * @param array $scopes
-     */
-    public function setScopes(array $scopes)
-    {
-        $this->scopes = $scopes;
-    }
-
-    /**
-     * @return string
-     */
-    public function getExpire()
+    public function getExpire(): string
     {
         return $this->expire;
     }
 
-    /**
-     * @param string $expire
-     */
-    public function setExpire($expire)
-    {
-        $this->expire = $expire;
-    }
-
-    /**
-     * @return string
-     */
-    public function getDate()
+    public function getDate(): string
     {
         return $this->date;
-    }
-
-    /**
-     * @param string $date
-     */
-    public function setDate($date)
-    {
-        $this->date = $date;
     }
 }

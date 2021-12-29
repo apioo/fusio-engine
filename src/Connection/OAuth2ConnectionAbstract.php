@@ -35,7 +35,7 @@ use Fusio\Engine\ParametersInterface;
  */
 abstract class OAuth2ConnectionAbstract implements ConnectionInterface, OAuth2Interface
 {
-    public function configure(BuilderInterface $builder, ElementFactoryInterface $elementFactory)
+    public function configure(BuilderInterface $builder, ElementFactoryInterface $elementFactory): void
     {
         $builder->add($elementFactory->newInput(OAuth2Interface::CONFIG_CLIENT_ID, 'Client-Id', 'text', 'The client id'));
         $builder->add($elementFactory->newInput(OAuth2Interface::CONFIG_CLIENT_SECRET, 'Client-Secret', 'text', 'The client secret'));

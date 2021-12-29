@@ -21,6 +21,11 @@
 
 namespace Fusio\Engine\Factory;
 
+use Fusio\Engine\ActionInterface as EngineActionInterface;
+use Fusio\Engine\Exception\FactoryResolveException;
+use PSX\Dependency\Exception\AutowiredException;
+use PSX\Dependency\Exception\NotFoundException;
+
 /**
  * ActionInterface
  *
@@ -31,13 +36,12 @@ namespace Fusio\Engine\Factory;
 interface ActionInterface extends FactoryInterface
 {
     /**
-     * Tries to create an action interface based on the provided class name. 
-     * Note the class name can also be a string to a php or javascript file
-     * which is the then resolved by the factory
-     * 
-     * @param string $className
-     * @param string $engine
-     * @return \Fusio\Engine\ActionInterface
+     * Tries to create an action interface based on the provided class name. Note the class name can also be a string to
+     * a php or javascript file which is the then resolved by the factory
+     *
+     * @throws NotFoundException
+     * @throws AutowiredException
+     * @throws FactoryResolveException
      */
-    public function factory($className, $engine = null);
+    public function factory(string $className, ?string $engine = null): EngineActionInterface;
 }

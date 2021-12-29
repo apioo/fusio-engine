@@ -33,29 +33,11 @@ use Fusio\Engine\Form;
  */
 class Directory extends ParserAbstract
 {
-    /**
-     * @var string
-     */
-    protected $directory;
+    private string $directory;
+    private string $namespace;
+    private string $instanceOf;
 
-    /**
-     * @var string
-     */
-    protected $namespace;
-
-    /**
-     * @var string
-     */
-    protected $instanceOf;
-
-    /**
-     * @param \Fusio\Engine\Factory\FactoryInterface $factory
-     * @param \Fusio\Engine\Form\ElementFactoryInterface $elementFactory
-     * @param string $directory
-     * @param string $namespace
-     * @param string $instanceOf
-     */
-    public function __construct(FactoryInterface $factory, Form\ElementFactoryInterface $elementFactory, $directory, $namespace, $instanceOf)
+    public function __construct(FactoryInterface $factory, Form\ElementFactoryInterface $elementFactory, string $directory, string $namespace, string $instanceOf)
     {
         parent::__construct($factory, $elementFactory);
 
@@ -64,10 +46,7 @@ class Directory extends ParserAbstract
         $this->instanceOf = $instanceOf;
     }
 
-    /**
-     * @return array
-     */
-    public function getClasses()
+    public function getClasses(): array
     {
         $result = array();
         $path   = realpath($this->directory);

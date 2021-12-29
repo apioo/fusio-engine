@@ -30,58 +30,18 @@ namespace Fusio\Engine\Model;
  */
 interface ProductInterface
 {
-    const INTERVAL_1MONTH = 1;
-    const INTERVAL_3MONTH = 2;
-    const INTERVAL_6MONTH = 3;
-    const INTERVAL_12MONTH = 4;
+    public const INTERVAL_1MONTH = 1;
+    public const INTERVAL_3MONTH = 2;
+    public const INTERVAL_6MONTH = 3;
+    public const INTERVAL_12MONTH = 4;
 
-    /**
-     * @return integer
-     */
-    public function getId();
+    public function getId(): int;
 
-    /**
-     * @param integer $id
-     */
-    public function setId($id);
+    public function getName(): string;
 
-    /**
-     * @return string
-     */
-    public function getName();
+    public function getPrice(): float;
 
-    /**
-     * @param string $name
-     */
-    public function setName($name);
+    public function getPoints(): int;
 
-    /**
-     * @return float
-     */
-    public function getPrice();
-
-    /**
-     * @param float $price
-     */
-    public function setPrice($price);
-
-    /**
-     * @return integer
-     */
-    public function getPoints();
-
-    /**
-     * @param integer $points
-     */
-    public function setPoints($points);
-
-    /**
-     * @return integer
-     */
-    public function getInterval();
-
-    /**
-     * @param integer $interval
-     */
-    public function setInterval($interval);
+    public function getInterval(): int;
 }

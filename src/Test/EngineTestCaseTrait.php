@@ -31,6 +31,7 @@ use Fusio\Engine\Model\App;
 use Fusio\Engine\Model\User;
 use Fusio\Engine\Parameters;
 use Fusio\Engine\Repository;
+use Fusio\Engine\Request\HttpInterface;
 use Fusio\Engine\Request\HttpRequest;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\StreamInterface;
@@ -50,21 +51,9 @@ use PSX\Uri\Uri;
  */
 trait EngineTestCaseTrait
 {
-    /**
-     * @var \Psr\Container\ContainerInterface
-     */
-    protected static $container;
+    private static ?ContainerInterface $container = null;
 
-    /**
-     * @param string $method
-     * @param array $uriFragments
-     * @param array $parameters
-     * @param array $headers
-     * @param \PSX\Record\RecordInterface|null $parsedBody
-     * @param \Psr\Http\Message\StreamInterface|null $rawBody
-     * @return \Fusio\Engine\Request\HttpInterface
-     */
-    protected function getRequest($method = null, array $uriFragments = [], array $parameters = [], array $headers = [], RecordInterface $parsedBody = null, StreamInterface $rawBody = null)
+    protected function getRequest(?string $method = null, array $uriFragments = [], array $parameters = [], array $headers = [], ?RecordInterface $parsedBody = null, ?StreamInterface $rawBody = null): HttpInterface
     {
         $uri = new Uri('http://127.0.0.1/foo');
         $uri = $uri->withParameters($parameters);
@@ -85,29 +74,40 @@ trait EngineTestCaseTrait
 
     protected function getContext(): Context
     {
-        $app = new App();
-        $app->setAnonymous(false);
-        $app->setId(3);
-        $app->setUserId(2);
-        $app->setStatus(1);
-        $app->setName('Foo-App');
-        $app->setUrl('http://google.com');
-        $app->setParameters(['foo' => 'bar']);
-        $app->setScopes(['foo', 'bar']);
-        $app->setAppKey('5347307d-d801-4075-9aaa-a21a29a448c5');
+        $app = new App(
+            anonymous: false,
+            id: 3,
+            userId: 2,
+            status: 1,
+            name: 'Foo-App',
+            url: 'http://google.com',
+            appKey: '5347307d-d801-4075-9aaa-a21a29a448c5',
+            parameters: ['foo' => 'bar'],
+            scopes: ['foo', 'bar'],
+        );
 
-        $user = new User();
-        $user->setAnonymous(false);
-        $user->setId(2);
-        $user->setStatus(0);
-        $user->setName('Consumer');
+        $user = new User(
+            anonymous: false,
+            id: 2,
+            roleId: 1,
+            categoryId: 1,
+            status: 0,
+            name: 'Consumer',
+            email: 'consumer@app.dev',
+            points: 100,
+        );
 
-        $action = new Action();
-        $action->setId(uniqid());
-        $action->setName('foo');
-        $action->setDate(date('Y-m-d H:i:s'));
+        $action = new Action(
+            id: 1,
+            name: 'foo',
+            class: \stdClass::class,
+            engine: \stdClass::class,
+            async: false,
+            config: [],
+        );
 
-        return new Context(34, 'http://127.0.0.1', $app, $user);
+        $context = new Context(34, 'http://127.0.0.1', $app, $user);
+        return $context->withAction($action);
     }
 
     protected function getActionFactory(): Factory\ActionInterface
@@ -147,7 +147,7 @@ trait EngineTestCaseTrait
 
     protected function getContainer(): ContainerInterface
     {
-        if (!self::$container) {
+        if (self::$container === null) {
             self::$container = $this->newContainer();
         }
 

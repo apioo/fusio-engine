@@ -22,6 +22,7 @@
 namespace Fusio\Engine\Request;
 
 use Fusio\Engine\RequestInterface;
+use PSX\Record\RecordInterface;
 
 /**
  * RpcInterface
@@ -33,18 +34,12 @@ use Fusio\Engine\RequestInterface;
 interface RpcInterface extends RequestInterface
 {
     /**
-     * Returns an argument of the RPC invocation, this is either an named or
-     * indexed based key
-     *
-     * @param string $name
-     * @return string|array
+     * Returns an argument of the RPC invocation, this is either an named or indexed based key
      */
-    public function getArgument($name);
+    public function getArgument(string $name): mixed;
 
     /**
      * Returns all available query parameters
-     *
-     * @return \PSX\Record\RecordInterface
      */
-    public function getArguments();
+    public function getArguments(): RecordInterface;
 }

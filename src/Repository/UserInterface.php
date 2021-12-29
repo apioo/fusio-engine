@@ -21,6 +21,8 @@
 
 namespace Fusio\Engine\Repository;
 
+use Fusio\Engine\Model;
+
 /**
  * UserInterface
  *
@@ -31,13 +33,9 @@ namespace Fusio\Engine\Repository;
 interface UserInterface extends RepositoryInterface
 {
     /**
-     * @return \Fusio\Engine\Model\UserInterface[]
+     * @return Model\UserInterface[]
      */
-    public function getAll();
+    public function getAll(): array;
 
-    /**
-     * @param integer|string $id
-     * @return \Fusio\Engine\Model\UserInterface|null
-     */
-    public function get($id);
+    public function get(string|int $id): ?Model\UserInterface;
 }

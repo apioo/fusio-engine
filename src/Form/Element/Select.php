@@ -32,17 +32,11 @@ use Fusio\Engine\Form\Element;
  */
 class Select extends Element
 {
-    /**
-     * @var string
-     */
-    protected $element = 'http://fusio-project.org/ns/2015/form/select';
+    private const NAMESPACE = 'http://fusio-project.org/ns/2015/form/select';
 
-    /**
-     * @var array
-     */
-    protected $options;
+    private array $options;
 
-    public function __construct($name, $title, array $options = array(), $help = null)
+    public function __construct(string $name, string $title, array $options = [], ?string $help = null)
     {
         parent::__construct($name, $title, $help);
 
@@ -51,21 +45,33 @@ class Select extends Element
         }
     }
 
-    public function setOptions(array $options)
+    public function setOptions(array $options): void
     {
         $this->options = $options;
     }
 
-    public function getOptions()
+    public function getOptions(): array
     {
         return $this->options;
     }
 
-    public function addOption($key, $value)
+    public function addOption(string $key, mixed $value): void
     {
         $this->options[] = array(
             'key'   => $key,
             'value' => $value,
         );
+    }
+
+    public function jsonSerialize(): array
+    {
+        return array_merge(parent::jsonSerialize(), [
+            'options' => $this->options,
+        ]);
+    }
+
+    protected function getNamespace(): string
+    {
+        return self::NAMESPACE;
     }
 }

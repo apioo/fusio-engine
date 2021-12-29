@@ -32,43 +32,14 @@ use Fusio\Engine\Model;
  */
 class Context implements ContextInterface
 {
-    /**
-     * @var integer
-     */
-    protected $routeId;
+    private int $routeId;
+    private string $baseUrl;
+    private Model\AppInterface $app;
+    private Model\UserInterface $user;
+    private ?Model\ActionInterface $action;
+    private mixed $connection;
 
-    /**
-     * @var string
-     */
-    protected $baseUrl;
-
-    /**
-     * @var \Fusio\Engine\Model\AppInterface
-     */
-    protected $app;
-
-    /**
-     * @var \Fusio\Engine\Model\UserInterface
-     */
-    protected $user;
-
-    /**
-     * @var \Fusio\Engine\Model\ActionInterface|null
-     */
-    protected $action;
-
-    /**
-     * @var mixed
-     */
-    protected $connection;
-
-    /**
-     * @param integer $routeId
-     * @param string $baseUrl
-     * @param \Fusio\Engine\Model\AppInterface $app
-     * @param \Fusio\Engine\Model\UserInterface $user
-     */
-    public function __construct($routeId, $baseUrl, Model\AppInterface $app, Model\UserInterface $user)
+    public function __construct(int $routeId, string $baseUrl, Model\AppInterface $app, Model\UserInterface $user)
     {
         $this->routeId = $routeId;
         $this->baseUrl = $baseUrl;
@@ -76,50 +47,32 @@ class Context implements ContextInterface
         $this->user    = $user;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getRouteId()
+    public function getRouteId(): int
     {
         return $this->routeId;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getBaseUrl()
+    public function getBaseUrl(): string
     {
         return $this->baseUrl;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getApp()
+    public function getApp(): Model\AppInterface
     {
         return $this->app;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getUser()
+    public function getUser(): Model\UserInterface
     {
         return $this->user;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getAction()
+    public function getAction(): ?Model\ActionInterface
     {
         return $this->action;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function withAction(Model\ActionInterface $action)
+    public function withAction(Model\ActionInterface $action): self
     {
         $me = clone $this;
         $me->action = $action;
@@ -127,18 +80,12 @@ class Context implements ContextInterface
         return $me;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getConnection()
+    public function getConnection(): mixed
     {
         return $this->connection;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function withConnection($connection)
+    public function withConnection(mixed $connection): self
     {
         $me = clone $this;
         $me->connection = $connection;

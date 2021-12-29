@@ -22,9 +22,8 @@
 namespace Fusio\Engine\Push;
 
 /**
- * The push interface provides a way to send a local Fusio instance to a remote
- * provider. I.e. a provider could parse the configured actions and install them
- * as a serverless function at AWS
+ * The push interface provides a way to send a local Fusio instance to a remote provider. I.e. a provider could parse
+ * the configured actions and install them as a serverless function at AWS
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
@@ -32,9 +31,5 @@ namespace Fusio\Engine\Push;
  */
 interface ProviderInterface
 {
-    /**
-     * @param string $basePath
-     * @return \Generator
-     */
-    public function push(string $basePath);
+    public function push(string $basePath): \Generator;
 }

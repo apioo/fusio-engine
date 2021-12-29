@@ -22,8 +22,8 @@
 namespace Fusio\Engine\Serverless;
 
 /**
- * The generator helps to generate a serverless.yaml file for a push provider.
- * This can be used by different vendors i.e. AWS or OpenWhisk
+ * The generator helps to generate a serverless.yaml file for a push provider. This can be used by different vendors
+ * i.e. AWS or OpenWhisk
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
@@ -31,11 +31,5 @@ namespace Fusio\Engine\Serverless;
  */
 interface GeneratorInterface
 {
-    /**
-     * @param string $basePath
-     * @param Config $config
-     * @param string $stub
-     * @return \Generator
-     */
     public function generate(string $basePath, Config $config, string $stub): \Generator;
 }
