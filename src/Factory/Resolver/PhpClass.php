@@ -21,6 +21,7 @@
 
 namespace Fusio\Engine\Factory\Resolver;
 
+use Fusio\Engine\ActionInterface;
 use Fusio\Engine\Exception\FactoryResolveException;
 use Fusio\Engine\Factory\ResolverInterface;
 use PSX\Dependency\AutowireResolverInterface;
@@ -34,20 +35,14 @@ use PSX\Dependency\AutowireResolverInterface;
  */
 class PhpClass implements ResolverInterface
 {
-    /**
-     * @var \PSX\Dependency\AutowireResolverInterface
-     */
-    private $autowireResolver;
+    private AutowireResolverInterface $autowireResolver;
 
     public function __construct(AutowireResolverInterface $autowireResolver)
     {
         $this->autowireResolver = $autowireResolver;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function resolve($className)
+    public function resolve(string $className): ActionInterface
     {
         if (!class_exists($className)) {
             throw new FactoryResolveException('Could not resolve class ' . $className);

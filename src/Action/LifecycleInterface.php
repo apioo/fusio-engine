@@ -24,8 +24,7 @@ namespace Fusio\Engine\Action;
 use Fusio\Engine\ParametersInterface;
 
 /**
- * If an action implements this interface those callback methods are called 
- * on the corresponding lifecycle event
+ * If an action implements this interface those callback methods are called on the corresponding lifecycle event
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
@@ -35,28 +34,16 @@ interface LifecycleInterface
 {
     /**
      * Is called if an action gets created
-     * 
-     * @param string $name
-     * @param \Fusio\Engine\ParametersInterface $config
-     * @return void
      */
-    public function onCreate($name, ParametersInterface $config);
+    public function onCreate(string $name, ParametersInterface $config): void;
 
     /**
      * Is called if an action gets updated
-     * 
-     * @param string $name
-     * @param \Fusio\Engine\ParametersInterface $config
-     * @return void
      */
-    public function onUpdate($name, ParametersInterface $config);
+    public function onUpdate(string $name, ParametersInterface $config): void;
 
     /**
      * Is called if an action gets deleted
-     * 
-     * @param string $name
-     * @param \Fusio\Engine\ParametersInterface $config
-     * @return void
      */
-    public function onDelete($name, ParametersInterface $config);
+    public function onDelete(string $name, ParametersInterface $config): void;
 }

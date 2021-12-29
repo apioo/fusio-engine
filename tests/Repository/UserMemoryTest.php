@@ -64,9 +64,16 @@ class UserMemoryTest extends TestCase
      */
     protected function createRepository()
     {
-        $user = new User();
-        $user->setId(1);
-        $user->setName('foo');
+        $user = new User(
+            anonymous: false,
+            id: 1,
+            roleId: 1,
+            categoryId: 1,
+            status: 1,
+            name: 'foo',
+            email: 'foo@bar.com',
+            points: 10,
+        );
 
         $repository = new Repository\UserMemory();
         $repository->add($user);

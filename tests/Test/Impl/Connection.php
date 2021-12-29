@@ -35,17 +35,17 @@ use Fusio\Engine\ParametersInterface;
  */
 class Connection implements ConnectionInterface
 {
-    public function getName()
+    public function getName(): string
     {
         return 'Connection';
     }
 
-    public function getConnection(ParametersInterface $config)
+    public function getConnection(ParametersInterface $config): \stdClass
     {
         return new \stdClass();
     }
 
-    public function configure(BuilderInterface $builder, ElementFactoryInterface $elementFactory)
+    public function configure(BuilderInterface $builder, ElementFactoryInterface $elementFactory): void
     {
         $builder->add($elementFactory->newInput('foo', 'Foo', 'text', 'bar'));
     }

@@ -30,23 +30,11 @@ namespace Fusio\Engine\Model;
  */
 interface ConnectionInterface
 {
-    /**
-     * @return integer
-     */
-    public function getId();
+    public function getId(): int;
 
-    /**
-     * @return string
-     */
-    public function getName();
+    public function getName(): string;
 
-    /**
-     * @return string
-     */
-    public function getClass();
+    public function getClass(): string;
 
-    /**
-     * @return array
-     */
-    public function getConfig();
+    public function getConfig(): array;
 }

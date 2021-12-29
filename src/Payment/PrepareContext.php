@@ -30,66 +30,29 @@ namespace Fusio\Engine\Payment;
  */
 class PrepareContext
 {
-    /**
-     * @var string
-     */
-    protected $returnUrl;
+    private string $returnUrl;
+    private string $cancelUrl;
+    private string $currency;
 
-    /**
-     * @var string
-     */
-    protected $cancelUrl;
+    public function __construct(string $returnUrl, string $cancelUrl, string $currency)
+    {
+        $this->returnUrl = $returnUrl;
+        $this->cancelUrl = $cancelUrl;
+        $this->currency = $currency;
+    }
 
-    /**
-     * @var string
-     */
-    protected $currency;
-
-    /**
-     * @return string
-     */
-    public function getReturnUrl()
+    public function getReturnUrl(): string
     {
         return $this->returnUrl;
     }
 
-    /**
-     * @param string $returnUrl
-     */
-    public function setReturnUrl($returnUrl)
-    {
-        $this->returnUrl = $returnUrl;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCancelUrl()
+    public function getCancelUrl(): string
     {
         return $this->cancelUrl;
     }
 
-    /**
-     * @param string $cancelUrl
-     */
-    public function setCancelUrl($cancelUrl)
-    {
-        $this->cancelUrl = $cancelUrl;
-    }
-
-    /**
-     * @return string
-     */
-    public function getCurrency()
+    public function getCurrency(): string
     {
         return $this->currency;
-    }
-
-    /**
-     * @param string $currency
-     */
-    public function setCurrency($currency)
-    {
-        $this->currency = $currency;
     }
 }

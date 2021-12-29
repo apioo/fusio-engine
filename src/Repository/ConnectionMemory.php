@@ -33,39 +33,29 @@ use Fusio\Engine\Model;
 class ConnectionMemory implements ConnectionInterface
 {
     /**
-     * @var \Fusio\Engine\Model\ConnectionInterface[]
+     * @var Model\ConnectionInterface[]
      */
-    protected $connections;
+    private array $connections;
 
-    /**
-     * @param array $connections
-     */
     public function __construct(array $connections = array())
     {
         $this->connections = $connections;
     }
 
-    /**
-     * @param \Fusio\Engine\Model\ConnectionInterface $connection
-     */
-    public function add(Model\ConnectionInterface $connection)
+    public function add(Model\ConnectionInterface $connection): void
     {
         $this->connections[$connection->getId()] = $connection;
     }
 
     /**
-     * @return \Fusio\Engine\Model\ConnectionInterface[]
+     * @return Model\ConnectionInterface[]
      */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->connections;
     }
 
-    /**
-     * @param integer|string $id
-     * @return \Fusio\Engine\Model\ConnectionInterface|null
-     */
-    public function get($id)
+    public function get(string|int $id): ?Model\ConnectionInterface
     {
         if (empty($this->connections)) {
             return null;

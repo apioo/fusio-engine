@@ -30,10 +30,7 @@ namespace Fusio\Engine;
  */
 class Dispatcher implements DispatcherInterface
 {
-    /**
-     * @inheritdoc
-     */
-    public function dispatch($eventName, $payload)
+    public function dispatch(string $eventName, mixed $payload): void
     {
     }
 }

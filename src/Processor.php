@@ -23,7 +23,9 @@ namespace Fusio\Engine;
 
 use Fusio\Engine\Exception\ActionNotFoundException;
 use Fusio\Engine\Factory;
+use Fusio\Engine\Repository;
 use PSX\Http\Environment\HttpResponse;
+use PSX\Http\Environment\HttpResponseInterface;
 use RuntimeException;
 
 /**
@@ -36,25 +38,12 @@ use RuntimeException;
 class Processor implements ProcessorInterface
 {
     /**
-     * @var array
+     * @var Repository\ActionInterface[]
      */
-    private $stack;
+    private array $stack;
+    private Factory\ActionInterface $factory;
+    private Action\QueueInterface $queue;
 
-    /**
-     * @var \Fusio\Engine\Factory\ActionInterface
-     */
-    private $factory;
-
-    /**
-     * @var \Fusio\Engine\Action\QueueInterface
-     */
-    private $queue;
-
-    /**
-     * @param \Fusio\Engine\Repository\ActionInterface $repository
-     * @param \Fusio\Engine\Factory\ActionInterface $factory
-     * @param \Fusio\Engine\Action\QueueInterface $queue
-     */
     public function __construct(Repository\ActionInterface $repository, Factory\ActionInterface $factory, Action\QueueInterface $queue)
     {
         $this->stack   = [];
@@ -64,47 +53,44 @@ class Processor implements ProcessorInterface
         $this->push($repository);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function execute($actionId, RequestInterface $request, ContextInterface $context)
+    public function execute(string|int $actionId, RequestInterface $request, ContextInterface $context): HttpResponseInterface
     {
         $repository = $this->getCurrentRepository();
-        $action     = $repository->get($actionId);
+        if (!$repository instanceof Repository\ActionInterface) {
+            throw new \RuntimeException('Repository not configured');
+        }
 
-        if ($action instanceof Model\ActionInterface) {
-            $parameters = new Parameters($action->getConfig());
-
-            if ($action->isAsync()) {
-                $this->queue->push($actionId, $request, $context);
-
-                return new HttpResponse(202, [], [
-                    'success' => true,
-                    'message' => 'Request was queued for execution',
-                ]);
-            } else {
-                return $this->factory->factory($action->getClass(), $action->getEngine())->handle($request, $parameters, $context->withAction($action));
-            }
-        } else {
+        $action = $repository->get($actionId);
+        if (!$action instanceof Model\ActionInterface) {
             throw new ActionNotFoundException('Could not found action ' . $actionId);
+        }
+
+        $parameters = new Parameters($action->getConfig());
+
+        if ($action->isAsync()) {
+            $this->queue->push($actionId, $request, $context);
+
+            return new HttpResponse(202, [], [
+                'success' => true,
+                'message' => 'Request was queued for execution',
+            ]);
+        } else {
+            return $this->factory->factory($action->getClass(), $action->getEngine())->handle($request, $parameters, $context->withAction($action));
         }
     }
 
     /**
-     * Pushes another repository to the processor stack. Through this it is
-     * possible to provide another action source
-     *
-     * @param \Fusio\Engine\Repository\ActionInterface
+     * Pushes another repository to the processor stack. Through this it is possible to provide another action source
      */
-    public function push(Repository\ActionInterface $repository)
+    public function push(Repository\ActionInterface $repository): void
     {
-        array_push($this->stack, $repository);
+        $this->stack[] = $repository;
     }
 
     /**
      * Removes the processor from the top of the stack
      */
-    public function pop()
+    public function pop(): void
     {
         if (count($this->stack) === 1) {
             throw new RuntimeException('One repository must be at least available');
@@ -113,11 +99,8 @@ class Processor implements ProcessorInterface
         array_pop($this->stack);
     }
 
-    /**
-     * @return \Fusio\Engine\Repository\ActionInterface
-     */
-    protected function getCurrentRepository()
+    protected function getCurrentRepository(): ?Repository\ActionInterface
     {
-        return end($this->stack);
+        return end($this->stack) ?: null;
     }
 }

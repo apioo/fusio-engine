@@ -32,19 +32,13 @@ namespace Fusio\Engine;
 interface RequestInterface
 {
     /**
-     * Returns a value from the request. To make your action independent of the
-     * request context i.e. HTTP or RPC use only this method. Otherwise you can
-     * get also values from the specific request instance 
-     * 
-     * @param string $name
-     * @return mixed
+     * Returns a value from the request. To make your action independent of the request context i.e. HTTP or RPC use
+     * only this method. Otherwise you can get also values from the specific request instance
      */
-    public function get($name);
+    public function get(string $name): mixed;
 
     /**
      * Returns the complete request payload
-     * 
-     * @return mixed
      */
-    public function getPayload();
+    public function getPayload(): mixed;
 }

@@ -35,17 +35,12 @@ interface ConfigurableInterface
 {
     /**
      * Returns a human readable string which represents this resource
-     *
-     * @return string
      */
-    public function getName();
+    public function getName(): string;
 
     /**
-     * Builds a form which the user can configure. The entered values get then
-     * passed as configuration to the handle method
-     *
-     * @param \Fusio\Engine\Form\BuilderInterface $builder
-     * @param \Fusio\Engine\Form\ElementFactoryInterface $elementFactory
+     * Builds a form which the user can configure. The entered values get then passed as configuration to the handle
+     * method
      */
-    public function configure(BuilderInterface $builder, ElementFactoryInterface $elementFactory);
+    public function configure(BuilderInterface $builder, ElementFactoryInterface $elementFactory): void;
 }

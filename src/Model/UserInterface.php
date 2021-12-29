@@ -30,43 +30,19 @@ namespace Fusio\Engine\Model;
  */
 interface UserInterface
 {
-    /**
-     * @return boolean
-     */
-    public function isAnonymous();
+    public function isAnonymous(): bool;
 
-    /**
-     * @return integer
-     */
-    public function getId();
+    public function getId(): int;
 
-    /**
-     * @return integer
-     */
-    public function getRoleId();
+    public function getRoleId(): int;
 
-    /**
-     * @return integer
-     */
-    public function getCategoryId();
+    public function getCategoryId(): int;
 
-    /**
-     * @return integer
-     */
-    public function getStatus();
+    public function getStatus(): int;
 
-    /**
-     * @return string
-     */
-    public function getName();
+    public function getName(): string;
 
-    /**
-     * @return string
-     */
-    public function getEmail();
+    public function getEmail(): string;
 
-    /**
-     * @return integer
-     */
-    public function getPoints();
+    public function getPoints(): int;
 }

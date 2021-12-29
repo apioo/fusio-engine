@@ -37,33 +37,15 @@ use Psr\SimpleCache\CacheInterface;
  */
 interface ServiceAwareInterface
 {
-    /**
-     * @param \Fusio\Engine\ConnectorInterface $connector
-     */
-    public function setConnector(ConnectorInterface $connector);
+    public function setConnector(ConnectorInterface $connector): void;
 
-    /**
-     * @param \Fusio\Engine\Response\FactoryInterface $response
-     */
-    public function setResponse(Response\FactoryInterface $response);
+    public function setResponse(Response\FactoryInterface $response): void;
 
-    /**
-     * @param \Fusio\Engine\ProcessorInterface $processor
-     */
-    public function setProcessor(ProcessorInterface $processor);
+    public function setProcessor(ProcessorInterface $processor): void;
 
-    /**
-     * @param \Fusio\Engine\DispatcherInterface $dispatcher
-     */
-    public function setDispatcher(DispatcherInterface $dispatcher);
+    public function setDispatcher(DispatcherInterface $dispatcher): void;
 
-    /**
-     * @param \Psr\Log\LoggerInterface
-     */
-    public function setLogger(LoggerInterface $logger);
+    public function setLogger(LoggerInterface $logger): void;
 
-    /**
-     * @param \Psr\SimpleCache\CacheInterface $cache
-     */
-    public function setCache(CacheInterface $cache);
+    public function setCache(CacheInterface $cache): void;
 }

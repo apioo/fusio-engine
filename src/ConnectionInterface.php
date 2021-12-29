@@ -31,13 +31,8 @@ namespace Fusio\Engine;
 interface ConnectionInterface extends ConfigurableInterface
 {
     /**
-     * Returns an arbitrary connection to a system. This can be i.e. a mysql
-     * or mongodb connection. The connection can then be used by an action to
-     * fulfill the task. The $config contains parameters which were set by the
-     * user
-     *
-     * @param \Fusio\Engine\ParametersInterface $config
-     * @return mixed
+     * Returns an arbitrary connection to a system. This can be i.e. a mysql or mongodb connection. The connection can
+     * then be used by an action to fulfill the task. The $config contains parameters which were set by the user
      */
-    public function getConnection(ParametersInterface $config);
+    public function getConnection(ParametersInterface $config): mixed;
 }

@@ -34,12 +34,8 @@ namespace Fusio\Engine;
 interface DispatcherInterface
 {
     /**
-     * Dispatches a specific event and sends the payload to all subscribers. The
-     * payload gets json encoded so it is recommended to use i.e. an array or
-     * stdClass data type
-     * 
-     * @param string $eventName
-     * @param mixed $payload
+     * Dispatches a specific event and sends the payload to all subscribers. The payload gets json encoded so it is
+     * recommended to use i.e. an array or stdClass data type
      */
-    public function dispatch($eventName, $payload);
+    public function dispatch(string $eventName, mixed $payload): void;
 }

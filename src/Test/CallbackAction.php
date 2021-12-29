@@ -28,6 +28,7 @@ use Fusio\Engine\Form\BuilderInterface;
 use Fusio\Engine\Form\ElementFactoryInterface;
 use Fusio\Engine\ParametersInterface;
 use Fusio\Engine\RequestInterface;
+use PSX\Http\Environment\HttpResponseInterface;
 
 /**
  * CallbackAction
@@ -38,12 +39,12 @@ use Fusio\Engine\RequestInterface;
  */
 class CallbackAction extends ActionAbstract
 {
-    public function getName()
+    public function getName(): string
     {
         return 'Callback-Action';
     }
 
-    public function handle(RequestInterface $request, ParametersInterface $configuration, ContextInterface $context)
+    public function handle(RequestInterface $request, ParametersInterface $configuration, ContextInterface $context): HttpResponseInterface
     {
         $callback = $configuration->get('callback');
 
@@ -54,7 +55,7 @@ class CallbackAction extends ActionAbstract
         return call_user_func_array($callback, [$this->response, $request, $configuration, $context]);
     }
 
-    public function configure(BuilderInterface $builder, ElementFactoryInterface $elementFactory)
+    public function configure(BuilderInterface $builder, ElementFactoryInterface $elementFactory): void
     {
     }
 }

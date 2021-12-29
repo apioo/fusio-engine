@@ -30,38 +30,15 @@ namespace Fusio\Engine\Model;
  */
 interface ActionInterface
 {
-    /**
-     * @return integer
-     */
-    public function getId();
+    public function getId(): int;
 
-    /**
-     * @return string
-     */
-    public function getName();
+    public function getName(): string;
 
-    /**
-     * @return string
-     */
-    public function getClass();
+    public function getClass(): string;
 
-    /**
-     * @return string
-     */
-    public function getEngine();
+    public function getEngine(): string;
 
-    /**
-     * @return bool
-     */
     public function isAsync(): bool;
 
-    /**
-     * @return array
-     */
-    public function getConfig();
-
-    /**
-     * @return string
-     */
-    public function getDate();
+    public function getConfig(): array;
 }

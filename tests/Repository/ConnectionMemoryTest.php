@@ -64,14 +64,14 @@ class ConnectionMemoryTest extends TestCase
         $this->assertSame('foo', $connection->getName());
     }
 
-    /**
-     * @return \Fusio\Engine\Repository\ConnectionInterface
-     */
-    protected function createRepository()
+    protected function createRepository(): Repository\ConnectionInterface
     {
-        $connection = new Connection();
-        $connection->setId(1);
-        $connection->setName('foo');
+        $connection = new Connection(
+            id: 1,
+            name: 'foo',
+            class: \stdClass::class,
+            config: [],
+        );
 
         $repository = new Repository\ConnectionMemory();
         $repository->add($connection);

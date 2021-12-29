@@ -34,23 +34,10 @@ use Fusio\Engine\Repository\RepositoryInterface;
  */
 class Repository extends ParserAbstract
 {
-    /**
-     * @var \Fusio\Engine\Repository\RepositoryInterface
-     */
-    protected $repository;
+    private RepositoryInterface $repository;
+    private string $instanceOf;
 
-    /**
-     * @var string
-     */
-    protected $instanceOf;
-
-    /**
-     * @param \Fusio\Engine\Factory\FactoryInterface $factory
-     * @param \Fusio\Engine\Form\ElementFactoryInterface $elementFactory
-     * @param \Fusio\Engine\Repository\RepositoryInterface $repository
-     * @param $instanceOf
-     */
-    public function __construct(FactoryInterface $factory, Form\ElementFactoryInterface $elementFactory, RepositoryInterface $repository, $instanceOf)
+    public function __construct(FactoryInterface $factory, Form\ElementFactoryInterface $elementFactory, RepositoryInterface $repository, string $instanceOf)
     {
         parent::__construct($factory, $elementFactory);
 
@@ -58,10 +45,7 @@ class Repository extends ParserAbstract
         $this->instanceOf = $instanceOf;
     }
 
-    /**
-     * @return array
-     */
-    public function getClasses()
+    public function getClasses(): array
     {
         $classes = $this->repository->getAll();
         $result  = array();

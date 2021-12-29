@@ -30,109 +30,29 @@ namespace Fusio\Engine\Model;
  */
 interface TransactionInterface
 {
-    const STATUS_PREPARED = 0;
-    const STATUS_CREATED  = 1;
-    const STATUS_APPROVED = 2;
-    const STATUS_FAILED   = 3;
-    const STATUS_UNKNOWN  = 4;
+    public const STATUS_PREPARED = 0;
+    public const STATUS_CREATED  = 1;
+    public const STATUS_APPROVED = 2;
+    public const STATUS_FAILED   = 3;
+    public const STATUS_UNKNOWN  = 4;
 
-    /**
-     * @return int
-     */
-    public function getId();
+    public function getId(): int;
 
-    /**
-     * @param int $id
-     */
-    public function setId($id);
+    public function getInvoiceId(): int;
 
-    /**
-     * @return int
-     */
-    public function getInvoiceId();
+    public function getStatus(): int;
 
-    /**
-     * @param int $invoiceId
-     */
-    public function setInvoiceId($invoiceId);
+    public function getProvider(): string;
 
-    /**
-     * @return int
-     */
-    public function getStatus();
+    public function getTransactionId(): string;
 
-    /**
-     * @param int $status
-     */
-    public function setStatus($status);
+    public function getRemoteId(): string;
 
-    /**
-     * @return string
-     */
-    public function getProvider();
+    public function getAmount(): float;
 
-    /**
-     * @param string $provider
-     */
-    public function setProvider($provider);
+    public function getReturnUrl(): string;
 
-    /**
-     * @return string
-     */
-    public function getTransactionId();
+    public function getUpdateDate(): \DateTimeInterface;
 
-    /**
-     * @param string $transactionId
-     */
-    public function setTransactionId($transactionId);
-
-    /**
-     * @return string
-     */
-    public function getRemoteId();
-
-    /**
-     * @param string $remoteId
-     */
-    public function setRemoteId($remoteId);
-
-    /**
-     * @return int
-     */
-    public function getAmount();
-
-    /**
-     * @param int $amount
-     */
-    public function setAmount($amount);
-
-    /**
-     * @return string
-     */
-    public function getReturnUrl();
-
-    /**
-     * @param string $returnUrl
-     */
-    public function setReturnUrl($returnUrl);
-
-    /**
-     * @return \DateTime
-     */
-    public function getUpdateDate();
-
-    /**
-     * @param \DateTime $updateDate
-     */
-    public function setUpdateDate(\DateTime $updateDate);
-
-    /**
-     * @return \DateTime
-     */
-    public function getCreateDate();
-
-    /**
-     * @param \DateTime $createDate
-     */
-    public function setCreateDate(\DateTime $createDate);
+    public function getCreateDate(): \DateTimeInterface;
 }

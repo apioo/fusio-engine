@@ -33,30 +33,16 @@ use Fusio\Engine\Factory;
  */
 class Connector implements ConnectorInterface
 {
-    /**
-     * @var \Fusio\Engine\Repository\ConnectionInterface
-     */
-    protected $repository;
+    private Repository\ConnectionInterface $repository;
+    private Factory\ConnectionInterface $factory;
 
-    /**
-     * @var \Fusio\Engine\Factory\ConnectionInterface
-     */
-    protected $factory;
-
-    /**
-     * @param \Fusio\Engine\Repository\ConnectionInterface $repository
-     * @param \Fusio\Engine\Factory\ConnectionInterface $factory
-     */
     public function __construct(Repository\ConnectionInterface $repository, Factory\ConnectionInterface $factory)
     {
         $this->repository = $repository;
         $this->factory    = $factory;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getConnection($connectionId)
+    public function getConnection(string|int $connectionId): mixed
     {
         $connection = $this->repository->get($connectionId);
 

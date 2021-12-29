@@ -28,6 +28,6 @@ namespace Fusio\Engine\Exception;
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    https://www.fusio-project.org
  */
-class ActionNotFoundException extends \RuntimeException
+class ActionNotFoundException extends \Exception
 {
 }

@@ -32,63 +32,39 @@ use ArrayIterator;
  */
 class Parameters implements ParametersInterface
 {
-    /**
-     * @var array
-     */
-    protected $container;
+    private array $container;
 
-    /**
-     * @param array $container
-     */
     public function __construct(array $container)
     {
         $this->container = $container;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function get($key)
+    public function get(string $key): mixed
     {
-        return isset($this->container[$key]) ? $this->container[$key] : null;
+        return $this->container[$key] ?? null;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function has($key)
+    public function has(string $key): bool
     {
         return isset($this->container[$key]);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function set($key, $value)
+    public function set(string $key, mixed $value)
     {
         $this->container[$key] = $value;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function isEmpty()
+    public function isEmpty(): bool
     {
         return empty($this->container);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getIterator()
+    public function getIterator(): \Traversable
     {
         return new ArrayIterator($this->container);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function toArray()
+    public function toArray(): array
     {
         return $this->container;
     }

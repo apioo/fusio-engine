@@ -21,6 +21,8 @@
 
 namespace Fusio\Engine\Parser;
 
+use Fusio\Engine\Form\Container;
+
 /**
  * ParserInterface
  *
@@ -32,16 +34,11 @@ interface ParserInterface
 {
     /**
      * Returns all available classes
-     *
-     * @return array
      */
-    public function getClasses();
+    public function getClasses(): array;
 
     /**
      * Returns a form if the class is configurable
-     *
-     * @param string $className
-     * @return \PSX\Record\RecordInterface
      */
-    public function getForm($className);
+    public function getForm(string $className): ?Container;
 }

@@ -33,38 +33,21 @@ use PSX\Record\RecordInterface;
  */
 class RpcRequest implements RpcInterface
 {
-    /**
-     * @var string
-     */
-    private $method;
+    private string $method;
+    private RecordInterface $arguments;
 
-    /**
-     * @var \PSX\Record\RecordInterface
-     */
-    private $arguments;
-
-    /**
-     * @param string $method
-     * @param \PSX\Record\RecordInterface $arguments
-     */
     public function __construct(string $method, RecordInterface $arguments)
     {
         $this->method    = $method;
         $this->arguments = $arguments;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function get($name)
+    public function get(string $name): mixed
     {
         return $this->arguments->getProperty($name);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getPayload()
+    public function getPayload(): mixed
     {
         $body = $this->arguments->getProperty('payload');
         if ($body instanceof PassthruRecord) {
@@ -74,34 +57,22 @@ class RpcRequest implements RpcInterface
         }
     }
 
-    /**
-     * @return string
-     */
     public function getMethod(): string
     {
         return $this->method;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getArgument($name)
+    public function getArgument(string $name): mixed
     {
         return $this->arguments->getProperty($name);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getArguments()
+    public function getArguments(): RecordInterface
     {
         return $this->arguments;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function withArguments(RecordInterface $arguments)
+    public function withArguments(RecordInterface $arguments): self
     {
         $self = clone $this;
         $self->arguments = $arguments;

@@ -21,6 +21,8 @@
 
 namespace Fusio\Engine\Repository;
 
+use Fusio\Engine\Model;
+
 /**
  * ActionInterface
  *
@@ -31,13 +33,9 @@ namespace Fusio\Engine\Repository;
 interface ActionInterface extends RepositoryInterface
 {
     /**
-     * @return \Fusio\Engine\Model\ActionInterface[]
+     * @return Model\ActionInterface[]
      */
-    public function getAll();
+    public function getAll(): array;
 
-    /**
-     * @param integer|string $id
-     * @return \Fusio\Engine\Model\ActionInterface|null
-     */
-    public function get($id);
+    public function get(string|int $id): ?Model\ActionInterface;
 }

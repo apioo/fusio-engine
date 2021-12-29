@@ -30,213 +30,78 @@ namespace Fusio\Engine\Model;
  */
 class Transaction implements TransactionInterface
 {
-    /**
-     * @var integer
-     */
-    protected $id;
+    private int $id;
+    private int $invoiceId;
+    private int $status;
+    private string $provider;
+    private string $transactionId;
+    private string $remoteId;
+    private float $amount;
+    private string $returnUrl;
+    private \DateTimeInterface $updateDate;
+    private \DateTimeInterface $createDate;
 
-    /**
-     * @var integer
-     */
-    protected $invoiceId;
+    public function __construct(int $id, int $invoiceId, int $status, string $provider, string $transactionId, string $remoteId, float $amount, string $returnUrl, \DateTimeInterface $updateDate, \DateTimeInterface $createDate)
+    {
+        $this->id = $id;
+        $this->invoiceId = $invoiceId;
+        $this->status = $status;
+        $this->provider = $provider;
+        $this->transactionId = $transactionId;
+        $this->remoteId = $remoteId;
+        $this->amount = $amount;
+        $this->returnUrl = $returnUrl;
+        $this->updateDate = $updateDate;
+        $this->createDate = $createDate;
+    }
 
-    /**
-     * @var integer
-     */
-    protected $status;
-
-    /**
-     * @var string
-     */
-    protected $provider;
-
-    /**
-     * @var string
-     */
-    protected $transactionId;
-
-    /**
-     * @var string
-     */
-    protected $remoteId;
-
-    /**
-     * @var float
-     */
-    protected $amount;
-
-    /**
-     * @var string
-     */
-    protected $returnUrl;
-
-    /**
-     * @var \DateTime
-     */
-    protected $updateDate;
-
-    /**
-     * @var \DateTime
-     */
-    protected $createDate;
-
-    /**
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return int
-     */
-    public function getInvoiceId()
+    public function getInvoiceId(): int
     {
         return $this->invoiceId;
     }
 
-    /**
-     * @param int $invoiceId
-     */
-    public function setInvoiceId($invoiceId)
-    {
-        $this->invoiceId = $invoiceId;
-    }
-
-    /**
-     * @return int
-     */
-    public function getStatus()
+    public function getStatus(): int
     {
         return $this->status;
     }
 
-    /**
-     * @param int $status
-     */
-    public function setStatus($status)
-    {
-        $this->status = $status;
-    }
-
-    /**
-     * @return string
-     */
-    public function getProvider()
+    public function getProvider(): string
     {
         return $this->provider;
     }
 
-    /**
-     * @param string $provider
-     */
-    public function setProvider($provider)
-    {
-        $this->provider = $provider;
-    }
-
-    /**
-     * @return string
-     */
-    public function getTransactionId()
+    public function getTransactionId(): string
     {
         return $this->transactionId;
     }
 
-    /**
-     * @param string $transactionId
-     */
-    public function setTransactionId($transactionId)
-    {
-        $this->transactionId = $transactionId;
-    }
-
-    /**
-     * @return string
-     */
-    public function getRemoteId()
+    public function getRemoteId(): string
     {
         return $this->remoteId;
     }
 
-    /**
-     * @param string $remoteId
-     */
-    public function setRemoteId($remoteId)
-    {
-        $this->remoteId = $remoteId;
-    }
-    
-    /**
-     * @return int
-     */
-    public function getAmount()
+    public function getAmount(): float
     {
         return $this->amount;
     }
 
-    /**
-     * @param int $amount
-     */
-    public function setAmount($amount)
-    {
-        $this->amount = $amount;
-    }
-
-    /**
-     * @return string
-     */
-    public function getReturnUrl()
+    public function getReturnUrl(): string
     {
         return $this->returnUrl;
     }
 
-    /**
-     * @param string $returnUrl
-     */
-    public function setReturnUrl($returnUrl)
-    {
-        $this->returnUrl = $returnUrl;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getUpdateDate()
+    public function getUpdateDate(): \DateTimeInterface
     {
         return $this->updateDate;
     }
 
-    /**
-     * @param \DateTime $updateDate
-     */
-    public function setUpdateDate(\DateTime $updateDate)
-    {
-        $this->updateDate = $updateDate;
-    }
-
-    /**
-     * @return \DateTime
-     */
-    public function getCreateDate()
+    public function getCreateDate(): \DateTimeInterface
     {
         return $this->createDate;
-    }
-
-    /**
-     * @param \DateTime $createDate
-     */
-    public function setCreateDate(\DateTime $createDate)
-    {
-        $this->createDate = $createDate;
     }
 }

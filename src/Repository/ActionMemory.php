@@ -33,39 +33,26 @@ use Fusio\Engine\Model;
 class ActionMemory implements ActionInterface, \JsonSerializable, \Countable
 {
     /**
-     * @var \Fusio\Engine\Model\ActionInterface[]
+     * @var Model\ActionInterface[]
      */
-    protected $actions;
+    private array $actions;
 
-    /**
-     * @param array $actions
-     */
     public function __construct(array $actions = array())
     {
         $this->actions = $actions;
     }
 
-    /**
-     * @param \Fusio\Engine\Model\ActionInterface $action
-     */
-    public function add(Model\ActionInterface $action)
+    public function add(Model\ActionInterface $action): void
     {
         $this->actions[$action->getId()] = $action;
     }
 
-    /**
-     * @return \Fusio\Engine\Model\ActionInterface[]
-     */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->actions;
     }
 
-    /**
-     * @param integer|string $id
-     * @return \Fusio\Engine\Model\ActionInterface|null
-     */
-    public function get($id)
+    public function get(string|int $id): ?Model\ActionInterface
     {
         if (empty($this->actions)) {
             return null;
@@ -84,12 +71,12 @@ class ActionMemory implements ActionInterface, \JsonSerializable, \Countable
         return null;
     }
 
-    public function count()
+    public function count(): int
     {
         return count($this->actions);
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         $result = [];
         foreach ($this->actions as $action) {
@@ -100,30 +87,27 @@ class ActionMemory implements ActionInterface, \JsonSerializable, \Countable
                 'engine' => $action->getEngine(),
                 'async'  => $action->isAsync(),
                 'config' => $action->getConfig(),
-                'date'   => $action->getDate(),
             ];
         }
 
         return $result;
     }
 
-    public static function fromJson($json)
+    public static function fromJson(string $json): static
     {
         $data = json_decode($json, true);
         $repo = new static();
 
         if (is_array($data)) {
             foreach ($data as $row) {
-                $action = new Model\Action();
-                $action->setId((int) $row['id']);
-                $action->setName($row['name']);
-                $action->setClass($row['class']);
-                $action->setEngine($row['engine']);
-                $action->setAsync((bool) $row['async']);
-                $action->setConfig($row['config']);
-                $action->setDate($row['date']);
-
-                $repo->add($action);
+                $repo->add(new Model\Action(
+                    (int) $row['id'],
+                    $row['name'],
+                    $row['class'],
+                    $row['engine'],
+                    (bool) $row['async'],
+                    $row['config']
+                ));
             }
         }
 

@@ -24,9 +24,8 @@ namespace Fusio\Engine\Serverless;
 use PSX\Http\ResponseInterface;
 
 /**
- * The serverless executor is used inside a specific handler to invoke the
- * framework logic for a specific method. This means the execute method gets
- * called i.e. inside a lambda function
+ * The serverless executor is used inside a specific handler to invoke the framework logic for a specific method. This
+ * means the execute method gets called i.e. inside a lambda function
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
@@ -34,14 +33,5 @@ use PSX\Http\ResponseInterface;
  */
 interface ExecutorInterface
 {
-    /**
-     * @param array $method
-     * @param string $httpMethod
-     * @param string $path
-     * @param array $uriFragments
-     * @param array $headers
-     * @param string|null $body
-     * @return ResponseInterface
-     */
     public function execute(array $method, string $httpMethod, string $path, array $uriFragments, array $headers, ?string $body = null): ResponseInterface;
 }

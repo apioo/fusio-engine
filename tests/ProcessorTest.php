@@ -108,14 +108,16 @@ class ProcessorTest extends TestCase
     {
         $repository = $this->getActionRepository();
 
-        $action = new Action();
-        $action->setId(1);
-        $action->setName('foo');
-        $action->setClass(CallbackAction::class);
-        $action->setAsync($async);
-        $action->setConfig(['callback' => function(FactoryInterface $response){
-            return $response->build(200, [], ['foo' => 'bar']);
-        }]);
+        $action = new Action(
+            id: 1,
+            name: 'foo',
+            class: CallbackAction::class,
+            engine: \stdClass::class,
+            async: $async,
+            config: ['callback' => function(FactoryInterface $response){
+                return $response->build(200, [], ['foo' => 'bar']);
+            }]
+        );
 
         $repository->add($action);
 

@@ -21,6 +21,9 @@
 
 namespace Fusio\Engine;
 
+use Fusio\Engine\Exception\ActionNotFoundException;
+use PSX\Http\Environment\HttpResponseInterface;
+
 /**
  * The processor can be used to invoke another action. Normally an action should
  * only contain simple logic but in some cases you may want to invoke an
@@ -37,10 +40,7 @@ interface ProcessorInterface
      * response. It is recommended to use the action name but you can also use
      * the actual database id of the action
      * 
-     * @param string|integer $actionId
-     * @param \Fusio\Engine\RequestInterface $request
-     * @param \Fusio\Engine\ContextInterface $context
-     * @return \PSX\Http\Environment\HttpResponseInterface
+     * @throws ActionNotFoundException
      */
-    public function execute($actionId, RequestInterface $request, ContextInterface $context);
+    public function execute(string|int $actionId, RequestInterface $request, ContextInterface $context): HttpResponseInterface;
 }

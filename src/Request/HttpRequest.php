@@ -34,38 +34,21 @@ use PSX\Record\RecordInterface;
  */
 class HttpRequest implements HttpInterface
 {
-    /**
-     * @var \PSX\Http\Environment\HttpContextInterface
-     */
-    protected $context;
+    private HttpContextInterface $context;
+    private RecordInterface $body;
 
-    /**
-     * @var \PSX\Record\RecordInterface
-     */
-    protected $body;
-
-    /**
-     * @param \PSX\Http\Environment\HttpContextInterface $context
-     * @param \PSX\Record\RecordInterface $body
-     */
     public function __construct(HttpContextInterface $context, RecordInterface $body)
     {
         $this->context = $context;
         $this->body    = $body;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function get($name)
+    public function get(string $name): mixed
     {
         return $this->getUriFragment($name) ?? ($this->getParameter($name) ?? $this->getBody()->getProperty($name));
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getPayload()
+    public function getPayload(): mixed
     {
         $body = $this->getBody();
         if ($body instanceof PassthruRecord) {
@@ -75,74 +58,47 @@ class HttpRequest implements HttpInterface
         }
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getMethod()
+    public function getMethod(): string
     {
         return $this->context->getMethod();
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getHeader($name)
+    public function getHeader(string $name): ?string
     {
         return $this->context->getHeader($name);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getHeaders()
+    public function getHeaders(): array
     {
         return $this->context->getHeaders();
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getUriFragment($name)
+    public function getUriFragment($name): ?string
     {
         return $this->context->getUriFragment($name);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getUriFragments()
+    public function getUriFragments(): array
     {
         return $this->context->getUriFragments();
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getParameter($name)
+    public function getParameter(string $name): mixed
     {
         return $this->context->getParameter($name);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getParameters()
+    public function getParameters(): array
     {
         return $this->context->getParameters();
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getBody()
+    public function getBody(): RecordInterface
     {
         return $this->body;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function withBody(RecordInterface $body)
+    public function withBody(RecordInterface $body): self
     {
         $self = clone $this;
         $self->body = $body;

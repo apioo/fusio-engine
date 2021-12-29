@@ -30,171 +30,64 @@ namespace Fusio\Engine\Model;
  */
 class User implements UserInterface
 {
-    /**
-     * @var boolean
-     */
-    protected $anonymous;
+    private bool $anonymous;
+    private int $id;
+    private int $roleId;
+    private int $categoryId;
+    private int $status;
+    private string $name;
+    private string $email;
+    private int $points;
 
-    /**
-     * @var integer
-     */
-    protected $id;
+    public function __construct(bool $anonymous, int $id, int $roleId, int $categoryId, int $status, string $name, string $email, int $points)
+    {
+        $this->anonymous = $anonymous;
+        $this->id = $id;
+        $this->roleId = $roleId;
+        $this->categoryId = $categoryId;
+        $this->status = $status;
+        $this->name = $name;
+        $this->email = $email;
+        $this->points = $points;
+    }
 
-    /**
-     * @var integer
-     */
-    protected $roleId;
-
-    /**
-     * @var integer
-     */
-    protected $categoryId;
-
-    /**
-     * @var integer
-     */
-    protected $status;
-
-    /**
-     * @var string
-     */
-    protected $name;
-
-    /**
-     * @var string
-     */
-    protected $email;
-
-    /**
-     * @var integer
-     */
-    protected $points;
-
-    /**
-     * @inheritdoc
-     */
-    public function isAnonymous()
+    public function isAnonymous(): bool
     {
         return $this->anonymous;
     }
 
-    /**
-     * @param boolean $anonymous
-     */
-    public function setAnonymous($anonymous)
-    {
-        $this->anonymous = $anonymous;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * @param int $id
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    /**
-     * @return int
-     */
-    public function getRoleId()
+    public function getRoleId(): int
     {
         return $this->roleId;
     }
 
-    /**
-     * @param int $roleId
-     */
-    public function setRoleId($roleId)
-    {
-        $this->roleId = $roleId;
-    }
-
-    /**
-     * @return int
-     */
-    public function getCategoryId()
+    public function getCategoryId(): int
     {
         return $this->categoryId;
     }
 
-    /**
-     * @param int $categoryId
-     */
-    public function setCategoryId($categoryId)
-    {
-        $this->categoryId = $categoryId;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getStatus()
+    public function getStatus(): int
     {
         return $this->status;
     }
 
-    /**
-     * @param int $status
-     */
-    public function setStatus($status)
-    {
-        $this->status = $status;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $name
-     */
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    /**
-     * @return string
-     */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
 
-    /**
-     * @param string $email
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-    }
-
-    /**
-     * @return int
-     */
-    public function getPoints()
+    public function getPoints(): int
     {
         return $this->points;
-    }
-
-    /**
-     * @param int $points
-     */
-    public function setPoints($points)
-    {
-        $this->points = $points;
     }
 }

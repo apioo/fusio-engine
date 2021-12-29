@@ -24,6 +24,7 @@ namespace Fusio\Engine;
 use Fusio\Engine\Action\ServiceAwareInterface;
 use Fusio\Engine\Form\BuilderInterface;
 use Fusio\Engine\Form\ElementFactoryInterface;
+use Fusio\Engine\Response\FactoryInterface;
 use Psr\Log\LoggerInterface;
 use Psr\SimpleCache\CacheInterface;
 
@@ -36,101 +37,54 @@ use Psr\SimpleCache\CacheInterface;
  */
 abstract class ActionAbstract implements ActionInterface, ServiceAwareInterface
 {
-    /**
-     * @var \Fusio\Engine\ConnectorInterface
-     */
-    protected $connector;
+    protected ConnectorInterface $connector;
+    protected FactoryInterface $response;
+    protected ProcessorInterface $processor;
+    protected DispatcherInterface $dispatcher;
+    protected LoggerInterface $logger;
+    protected CacheInterface $cache;
 
-    /**
-     * @var \Fusio\Engine\Response\FactoryInterface
-     */
-    protected $response;
-
-    /**
-     * @var \Fusio\Engine\ProcessorInterface
-     */
-    protected $processor;
-
-    /**
-     * @var \Fusio\Engine\DispatcherInterface
-     */
-    protected $dispatcher;
-
-    /**
-     * @var \Psr\Log\LoggerInterface
-     */
-    protected $logger;
-
-    /**
-     * @var \Psr\SimpleCache\CacheInterface
-     */
-    protected $cache;
-
-    /**
-     * @param \Fusio\Engine\ConnectorInterface $connector
-     */
-    public function setConnector(ConnectorInterface $connector)
+    public function setConnector(ConnectorInterface $connector): void
     {
         $this->connector = $connector;
     }
 
-    /**
-     * @param \Fusio\Engine\Response\FactoryInterface $response
-     */
-    public function setResponse(Response\FactoryInterface $response)
+    public function setResponse(Response\FactoryInterface $response): void
     {
         $this->response = $response;
     }
 
-    /**
-     * @param \Fusio\Engine\ProcessorInterface $processor
-     */
-    public function setProcessor(ProcessorInterface $processor)
+    public function setProcessor(ProcessorInterface $processor): void
     {
         $this->processor = $processor;
     }
 
-    /**
-     * @param \Fusio\Engine\DispatcherInterface $dispatcher
-     */
-    public function setDispatcher(DispatcherInterface $dispatcher)
+    public function setDispatcher(DispatcherInterface $dispatcher): void
     {
         $this->dispatcher = $dispatcher;
     }
 
-    /**
-     * @param \Psr\Log\LoggerInterface $logger
-     */
-    public function setLogger(LoggerInterface $logger)
+    public function setLogger(LoggerInterface $logger): void
     {
         $this->logger = $logger;
     }
 
-    /**
-     * @param \Psr\SimpleCache\CacheInterface $cache
-     */
-    public function setCache(CacheInterface $cache)
+    public function setCache(CacheInterface $cache): void
     {
         $this->cache = $cache;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         $className = get_class($this);
-        $lastPart  = substr($className, strrpos($className, '\\') + 1);
+        $pos       = strrpos($className, '\\');
+        $lastPart  = $pos !== false ? substr($className, $pos + 1) : $className;
         $name      = preg_replace(array('/([A-Z]+)([A-Z][a-z])/', '/([a-z\d])([A-Z])/'), array('\\1-\\2', '\\1-\\2'), strtr($lastPart, '_', '.'));
 
         return $name;
     }
 
-    /**
-     * @param \Fusio\Engine\Form\BuilderInterface $builder
-     * @param \Fusio\Engine\Form\ElementFactoryInterface $elementFactory
-     */
-    public function configure(BuilderInterface $builder, ElementFactoryInterface $elementFactory)
+    public function configure(BuilderInterface $builder, ElementFactoryInterface $elementFactory): void
     {
     }
 }

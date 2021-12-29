@@ -32,30 +32,36 @@ use Fusio\Engine\Form\Element;
  */
 class TextArea extends Element
 {
-    /**
-     * @var string
-     */
-    protected $element = 'http://fusio-project.org/ns/2015/form/textarea';
+    private const NAMESPACE = 'http://fusio-project.org/ns/2015/form/textarea';
 
-    /**
-     * @var string
-     */
-    protected $mode;
+    private string $mode;
 
-    public function __construct($name, $title, $mode, $help = null)
+    public function __construct(string $name, string $title, string $mode, ?string $help = null)
     {
         parent::__construct($name, $title, $help);
 
         $this->mode = $mode;
     }
 
-    public function setMode($mode)
+    public function setMode(string $mode): void
     {
         $this->mode = $mode;
     }
     
-    public function getMode()
+    public function getMode(): string
     {
         return $this->mode;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return array_merge(parent::jsonSerialize(), [
+            'mode' => $this->mode,
+        ]);
+    }
+
+    protected function getNamespace(): string
+    {
+        return self::NAMESPACE;
     }
 }

@@ -21,8 +21,6 @@
 
 namespace Fusio\Engine\Form;
 
-use PSX\Record\RecordObject;
-
 /**
  * Element
  *
@@ -30,82 +28,58 @@ use PSX\Record\RecordObject;
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    https://www.fusio-project.org
  */
-class Element extends RecordObject
+abstract class Element implements \JsonSerializable
 {
-    /**
-     * @var string
-     */
-    protected $name;
+    private string $name;
+    private string $title;
+    private ?string $help;
 
-    /**
-     * @var string
-     */
-    protected $title;
-
-    /**
-     * @var string
-     */
-    protected $help;
-
-    /**
-     * @param string $name
-     * @param string $title
-     * @param string $help
-     */
-    public function __construct($name, $title, $help = null)
+    public function __construct(string $name, string $title, ?string $help = null)
     {
-        parent::__construct();
-
         $this->name  = $name;
         $this->title = $title;
         $this->help  = $help;
     }
 
-    /**
-     * @param string $name
-     */
-    public function setName($name)
+    public function setName(string $name): void
     {
         $this->name = $name;
     }
 
-    /**
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * @param string $title
-     */
-    public function setTitle($title)
+    public function setTitle(string $title): void
     {
         $this->title = $title;
     }
 
-    /**
-     * @return string
-     */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
 
-    /**
-     * @param string $help
-     */
-    public function setHelp($help)
+    public function setHelp(string $help): void
     {
         $this->help = $help;
     }
 
-    /**
-     * @return string
-     */
-    public function getHelp()
+    public function getHelp(): ?string
     {
         return $this->help;
     }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'element' => $this->getNamespace(),
+            'name' => $this->name,
+            'title' => $this->title,
+            'help' => $this->help,
+        ];
+    }
+
+    abstract protected function getNamespace(): string;
 }

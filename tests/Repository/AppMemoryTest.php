@@ -59,14 +59,19 @@ class AppMemoryTest extends TestCase
         $this->assertSame('foo', $connection->getName());
     }
 
-    /**
-     * @return \Fusio\Engine\Repository\AppInterface
-     */
-    protected function createRepository()
+    protected function createRepository(): Repository\AppInterface
     {
-        $app = new App();
-        $app->setId(1);
-        $app->setName('foo');
+        $app = new App(
+            anonymous: false,
+            id: 1,
+            userId: 1,
+            status: 1,
+            name: 'foo',
+            url: 'url',
+            appKey: 'key',
+            parameters: [],
+            scopes: [],
+        );
 
         $repository = new Repository\AppMemory();
         $repository->add($app);

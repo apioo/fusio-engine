@@ -33,16 +33,8 @@ use Fusio\Engine\Form;
  */
 class Memory extends ParserAbstract
 {
-    /**
-     * @var array
-     */
-    protected $classes;
+    private array $classes;
 
-    /**
-     * @param \Fusio\Engine\Factory\FactoryInterface $factory
-     * @param \Fusio\Engine\Form\ElementFactoryInterface $elementFactory
-     * @param array $classes
-     */
     public function __construct(FactoryInterface $factory, Form\ElementFactoryInterface $elementFactory, array $classes)
     {
         parent::__construct($factory, $elementFactory);
@@ -50,19 +42,12 @@ class Memory extends ParserAbstract
         $this->classes = $classes;
     }
 
-    /**
-     * @param string $class
-     * @param string $name
-     */
-    public function addClass($class, $name)
+    public function addClass(string $class, string $name)
     {
         $this->classes[$class] = $name;
     }
 
-    /**
-     * @return array
-     */
-    public function getClasses()
+    public function getClasses(): array
     {
         $result = [];
         foreach ($this->classes as $class => $name) {

@@ -33,22 +33,19 @@ use Fusio\Engine\RequestInterface;
  */
 class MemoryQueue implements QueueInterface
 {
-    private $container;
+    private array $container;
 
     public function __construct()
     {
         $this->container = [];
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function push($actionId, RequestInterface $request, ContextInterface $context)
+    public function push(string|int $actionId, RequestInterface $request, ContextInterface $context): void
     {
         $this->container[] = [$actionId, $request, $context];
     }
 
-    public function pop()
+    public function pop(): array
     {
         return array_pop($this->container);
     }

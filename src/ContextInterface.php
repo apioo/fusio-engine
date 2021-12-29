@@ -36,62 +36,43 @@ interface ContextInterface
 {
     /**
      * Returns the id of the route
-     *
-     * @return integer
      */
-    public function getRouteId();
+    public function getRouteId(): int;
 
     /**
-     * Returns the base url of the system to generate i.e. HATEOAS links. The
-     * url has a trailing slash
-     *
-     * @return string
+     * Returns the base url of the system to generate i.e. HATEOAS links. The url has a trailing slash
      */
-    public function getBaseUrl();
+    public function getBaseUrl(): string;
 
     /**
-     * Returns the app which was used for this request. Can also be an anonymous
-     * app if authorization is not required for the endpoint
-     *
-     * @return \Fusio\Engine\Model\AppInterface
+     * Returns the app which was used for this request. Can also be an anonymous app if authorization is not required
+     * for the endpoint
      */
-    public function getApp();
+    public function getApp(): Model\AppInterface;
 
     /**
-     * Returns the user which has authenticated through the app. Can also be an 
-     * anonymous user if authorization is not required for the endpoint
-     *
-     * @return \Fusio\Engine\Model\UserInterface
+     * Returns the user which has authenticated through the app. Can also be an anonymous user if authorization is not
+     * required for the endpoint
      */
-    public function getUser();
+    public function getUser(): Model\UserInterface;
 
     /**
      * Returns the current action
-     *
-     * @return \Fusio\Engine\Model\ActionInterface
      */
-    public function getAction();
+    public function getAction(): ?Model\ActionInterface;
 
     /**
      * Creates a new context containing the given action
-     *
-     * @param \Fusio\Engine\Model\ActionInterface $action
-     * @return \Fusio\Engine\ContextInterface
      */
-    public function withAction(ModelActionInterface $action);
+    public function withAction(ModelActionInterface $action): self;
 
     /**
      * Returns the connection which is currently used by the action
-     *
-     * @return mixed
      */
-    public function getConnection();
+    public function getConnection(): mixed;
 
     /**
      * Sets the currently used connection
-     *
-     * @param mixed $connection
-     * @return \Fusio\Engine\ContextInterface
      */
-    public function withConnection($connection);
+    public function withConnection(mixed $connection): self;
 }

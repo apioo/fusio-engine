@@ -21,6 +21,8 @@
 
 namespace Fusio\Engine\Repository;
 
+use Fusio\Engine\Model;
+
 /**
  * ConnectionInterface
  *
@@ -31,15 +33,12 @@ namespace Fusio\Engine\Repository;
 interface ConnectionInterface extends RepositoryInterface
 {
     /**
-     * @return \Fusio\Engine\Model\ConnectionInterface[]
+     * @return Model\ConnectionInterface[]
      */
-    public function getAll();
+    public function getAll(): array;
 
     /**
      * Returns an connection with the provided id
-     *
-     * @param integer|string $id
-     * @return \Fusio\Engine\Model\ConnectionInterface|null
      */
-    public function get($id);
+    public function get(string|int $id): ?Model\ConnectionInterface;
 }

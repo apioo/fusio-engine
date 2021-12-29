@@ -23,13 +23,13 @@ namespace Fusio\Engine\Factory;
 
 use Fusio\Engine\Action\ServiceAwareInterface;
 use Fusio\Engine\ActionInterface as EngineActionInterface;
-use Fusio\Engine\CacheInterface;
 use Fusio\Engine\ConnectorInterface;
 use Fusio\Engine\DispatcherInterface;
-use Fusio\Engine\LoggerInterface;
 use Fusio\Engine\ProcessorInterface;
 use Fusio\Engine\Response;
 use Psr\Container\ContainerInterface;
+use Psr\Log\LoggerInterface;
+use Psr\SimpleCache\CacheInterface;
 use PSX\Dependency\TypeResolverInterface;
 use RuntimeException;
 
@@ -42,20 +42,9 @@ use RuntimeException;
  */
 class Action implements ActionInterface
 {
-    /**
-     * @var \Psr\Container\ContainerInterface
-     */
-    protected $container;
-
-    /**
-     * @var \PSX\Dependency\TypeResolverInterface
-     */
-    protected $typeResolver;
-
-    /**
-     * @var array
-     */
-    protected $resolvers;
+    private ContainerInterface $container;
+    private TypeResolverInterface $typeResolver;
+    private array $resolvers;
 
     public function __construct(ContainerInterface $container, TypeResolverInterface $typeResolver)
     {
@@ -64,10 +53,7 @@ class Action implements ActionInterface
         $this->resolvers    = [];
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function factory($className, $engine = null)
+    public function factory(string $className, ?string $engine = null): EngineActionInterface
     {
         if (!empty($engine) && isset($this->resolvers[$engine])) {
             $resolver = $this->resolvers[$engine];
@@ -94,17 +80,10 @@ class Action implements ActionInterface
             $action->setCache($this->typeResolver->getServiceByType(CacheInterface::class));
         }
 
-        if ($action instanceof ContainerAwareInterface) {
-            $action->setContainer($this->container);
-        }
-
         return $action;
     }
 
-    /**
-     * @param \Fusio\Engine\Factory\ResolverInterface $resolver
-     */
-    public function addResolver(ResolverInterface $resolver)
+    public function addResolver(ResolverInterface $resolver): void
     {
         $this->resolvers[get_class($resolver)] = $resolver;
     }

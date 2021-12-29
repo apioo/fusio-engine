@@ -33,16 +33,8 @@ use Fusio\Engine\Form;
  */
 class Composite extends ParserAbstract
 {
-    /**
-     * @var array
-     */
-    protected $parsers;
+    private array $parsers;
 
-    /**
-     * @param \Fusio\Engine\Factory\FactoryInterface $factory
-     * @param \Fusio\Engine\Form\ElementFactoryInterface $elementFactory
-     * @param \Fusio\Engine\Parser\ParserInterface[] $parsers
-     */
     public function __construct(FactoryInterface $factory, Form\ElementFactoryInterface $elementFactory, array $parsers)
     {
         parent::__construct($factory, $elementFactory);
@@ -50,10 +42,7 @@ class Composite extends ParserAbstract
         $this->parsers = $parsers;
     }
 
-    /**
-     * @return array
-     */
-    public function getClasses()
+    public function getClasses(): array
     {
         $classes = array();
         foreach ($this->parsers as $parser) {

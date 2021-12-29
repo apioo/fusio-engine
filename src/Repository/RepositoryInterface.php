@@ -30,14 +30,7 @@ namespace Fusio\Engine\Repository;
  */
 interface RepositoryInterface
 {
-    /**
-     * @return array
-     */
-    public function getAll();
+    public function getAll(): array;
 
-    /**
-     * @param integer|string $id
-     * @return object|null
-     */
-    public function get($id);
+    public function get(string|int $id): mixed;
 }

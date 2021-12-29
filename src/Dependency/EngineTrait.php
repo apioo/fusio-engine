@@ -22,25 +22,22 @@
 namespace Fusio\Engine\Dependency;
 
 use Doctrine\Common\Annotations;
-use Doctrine\Common\Cache\ArrayCache;
 use Fusio\Engine\Action;
-use Fusio\Engine\Cache;
-use Fusio\Engine\CacheInterface;
 use Fusio\Engine\Connector;
 use Fusio\Engine\ConnectorInterface;
 use Fusio\Engine\Dispatcher;
 use Fusio\Engine\DispatcherInterface;
 use Fusio\Engine\Factory;
 use Fusio\Engine\Form;
-use Fusio\Engine\Logger;
-use Fusio\Engine\LoggerInterface;
 use Fusio\Engine\Parser;
 use Fusio\Engine\Processor;
 use Fusio\Engine\ProcessorInterface;
 use Fusio\Engine\Repository;
 use Fusio\Engine\Response;
 use Monolog\Handler\NullHandler;
-use PSX\Cache\Pool;
+use Monolog\Logger;
+use Psr\Log\LoggerInterface;
+use Psr\SimpleCache\CacheInterface;
 use PSX\Dependency\AutowireResolver;
 use PSX\Dependency\AutowireResolverInterface;
 use PSX\Dependency\Inspector\ContainerInspector;
@@ -49,6 +46,8 @@ use PSX\Dependency\ObjectBuilder;
 use PSX\Dependency\ObjectBuilderInterface;
 use PSX\Dependency\TypeResolver;
 use PSX\Dependency\TypeResolverInterface;
+use Symfony\Component\Cache\Adapter\ArrayAdapter;
+use Symfony\Component\Cache\Psr16Cache;
 
 /**
  * EngineTrait
@@ -160,38 +159,21 @@ trait EngineTrait
 
     public function getCache(): CacheInterface
     {
-        return new Cache(new ArrayCache());
+        return new Psr16Cache(new ArrayAdapter());
     }
 
     public function getObjectBuilder(): ObjectBuilderInterface
     {
         return new ObjectBuilder(
-            $this,
-            $this->get('annotation_reader'),
-            new Pool(new ArrayCache()),
+            $this->get('container_type_resolver'),
+            new ArrayAdapter(),
             true
         );
     }
 
-    public function getAnnotationReader(): Annotations\Reader
-    {
-        $namespaces = [
-            'PSX\Dependency\Annotation',
-        ];
-
-        $this->registerAnnotationLoader($namespaces);
-
-        $reader = new Annotations\SimpleAnnotationReader();
-        foreach ($namespaces as $namespace) {
-            $reader->addNamespace($namespace);
-        }
-
-        return $reader;
-    }
-
     public function getContainerInspector(): InspectorInterface
     {
-        return new ContainerInspector($this, $this->get('annotation_reader'));
+        return new ContainerInspector($this);
     }
 
     public function getContainerTypeResolver(): TypeResolverInterface
@@ -202,22 +184,5 @@ trait EngineTrait
     public function getContainerAutowireResolver(): AutowireResolverInterface
     {
         return new AutowireResolver($this->get('container_type_resolver'));
-    }
-
-    /**
-     * @param array $namespaces
-     */
-    protected function registerAnnotationLoader(array $namespaces)
-    {
-        Annotations\AnnotationRegistry::reset();
-        Annotations\AnnotationRegistry::registerLoader(function ($class) use ($namespaces) {
-            foreach ($namespaces as $namespace) {
-                if (strpos($class, $namespace) === 0) {
-                    spl_autoload_call($class);
-
-                    return class_exists($class, false);
-                }
-            }
-        });
     }
 }

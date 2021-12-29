@@ -32,7 +32,7 @@ use Fusio\Engine\Test\AdapterTestCase;
  */
 class AdapterTest extends AdapterTestCase
 {
-    protected function getAdapterClass()
+    protected function getAdapterClass(): string
     {
         return TestAdapter::class;
     }

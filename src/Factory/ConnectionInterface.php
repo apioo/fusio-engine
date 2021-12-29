@@ -21,6 +21,10 @@
 
 namespace Fusio\Engine\Factory;
 
+use Fusio\Engine\ConnectionInterface as EngineConnectionInterface;
+use PSX\Dependency\Exception\AutowiredException;
+use PSX\Dependency\Exception\NotFoundException;
+
 /**
  * ConnectionInterface
  *
@@ -31,8 +35,8 @@ namespace Fusio\Engine\Factory;
 interface ConnectionInterface extends FactoryInterface
 {
     /**
-     * @param string $className
-     * @return \Fusio\Engine\ConnectionInterface
+     * @throws AutowiredException
+     * @throws NotFoundException
      */
-    public function factory($className);
+    public function factory(string $className): EngineConnectionInterface;
 }

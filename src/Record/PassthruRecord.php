@@ -22,35 +22,30 @@
 namespace Fusio\Engine\Record;
 
 use PSX\Record\Record;
+use PSX\Record\RecordInterface;
 use Symfony\Component\PropertyAccess\PropertyAccess;
+use Symfony\Component\PropertyAccess\PropertyAccessor;
 
 /**
- * This record is used if a route has specified the passthru schema that means
- * that we redirect the result from the reader to the action. I.e. in case of
- * json this contains a stdClass and for xml a DOMDocument
+ * This record is used if a route has specified the passthru schema that means that we redirect the result from the
+ * reader to the action. I.e. in case of json this contains a stdClass and for xml a DOMDocument
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    http://fusio-project.org
+ * @extends Record<mixed>
  */
 class PassthruRecord extends Record
 {
-    /**
-     * @var mixed
-     */
-    private $payload;
+    private mixed $payload;
+    private PropertyAccessor $accessor;
 
-    /**
-     * @var PropertyAccess
-     */
-    private $accessor;
-
-    public function __construct($payload)
+    public function __construct(mixed $payload)
     {
-        parent::__construct('record', (array) $payload);
-
         $this->payload  = $payload;
         $this->accessor = PropertyAccess::createPropertyAccessor();
+
+        parent::__construct($this->toIterable($payload));
     }
 
     public function getPayload()
@@ -58,22 +53,31 @@ class PassthruRecord extends Record
         return $this->payload;
     }
 
-    public function getProperty($name)
+    public function getProperty(string $name): mixed
     {
         return $this->accessor->getValue($this->payload, $name);
     }
 
-    public function setProperty($name, $value)
+    public function setProperty(string $name, mixed $value): void
     {
         $this->accessor->setValue($this->payload, $name, $value);
     }
 
-    public function removeProperty($name)
+    public function removeProperty(string $name): void
     {
     }
 
-    public function hasProperty($name)
+    public function hasProperty(string $name): bool
     {
         return $this->accessor->isReadable($this->payload, $name);
+    }
+
+    private function toIterable(mixed $payload): iterable
+    {
+        if (!is_iterable($payload)) {
+            return [];
+        }
+
+        return $payload;
     }
 }

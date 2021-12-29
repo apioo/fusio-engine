@@ -32,9 +32,6 @@ interface PingableInterface
 {
     /**
      * Test whether it is possible to connect to the remote service 
-     *
-     * @param mixed $connection
-     * @return boolean
      */
-    public function ping($connection);
+    public function ping(mixed $connection): bool;
 }

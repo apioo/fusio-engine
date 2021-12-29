@@ -35,74 +35,49 @@ interface HttpInterface extends RequestInterface
 {
     /**
      * Returns the HTTP request method i.e. GET, POST
-     *
-     * @return string
      */
-    public function getMethod();
+    public function getMethod(): string;
 
     /**
-     * Returns a specific header or return null in case the header is not
-     * available
-     *
-     * @param string $name
-     * @return string|null
+     * Returns a specific header or return null in case the header is not available
      */
-    public function getHeader($name);
+    public function getHeader(string $name): ?string;
 
     /**
      * Returns all available headers
-     *
-     * @return array
      */
-    public function getHeaders();
+    public function getHeaders(): array;
 
     /**
-     * Returns a specific fragment from the uri. To specify a fragment your
-     * route must contain a variable fragment i.e. /foo/:bar, then it is
-     * possible to access the bar fragment through this method
-     *
-     * @param string $name
-     * @return string
+     * Returns a specific fragment from the uri. To specify a fragment your route must contain a variable fragment i.e.
+     * /foo/:bar, then it is possible to access the bar fragment through this method
      */
-    public function getUriFragment($name);
+    public function getUriFragment(string $name): ?string;
 
     /**
      * Returns all available uri fragments
-     *
-     * @return \Fusio\Engine\Parameters
      */
-    public function getUriFragments();
+    public function getUriFragments(): array;
 
     /**
-     * Returns a query parameter from the uri. Those are parsed by the parse_str
-     * function so the value is either a string or an array in case the
-     * parameter uses a "[]" notation
-     *
-     * @param string $name
-     * @return string|array
+     * Returns a query parameter from the uri. Those are parsed by the parse_str function so the value is either a
+     * string or an array in case the parameter uses a "[]" notation
      */
-    public function getParameter($name);
+    public function getParameter(string $name): mixed;
 
     /**
      * Returns all available query parameters
-     *
-     * @return \Fusio\Engine\Parameters
      */
-    public function getParameters();
+    public function getParameters(): array;
 
     /**
-     * Returns the parsed body. If the body arrives at the action it is already
-     * valid against the defined JSON schema (if provided)
-     *
-     * @return \PSX\Record\RecordInterface
+     * Returns the parsed body. If the body arrives at the action it is already valid against the defined JSON schema
+     * (if provided)
      */
-    public function getBody();
+    public function getBody(): RecordInterface;
 
     /**
      * Returns a copy of the request object with the provided body
-     *
-     * @param \PSX\Record\RecordInterface $body
-     * @return self
      */
-    public function withBody(RecordInterface $body);
+    public function withBody(RecordInterface $body): self;
 }

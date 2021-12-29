@@ -24,12 +24,10 @@ namespace Fusio\Engine\Connection;
 use Fusio\Engine\ParametersInterface;
 
 /**
- * If a connection implements this interface those callback methods are called
- * if a connection gets created or is removed. Those methods can not work with
- * the corresponding connection and it is guaranteed that they are called even
- * if the connection later on fails. It is recommended to implement it in an 
- * idempotent way that means that the side-effects of N > 0 method calls is the 
- * same as for a single call
+ * If a connection implements this interface those callback methods are called if a connection gets created or is
+ * removed. Those methods can not work with the corresponding connection and it is guaranteed that they are called even
+ * if the connection later on fails. It is recommended to implement it in an idempotent way that means that the
+ * side-effects of N > 0 method calls is the same as for a single call
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
@@ -39,19 +37,11 @@ interface DeploymentInterface
 {
     /**
      * Is called on creation of a connection
-     *
-     * @param string $name
-     * @param \Fusio\Engine\ParametersInterface $config
-     * @return void
      */
-    public function onUp($name, ParametersInterface $config);
+    public function onUp(string $name, ParametersInterface $config): void;
 
     /**
      * Is called on deletion of a connection
-     *
-     * @param string $name
-     * @param \Fusio\Engine\ParametersInterface $config
-     * @return void
      */
-    public function onDown($name, ParametersInterface $config);
+    public function onDown(string $name, ParametersInterface $config): void;
 }

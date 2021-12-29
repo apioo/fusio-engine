@@ -72,7 +72,7 @@ abstract class AdapterTestCase extends TestCase
 
     private function validateSchema(\stdClass $data)
     {
-        $manager = new SchemaManager(new SimpleAnnotationReader());
+        $manager = new SchemaManager();
         $schema  = $manager->getSchema(__DIR__ . '/definition_schema.json');
 
         $traverser = new SchemaTraverser();
@@ -91,42 +91,7 @@ abstract class AdapterTestCase extends TestCase
                         $this->fail('Defined ' . $key . ' class ' . $class . ' does not exist');
                     }
 
-                    if ($type === 'action') {
-                        $action = $this->getActionFactory()->factory($class);
-                        if (!$action instanceof ActionInterface) {
-                            $this->fail('Defined action ' . $class . ' must be an instance of ' . ActionInterface::class);
-                        }
-
-                        $this->validateAction($action);
-                    } elseif ($type === 'connection') {
-                        $connection = $this->getConnectionFactory()->factory($class);
-                        if (!$connection instanceof ConnectionInterface) {
-                            $this->fail('Defined connection ' . $class . ' must be an instance of ' . ConnectionInterface::class);
-                        }
-
-                        $this->validateConnection($connection);
-                    } elseif ($type === 'user') {
-                        $provider = $this->getContainerAutowireResolver()->getObject($class);
-                        if (!$provider instanceof User\ProviderInterface) {
-                            $this->fail('Defined user ' . $class . ' must be an instance of ' . User\ProviderInterface::class);
-                        }
-
-                        $this->validateUser($provider);
-                    } elseif ($type === 'payment') {
-                        $provider = $this->getContainerAutowireResolver()->getObject($class);
-                        if (!$provider instanceof Payment\ProviderInterface) {
-                            $this->fail('Defined payment ' . $class . ' must be an instance of ' . Payment\ProviderInterface::class);
-                        }
-
-                        $this->validatePayment($provider);
-                    } elseif ($type === 'routes') {
-                        $provider = $this->getContainerAutowireResolver()->getObject($class);
-                        if (!$provider instanceof Routes\ProviderInterface) {
-                            $this->fail('Defined routes ' . $class . ' must be an instance of ' . Routes\ProviderInterface::class);
-                        }
-
-                        $this->validateRoutes($provider);
-                    }
+                    $this->validateClassType($type, $class);
                 }
             }
         }
@@ -134,15 +99,58 @@ abstract class AdapterTestCase extends TestCase
 
     /**
      * Returns the adapter class name
-     * 
-     * @return string
      */
-    abstract protected function getAdapterClass();
+    abstract protected function getAdapterClass(): string;
+
+    private function validateClassType(string $type, string $class)
+    {
+        switch ($type) {
+            case 'action':
+                $action = $this->getActionFactory()->factory($class);
+                if (!$action instanceof ActionInterface) {
+                    $this->fail('Defined action ' . $class . ' must be an instance of ' . ActionInterface::class);
+                }
+
+                $this->validateAction($action);
+                break;
+            case 'connection':
+                $connection = $this->getConnectionFactory()->factory($class);
+                if (!$connection instanceof ConnectionInterface) {
+                    $this->fail('Defined connection ' . $class . ' must be an instance of ' . ConnectionInterface::class);
+                }
+
+                $this->validateConnection($connection);
+                break;
+            case 'user':
+                $provider = $this->getContainerAutowireResolver()->getObject($class);
+                if (!$provider instanceof User\ProviderInterface) {
+                    $this->fail('Defined user ' . $class . ' must be an instance of ' . User\ProviderInterface::class);
+                }
+
+                $this->validateUser($provider);
+                break;
+            case 'payment':
+                $provider = $this->getContainerAutowireResolver()->getObject($class);
+                if (!$provider instanceof Payment\ProviderInterface) {
+                    $this->fail('Defined payment ' . $class . ' must be an instance of ' . Payment\ProviderInterface::class);
+                }
+
+                $this->validatePayment($provider);
+                break;
+            case 'routes':
+                $provider = $this->getContainerAutowireResolver()->getObject($class);
+                if (!$provider instanceof Routes\ProviderInterface) {
+                    $this->fail('Defined routes ' . $class . ' must be an instance of ' . Routes\ProviderInterface::class);
+                }
+
+                $this->validateRoutes($provider);
+                break;
+        }
+    }
 
     private function validateAction(ActionInterface $action)
     {
         $this->assertNotEmpty($action->getName());
-        $this->assertTrue(is_string($action->getName()));
 
         if ($action instanceof ConfigurableInterface) {
             $this->validateConfigurable($action);
@@ -152,7 +160,6 @@ abstract class AdapterTestCase extends TestCase
     private function validateConnection(ConnectionInterface $connection)
     {
         $this->assertNotEmpty($connection->getName());
-        $this->assertTrue(is_string($connection->getName()));
 
         if ($connection instanceof ConfigurableInterface) {
             $this->validateConfigurable($connection);
@@ -172,7 +179,6 @@ abstract class AdapterTestCase extends TestCase
     private function validateUser(User\ProviderInterface $provider)
     {
         $this->assertNotEmpty($provider->getId());
-        $this->assertTrue(is_int($provider->getId()));
     }
 
     private function validatePayment(Payment\ProviderInterface $provider)
@@ -182,6 +188,5 @@ abstract class AdapterTestCase extends TestCase
     private function validateRoutes(Routes\ProviderInterface $provider)
     {
         $this->assertNotEmpty($provider->getName());
-        $this->assertTrue(is_string($provider->getName()));
     }
 }

@@ -33,39 +33,26 @@ use Fusio\Engine\Model;
 class AppMemory implements AppInterface
 {
     /**
-     * @var \Fusio\Engine\Model\AppInterface[]
+     * @var Model\AppInterface[]
      */
-    protected $apps;
+    private array $apps;
 
-    /**
-     * @param array $apps
-     */
     public function __construct(array $apps = array())
     {
         $this->apps = $apps;
     }
 
-    /**
-     * @param \Fusio\Engine\Model\AppInterface $app
-     */
-    public function add(Model\AppInterface $app)
+    public function add(Model\AppInterface $app): void
     {
         $this->apps[$app->getId()] = $app;
     }
 
-    /**
-     * @return \Fusio\Engine\Model\ActionInterface[]
-     */
-    public function getAll()
+    public function getAll(): array
     {
         return $this->apps;
     }
 
-    /**
-     * @param integer|string $id
-     * @return \Fusio\Engine\Model\ActionInterface|null
-     */
-    public function get($id)
+    public function get(string|int $id): ?Model\AppInterface
     {
         if (empty($this->apps)) {
             return null;
