@@ -27,6 +27,7 @@ use Fusio\Engine\Form\BuilderInterface;
 use Fusio\Engine\Form\ElementFactoryInterface;
 use Fusio\Engine\ParametersInterface;
 use Fusio\Engine\RequestInterface;
+use PSX\Http\Environment\HttpResponseInterface;
 
 /**
  * Action
@@ -37,17 +38,17 @@ use Fusio\Engine\RequestInterface;
  */
 class Action extends ActionAbstract
 {
-    public function getName()
+    public function getName(): string
     {
         return 'Action';
     }
 
-    public function handle(RequestInterface $request, ParametersInterface $configuration, ContextInterface $context)
+    public function handle(RequestInterface $request, ParametersInterface $configuration, ContextInterface $context): HttpResponseInterface
     {
         return $this->response->build(200, [], ['foo' => 'bar']);
     }
 
-    public function configure(BuilderInterface $builder, ElementFactoryInterface $elementFactory)
+    public function configure(BuilderInterface $builder, ElementFactoryInterface $elementFactory): void
     {
         $builder->add($elementFactory->newInput('foo', 'Foo', 'text', 'bar'));
     }

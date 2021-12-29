@@ -21,6 +21,7 @@
 
 namespace Fusio\Engine\Factory;
 
+use Fusio\Engine\ActionInterface as EngineActionInterface;
 use Fusio\Engine\Exception\FactoryResolveException;
 use PSX\Dependency\Exception\AutowiredException;
 use PSX\Dependency\Exception\NotFoundException;
@@ -41,5 +42,5 @@ interface ResolverInterface
      * @throws NotFoundException
      * @throws AutowiredException
      */
-    public function resolve(string $className): ActionInterface;
+    public function resolve(string $className): EngineActionInterface;
 }

@@ -81,13 +81,12 @@ class ActionMemoryTest extends TestCase
     {
         "id": 1,
         "name": "foo",
-        "class": "\\stdClass",
-        "engine": null,
+        "class": "stdClass",
+        "engine": "stdClass",
         "async": false,
         "config": {
             "foo": "bar"
-        },
-        "date": null
+        }
     }
 ]
 JSON;
@@ -109,13 +108,12 @@ JSON;
     {
         "id": 1,
         "name": "foo",
-        "class": "\\stdClass",
-        "engine": null,
+        "class": "stdClass",
+        "engine": "stdClass",
         "async": false,
         "config": {
             "foo": "bar"
-        },
-        "date": null
+        }
     }
 ]
 JSON;
@@ -126,16 +124,16 @@ JSON;
         $this->assertEquals($expect, $actual);
     }
 
-    /**
-     * @return \Fusio\Engine\Repository\ActionInterface
-     */
-    protected function createRepository()
+    protected function createRepository(): Repository\ActionInterface
     {
-        $action = new Action();
-        $action->setId(1);
-        $action->setName('foo');
-        $action->setClass('\stdClass');
-        $action->setConfig(['foo' => 'bar']);
+        $action = new Action(
+            id: 1,
+            name: 'foo',
+            class: \stdClass::class,
+            engine: \stdClass::class,
+            async: false,
+            config: ['foo' => 'bar'],
+        );
 
         $repository = new Repository\ActionMemory();
         $repository->add($action);

@@ -72,13 +72,14 @@ class ConnectorTest extends TestCase
     {
         $repository = $this->getConnectionRepository();
 
-        $connection = new Connection();
-        $connection->setId(1);
-        $connection->setName('foo');
-        $connection->setClass(CallbackConnection::class);
-        $connection->setConfig(['callback' => function(){
-            return new \stdClass();
-        }]);
+        $connection = new Connection(
+            id: 1,
+            name: 'foo',
+            class: CallbackConnection::class,
+            config: ['callback' => function(){
+                return new \stdClass();
+            }]
+        );
 
         $repository->add($connection);
 

@@ -42,10 +42,10 @@ class PassthruRecord extends Record
 
     public function __construct(mixed $payload)
     {
-        parent::__construct($this->toIterable($payload));
-
         $this->payload  = $payload;
         $this->accessor = PropertyAccess::createPropertyAccessor();
+
+        parent::__construct($this->toIterable($payload));
     }
 
     public function getPayload()

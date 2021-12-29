@@ -166,7 +166,7 @@ trait EngineTrait
     {
         return new ObjectBuilder(
             $this->get('container_type_resolver'),
-            $this->get('cache'),
+            new ArrayAdapter(),
             true
         );
     }

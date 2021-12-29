@@ -21,8 +21,8 @@
 
 namespace Fusio\Engine\Factory\Resolver;
 
+use Fusio\Engine\ActionInterface;
 use Fusio\Engine\Exception\FactoryResolveException;
-use Fusio\Engine\Factory\ActionInterface;
 use Fusio\Engine\Factory\ResolverInterface;
 use PSX\Dependency\AutowireResolverInterface;
 
