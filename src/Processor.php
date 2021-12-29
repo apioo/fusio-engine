@@ -23,6 +23,7 @@ namespace Fusio\Engine;
 
 use Fusio\Engine\Exception\ActionNotFoundException;
 use Fusio\Engine\Factory;
+use Fusio\Engine\Repository;
 use PSX\Http\Environment\HttpResponse;
 use PSX\Http\Environment\HttpResponseInterface;
 use RuntimeException;
@@ -55,23 +56,26 @@ class Processor implements ProcessorInterface
     public function execute(string|int $actionId, RequestInterface $request, ContextInterface $context): HttpResponseInterface
     {
         $repository = $this->getCurrentRepository();
-        $action     = $repository->get($actionId);
+        if (!$repository instanceof Repository\ActionInterface) {
+            throw new \RuntimeException('Repository not configured');
+        }
 
-        if ($action instanceof Model\ActionInterface) {
-            $parameters = new Parameters($action->getConfig());
-
-            if ($action->isAsync()) {
-                $this->queue->push($actionId, $request, $context);
-
-                return new HttpResponse(202, [], [
-                    'success' => true,
-                    'message' => 'Request was queued for execution',
-                ]);
-            } else {
-                return $this->factory->factory($action->getClass(), $action->getEngine())->handle($request, $parameters, $context->withAction($action));
-            }
-        } else {
+        $action = $repository->get($actionId);
+        if (!$action instanceof Model\ActionInterface) {
             throw new ActionNotFoundException('Could not found action ' . $actionId);
+        }
+
+        $parameters = new Parameters($action->getConfig());
+
+        if ($action->isAsync()) {
+            $this->queue->push($actionId, $request, $context);
+
+            return new HttpResponse(202, [], [
+                'success' => true,
+                'message' => 'Request was queued for execution',
+            ]);
+        } else {
+            return $this->factory->factory($action->getClass(), $action->getEngine())->handle($request, $parameters, $context->withAction($action));
         }
     }
 

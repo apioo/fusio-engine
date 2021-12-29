@@ -160,7 +160,6 @@ abstract class AdapterTestCase extends TestCase
     private function validateConnection(ConnectionInterface $connection)
     {
         $this->assertNotEmpty($connection->getName());
-        $this->assertTrue(is_string($connection->getName()));
 
         if ($connection instanceof ConfigurableInterface) {
             $this->validateConfigurable($connection);
