@@ -104,4 +104,14 @@ class Transaction implements TransactionInterface
     {
         return $this->createDate;
     }
+
+    public function setStatus(int $status): void
+    {
+        $this->status = $status;
+    }
+
+    public function setRemoteId(string $remoteId): void
+    {
+        $this->remoteId = $remoteId;
+    }
 }
