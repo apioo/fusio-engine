@@ -39,6 +39,9 @@ interface ActionInterface extends FactoryInterface
      * Tries to create an action interface based on the provided class name. Note the class name can also be a string to
      * a php or javascript file which is the then resolved by the factory
      *
+     * @template T of EngineActionInterface
+     * @psalm-param class-string<T> $className
+     * @return T
      * @throws NotFoundException
      * @throws AutowiredException
      * @throws FactoryResolveException
