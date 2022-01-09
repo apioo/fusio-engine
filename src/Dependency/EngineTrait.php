@@ -69,7 +69,7 @@ trait EngineTrait
 
     public function getActionFactory(): Factory\ActionInterface
     {
-        $factory = new Factory\Action($this, $this->get('container_type_resolver'));
+        $factory = new Factory\Action($this->get('container_type_resolver'));
         $factory->addResolver(new Factory\Resolver\PhpClass($this->get('container_autowire_resolver')));
 
         return $factory;
@@ -110,7 +110,7 @@ trait EngineTrait
 
     public function getConnectionFactory(): Factory\ConnectionInterface
     {
-        return new Factory\Connection($this, $this->get('container_autowire_resolver'));
+        return new Factory\Connection($this->get('container_autowire_resolver'));
     }
 
     public function getConnectionRepository(): Repository\ConnectionInterface

@@ -22,7 +22,6 @@
 namespace Fusio\Engine\Factory;
 
 use Fusio\Engine\ConnectionInterface as EngineConnectionInterface;
-use Psr\Container\ContainerInterface;
 use PSX\Dependency\AutowireResolverInterface;
 use RuntimeException;
 
@@ -35,12 +34,10 @@ use RuntimeException;
  */
 class Connection implements ConnectionInterface
 {
-    protected ContainerInterface $container;
     private AutowireResolverInterface $autowireResolver;
 
-    public function __construct(ContainerInterface $container, AutowireResolverInterface $autowireResolver)
+    public function __construct(AutowireResolverInterface $autowireResolver)
     {
-        $this->container = $container;
         $this->autowireResolver = $autowireResolver;
     }
 

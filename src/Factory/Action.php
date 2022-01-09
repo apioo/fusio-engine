@@ -27,7 +27,6 @@ use Fusio\Engine\ConnectorInterface;
 use Fusio\Engine\DispatcherInterface;
 use Fusio\Engine\ProcessorInterface;
 use Fusio\Engine\Response;
-use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 use Psr\SimpleCache\CacheInterface;
 use PSX\Dependency\TypeResolverInterface;
@@ -42,13 +41,11 @@ use RuntimeException;
  */
 class Action implements ActionInterface
 {
-    private ContainerInterface $container;
     private TypeResolverInterface $typeResolver;
     private array $resolvers;
 
-    public function __construct(ContainerInterface $container, TypeResolverInterface $typeResolver)
+    public function __construct(TypeResolverInterface $typeResolver)
     {
-        $this->container    = $container;
         $this->typeResolver = $typeResolver;
         $this->resolvers    = [];
     }

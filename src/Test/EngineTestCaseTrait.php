@@ -154,10 +154,7 @@ trait EngineTestCaseTrait
         return self::$container;
     }
 
-    /**
-     * @return \Psr\Container\ContainerInterface
-     */
-    protected function newContainer()
+    protected function newContainer(): ContainerInterface
     {
         return new EngineContainer();
     }
