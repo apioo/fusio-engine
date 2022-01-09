@@ -23,6 +23,8 @@ namespace Fusio\Engine;
 
 use Fusio\Engine\Exception\ConnectionNotFoundException;
 use Fusio\Engine\Factory;
+use PSX\Dependency\Exception\AutowiredException;
+use PSX\Dependency\Exception\NotFoundException;
 
 /**
  * Connector
@@ -42,6 +44,11 @@ class Connector implements ConnectorInterface
         $this->factory    = $factory;
     }
 
+    /**
+     * @throws AutowiredException
+     * @throws NotFoundException
+     * @throws ConnectionNotFoundException
+     */
     public function getConnection(string|int $connectionId): mixed
     {
         $connection = $this->repository->get($connectionId);

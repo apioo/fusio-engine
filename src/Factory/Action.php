@@ -67,10 +67,6 @@ class Action implements ActionInterface
 
         $action = $resolver->resolve($className);
 
-        if (!$action instanceof EngineActionInterface) {
-            throw new RuntimeException('Action ' . $className . ' must implement the Fusio\Engine\ActionInterface interface');
-        }
-
         if ($action instanceof ServiceAwareInterface) {
             $action->setConnector($this->typeResolver->getServiceByType(ConnectorInterface::class));
             $action->setResponse($this->typeResolver->getServiceByType(Response\FactoryInterface::class));

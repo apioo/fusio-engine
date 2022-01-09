@@ -35,9 +35,6 @@ use PSX\Dependency\Exception\NotFoundException;
 interface ConnectionInterface extends FactoryInterface
 {
     /**
-     * @template T of EngineConnectionInterface
-     * @psalm-param class-string<T> $className
-     * @return T
      * @throws AutowiredException
      * @throws NotFoundException
      */
