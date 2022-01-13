@@ -25,7 +25,6 @@ use Fusio\Engine\Exception\ActionNotFoundException;
 use Fusio\Engine\Factory;
 use Fusio\Engine\Repository;
 use PSX\Http\Environment\HttpResponse;
-use PSX\Http\Environment\HttpResponseInterface;
 use RuntimeException;
 
 /**
@@ -53,7 +52,7 @@ class Processor implements ProcessorInterface
         $this->push($repository);
     }
 
-    public function execute(string|int $actionId, RequestInterface $request, ContextInterface $context): HttpResponseInterface
+    public function execute(string|int $actionId, RequestInterface $request, ContextInterface $context): mixed
     {
         $repository = $this->getCurrentRepository();
         if (!$repository instanceof Repository\ActionInterface) {
