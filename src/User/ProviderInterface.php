@@ -21,8 +21,6 @@
 
 namespace Fusio\Engine\User;
 
-use Fusio\Engine\Model;
-
 /**
  * Describes a remote identity provider which can be used to authorize an user through a remote system so that the
  * developer dont need to create an account. Usually this is done through OAuth2, which has the following flow:
@@ -51,5 +49,5 @@ interface ProviderInterface
     /**
      * Requests user information of a remote provider
      */
-    public function requestUser(string $code, string $clientId, string $redirectUri): Model\User;
+    public function requestUser(string $code, string $clientId, string $redirectUri): ?UserDetails;
 }
