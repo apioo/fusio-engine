@@ -32,9 +32,9 @@ class UserDetails
 {
     private string $id;
     private string $userName;
-    private string $email;
+    private ?string $email;
 
-    public function __construct(string $id, string $userName, string $email)
+    public function __construct(string $id, string $userName, ?string $email)
     {
         $this->id = $id;
         $this->userName = $userName;
@@ -51,7 +51,7 @@ class UserDetails
         return $this->userName;
     }
 
-    public function getEmail(): string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
