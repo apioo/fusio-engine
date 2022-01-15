@@ -41,7 +41,7 @@ class Transaction implements TransactionInterface
     private ?\DateTimeInterface $updateDate;
     private \DateTimeInterface $createDate;
 
-    public function __construct(int $id, int $invoiceId, int $status, string $provider, string $transactionId, string $remoteId, float $amount, string $returnUrl, \DateTimeInterface $updateDate, \DateTimeInterface $createDate)
+    public function __construct(int $id, int $invoiceId, int $status, string $provider, string $transactionId, string $remoteId, float $amount, string $returnUrl, ?\DateTimeInterface $updateDate, \DateTimeInterface $createDate)
     {
         $this->id = $id;
         $this->invoiceId = $invoiceId;
