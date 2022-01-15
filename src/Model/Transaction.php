@@ -35,10 +35,10 @@ class Transaction implements TransactionInterface
     private int $status;
     private string $provider;
     private string $transactionId;
-    private string $remoteId;
+    private ?string $remoteId;
     private float $amount;
     private string $returnUrl;
-    private \DateTimeInterface $updateDate;
+    private ?\DateTimeInterface $updateDate;
     private \DateTimeInterface $createDate;
 
     public function __construct(int $id, int $invoiceId, int $status, string $provider, string $transactionId, string $remoteId, float $amount, string $returnUrl, \DateTimeInterface $updateDate, \DateTimeInterface $createDate)
@@ -80,7 +80,7 @@ class Transaction implements TransactionInterface
         return $this->transactionId;
     }
 
-    public function getRemoteId(): string
+    public function getRemoteId(): ?string
     {
         return $this->remoteId;
     }
@@ -95,7 +95,7 @@ class Transaction implements TransactionInterface
         return $this->returnUrl;
     }
 
-    public function getUpdateDate(): \DateTimeInterface
+    public function getUpdateDate(): ?\DateTimeInterface
     {
         return $this->updateDate;
     }

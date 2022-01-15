@@ -46,13 +46,13 @@ interface TransactionInterface
 
     public function getTransactionId(): string;
 
-    public function getRemoteId(): string;
+    public function getRemoteId(): ?string;
 
     public function getAmount(): float;
 
     public function getReturnUrl(): string;
 
-    public function getUpdateDate(): \DateTimeInterface;
+    public function getUpdateDate(): ?\DateTimeInterface;
 
     public function getCreateDate(): \DateTimeInterface;
 }
