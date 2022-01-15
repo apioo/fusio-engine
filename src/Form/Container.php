@@ -45,7 +45,7 @@ class Container implements \JsonSerializable
     public function jsonSerialize(): array
     {
         return [
-            'elements' => $this->elements
+            'element' => $this->elements
         ];
     }
 }
