@@ -22,7 +22,6 @@
 namespace Fusio\Engine\Record;
 
 use PSX\Record\Record;
-use PSX\Record\RecordInterface;
 use Symfony\Component\PropertyAccess\PropertyAccess;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
 
@@ -53,27 +52,22 @@ class PassthruRecord extends Record
         return $this->payload;
     }
 
-    public function getProperty(string $name): mixed
+    public function get(string $name): mixed
     {
         return $this->accessor->getValue($this->payload, $name);
     }
 
-    public function setProperty(string $name, mixed $value): void
-    {
-        $this->accessor->setValue($this->payload, $name, $value);
-    }
-
-    public function removeProperty(string $name): void
-    {
-    }
-
-    public function hasProperty(string $name): bool
+    public function has(string $name): bool
     {
         return $this->accessor->isReadable($this->payload, $name);
     }
 
     private function toIterable(mixed $payload): iterable
     {
+        if ($payload instanceof \stdClass) {
+            $payload = (array) $payload;
+        }
+
         if (!is_iterable($payload)) {
             return [];
         }
