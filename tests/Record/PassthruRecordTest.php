@@ -50,8 +50,7 @@ class PassthruRecordTest extends TestCase
         $object = Record::fromArray(['foo' => (object) ['foo' => 'bar']]);
         $record = new PassthruRecord($object);
 
-        $this->assertEquals('bar', $record->getProperty('foo.foo'));
-        $this->assertEquals('bar', $record['foo.foo']);
+        $this->assertEquals('bar', $record->get('foo.foo'));
         $this->assertInstanceOf(RecordInterface::class, $record->getPayload());
     }
 
@@ -60,8 +59,7 @@ class PassthruRecordTest extends TestCase
         $object = Record::fromArray(['foo' => ['foo', 'bar']]);
         $record = new PassthruRecord($object);
 
-        $this->assertEquals('bar', $record->getProperty('foo[1]'));
-        $this->assertEquals('bar', $record['foo[1]']);
+        $this->assertEquals('bar', $record->get('foo[1]'));
         $this->assertInstanceOf(RecordInterface::class, $record->getPayload());
     }
 }
