@@ -36,7 +36,7 @@ class Context implements ContextInterface
     private string $baseUrl;
     private Model\AppInterface $app;
     private Model\UserInterface $user;
-    private ?Model\ActionInterface $action;
+    private ?Model\ActionInterface $action = null;
     private mixed $connection;
 
     public function __construct(int $routeId, string $baseUrl, Model\AppInterface $app, Model\UserInterface $user)

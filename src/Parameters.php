@@ -49,7 +49,7 @@ class Parameters implements ParametersInterface
         return isset($this->container[$key]);
     }
 
-    public function set(string $key, mixed $value)
+    public function set(string $key, mixed $value): void
     {
         $this->container[$key] = $value;
     }

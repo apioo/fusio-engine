@@ -42,7 +42,7 @@ class Memory extends ParserAbstract
         $this->classes = $classes;
     }
 
-    public function addClass(string $class, string $name)
+    public function addClass(string $class, string $name): void
     {
         $this->classes[$class] = $name;
     }

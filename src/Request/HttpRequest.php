@@ -73,7 +73,7 @@ class HttpRequest implements HttpInterface
         return $this->context->getHeaders();
     }
 
-    public function getUriFragment($name): ?string
+    public function getUriFragment(string $name): ?string
     {
         return $this->context->getUriFragment($name);
     }
@@ -83,7 +83,7 @@ class HttpRequest implements HttpInterface
         return $this->context->getUriFragments();
     }
 
-    public function getParameter(string $name): mixed
+    public function getParameter(string $name): string|array|null
     {
         return $this->context->getParameter($name);
     }

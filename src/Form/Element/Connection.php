@@ -45,7 +45,7 @@ class Connection extends Select
         $this->load();
     }
 
-    protected function load()
+    protected function load(): void
     {
         $result = $this->repository->getAll();
 

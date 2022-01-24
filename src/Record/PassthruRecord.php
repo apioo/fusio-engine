@@ -47,7 +47,7 @@ class PassthruRecord extends Record
         parent::__construct($this->toIterable($payload));
     }
 
-    public function getPayload()
+    public function getPayload(): mixed
     {
         return $this->payload;
     }

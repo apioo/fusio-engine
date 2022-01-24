@@ -32,7 +32,7 @@ class Container implements \JsonSerializable
 {
     private array $elements = [];
 
-    public function add(Element $element)
+    public function add(Element $element): void
     {
         $this->elements[] = $element;
     }

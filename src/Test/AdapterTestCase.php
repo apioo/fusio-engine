@@ -46,7 +46,7 @@ abstract class AdapterTestCase extends TestCase
 {
     use EngineTestCaseTrait;
 
-    public function testDefinition()
+    public function testDefinition(): void
     {
         $class = $this->getAdapterClass();
 
@@ -70,7 +70,7 @@ abstract class AdapterTestCase extends TestCase
         $this->validateClassTypes($data);
     }
 
-    private function validateSchema(\stdClass $data)
+    private function validateSchema(\stdClass $data): void
     {
         $manager = new SchemaManager();
         $schema  = $manager->getSchema(__DIR__ . '/definition_schema.json');
@@ -79,7 +79,7 @@ abstract class AdapterTestCase extends TestCase
         $traverser->traverse($data, $schema);
     }
 
-    private function validateClassTypes(\stdClass $data)
+    private function validateClassTypes(\stdClass $data): void
     {
         $types = ['action', 'connection', 'user', 'payment', 'routes'];
 
@@ -102,23 +102,15 @@ abstract class AdapterTestCase extends TestCase
      */
     abstract protected function getAdapterClass(): string;
 
-    private function validateClassType(string $type, string $class)
+    private function validateClassType(string $type, string $class): void
     {
         switch ($type) {
             case 'action':
                 $action = $this->getActionFactory()->factory($class);
-                if (!$action instanceof ActionInterface) {
-                    $this->fail('Defined action ' . $class . ' must be an instance of ' . ActionInterface::class);
-                }
-
                 $this->validateAction($action);
                 break;
             case 'connection':
                 $connection = $this->getConnectionFactory()->factory($class);
-                if (!$connection instanceof ConnectionInterface) {
-                    $this->fail('Defined connection ' . $class . ' must be an instance of ' . ConnectionInterface::class);
-                }
-
                 $this->validateConnection($connection);
                 break;
             case 'user':
@@ -148,25 +140,19 @@ abstract class AdapterTestCase extends TestCase
         }
     }
 
-    private function validateAction(ActionInterface $action)
+    private function validateAction(ActionInterface $action): void
     {
         $this->assertNotEmpty($action->getName());
-
-        if ($action instanceof ConfigurableInterface) {
-            $this->validateConfigurable($action);
-        }
+        $this->validateConfigurable($action);
     }
 
-    private function validateConnection(ConnectionInterface $connection)
+    private function validateConnection(ConnectionInterface $connection): void
     {
         $this->assertNotEmpty($connection->getName());
-
-        if ($connection instanceof ConfigurableInterface) {
-            $this->validateConfigurable($connection);
-        }
+        $this->validateConfigurable($connection);
     }
 
-    private function validateConfigurable(ConfigurableInterface $object)
+    private function validateConfigurable(ConfigurableInterface $object): void
     {
         $builder = new Builder();
         $factory = $this->getFormElementFactory();
@@ -176,16 +162,16 @@ abstract class AdapterTestCase extends TestCase
         $this->assertInstanceOf(Container::class, $builder->getForm());
     }
 
-    private function validateUser(User\ProviderInterface $provider)
+    private function validateUser(User\ProviderInterface $provider): void
     {
         $this->assertNotEmpty($provider->getId());
     }
 
-    private function validatePayment(Payment\ProviderInterface $provider)
+    private function validatePayment(Payment\ProviderInterface $provider): void
     {
     }
 
-    private function validateRoutes(Routes\ProviderInterface $provider)
+    private function validateRoutes(Routes\ProviderInterface $provider): void
     {
         $this->assertNotEmpty($provider->getName());
     }

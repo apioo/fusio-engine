@@ -47,7 +47,7 @@ interface ParametersInterface extends IteratorAggregate
     /**
      * Sets a specific parameter
      */
-    public function set(string $key, mixed $value);
+    public function set(string $key, mixed $value): void;
 
     /**
      * Returns whether no parameter is available

@@ -93,10 +93,10 @@ class ActionMemory implements ActionInterface, \JsonSerializable, \Countable
         return $result;
     }
 
-    public static function fromJson(string $json): static
+    public static function fromJson(string $json): self
     {
         $data = json_decode($json, true);
-        $repo = new static();
+        $repo = new self();
 
         if (is_array($data)) {
             foreach ($data as $row) {
