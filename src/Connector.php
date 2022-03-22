@@ -58,7 +58,7 @@ class Connector implements ConnectorInterface
 
             return $this->factory->factory($connection->getClass())->getConnection($parameters);
         } else {
-            throw new ConnectionNotFoundException('Could not found connection ' . $connectionId);
+            throw new ConnectionNotFoundException('Could not find connection ' . $connectionId);
         }
     }
 }
