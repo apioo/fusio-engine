@@ -45,4 +45,6 @@ interface UserInterface
     public function getEmail(): string;
 
     public function getPoints(): int;
+
+    public function getExternalId(): ?string;
 }

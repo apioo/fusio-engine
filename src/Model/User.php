@@ -38,8 +38,9 @@ class User implements UserInterface
     private string $name;
     private string $email;
     private int $points;
+    private ?string $externalId;
 
-    public function __construct(bool $anonymous, int $id, int $roleId, int $categoryId, int $status, string $name, string $email, int $points)
+    public function __construct(bool $anonymous, int $id, int $roleId, int $categoryId, int $status, string $name, string $email, int $points, ?string $externalId = null)
     {
         $this->anonymous = $anonymous;
         $this->id = $id;
@@ -49,6 +50,7 @@ class User implements UserInterface
         $this->name = $name;
         $this->email = $email;
         $this->points = $points;
+        $this->externalId = $externalId;
     }
 
     public function isAnonymous(): bool
@@ -89,5 +91,10 @@ class User implements UserInterface
     public function getPoints(): int
     {
         return $this->points;
+    }
+
+    public function getExternalId(): ?string
+    {
+        return $this->externalId;
     }
 }
