@@ -35,17 +35,15 @@ class Product implements ProductInterface
     private float $price;
     private int $points;
     private int $interval;
-    private int $intervalCount;
     private ?string $externalId;
 
-    public function __construct(int $id, string $name, float $price, int $points, int $interval, int $intervalCount, ?string $externalId = null)
+    public function __construct(int $id, string $name, float $price, int $points, int $interval, ?string $externalId = null)
     {
         $this->id = $id;
         $this->name = $name;
         $this->price = $price;
         $this->points = $points;
         $this->interval = $interval;
-        $this->intervalCount = $intervalCount;
         $this->externalId = $externalId;
     }
 
