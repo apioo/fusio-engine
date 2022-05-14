@@ -30,11 +30,8 @@ namespace Fusio\Engine\Model;
  */
 interface ProductInterface
 {
-    public const INTERVAL_NONE = 0;
-    public const INTERVAL_DAY = 1;
-    public const INTERVAL_WEEK = 2;
-    public const INTERVAL_MONTH = 3;
-    public const INTERVAL_YEAR = 4;
+    public const INTERVAL_ONETIME = 0;
+    public const INTERVAL_SUBSCRIPTION = 1;
 
     public function getId(): int;
 
@@ -45,8 +42,6 @@ interface ProductInterface
     public function getPoints(): int;
 
     public function getInterval(): int;
-
-    public function getIntervalCount(): int;
 
     public function getExternalId(): ?string;
 }

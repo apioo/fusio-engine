@@ -74,11 +74,6 @@ class Product implements ProductInterface
         return $this->interval;
     }
 
-    public function getIntervalCount(): int
-    {
-        return $this->intervalCount;
-    }
-
     public function getExternalId(): ?string
     {
         return $this->externalId;
