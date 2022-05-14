@@ -55,7 +55,9 @@ interface ProviderInterface
     public function webhook(RequestInterface $request, WebhookInterface $handler, ?string $webhookSecret = null): void;
 
     /**
-     * Returns an url which redirects the user to the payment provider portal where he can manage all subscriptions
+     * Returns an url which redirects the user to the payment provider portal where he can manage all subscriptions.
+     * Can return null in case either the payment provider does not support such a portal or the user has no external
+     * id assigned
      */
-    public function portal(mixed $connection, UserInterface $user, string $returnUrl): string;
+    public function portal(mixed $connection, UserInterface $user, string $returnUrl): ?string;
 }
