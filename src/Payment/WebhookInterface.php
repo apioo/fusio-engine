@@ -22,37 +22,30 @@
 namespace Fusio\Engine\Payment;
 
 /**
- * PrepareContext
+ * The webhook handler gets passed to the provider webhook method, the provider then calls the fitting methods on the
+ * object to either activate or deactivate a payment
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    https://www.fusio-project.org
  */
-class PrepareContext
+interface WebhookInterface
 {
-    private string $returnUrl;
-    private string $cancelUrl;
-    private string $currency;
+    /**
+     * Method which needs to be called in case the checkout of a plan was successful. The customer and session id is
+     * a remote id of the payment provider, the user and plan id are Fusio internal ids. Fusio then assigns the
+     * customer id to the user
+     */
+    public function completed(int $userId, int $planId, string $customerId, int $amountTotal, string $sessionId): void;
 
-    public function __construct(string $returnUrl, string $cancelUrl, string $currency)
-    {
-        $this->returnUrl = $returnUrl;
-        $this->cancelUrl = $cancelUrl;
-        $this->currency = $currency;
-    }
+    /**
+     * Method which needs to be called in case a recurring payment was done. The customer and invoice id is an external
+     * id of the payment provider
+     */
+    public function paid(string $customerId, int $amountPaid, string $invoiceId): void;
 
-    public function getReturnUrl(): string
-    {
-        return $this->returnUrl;
-    }
-
-    public function getCancelUrl(): string
-    {
-        return $this->cancelUrl;
-    }
-
-    public function getCurrency(): string
-    {
-        return $this->currency;
-    }
+    /**
+     * Method which needs to be called in case a payment has failed
+     */
+    public function failed(string $customerId): void;
 }
