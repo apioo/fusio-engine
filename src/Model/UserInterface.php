@@ -47,4 +47,6 @@ interface UserInterface
     public function getPoints(): int;
 
     public function getExternalId(): ?string;
+
+    public function getPlanId(): ?string;
 }
