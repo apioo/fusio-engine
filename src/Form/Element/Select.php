@@ -32,7 +32,7 @@ use Fusio\Engine\Form\Element;
  */
 class Select extends Element
 {
-    private const NAMESPACE = 'http://fusio-project.org/ns/2015/form/select';
+    private const NAMESPACE = 'select';
 
     private array $options = [];
 

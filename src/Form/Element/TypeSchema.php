@@ -24,41 +24,15 @@ namespace Fusio\Engine\Form\Element;
 use Fusio\Engine\Form\Element;
 
 /**
- * TextArea
+ * TypeSchema
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    https://www.fusio-project.org
  */
-class TextArea extends Element
+class TypeSchema extends Element
 {
-    private const NAMESPACE = 'textarea';
-
-    private string $mode;
-
-    public function __construct(string $name, string $title, string $mode, ?string $help = null)
-    {
-        parent::__construct($name, $title, $help);
-
-        $this->mode = $mode;
-    }
-
-    public function setMode(string $mode): void
-    {
-        $this->mode = $mode;
-    }
-    
-    public function getMode(): string
-    {
-        return $this->mode;
-    }
-
-    public function jsonSerialize(): array
-    {
-        return array_merge(parent::jsonSerialize(), [
-            'mode' => $this->mode,
-        ]);
-    }
+    private const NAMESPACE = 'typeschema';
 
     protected function getNamespace(): string
     {

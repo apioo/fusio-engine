@@ -32,7 +32,7 @@ use Fusio\Engine\Form\Element;
  */
 class Input extends Element
 {
-    private const NAMESPACE = 'http://fusio-project.org/ns/2015/form/input';
+    private const NAMESPACE = 'input';
 
     private string $type;
 

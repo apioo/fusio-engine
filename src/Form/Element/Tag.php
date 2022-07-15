@@ -32,7 +32,7 @@ use Fusio\Engine\Form\Element;
  */
 class Tag extends Element
 {
-    private const NAMESPACE = 'http://fusio-project.org/ns/2015/form/tag';
+    private const NAMESPACE = 'tag';
 
     public function __construct(string $name, string $title, ?string $help = null)
     {
