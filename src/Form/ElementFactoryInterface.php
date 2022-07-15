@@ -61,4 +61,9 @@ interface ElementFactoryInterface
      * Creates a new tag input
      */
     public function newTag(string $name, string $title, ?string $help = null): Element\Tag;
+
+    /**
+     * Creates a new type schema designer
+     */
+    public function newTypeSchema(string $name, string $title, ?string $help = null): Element\TypeSchema;
 }

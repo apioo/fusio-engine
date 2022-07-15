@@ -70,4 +70,9 @@ class ElementFactory implements ElementFactoryInterface
     {
         return new Element\Tag($name, $title, $help);
     }
+
+    public function newTypeSchema(string $name, string $title, ?string $help = null): Element\TypeSchema
+    {
+        return new Element\TypeSchema($name, $title, $help);
+    }
 }
