@@ -32,8 +32,6 @@ use Fusio\Engine\Form\Element;
  */
 class Select extends Element
 {
-    private const NAMESPACE = 'select';
-
     private array $options = [];
 
     public function __construct(string $name, string $title, array $options = [], ?string $help = null)
@@ -70,8 +68,8 @@ class Select extends Element
         ]);
     }
 
-    protected function getNamespace(): string
+    protected function getElement(): string
     {
-        return self::NAMESPACE;
+        return 'select';
     }
 }

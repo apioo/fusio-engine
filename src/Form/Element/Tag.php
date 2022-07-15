@@ -32,15 +32,13 @@ use Fusio\Engine\Form\Element;
  */
 class Tag extends Element
 {
-    private const NAMESPACE = 'tag';
-
     public function __construct(string $name, string $title, ?string $help = null)
     {
         parent::__construct($name, $title, $help);
     }
 
-    protected function getNamespace(): string
+    protected function getElement(): string
     {
-        return self::NAMESPACE;
+        return 'tag';
     }
 }

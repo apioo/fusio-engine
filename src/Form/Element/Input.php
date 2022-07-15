@@ -32,8 +32,6 @@ use Fusio\Engine\Form\Element;
  */
 class Input extends Element
 {
-    private const NAMESPACE = 'input';
-
     private string $type;
 
     public function __construct(string $name, string $title, string $type = 'text', ?string $help = null)
@@ -60,8 +58,8 @@ class Input extends Element
         ]);
     }
 
-    protected function getNamespace(): string
+    protected function getElement(): string
     {
-        return self::NAMESPACE;
+        return 'input';
     }
 }

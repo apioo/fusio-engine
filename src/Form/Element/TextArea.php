@@ -32,8 +32,6 @@ use Fusio\Engine\Form\Element;
  */
 class TextArea extends Element
 {
-    private const NAMESPACE = 'textarea';
-
     private string $mode;
 
     public function __construct(string $name, string $title, string $mode, ?string $help = null)
@@ -60,8 +58,8 @@ class TextArea extends Element
         ]);
     }
 
-    protected function getNamespace(): string
+    protected function getElement(): string
     {
-        return self::NAMESPACE;
+        return 'textarea';
     }
 }

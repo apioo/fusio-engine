@@ -32,10 +32,8 @@ use Fusio\Engine\Form\Element;
  */
 class TypeSchema extends Element
 {
-    private const NAMESPACE = 'typeschema';
-
-    protected function getNamespace(): string
+    protected function getElement(): string
     {
-        return self::NAMESPACE;
+        return 'typeschema';
     }
 }

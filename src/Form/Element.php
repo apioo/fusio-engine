@@ -74,12 +74,12 @@ abstract class Element implements \JsonSerializable
     public function jsonSerialize(): array
     {
         return [
-            'element' => $this->getNamespace(),
+            'element' => $this->getElement(),
             'name' => $this->name,
             'title' => $this->title,
             'help' => $this->help,
         ];
     }
 
-    abstract protected function getNamespace(): string;
+    abstract protected function getElement(): string;
 }
