@@ -58,9 +58,14 @@ interface ElementFactoryInterface
     public function newTextArea(string $name, string $title, string $mode, ?string $help = null): Element\TextArea;
 
     /**
-     * Creates a new tag input
+     * Creates a new collection of inputs of a specific type, this results in an JSON array in the config
      */
-    public function newTag(string $name, string $title, ?string $help = null): Element\Tag;
+    public function newCollection(string $name, string $title, string $type = 'text', ?string $help = null): Element\Collection;
+
+    /**
+     * Creates a map of inputs of a specific type, this results in an JSON object in the config
+     */
+    public function newMap(string $name, string $title, string $type = 'text', ?string $help = null): Element\Map;
 
     /**
      * Creates a new type schema designer

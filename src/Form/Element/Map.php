@@ -21,24 +21,17 @@
 
 namespace Fusio\Engine\Form\Element;
 
-use Fusio\Engine\Form\Element;
-
 /**
- * Tag
+ * Map
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    https://www.fusio-project.org
  */
-class Tag extends Element
+class Map extends Input
 {
-    public function __construct(string $name, string $title, ?string $help = null)
-    {
-        parent::__construct($name, $title, $help);
-    }
-
     protected function getElement(): string
     {
-        return 'tag';
+        return 'map';
     }
 }

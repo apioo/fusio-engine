@@ -66,9 +66,22 @@ class ElementFactory implements ElementFactoryInterface
         return new Element\TextArea($name, $title, $mode, $help);
     }
 
-    public function newTag(string $name, string $title, ?string $help = null): Element\Tag
+    /**
+     * @deprecated - use newCollection instead
+     */
+    public function newTag(string $name, string $title, ?string $help = null): Element\Collection
     {
-        return new Element\Tag($name, $title, $help);
+        return $this->newCollection($name, $title, 'text', $help);
+    }
+
+    public function newCollection(string $name, string $title, string $type = 'text', ?string $help = null): Element\Collection
+    {
+        return new Element\Collection($name, $title, $type, $help);
+    }
+
+    public function newMap(string $name, string $title, string $type = 'text', ?string $help = null): Element\Map
+    {
+        return new Element\Map($name, $title, $type, $help);
     }
 
     public function newTypeSchema(string $name, string $title, ?string $help = null): Element\TypeSchema
