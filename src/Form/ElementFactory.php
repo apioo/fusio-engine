@@ -66,6 +66,11 @@ class ElementFactory implements ElementFactoryInterface
         return new Element\TextArea($name, $title, $mode, $help);
     }
 
+    public function newCheckbox(string $name, string $title, ?string $help = null): Element\Checkbox
+    {
+        return new Element\Checkbox($name, $title, $help);
+    }
+
     /**
      * @deprecated - use newCollection instead
      */

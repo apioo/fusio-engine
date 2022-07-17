@@ -58,6 +58,11 @@ interface ElementFactoryInterface
     public function newTextArea(string $name, string $title, string $mode, ?string $help = null): Element\TextArea;
 
     /**
+     * Creates a new checkbox input, this results in a JSON boolean type
+     */
+    public function newCheckbox(string $name, string $title, ?string $help = null): Element\Checkbox;
+
+    /**
      * Creates a new collection of inputs of a specific type, this results in an JSON array in the config
      */
     public function newCollection(string $name, string $title, string $type = 'text', ?string $help = null): Element\Collection;
