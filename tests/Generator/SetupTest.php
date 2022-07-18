@@ -19,9 +19,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Fusio\Engine\Tests\Routes;
+namespace Fusio\Engine\Tests\Generator;
 
-use Fusio\Engine\Routes\Setup;
+use Fusio\Engine\Generator\Setup;
 use PHPUnit\Framework\TestCase;
 
 /**

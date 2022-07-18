@@ -21,10 +21,7 @@
         "userClass": {
           "$ref": "ClassList"
         },
-        "routesClass": {
-          "$ref": "ClassList"
-        },
-        "pushClass": {
+        "generatorClass": {
           "$ref": "ClassList"
         }
       }

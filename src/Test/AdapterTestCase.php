@@ -134,7 +134,7 @@ abstract class AdapterTestCase extends TestCase
                     $this->fail('Defined routes ' . $class . ' must be an instance of ' . Generator\ProviderInterface::class);
                 }
 
-                $this->validateRoutes($provider);
+                $this->validateGenerator($provider);
                 break;
         }
     }
@@ -170,7 +170,7 @@ abstract class AdapterTestCase extends TestCase
     {
     }
 
-    private function validateRoutes(Generator\ProviderInterface $provider): void
+    private function validateGenerator(Generator\ProviderInterface $provider): void
     {
         $this->assertNotEmpty($provider->getName());
     }
