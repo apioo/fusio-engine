@@ -19,7 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Fusio\Engine\Routes;
+namespace Fusio\Engine\Generator;
 
 use Fusio\Engine\ConfigurableInterface;
 use Fusio\Engine\ParametersInterface;

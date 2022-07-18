@@ -19,19 +19,29 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Fusio\Engine\Routes;
-
-use Fusio\Engine\ParametersInterface;
+namespace Fusio\Engine\Generator;
 
 /**
- * This interface can be implemented by a route provider to execute specific actions after the import i.e. a provider
- * could create specific tables
+ * SetupInterface
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    https://www.fusio-project.org
  */
-interface ExecutableInterface
+interface SetupInterface
 {
-    public function execute(ParametersInterface $configuration): void;
+    /**
+     * Adds a new schema
+     */
+    public function addSchema(string $name, array $source): int;
+
+    /**
+     * Adds a new action
+     */
+    public function addAction(string $name, string $class, string $engine, array $config): int;
+
+    /**
+     * Adds a new route
+     */
+    public function addRoute(int $priority, string $path, string $controller, array $scopes, array $config): int;
 }
