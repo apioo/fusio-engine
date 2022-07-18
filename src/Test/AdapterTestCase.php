@@ -21,15 +21,14 @@
 
 namespace Fusio\Engine\Test;
 
-use Doctrine\Common\Annotations\SimpleAnnotationReader;
 use Fusio\Engine\ActionInterface;
 use Fusio\Engine\AdapterInterface;
 use Fusio\Engine\ConfigurableInterface;
 use Fusio\Engine\ConnectionInterface;
 use Fusio\Engine\Form\Builder;
 use Fusio\Engine\Form\Container;
+use Fusio\Engine\Generator;
 use Fusio\Engine\Payment;
-use Fusio\Engine\Routes;
 use Fusio\Engine\User;
 use PHPUnit\Framework\TestCase;
 use PSX\Schema\SchemaManager;
@@ -81,7 +80,7 @@ abstract class AdapterTestCase extends TestCase
 
     private function validateClassTypes(\stdClass $data): void
     {
-        $types = ['action', 'connection', 'user', 'payment', 'routes'];
+        $types = ['action', 'connection', 'user', 'payment', 'generator'];
 
         foreach ($types as $type) {
             $key = $type . 'Class';
@@ -129,10 +128,10 @@ abstract class AdapterTestCase extends TestCase
 
                 $this->validatePayment($provider);
                 break;
-            case 'routes':
+            case 'generator':
                 $provider = $this->getContainerAutowireResolver()->getObject($class);
-                if (!$provider instanceof Routes\ProviderInterface) {
-                    $this->fail('Defined routes ' . $class . ' must be an instance of ' . Routes\ProviderInterface::class);
+                if (!$provider instanceof Generator\ProviderInterface) {
+                    $this->fail('Defined routes ' . $class . ' must be an instance of ' . Generator\ProviderInterface::class);
                 }
 
                 $this->validateRoutes($provider);
@@ -171,7 +170,7 @@ abstract class AdapterTestCase extends TestCase
     {
     }
 
-    private function validateRoutes(Routes\ProviderInterface $provider): void
+    private function validateRoutes(Generator\ProviderInterface $provider): void
     {
         $this->assertNotEmpty($provider->getName());
     }
