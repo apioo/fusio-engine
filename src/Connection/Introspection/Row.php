@@ -22,40 +22,30 @@
 namespace Fusio\Engine\Connection\Introspection;
 
 /**
- * Details
+ * Row
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    https://www.fusio-project.org
  */
-class Details implements \JsonSerializable
+class Row implements \JsonSerializable, \Countable
 {
-    private string $name;
-    private array $headers;
-    private array $rows;
+    private array $values;
 
-    public function __construct(string $name, array $headers)
+    public function __construct(array $values)
     {
-        $this->name = $name;
-        $this->headers = $headers;
-        $this->rows = [];
-    }
-
-    public function addRow(array $row): void
-    {
-        if (count($row) !== count($this->headers)) {
-            throw new \InvalidArgumentException('Row must match the headers count');
-        }
-
-        $this->rows[] = array_values($row);
+        $this->values = $values;
     }
 
     public function jsonSerialize(): array
     {
         return [
-            'name' => $this->name,
-            'headers' => $this->headers,
-            'rows' => $this->rows,
+            'values' => $this->values,
         ];
+    }
+
+    public function count(): int
+    {
+        return count($this->values);
     }
 }

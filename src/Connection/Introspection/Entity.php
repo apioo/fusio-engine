@@ -22,23 +22,40 @@
 namespace Fusio\Engine\Connection\Introspection;
 
 /**
- * IntrospectorInterface
+ * Entity
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    https://www.fusio-project.org
  */
-interface IntrospectorInterface
+class Entity implements \JsonSerializable
 {
-    /**
-     * Returns all available entities of the connection this could be i.e. a list of tables for a database connection
-     *
-     * @return string[]
-     */
-    public function getEntities(): array;
+    private string $name;
+    private array $headers;
+    private array $rows;
 
-    /**
-     * Returns details of a specific entity i.e. all columns for a table on database connection
-     */
-    public function getEntity(string $entityName): Entity;
+    public function __construct(string $name, array $headers)
+    {
+        $this->name = $name;
+        $this->headers = $headers;
+        $this->rows = [];
+    }
+
+    public function addRow(Row $row): void
+    {
+        if (count($row) !== count($this->headers)) {
+            throw new \InvalidArgumentException('Row must match the headers count');
+        }
+
+        $this->rows[] = $row;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'name' => $this->name,
+            'headers' => $this->headers,
+            'rows' => $this->rows,
+        ];
+    }
 }
