@@ -59,5 +59,5 @@ interface ProviderInterface
      * Can return null in case either the payment provider does not support such a portal or the user has no external
      * id assigned
      */
-    public function portal(mixed $connection, UserInterface $user, string $returnUrl): ?string;
+    public function portal(mixed $connection, UserInterface $user, string $returnUrl, ?string $configurationId = null): ?string;
 }
