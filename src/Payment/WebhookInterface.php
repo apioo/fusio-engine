@@ -42,7 +42,7 @@ interface WebhookInterface
      * Method which needs to be called in case a recurring payment was done. The customer and invoice id is an external
      * id of the payment provider
      */
-    public function paid(string $customerId, int $amountPaid, string $invoiceId, \DateTimeImmutable $startDate, \DateTimeImmutable $endDate): void;
+    public function paid(string $customerId, int $amountPaid, string $invoiceId, \DateTimeImmutable $periodStart, \DateTimeImmutable $periodEnd): void;
 
     /**
      * Method which needs to be called in case a payment has failed
