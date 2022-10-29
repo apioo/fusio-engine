@@ -213,7 +213,7 @@ class Setup implements SetupInterface
             $result->setAction((string) $method['action']);
         }
 
-        if (isset($method['costs']) && is_string($method['costs'])) {
+        if (isset($method['costs']) && is_int($method['costs'])) {
             $result->setCosts($method['costs']);
         }
 
