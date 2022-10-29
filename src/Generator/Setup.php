@@ -191,8 +191,8 @@ class Setup implements SetupInterface
             $result->setOperationId($method['operationId']);
         }
 
-        if (isset($method['parameters']) && is_string($method['parameters'])) {
-            $result->setParameters($method['parameters']);
+        if (isset($method['parameters'])) {
+            $result->setParameters((string) $method['parameters']);
         }
 
         if (isset($method['request'])) {
