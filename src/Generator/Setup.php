@@ -40,9 +40,21 @@ use Fusio\Model\Backend\SchemaSource;
  */
 class Setup implements SetupInterface
 {
+    /**
+     * @var Schema[]
+     */
     private array $schemas = [];
+
+    /**
+     * @var Action[]
+     */
     private array $actions = [];
+
+    /**
+     * @var Route[]
+     */
     private array $routes = [];
+
     private int $schemaIndex = -1;
     private int $actionIndex = -1;
     private int $routesIndex = -1;
@@ -91,16 +103,25 @@ class Setup implements SetupInterface
         return $this->routesIndex;
     }
 
+    /**
+     * @return Schema[]
+     */
     public function getSchemas(): array
     {
         return $this->schemas;
     }
-    
+
+    /**
+     * @return Action[]
+     */
     public function getActions(): array
     {
         return $this->actions;
     }
 
+    /**
+     * @return Route[]
+     */
     public function getRoutes(): array
     {
         return $this->routes;
