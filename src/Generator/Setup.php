@@ -21,14 +21,14 @@
 
 namespace Fusio\Engine\Generator;
 
-use Fusio\Model\Backend\Action;
 use Fusio\Model\Backend\ActionConfig;
-use Fusio\Model\Backend\Route;
+use Fusio\Model\Backend\ActionCreate;
+use Fusio\Model\Backend\RouteCreate;
 use Fusio\Model\Backend\RouteMethod;
 use Fusio\Model\Backend\RouteMethodResponses;
 use Fusio\Model\Backend\RouteMethods;
 use Fusio\Model\Backend\RouteVersion;
-use Fusio\Model\Backend\Schema;
+use Fusio\Model\Backend\SchemaCreate;
 use Fusio\Model\Backend\SchemaSource;
 
 /**
@@ -41,17 +41,17 @@ use Fusio\Model\Backend\SchemaSource;
 class Setup implements SetupInterface
 {
     /**
-     * @var Schema[]
+     * @var SchemaCreate[]
      */
     private array $schemas = [];
 
     /**
-     * @var Action[]
+     * @var ActionCreate[]
      */
     private array $actions = [];
 
     /**
-     * @var Route[]
+     * @var RouteCreate[]
      */
     private array $routes = [];
 
@@ -63,7 +63,7 @@ class Setup implements SetupInterface
     {
         $this->schemaIndex++;
 
-        $schema = new Schema();
+        $schema = new SchemaCreate();
         $schema->setName($name);
         $schema->setSource(SchemaSource::fromArray($source));
 
@@ -76,7 +76,7 @@ class Setup implements SetupInterface
     {
         $this->actionIndex++;
 
-        $action = new Action();
+        $action = new ActionCreate();
         $action->setName($name);
         $action->setClass($class);
         $action->setEngine($engine);
@@ -91,7 +91,7 @@ class Setup implements SetupInterface
     {
         $this->routesIndex++;
 
-        $route = new Route();
+        $route = new RouteCreate();
         $route->setPriority($priority);
         $route->setPath($path);
         $route->setController($controller);
@@ -104,7 +104,7 @@ class Setup implements SetupInterface
     }
 
     /**
-     * @return Schema[]
+     * @return SchemaCreate[]
      */
     public function getSchemas(): array
     {
@@ -112,7 +112,7 @@ class Setup implements SetupInterface
     }
 
     /**
-     * @return Action[]
+     * @return ActionCreate[]
      */
     public function getActions(): array
     {
@@ -120,7 +120,7 @@ class Setup implements SetupInterface
     }
 
     /**
-     * @return Route[]
+     * @return RouteCreate[]
      */
     public function getRoutes(): array
     {
