@@ -139,6 +139,7 @@ JSON;
           "active": true,
           "public": false,
           "description": "Creates a new entity",
+          "parameters": "0",
           "request": "0",
           "responses": {
             "201": "0"
