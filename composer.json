@@ -15,6 +15,7 @@
     "monolog/monolog": "^2.3",
     "psr/simple-cache": "^1.0|^2.0|^3.0",
     "psr/log": "^1.0|^2.0|^3.0",
+    "fusio/model": "^2.0",
     "psx/dependency": "^2.0",
     "psx/http": "^3.0",
     "psx/record": "^2.0",

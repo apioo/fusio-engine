@@ -21,6 +21,16 @@
 
 namespace Fusio\Engine\Generator;
 
+use Fusio\Model\Backend\Action;
+use Fusio\Model\Backend\ActionConfig;
+use Fusio\Model\Backend\Route;
+use Fusio\Model\Backend\RouteMethod;
+use Fusio\Model\Backend\RouteMethodResponses;
+use Fusio\Model\Backend\RouteMethods;
+use Fusio\Model\Backend\RouteVersion;
+use Fusio\Model\Backend\Schema;
+use Fusio\Model\Backend\SchemaSource;
+
 /**
  * Setup
  *
@@ -41,10 +51,11 @@ class Setup implements SetupInterface
     {
         $this->schemaIndex++;
 
-        $this->schemas[$this->schemaIndex] = (object) [
-            'name' => $name,
-            'source' => (object) $source,
-        ];
+        $schema = new Schema();
+        $schema->setName($name);
+        $schema->setSource(SchemaSource::fromArray($source));
+
+        $this->schemas[$this->schemaIndex] = $schema;
 
         return $this->schemaIndex;
     }
@@ -53,12 +64,13 @@ class Setup implements SetupInterface
     {
         $this->actionIndex++;
 
-        $this->actions[$this->actionIndex] = (object) [
-            'name' => $name,
-            'class' => $class,
-            'engine' => $engine,
-            'config' => (object) $config,
-        ];
+        $action = new Action();
+        $action->setName($name);
+        $action->setClass($class);
+        $action->setEngine($engine);
+        $action->setConfig(ActionConfig::fromArray($config));
+
+        $this->actions[$this->actionIndex] = $action;
 
         return $this->actionIndex;
     }
@@ -67,13 +79,14 @@ class Setup implements SetupInterface
     {
         $this->routesIndex++;
 
-        $this->routes[$this->routesIndex] = (object) [
-            'priority' => $priority,
-            'path' => $path,
-            'controller' => $controller,
-            'scopes' => $scopes,
-            'config' => $config,
-        ];
+        $route = new Route();
+        $route->setPriority($priority);
+        $route->setPath($path);
+        $route->setController($controller);
+        $route->setScopes($scopes);
+        $route->setConfig($this->convertConfig($config));
+
+        $this->routes[$this->routesIndex] = $route;
 
         return $this->routesIndex;
     }
@@ -91,5 +104,130 @@ class Setup implements SetupInterface
     public function getRoutes(): array
     {
         return $this->routes;
+    }
+
+    private function convertConfig(array $config): array
+    {
+        $result = [];
+        foreach ($config as $version) {
+            if ($version instanceof RouteVersion) {
+                $result[] = $version;
+            } elseif (is_array($version)) {
+                $result[] = $this->convertVersion($version);
+            } elseif ($version instanceof \stdClass) {
+                $result[] = $this->convertVersion((array) $version);
+            }
+        }
+
+        return $result;
+    }
+
+    private function convertVersion(array $version): RouteVersion
+    {
+        $result = new RouteVersion();
+
+        if (isset($version['status']) && is_int($version['status'])) {
+            $result->setStatus($version['status']);
+        }
+
+        if (isset($version['version']) && is_int($version['version'])) {
+            $result->setVersion($version['version']);
+        }
+
+        if (isset($version['methods'])) {
+            if ($version['methods'] instanceof RouteMethods) {
+                $result->setMethods($version['methods']);
+            } elseif (is_array($version['methods'])) {
+                $result->setMethods($this->convertMethods($version['methods']));
+            } elseif ($version['methods'] instanceof \stdClass) {
+                $result->setMethods($this->convertMethods((array) $version['methods']));
+            }
+        }
+
+        return $result;
+    }
+
+    private function convertMethods(array $methods): RouteMethods
+    {
+        $result = new RouteMethods();
+        foreach ($methods as $methodName => $method) {
+            if ($method instanceof RouteMethod) {
+                $result[$methodName] = $method;
+            } elseif (is_array($method)) {
+                $result[$methodName] = $this->convertMethod($method);
+            } elseif ($method instanceof \stdClass) {
+                $result[$methodName] = $this->convertMethod((array) $method);
+            }
+        }
+
+        return $result;
+    }
+
+    private function convertMethod(array $method): RouteMethod
+    {
+        $result = new RouteMethod();
+
+        if (isset($method['version']) && is_int($method['version'])) {
+            $result->setVersion($method['version']);
+        }
+
+        if (isset($method['status']) && is_int($method['status'])) {
+            $result->setStatus($method['status']);
+        }
+
+        if (isset($method['active']) && is_bool($method['active'])) {
+            $result->setActive($method['active']);
+        }
+
+        if (isset($method['public']) && is_bool($method['public'])) {
+            $result->setPublic($method['public']);
+        }
+
+        if (isset($method['description']) && is_string($method['description'])) {
+            $result->setDescription($method['description']);
+        }
+
+        if (isset($method['operationId']) && is_string($method['operationId'])) {
+            $result->setOperationId($method['operationId']);
+        }
+
+        if (isset($method['parameters']) && is_string($method['parameters'])) {
+            $result->setParameters($method['parameters']);
+        }
+
+        if (isset($method['request'])) {
+            $result->setRequest((string) $method['request']);
+        }
+
+        if (isset($method['responses'])) {
+            if ($method['responses'] instanceof RouteMethodResponses) {
+                $result->setResponses($method['responses']);
+            } elseif (is_array($method['responses'])) {
+                $result->setResponses($this->convertResponses($method['responses']));
+            } elseif ($method['responses'] instanceof \stdClass) {
+                $result->setResponses($this->convertResponses((array) $method['responses']));
+            }
+        }
+
+        if (isset($method['action'])) {
+            $result->setAction((string) $method['action']);
+        }
+
+        if (isset($method['costs']) && is_string($method['costs'])) {
+            $result->setCosts($method['costs']);
+        }
+
+        return $result;
+    }
+
+    private function convertResponses(array $responses): RouteMethodResponses
+    {
+        $result = new RouteMethodResponses();
+
+        foreach ($responses as $statusCode => $response) {
+            $result[$statusCode] = (string) $response;
+        }
+
+        return $result;
     }
 }

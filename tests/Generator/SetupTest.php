@@ -36,23 +36,25 @@ class SetupTest extends TestCase
     public function testAddAction()
     {
         $setup = new Setup();
+
         $return = $setup->addAction('foo_action', \stdClass::class, \stdClass::class, [
             'table' => 'foobar'
         ]);
 
-        $expect = [
-            0 => (object) [
-                'name' => 'foo_action',
-                'class' => 'stdClass',
-                'engine' => 'stdClass',
-                'config' => (object) [
-                    'table' => 'foobar'
-                ]
-            ]
-        ];
+        $expect = <<<JSON
+{
+  "name": "foo_action",
+  "class": "stdClass",
+  "engine": "stdClass",
+  "config": {
+    "table": "foobar"
+  }
+}
+JSON;
 
         $this->assertSame(0, $return);
-        $this->assertEquals($expect, $setup->getActions());
+        $this->assertSame(1, count($setup->getActions()));
+        $this->assertJsonStringEqualsJsonString($expect, json_encode($setup->getActions()[0]));
 
         $return = $setup->addAction('foo_action', \stdClass::class, \stdClass::class, [
             'table' => 'foobar'
@@ -64,21 +66,23 @@ class SetupTest extends TestCase
     public function testAddSchema()
     {
         $setup = new Setup();
+
         $return = $setup->addSchema('foo_schema', [
             'type' => 'object'
         ]);
 
-        $expect = [
-            0 => (object) [
-                'name' => 'foo_schema',
-                'source' => (object) [
-                    'type' => 'object'
-                ]
-            ],
-        ];
+        $expect = <<<JSON
+{
+  "name": "foo_schema",
+  "source": {
+    "type": "object"
+  }
+}
+JSON;
 
         $this->assertSame(0, $return);
-        $this->assertEquals($expect, $setup->getSchemas());
+        $this->assertSame(1, count($setup->getSchemas()));
+        $this->assertJsonStringEqualsJsonString($expect, json_encode($setup->getSchemas()[0]));
 
         $return = $setup->addSchema('foo_schema', [
             'type' => 'object'
@@ -90,26 +94,66 @@ class SetupTest extends TestCase
     public function testAddRoute()
     {
         $setup = new Setup();
-        $return = $setup->addRoute(1, '/foo', \stdClass::class, ['foo', 'bar'], [
-            'version' => 1,
-            'methods' => [],
+
+        $schema = $setup->addSchema('foo_schema', [
+            'type' => 'object'
         ]);
 
-        $expect = [
-            0 => (object) [
-                'priority' => 1,
-                'path' => '/foo',
-                'controller' => 'stdClass',
-                'scopes' => ['foo', 'bar'],
-                'config' => [
-                    'version' => 1,
-                    'methods' => [],
+        $action = $setup->addAction('foo_action', \stdClass::class, \stdClass::class, [
+            'table' => 'foobar'
+        ]);
+
+        $return = $setup->addRoute(1, '/foo', \stdClass::class, ['foo', 'bar'], [
+            [
+                'version' => 1,
+                'methods' => [
+                    'POST' => [
+                        'active' => true,
+                        'public' => false,
+                        'description' => 'Creates a new entity',
+                        'parameters' => $schema,
+                        'request' => $schema,
+                        'responses' => [
+                            201 => $schema,
+                        ],
+                        'action' => $action,
+                    ]
                 ],
-            ],
-        ];
+            ]
+        ]);
+
+        $expect = <<<JSON
+{
+  "priority": 1,
+  "path": "\/foo",
+  "controller": "stdClass",
+  "scopes": [
+    "foo",
+    "bar"
+  ],
+  "config": [
+    {
+      "version": 1,
+      "methods": {
+        "POST": {
+          "active": true,
+          "public": false,
+          "description": "Creates a new entity",
+          "request": "0",
+          "responses": {
+            "201": "0"
+          },
+          "action": "0"
+        }
+      }
+    }
+  ]
+}
+JSON;
 
         $this->assertSame(0, $return);
-        $this->assertEquals($expect, $setup->getRoutes());
+        $this->assertSame(1, count($setup->getRoutes()));
+        $this->assertJsonStringEqualsJsonString($expect, json_encode($setup->getRoutes()[0]));
 
         $return = $setup->addRoute(1, '/foo', \stdClass::class, ['foo', 'bar'], [
             'version' => 1,
