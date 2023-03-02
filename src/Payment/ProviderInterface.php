@@ -52,7 +52,7 @@ interface ProviderInterface
      * Method which gets called by the payment provider in case an invoice was i.e. payed. The provider needs to call
      * the fitting methods on the webhook handler
      */
-    public function webhook(RequestInterface $request, WebhookInterface $handler, ?string $webhookSecret = null): void;
+    public function webhook(RequestInterface $request, WebhookInterface $handler, ?string $webhookSecret = null, ?string $domain = null): void;
 
     /**
      * Returns an url which redirects the user to the payment provider portal where he can manage all subscriptions.

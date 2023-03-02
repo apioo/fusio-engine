@@ -33,12 +33,14 @@ class CheckoutContext
     private string $returnUrl;
     private string $cancelUrl;
     private string $currency;
+    private ?string $domain;
 
-    public function __construct(string $returnUrl, string $cancelUrl, string $currency)
+    public function __construct(string $returnUrl, string $cancelUrl, string $currency, ?string $domain = null)
     {
         $this->returnUrl = $returnUrl;
         $this->cancelUrl = $cancelUrl;
         $this->currency = $currency;
+        $this->domain = $domain;
     }
 
     public function getReturnUrl(): string
@@ -54,5 +56,10 @@ class CheckoutContext
     public function getCurrency(): string
     {
         return $this->currency;
+    }
+
+    public function getDomain(): ?string
+    {
+        return $this->domain;
     }
 }
