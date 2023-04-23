@@ -116,12 +116,15 @@ class EngineContainerFactory
         $cache = new Psr16Cache(new ArrayAdapter());
         $container->set(CacheInterface::class, $cache);
 
-        $container->set(CallbackConnection::class, new CallbackConnection());
-        $container->set(CallbackAction::class, new CallbackAction($connector, $responseFactory, $processor, $dispatcher, $logger, $cache));
-        $container->set(Impl\Connection::class, new Impl\Connection());
-        $container->set(Impl\Action::class, new Impl\Action($connector, $responseFactory, $processor, $dispatcher, $logger, $cache));
+        $actionRuntime = new Action\Runtime($connector, $responseFactory, $processor, $dispatcher, $logger, $cache);
+        $container->set(Action\Runtime::class, $actionRuntime);
 
-        call_user_func_array($this->configure, [$container]);
+        $container->set(CallbackConnection::class, new CallbackConnection());
+        $container->set(CallbackAction::class, new CallbackAction($actionRuntime));
+        $container->set(Impl\Connection::class, new Impl\Connection());
+        $container->set(Impl\Action::class, new Impl\Action($actionRuntime));
+
+        call_user_func_array($this->configure, [$actionRuntime, $container]);
 
         return $container;
     }

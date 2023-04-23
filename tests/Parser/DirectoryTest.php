@@ -21,10 +21,12 @@
 
 namespace Fusio\Engine\Tests\Parser;
 
+use Fusio\Engine\Action\Runtime;
 use Fusio\Engine\ActionInterface;
 use Fusio\Engine\Parser\Directory;
 use Fusio\Engine\Test\EngineTestCaseTrait;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\DependencyInjection\Container;
 
 /**
  * DirectoryTest
@@ -36,6 +38,13 @@ use PHPUnit\Framework\TestCase;
 class DirectoryTest extends TestCase
 {
     use EngineTestCaseTrait;
+
+    protected function configure(Runtime $runtime, Container $container): void
+    {
+        $container->set(Foo\Bar\Bar::class, new Foo\Bar\Bar($runtime));
+        $container->set(Foo\Bar\Baz\Baz::class, new Foo\Bar\Baz\Baz($runtime));
+        $container->set(Foo\Foo::class, new Foo\Foo($runtime));
+    }
 
     public function testGetClasses()
     {
@@ -59,4 +68,6 @@ class DirectoryTest extends TestCase
 
         $this->assertEquals($expect, $classes);
     }
+
+
 }

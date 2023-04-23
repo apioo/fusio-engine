@@ -22,6 +22,7 @@
 namespace Fusio\Engine\Test;
 
 use Fusio\Engine\Action\QueueInterface;
+use Fusio\Engine\Action\Runtime;
 use Fusio\Engine\Context;
 use Fusio\Engine\Dependency\EngineContainerFactory;
 use Fusio\Engine\Factory;
@@ -151,14 +152,14 @@ trait EngineTestCaseTrait
 
     protected function newContainer(): ContainerInterface
     {
-        $configure = function (Container $container) {
-            $this->configure($container);
+        $configure = function (Runtime $runtime, Container $container) {
+            $this->configure($runtime, $container);
         };
 
         return (new EngineContainerFactory($configure))->factory();
     }
 
-    protected function configure(Container $container): void
+    protected function configure(Runtime $runtime, Container $container): void
     {
     }
 }

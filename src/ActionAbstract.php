@@ -21,6 +21,7 @@
 
 namespace Fusio\Engine;
 
+use Fusio\Engine\Action\RuntimeInterface;
 use Fusio\Engine\Form\BuilderInterface;
 use Fusio\Engine\Form\ElementFactoryInterface;
 use Fusio\Engine\Response\FactoryInterface;
@@ -43,14 +44,14 @@ abstract class ActionAbstract implements ActionInterface
     protected LoggerInterface $logger;
     protected CacheInterface $cache;
 
-    public function __construct(ConnectorInterface $connector, FactoryInterface $response, ProcessorInterface $processor, DispatcherInterface $dispatcher, LoggerInterface $logger, CacheInterface $cache)
+    public function __construct(RuntimeInterface $runtime)
     {
-        $this->connector = $connector;
-        $this->response = $response;
-        $this->processor = $processor;
-        $this->dispatcher = $dispatcher;
-        $this->logger = $logger;
-        $this->cache = $cache;
+        $this->connector = $runtime->getConnector();
+        $this->response = $runtime->getResponse();
+        $this->processor = $runtime->getProcessor();
+        $this->dispatcher = $runtime->getDispatcher();
+        $this->logger = $runtime->getLogger();
+        $this->cache = $runtime->getCache();
     }
 
     public function getName(): string
