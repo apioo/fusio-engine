@@ -54,6 +54,14 @@ trait EngineTestCaseTrait
 {
     private static ?ContainerInterface $container = null;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        // always reset the container for each test
+        self::$container = null;
+    }
+
     protected function getRequest(?string $method = null, array $uriFragments = [], array $parameters = [], array $headers = [], ?RecordInterface $parsedBody = null, ?StreamInterface $rawBody = null): HttpInterface
     {
         $uri = Uri::parse('http://127.0.0.1/foo');
