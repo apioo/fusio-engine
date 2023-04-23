@@ -160,7 +160,7 @@ trait EngineTestCaseTrait
 
     protected function newContainer(): ContainerInterface
     {
-        $configure = function (Runtime $runtime, Container $container) {
+        $configure = function (Runtime $runtime, Container $container): void {
             $this->configure($runtime, $container);
         };
 
