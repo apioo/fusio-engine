@@ -34,7 +34,7 @@ use PSX\Record\RecordInterface;
 interface RpcInterface extends RequestInterface
 {
     /**
-     * Returns an argument of the RPC invocation, this is either an named or indexed based key
+     * Returns an argument of the RPC invocation, this is either a named or indexed based key
      */
     public function getArgument(string $name): mixed;
 
