@@ -23,8 +23,6 @@ namespace Fusio\Engine;
 
 use Fusio\Engine\Exception\ConnectionNotFoundException;
 use Fusio\Engine\Factory;
-use PSX\Dependency\Exception\AutowiredException;
-use PSX\Dependency\Exception\NotFoundException;
 
 /**
  * Connector

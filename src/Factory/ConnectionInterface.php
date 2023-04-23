@@ -22,7 +22,7 @@
 namespace Fusio\Engine\Factory;
 
 use Fusio\Engine\ConnectionInterface as EngineConnectionInterface;
-use Fusio\Engine\Exception\NotFoundException;
+use Fusio\Engine\Exception\ConnectionNotFoundException;
 
 /**
  * ConnectionInterface
@@ -34,7 +34,7 @@ use Fusio\Engine\Exception\NotFoundException;
 interface ConnectionInterface extends FactoryInterface
 {
     /**
-     * @throws NotFoundException
+     * @throws ConnectionNotFoundException
      */
     public function factory(string $className): EngineConnectionInterface;
 }

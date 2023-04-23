@@ -22,8 +22,8 @@
 namespace Fusio\Engine\Factory;
 
 use Fusio\Engine\ActionInterface as EngineActionInterface;
+use Fusio\Engine\Exception\ActionNotFoundException;
 use Fusio\Engine\Exception\FactoryResolveException;
-use Fusio\Engine\Exception\NotFoundException;
 
 /**
  * ActionInterface
@@ -39,7 +39,7 @@ interface ActionInterface extends FactoryInterface
      * a php or javascript file which is the then resolved by the factory
      *
      * @throws FactoryResolveException
-     * @throws NotFoundException
+     * @throws ActionNotFoundException
      */
     public function factory(string $className, ?string $engine = null): EngineActionInterface;
 }
