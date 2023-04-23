@@ -19,18 +19,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Fusio\Engine\Dependency;
-
-use PSX\Dependency\Container;
+namespace Fusio\Engine\Exception;
 
 /**
- * EngineContainer
+ * NotFoundException
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    https://www.fusio-project.org
  */
-class EngineContainer extends Container
+class NotFoundException extends \Exception
 {
-    use EngineTrait;
 }

@@ -22,9 +22,9 @@
 namespace Fusio\Engine\Parser;
 
 use Fusio\Engine\ConfigurableInterface;
+use Fusio\Engine\Exception\NotFoundException;
 use Fusio\Engine\Factory\FactoryInterface;
 use Fusio\Engine\Form;
-use PSX\Dependency\Exception\NotFoundException;
 
 /**
  * ParserAbstract
@@ -65,7 +65,7 @@ abstract class ParserAbstract implements ParserInterface
     protected function getObject(string $className): mixed
     {
         if (empty($className)) {
-            throw new \RuntimeException('Invalid class name');
+            throw new NotFoundException('Invalid class name');
         }
 
         if (!class_exists($className)) {

@@ -23,7 +23,7 @@ namespace Fusio\Engine\Test;
 
 use Fusio\Engine\Action\QueueInterface;
 use Fusio\Engine\Context;
-use Fusio\Engine\Dependency\EngineContainer;
+use Fusio\Engine\Dependency\EngineContainerFactory;
 use Fusio\Engine\Factory;
 use Fusio\Engine\Form\ElementFactoryInterface;
 use Fusio\Engine\Model\Action;
@@ -35,7 +35,6 @@ use Fusio\Engine\Request\HttpInterface;
 use Fusio\Engine\Request\HttpRequest;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\StreamInterface;
-use PSX\Dependency\AutowireResolverInterface;
 use PSX\Http\Environment\HttpContext;
 use PSX\Http\Request;
 use PSX\Record\Record;
@@ -55,7 +54,7 @@ trait EngineTestCaseTrait
 
     protected function getRequest(?string $method = null, array $uriFragments = [], array $parameters = [], array $headers = [], ?RecordInterface $parsedBody = null, ?StreamInterface $rawBody = null): HttpInterface
     {
-        $uri = new Uri('http://127.0.0.1/foo');
+        $uri = Uri::parse('http://127.0.0.1/foo');
         $uri = $uri->withParameters($parameters);
 
         $request = new Request($uri, $method === null ? 'GET' : $method, $headers, $rawBody);
@@ -112,37 +111,32 @@ trait EngineTestCaseTrait
 
     protected function getActionFactory(): Factory\ActionInterface
     {
-        return $this->getContainer()->get('action_factory');
+        return $this->getContainer()->get(Factory\ActionInterface::class);
     }
 
     protected function getActionQueue(): QueueInterface
     {
-        return $this->getContainer()->get('action_queue');
+        return $this->getContainer()->get(QueueInterface::class);
     }
 
     protected function getActionRepository(): Repository\ActionInterface
     {
-        return $this->getContainer()->get('action_repository');
+        return $this->getContainer()->get(Repository\ActionInterface::class);
     }
 
     protected function getConnectionFactory(): Factory\ConnectionInterface
     {
-        return $this->getContainer()->get('connection_factory');
+        return $this->getContainer()->get(Factory\ConnectionInterface::class);
     }
 
     protected function getConnectionRepository(): Repository\ConnectionInterface
     {
-        return $this->getContainer()->get('connection_repository');
+        return $this->getContainer()->get(Repository\ConnectionInterface::class);
     }
 
     protected function getFormElementFactory(): ElementFactoryInterface
     {
-        return $this->getContainer()->get('form_element_factory');
-    }
-
-    protected function getContainerAutowireResolver(): AutowireResolverInterface
-    {
-        return $this->getContainer()->get('container_autowire_resolver');
+        return $this->getContainer()->get(ElementFactoryInterface::class);
     }
 
     protected function getContainer(): ContainerInterface
@@ -156,6 +150,6 @@ trait EngineTestCaseTrait
 
     protected function newContainer(): ContainerInterface
     {
-        return new EngineContainer();
+        return (new EngineContainerFactory())->factory();
     }
 }

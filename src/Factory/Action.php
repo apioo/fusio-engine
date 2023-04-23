@@ -21,16 +21,9 @@
 
 namespace Fusio\Engine\Factory;
 
-use Fusio\Engine\Action\ServiceAwareInterface;
 use Fusio\Engine\ActionInterface as EngineActionInterface;
-use Fusio\Engine\ConnectorInterface;
-use Fusio\Engine\DispatcherInterface;
-use Fusio\Engine\ProcessorInterface;
-use Fusio\Engine\Response;
-use Psr\Log\LoggerInterface;
-use Psr\SimpleCache\CacheInterface;
-use PSX\Dependency\TypeResolverInterface;
-use RuntimeException;
+use Fusio\Engine\Exception\FactoryResolveException;
+use Psr\Container\ContainerInterface;
 
 /**
  * Action
@@ -41,13 +34,13 @@ use RuntimeException;
  */
 class Action implements ActionInterface
 {
-    private TypeResolverInterface $typeResolver;
+    private ContainerInterface $container;
     private array $resolvers;
 
-    public function __construct(TypeResolverInterface $typeResolver)
+    public function __construct(ContainerInterface $container)
     {
-        $this->typeResolver = $typeResolver;
-        $this->resolvers    = [];
+        $this->container = $container;
+        $this->resolvers = [];
     }
 
     public function factory(string $className, ?string $engine = null): EngineActionInterface
@@ -58,22 +51,11 @@ class Action implements ActionInterface
             $resolver = reset($this->resolvers);
 
             if (!$resolver instanceof ResolverInterface) {
-                throw new RuntimeException('No resolver was configured');
+                throw new FactoryResolveException('No resolver was configured');
             }
         }
 
-        $action = $resolver->resolve($className);
-
-        if ($action instanceof ServiceAwareInterface) {
-            $action->setConnector($this->typeResolver->getServiceByType(ConnectorInterface::class));
-            $action->setResponse($this->typeResolver->getServiceByType(Response\FactoryInterface::class));
-            $action->setProcessor($this->typeResolver->getServiceByType(ProcessorInterface::class));
-            $action->setDispatcher($this->typeResolver->getServiceByType(DispatcherInterface::class));
-            $action->setLogger($this->typeResolver->getServiceByType(LoggerInterface::class));
-            $action->setCache($this->typeResolver->getServiceByType(CacheInterface::class));
-        }
-
-        return $action;
+        return $resolver->resolve($className);
     }
 
     public function addResolver(ResolverInterface $resolver): void

@@ -21,7 +21,7 @@
 
 namespace Fusio\Engine\Factory;
 
-use PSX\Dependency\Exception\NotFoundException;
+use Fusio\Engine\Exception\NotFoundException;
 
 /**
  * FactoryInterface

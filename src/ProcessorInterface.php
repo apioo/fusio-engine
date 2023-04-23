@@ -23,8 +23,6 @@ namespace Fusio\Engine;
 
 use Fusio\Engine\Exception\ActionNotFoundException;
 use Fusio\Engine\Exception\FactoryResolveException;
-use PSX\Dependency\Exception\AutowiredException;
-use PSX\Dependency\Exception\NotFoundException;
 
 /**
  * The processor can be used to invoke another action. Normally an action should only contain simple logic but in some
@@ -42,8 +40,6 @@ interface ProcessorInterface
      *
      * @throws ActionNotFoundException
      * @throws FactoryResolveException
-     * @throws AutowiredException
-     * @throws NotFoundException
      */
     public function execute(string|int $actionId, RequestInterface $request, ContextInterface $context): mixed;
 }

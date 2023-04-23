@@ -21,7 +21,6 @@
 
 namespace Fusio\Engine;
 
-use Fusio\Engine\Action\ServiceAwareInterface;
 use Fusio\Engine\Form\BuilderInterface;
 use Fusio\Engine\Form\ElementFactoryInterface;
 use Fusio\Engine\Response\FactoryInterface;
@@ -35,7 +34,7 @@ use Psr\SimpleCache\CacheInterface;
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    https://www.fusio-project.org
  */
-abstract class ActionAbstract implements ActionInterface, ServiceAwareInterface
+abstract class ActionAbstract implements ActionInterface
 {
     protected ConnectorInterface $connector;
     protected FactoryInterface $response;
@@ -44,33 +43,13 @@ abstract class ActionAbstract implements ActionInterface, ServiceAwareInterface
     protected LoggerInterface $logger;
     protected CacheInterface $cache;
 
-    public function setConnector(ConnectorInterface $connector): void
+    public function __construct(ConnectorInterface $connector, FactoryInterface $response, ProcessorInterface $processor, DispatcherInterface $dispatcher, LoggerInterface $logger, CacheInterface $cache)
     {
         $this->connector = $connector;
-    }
-
-    public function setResponse(Response\FactoryInterface $response): void
-    {
         $this->response = $response;
-    }
-
-    public function setProcessor(ProcessorInterface $processor): void
-    {
         $this->processor = $processor;
-    }
-
-    public function setDispatcher(DispatcherInterface $dispatcher): void
-    {
         $this->dispatcher = $dispatcher;
-    }
-
-    public function setLogger(LoggerInterface $logger): void
-    {
         $this->logger = $logger;
-    }
-
-    public function setCache(CacheInterface $cache): void
-    {
         $this->cache = $cache;
     }
 

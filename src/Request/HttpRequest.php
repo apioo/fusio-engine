@@ -45,7 +45,7 @@ class HttpRequest implements HttpInterface
 
     public function get(string $name): mixed
     {
-        return $this->getUriFragment($name) ?? ($this->getParameter($name) ?? $this->getBody()->getProperty($name));
+        return $this->getUriFragment($name) ?? ($this->getParameter($name) ?? $this->getBody()->get($name));
     }
 
     public function getPayload(): mixed

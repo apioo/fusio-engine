@@ -113,7 +113,7 @@ abstract class AdapterTestCase extends TestCase
                 $this->validateConnection($connection);
                 break;
             case 'user':
-                $provider = $this->getContainerAutowireResolver()->getObject($class);
+                $provider = $this->getContainer()->get($class);
                 if (!$provider instanceof User\ProviderInterface) {
                     $this->fail('Defined user ' . $class . ' must be an instance of ' . User\ProviderInterface::class);
                 }
@@ -121,7 +121,7 @@ abstract class AdapterTestCase extends TestCase
                 $this->validateUser($provider);
                 break;
             case 'payment':
-                $provider = $this->getContainerAutowireResolver()->getObject($class);
+                $provider = $this->getContainer()->get($class);
                 if (!$provider instanceof Payment\ProviderInterface) {
                     $this->fail('Defined payment ' . $class . ' must be an instance of ' . Payment\ProviderInterface::class);
                 }
@@ -129,7 +129,7 @@ abstract class AdapterTestCase extends TestCase
                 $this->validatePayment($provider);
                 break;
             case 'generator':
-                $provider = $this->getContainerAutowireResolver()->getObject($class);
+                $provider = $this->getContainer()->get($class);
                 if (!$provider instanceof Generator\ProviderInterface) {
                     $this->fail('Defined routes ' . $class . ' must be an instance of ' . Generator\ProviderInterface::class);
                 }

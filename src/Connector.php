@@ -45,8 +45,6 @@ class Connector implements ConnectorInterface
     }
 
     /**
-     * @throws AutowiredException
-     * @throws NotFoundException
      * @throws ConnectionNotFoundException
      */
     public function getConnection(string|int $connectionId): mixed

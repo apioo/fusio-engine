@@ -39,12 +39,12 @@ class PassthruRecord extends Record
     private mixed $payload;
     private PropertyAccessor $accessor;
 
-    public function __construct(mixed $payload)
+    public function __construct(iterable $properties = [], mixed $payload = null)
     {
+        parent::__construct($properties);
+
         $this->payload  = $payload;
         $this->accessor = PropertyAccess::createPropertyAccessor();
-
-        parent::__construct($this->toIterable($payload));
     }
 
     public function getPayload(): mixed
@@ -52,26 +52,31 @@ class PassthruRecord extends Record
         return $this->payload;
     }
 
-    public function get(string $name): mixed
+    public function get(string $key): mixed
     {
-        return $this->accessor->getValue($this->payload, $name);
+        return $this->accessor->getValue($this->payload, $key);
     }
 
-    public function has(string $name): bool
+    public function has(string $key): bool
     {
-        return $this->accessor->isReadable($this->payload, $name);
+        return $this->accessor->isReadable($this->payload, $key);
     }
 
-    private function toIterable(mixed $payload): iterable
+    public function containsKey(string $key): bool
+    {
+        return $this->accessor->isReadable($this->payload, $key);
+    }
+
+    public static function fromPayload(mixed $payload): iterable
     {
         if ($payload instanceof \stdClass) {
-            $payload = (array) $payload;
+            $properties = (array) $payload;
+        } elseif (is_iterable($payload)) {
+            $properties = $payload;
+        } else {
+            $properties = [];
         }
 
-        if (!is_iterable($payload)) {
-            return [];
-        }
-
-        return $payload;
+        return new self($properties, $payload);
     }
 }

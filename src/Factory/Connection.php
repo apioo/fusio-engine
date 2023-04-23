@@ -22,8 +22,8 @@
 namespace Fusio\Engine\Factory;
 
 use Fusio\Engine\ConnectionInterface as EngineConnectionInterface;
-use PSX\Dependency\AutowireResolverInterface;
-use RuntimeException;
+use Fusio\Engine\Exception\ConnectionNotFoundException;
+use Psr\Container\ContainerInterface;
 
 /**
  * Connection
@@ -34,19 +34,19 @@ use RuntimeException;
  */
 class Connection implements ConnectionInterface
 {
-    private AutowireResolverInterface $autowireResolver;
+    private ContainerInterface $container;
 
-    public function __construct(AutowireResolverInterface $autowireResolver)
+    public function __construct(ContainerInterface $container)
     {
-        $this->autowireResolver = $autowireResolver;
+        $this->container = $container;
     }
 
     public function factory(string $className): EngineConnectionInterface
     {
-        $connection = $this->autowireResolver->getObject($className);
+        $connection = $this->container->get($className);
 
         if (!$connection instanceof EngineConnectionInterface) {
-            throw new RuntimeException('Connection ' . $className . ' must implement the Fusio\Engine\ConnectionInterface interface');
+            throw new ConnectionNotFoundException('The service ' . $className . ' is available but it must implement the interface: ' . EngineConnectionInterface::class);
         }
 
         return $connection;

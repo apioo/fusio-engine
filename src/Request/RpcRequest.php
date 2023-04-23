@@ -44,12 +44,12 @@ class RpcRequest implements RpcInterface
 
     public function get(string $name): mixed
     {
-        return $this->arguments->getProperty($name);
+        return $this->arguments->get($name);
     }
 
     public function getPayload(): mixed
     {
-        $body = $this->arguments->getProperty('payload');
+        $body = $this->arguments->get('payload');
         if ($body instanceof PassthruRecord) {
             return $body->getPayload();
         } else {
@@ -64,7 +64,7 @@ class RpcRequest implements RpcInterface
 
     public function getArgument(string $name): mixed
     {
-        return $this->arguments->getProperty($name);
+        return $this->arguments->get($name);
     }
 
     public function getArguments(): RecordInterface

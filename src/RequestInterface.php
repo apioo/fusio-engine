@@ -22,8 +22,8 @@
 namespace Fusio\Engine;
 
 /**
- * Represents an incoming request, this is either an HTTP or RPC request. This
- * object can be used to access all values from an incoming request
+ * Represents an incoming request, this is either an HTTP or RPC request. This object can be used to access all values
+ * from an incoming request
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
