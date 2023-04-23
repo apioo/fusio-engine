@@ -38,7 +38,7 @@ class PassthruRecordTest extends TestCase
     public function testGet()
     {
         $object = Record::fromArray(['foo' => 'bar']);
-        $record = new PassthruRecord($object);
+        $record = PassthruRecord::fromPayload($object);
 
         $this->assertEquals('bar', $record->getProperty('foo'));
         $this->assertEquals('bar', $record['foo']);
@@ -48,7 +48,7 @@ class PassthruRecordTest extends TestCase
     public function testGetNested()
     {
         $object = Record::fromArray(['foo' => (object) ['foo' => 'bar']]);
-        $record = new PassthruRecord($object);
+        $record = PassthruRecord::fromPayload($object);
 
         $this->assertEquals('bar', $record->get('foo.foo'));
         $this->assertInstanceOf(RecordInterface::class, $record->getPayload());
@@ -57,7 +57,7 @@ class PassthruRecordTest extends TestCase
     public function testGetArray()
     {
         $object = Record::fromArray(['foo' => ['foo', 'bar']]);
-        $record = new PassthruRecord($object);
+        $record = PassthruRecord::fromPayload($object);
 
         $this->assertEquals('bar', $record->get('foo[1]'));
         $this->assertInstanceOf(RecordInterface::class, $record->getPayload());

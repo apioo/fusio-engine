@@ -19,31 +19,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Fusio\Engine\Tests\Request;
-
-use Fusio\Engine\Request\HttpRequest;
-use Fusio\Engine\RequestInterface;
-use PHPUnit\Framework\TestCase;
-use PSX\Http\Environment\HttpContext;
-use PSX\Http\Request;
-use PSX\Record\Record;
-use PSX\Uri\Uri;
+namespace Fusio\Engine\Parser;
 
 /**
- * HttpRequestTest
+ * ActionInterface
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    https://www.fusio-project.org
  */
-class HttpRequestTest extends TestCase
+interface ActionInterface extends ParserInterface
 {
-    public function testRequest()
-    {
-        $context = new HttpContext(new Request(Uri::parse('/'), 'GET'), []);
-        $request = new HttpRequest($context, Record::fromArray(['foo' => 'bar']));
-
-        $this->assertInstanceOf(RequestInterface::class, $request);
-        $this->assertEquals('bar', $request->get('foo'));
-    }
 }

@@ -40,6 +40,7 @@ use PSX\Http\Request;
 use PSX\Record\Record;
 use PSX\Record\RecordInterface;
 use PSX\Uri\Uri;
+use Symfony\Component\DependencyInjection\Container;
 
 /**
  * EngineTestCaseTrait
@@ -150,6 +151,14 @@ trait EngineTestCaseTrait
 
     protected function newContainer(): ContainerInterface
     {
-        return (new EngineContainerFactory())->factory();
+        $configure = function (Container $container) {
+            $this->configure($container);
+        };
+
+        return (new EngineContainerFactory($configure))->factory();
+    }
+
+    protected function configure(Container $container): void
+    {
     }
 }

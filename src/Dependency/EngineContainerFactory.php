@@ -22,6 +22,9 @@
 namespace Fusio\Engine\Dependency;
 
 use Fusio\Engine\Factory\FactoryInterface;
+use Fusio\Engine\Test\CallbackAction;
+use Fusio\Engine\Test\CallbackConnection;
+use Fusio\Engine\Tests\Test\Impl\Connection;
 use Symfony\Component\DependencyInjection\Container;
 use Fusio\Engine\Action;
 use Fusio\Engine\Connector;
@@ -41,6 +44,7 @@ use Psr\Log\LoggerInterface;
 use Psr\SimpleCache\CacheInterface;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Cache\Psr16Cache;
+use Fusio\Engine\Tests\Test\Impl;
 
 /**
  * EngineContainerFactory
@@ -51,6 +55,13 @@ use Symfony\Component\Cache\Psr16Cache;
  */
 class EngineContainerFactory
 {
+    private \Closure $configure;
+
+    public function __construct(\Closure $configure)
+    {
+        $this->configure = $configure;
+    }
+
     public function factory(): Container
     {
         $container = new Container();
@@ -67,6 +78,9 @@ class EngineContainerFactory
         $userRepository = new Repository\UserMemory();
         $container->set(Repository\UserInterface::class, $userRepository);
 
+        $elementFactory = new Form\ElementFactory($actionRepository, $connectionRepository);
+        $container->set(Form\ElementFactoryInterface::class, $elementFactory);
+
         $actionFactory = new Factory\Action($container);
         $actionFactory->addResolver(new Factory\Resolver\PhpClass($container));
         $container->set(Factory\ActionInterface::class, $actionFactory);
@@ -74,8 +88,11 @@ class EngineContainerFactory
         $connectionFactory = new Factory\Connection($container);
         $container->set(Factory\ConnectionInterface::class, $connectionFactory);
 
-        $elementFactory = new Form\ElementFactory($actionRepository, $connectionRepository);
-        $container->set(Form\ElementFactoryInterface::class, $elementFactory);
+        $actionParser = new Parser\Memory($actionFactory, $elementFactory, []);
+        $container->set(Parser\ActionInterface::class, $actionParser);
+
+        $connectionParser = new Parser\Memory($connectionFactory, $elementFactory, []);
+        $container->set(Parser\ConnectionInterface::class, $connectionParser);
 
         $queue = new Action\MemoryQueue();
         $container->set(Action\QueueInterface::class, $queue);
@@ -98,6 +115,13 @@ class EngineContainerFactory
 
         $cache = new Psr16Cache(new ArrayAdapter());
         $container->set(CacheInterface::class, $cache);
+
+        $container->set(CallbackConnection::class, new CallbackConnection());
+        $container->set(CallbackAction::class, new CallbackAction($connector, $responseFactory, $processor, $dispatcher, $logger, $cache));
+        $container->set(Impl\Connection::class, new Impl\Connection());
+        $container->set(Impl\Action::class, new Impl\Action($connector, $responseFactory, $processor, $dispatcher, $logger, $cache));
+
+        call_user_func_array($this->configure, [$container]);
 
         return $container;
     }

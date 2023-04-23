@@ -145,17 +145,17 @@ JSON;
     public function testContainer()
     {
         $this->assertInstanceOf(ContainerInterface::class, $this->getContainer());
-        $this->assertInstanceOf(Parser\ParserInterface::class, $this->getContainer()->get('action_parser'));
-        $this->assertInstanceOf(Factory\ActionInterface::class, $this->getContainer()->get('action_factory'));
-        $this->assertInstanceOf(Repository\ActionInterface::class, $this->getContainer()->get('action_repository'));
-        $this->assertInstanceOf(ProcessorInterface::class, $this->getContainer()->get('processor'));
-        $this->assertInstanceOf(Parser\ParserInterface::class, $this->getContainer()->get('connection_parser'));
-        $this->assertInstanceOf(Factory\ConnectionInterface::class, $this->getContainer()->get('connection_factory'));
-        $this->assertInstanceOf(Repository\ConnectionInterface::class, $this->getContainer()->get('connection_repository'));
-        $this->assertInstanceOf(ConnectorInterface::class, $this->getContainer()->get('connector'));
-        $this->assertInstanceOf(Repository\AppInterface::class, $this->getContainer()->get('app_repository'));
-        $this->assertInstanceOf(Repository\UserInterface::class, $this->getContainer()->get('user_repository'));
-        $this->assertInstanceOf(Form\ElementFactoryInterface::class, $this->getContainer()->get('form_element_factory'));
-        $this->assertInstanceOf(FactoryInterface::class, $this->getContainer()->get('response'));
+        $this->assertInstanceOf(Parser\ParserInterface::class, $this->getContainer()->get(Parser\ActionInterface::class));
+        $this->assertInstanceOf(Factory\ActionInterface::class, $this->getContainer()->get(Factory\ActionInterface::class));
+        $this->assertInstanceOf(Repository\ActionInterface::class, $this->getContainer()->get(Repository\ActionInterface::class));
+        $this->assertInstanceOf(ProcessorInterface::class, $this->getContainer()->get(ProcessorInterface::class));
+        $this->assertInstanceOf(Parser\ParserInterface::class, $this->getContainer()->get(Parser\ConnectionInterface::class));
+        $this->assertInstanceOf(Factory\ConnectionInterface::class, $this->getContainer()->get(Factory\ConnectionInterface::class));
+        $this->assertInstanceOf(Repository\ConnectionInterface::class, $this->getContainer()->get(Repository\ConnectionInterface::class));
+        $this->assertInstanceOf(ConnectorInterface::class, $this->getContainer()->get(ConnectorInterface::class));
+        $this->assertInstanceOf(Repository\AppInterface::class, $this->getContainer()->get(Repository\AppInterface::class));
+        $this->assertInstanceOf(Repository\UserInterface::class, $this->getContainer()->get(Repository\UserInterface::class));
+        $this->assertInstanceOf(Form\ElementFactoryInterface::class, $this->getContainer()->get(Form\ElementFactoryInterface::class));
+        $this->assertInstanceOf(FactoryInterface::class, $this->getContainer()->get(FactoryInterface::class));
     }
 }
