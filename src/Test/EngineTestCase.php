@@ -21,7 +21,10 @@
 
 namespace Fusio\Engine\Test;
 
+use Fusio\Engine\Action\Runtime;
+use Fusio\Engine\Tests\Test\Impl;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\DependencyInjection\Container;
 
 /**
  * EngineTestCase

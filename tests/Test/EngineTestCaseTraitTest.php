@@ -21,6 +21,7 @@
 
 namespace Fusio\Engine\Tests\Test;
 
+use Fusio\Engine\Action\Runtime;
 use Fusio\Engine\ActionInterface;
 use Fusio\Engine\ConnectionInterface;
 use Fusio\Engine\ConnectorInterface;
@@ -38,6 +39,7 @@ use Fusio\Engine\Schema;
 use Fusio\Engine\Test\EngineTestCase;
 use Psr\Container\ContainerInterface;
 use PSX\Http\Environment\HttpResponseInterface;
+use Symfony\Component\DependencyInjection\Container;
 
 /**
  * EngineTestCaseTraitTest
@@ -48,6 +50,12 @@ use PSX\Http\Environment\HttpResponseInterface;
  */
 class EngineTestCaseTraitTest extends EngineTestCase
 {
+    protected function configure(Runtime $runtime, Container $container): void
+    {
+        $container->set(Impl\Connection::class, new Impl\Connection());
+        $container->set(Impl\Action::class, new Impl\Action($runtime));
+    }
+
     public function testGetRequest()
     {
         $this->assertInstanceOf(RequestInterface::class, $this->getRequest());
