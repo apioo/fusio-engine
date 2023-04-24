@@ -21,11 +21,6 @@
 
 namespace Fusio\Engine\Dependency;
 
-use Fusio\Engine\Factory\FactoryInterface;
-use Fusio\Engine\Test\CallbackAction;
-use Fusio\Engine\Test\CallbackConnection;
-use Fusio\Engine\Tests\Test\Impl\Connection;
-use Symfony\Component\DependencyInjection\Container;
 use Fusio\Engine\Action;
 use Fusio\Engine\Connector;
 use Fusio\Engine\ConnectorInterface;
@@ -38,13 +33,15 @@ use Fusio\Engine\Processor;
 use Fusio\Engine\ProcessorInterface;
 use Fusio\Engine\Repository;
 use Fusio\Engine\Response;
+use Fusio\Engine\Test\CallbackAction;
+use Fusio\Engine\Test\CallbackConnection;
 use Monolog\Handler\NullHandler;
 use Monolog\Logger;
 use Psr\Log\LoggerInterface;
 use Psr\SimpleCache\CacheInterface;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Cache\Psr16Cache;
-use Fusio\Engine\Tests\Test\Impl;
+use Symfony\Component\DependencyInjection\Container;
 
 /**
  * EngineContainerFactory
@@ -121,8 +118,6 @@ class EngineContainerFactory
 
         $container->set(CallbackConnection::class, new CallbackConnection());
         $container->set(CallbackAction::class, new CallbackAction($actionRuntime));
-        $container->set(Impl\Connection::class, new Impl\Connection());
-        $container->set(Impl\Action::class, new Impl\Action($actionRuntime));
 
         call_user_func_array($this->configure, [$actionRuntime, $container]);
 
