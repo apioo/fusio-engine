@@ -31,7 +31,7 @@ namespace Fusio\Engine;
 interface AdapterInterface
 {
     /**
-     * Returns the absolute file path of the definition.json file
+     * Registers all services for this provider
      */
-    public function getDefinition(): string;
+    public function getContainerFile(): string;
 }

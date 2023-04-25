@@ -33,6 +33,10 @@ use Fusio\Engine\User;
 use PHPUnit\Framework\TestCase;
 use PSX\Schema\SchemaManager;
 use PSX\Schema\SchemaTraverser;
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 
 /**
  * AdapterTestCase
@@ -56,122 +60,15 @@ abstract class AdapterTestCase extends TestCase
 
         $this->assertInstanceOf(AdapterInterface::class, $adapter);
 
-        $path = $adapter->getDefinition();
-        if (!is_file($path)) {
-            $this->fail('Adapter definition file ' . $path . ' does not exist');
-        }
+        $containerFile = $adapter->getContainerFile();
 
-        $data = json_decode(file_get_contents($path));
-
-        $this->assertInstanceOf(\stdClass::class, $data);
-
-        $this->validateSchema($data);
-        $this->validateClassTypes($data);
-    }
-
-    private function validateSchema(\stdClass $data): void
-    {
-        $manager = new SchemaManager();
-        $schema  = $manager->getSchema(__DIR__ . '/definition_schema.json');
-
-        $traverser = new SchemaTraverser();
-        $traverser->traverse($data, $schema);
-    }
-
-    private function validateClassTypes(\stdClass $data): void
-    {
-        $types = ['action', 'connection', 'user', 'payment', 'generator'];
-
-        foreach ($types as $type) {
-            $key = $type . 'Class';
-            if (isset($data->{$key})) {
-                foreach ($data->{$key} as $class) {
-                    if (!class_exists($class)) {
-                        $this->fail('Defined ' . $key . ' class ' . $class . ' does not exist');
-                    }
-
-                    $this->validateClassType($type, $class);
-                }
-            }
-        }
+        $containerBuilder = new ContainerBuilder();
+        $loader = new PhpFileLoader($containerBuilder, new FileLocator(__DIR__));
+        $loader->load($containerFile);
     }
 
     /**
      * Returns the adapter class name
      */
     abstract protected function getAdapterClass(): string;
-
-    private function validateClassType(string $type, string $class): void
-    {
-        switch ($type) {
-            case 'action':
-                $action = $this->getActionFactory()->factory($class);
-                $this->validateAction($action);
-                break;
-            case 'connection':
-                $connection = $this->getConnectionFactory()->factory($class);
-                $this->validateConnection($connection);
-                break;
-            case 'user':
-                $provider = $this->getContainer()->get($class);
-                if (!$provider instanceof User\ProviderInterface) {
-                    $this->fail('Defined user ' . $class . ' must be an instance of ' . User\ProviderInterface::class);
-                }
-
-                $this->validateUser($provider);
-                break;
-            case 'payment':
-                $provider = $this->getContainer()->get($class);
-                if (!$provider instanceof Payment\ProviderInterface) {
-                    $this->fail('Defined payment ' . $class . ' must be an instance of ' . Payment\ProviderInterface::class);
-                }
-
-                $this->validatePayment($provider);
-                break;
-            case 'generator':
-                $provider = $this->getContainer()->get($class);
-                if (!$provider instanceof Generator\ProviderInterface) {
-                    $this->fail('Defined routes ' . $class . ' must be an instance of ' . Generator\ProviderInterface::class);
-                }
-
-                $this->validateGenerator($provider);
-                break;
-        }
-    }
-
-    private function validateAction(ActionInterface $action): void
-    {
-        $this->assertNotEmpty($action->getName());
-        $this->validateConfigurable($action);
-    }
-
-    private function validateConnection(ConnectionInterface $connection): void
-    {
-        $this->assertNotEmpty($connection->getName());
-        $this->validateConfigurable($connection);
-    }
-
-    private function validateConfigurable(ConfigurableInterface $object): void
-    {
-        $builder = new Builder();
-        $factory = $this->getFormElementFactory();
-
-        $object->configure($builder, $factory);
-
-        $this->assertInstanceOf(Container::class, $builder->getForm());
-    }
-
-    private function validateUser(User\ProviderInterface $provider): void
-    {
-        $this->assertNotEmpty($provider->getId());
-    }
-
-    private function validatePayment(Payment\ProviderInterface $provider): void
-    {
-    }
-
-    private function validateGenerator(Generator\ProviderInterface $provider): void
-    {
-        $this->assertNotEmpty($provider->getName());
-    }
 }
