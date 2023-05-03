@@ -19,27 +19,48 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Fusio\Engine\Request;
+namespace Fusio\Engine;
 
-use Fusio\Engine\RequestInterface;
+use Fusio\Engine\Record\PassthruRecord;
+use Fusio\Engine\Request\RequestContextInterface;
 use PSX\Record\RecordInterface;
 
 /**
- * RpcInterface
+ * Request
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    https://www.fusio-project.org
  */
-interface RpcInterface extends RequestInterface
+class Request implements RequestInterface
 {
-    /**
-     * Returns an argument of the RPC invocation, this is either a named or indexed based key
-     */
-    public function getArgument(string $name): mixed;
+    private RecordInterface $arguments;
+    private ?RecordInterface $payload;
+    private RequestContextInterface $context;
 
-    /**
-     * Returns all available query parameters
-     */
-    public function getArguments(): RecordInterface;
+    public function __construct(RecordInterface $arguments, ?RecordInterface $payload, RequestContextInterface $context)
+    {
+        $this->arguments = $arguments;
+        $this->payload = $payload;
+        $this->context = $context;
+    }
+
+    public function get(string $name): mixed
+    {
+        return $this->arguments->get($name);
+    }
+
+    public function getPayload(): mixed
+    {
+        if ($this->payload instanceof PassthruRecord) {
+            return $this->payload->getPayload();
+        } else {
+            return $this->payload;
+        }
+    }
+
+    public function getContext(): RequestContextInterface
+    {
+        return $this->context;
+    }
 }

@@ -21,9 +21,7 @@
 
 namespace Fusio\Engine\Request;
 
-use Fusio\Engine\Record\PassthruRecord;
 use PSX\Http\Environment\HttpContextInterface;
-use PSX\Record\RecordInterface;
 
 /**
  * Request
@@ -32,30 +30,13 @@ use PSX\Record\RecordInterface;
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    https://www.fusio-project.org
  */
-class HttpRequest implements HttpInterface
+class HttpRequest implements RequestContextInterface
 {
     private HttpContextInterface $context;
-    private RecordInterface $body;
 
-    public function __construct(HttpContextInterface $context, RecordInterface $body)
+    public function __construct(HttpContextInterface $context)
     {
         $this->context = $context;
-        $this->body    = $body;
-    }
-
-    public function get(string $name): mixed
-    {
-        return $this->getUriFragment($name) ?? ($this->getParameter($name) ?? $this->getBody()->get($name));
-    }
-
-    public function getPayload(): mixed
-    {
-        $body = $this->getBody();
-        if ($body instanceof PassthruRecord) {
-            return $body->getPayload();
-        } else {
-            return $body;
-        }
     }
 
     public function getMethod(): string
@@ -91,18 +72,5 @@ class HttpRequest implements HttpInterface
     public function getParameters(): array
     {
         return $this->context->getParameters();
-    }
-
-    public function getBody(): RecordInterface
-    {
-        return $this->body;
-    }
-
-    public function withBody(RecordInterface $body): self
-    {
-        $self = clone $this;
-        $self->body = $body;
-
-        return $self;
     }
 }
