@@ -22,6 +22,7 @@
 namespace Fusio\Engine;
 
 use Fusio\Engine\Request\RequestContextInterface;
+use PSX\Record\RecordInterface;
 
 /**
  * Represents an incoming request, this is i.e. an HTTP or RPC request. This object can be used to access all values
@@ -38,6 +39,11 @@ interface RequestInterface
      * only this method. Otherwise you can get also values from the specific request instance
      */
     public function get(string $name): mixed;
+
+    /**
+     * Returns all arguments
+     */
+    public function getArguments(): RecordInterface;
 
     /**
      * Returns the complete request payload
