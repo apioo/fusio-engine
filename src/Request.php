@@ -45,6 +45,11 @@ class Request implements RequestInterface
         $this->context = $context;
     }
 
+    public function getArguments(): RecordInterface
+    {
+        return $this->arguments;
+    }
+
     public function get(string $name): mixed
     {
         return $this->arguments->get($name);
@@ -57,6 +62,11 @@ class Request implements RequestInterface
         } else {
             return $this->payload;
         }
+    }
+
+    public function withPayload(RecordInterface $payload): self
+    {
+        return new self($this->arguments, $payload, $this->context);
     }
 
     public function getContext(): RequestContextInterface
