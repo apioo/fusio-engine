@@ -32,6 +32,7 @@ use Fusio\Engine\Model\App;
 use Fusio\Engine\Model\User;
 use Fusio\Engine\Parameters;
 use Fusio\Engine\Repository;
+use Fusio\Engine\Request as EngineRequest;
 use Fusio\Engine\Request\HttpInterface;
 use Fusio\Engine\Request\HttpRequest;
 use Psr\Container\ContainerInterface;
@@ -62,7 +63,7 @@ trait EngineTestCaseTrait
         self::$container = null;
     }
 
-    protected function getRequest(?string $method = null, array $uriFragments = [], array $parameters = [], array $headers = [], ?RecordInterface $parsedBody = null, ?StreamInterface $rawBody = null): HttpInterface
+    protected function getRequest(?string $method = null, array $uriFragments = [], array $parameters = [], array $headers = [], ?RecordInterface $parsedBody = null, ?StreamInterface $rawBody = null): \Fusio\Engine\Request
     {
         $uri = Uri::parse('http://127.0.0.1/foo');
         $uri = $uri->withParameters($parameters);
@@ -70,9 +71,10 @@ trait EngineTestCaseTrait
         $request = new Request($uri, $method === null ? 'GET' : $method, $headers, $rawBody);
         $context = new HttpContext($request, $uriFragments);
 
-        return new HttpRequest(
-            $context,
-            $parsedBody === null ? new Record() : $parsedBody
+        return new EngineRequest(
+            Record::fromArray(array_merge($uriFragments, $parameters)),
+            $parsedBody === null ? new Record() : $parsedBody,
+            new HttpRequest($context)
         );
     }
 

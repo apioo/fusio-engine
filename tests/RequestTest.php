@@ -19,27 +19,33 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Fusio\Engine\Tests\Request;
+namespace Fusio\Engine\Tests;
 
-use Fusio\Engine\Request\RpcRequest;
+use Fusio\Engine\Request as EngineRequest;
+use Fusio\Engine\Request\HttpRequest;
 use Fusio\Engine\RequestInterface;
 use PHPUnit\Framework\TestCase;
+use PSX\Http\Environment\HttpContext;
+use PSX\Http\Request;
 use PSX\Record\Record;
+use PSX\Uri\Uri;
 
 /**
- * RpcRequestTest
+ * RequestTest
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    https://www.fusio-project.org
  */
-class RpcRequestTest extends TestCase
+class RequestTest extends TestCase
 {
     public function testRequest()
     {
-        $request = new RpcRequest('myAction', Record::fromArray(['foo' => 'bar']));
+        $context = new HttpRequest(new HttpContext(new Request(Uri::parse('/'), 'GET'), []));
+        $request = new EngineRequest(Record::fromArray(['foo' => 'bar']), Record::fromArray(['foo' => 'bar']), $context);
 
         $this->assertInstanceOf(RequestInterface::class, $request);
         $this->assertEquals('bar', $request->get('foo'));
+        $this->assertEquals('bar', $request->getPayload()->get('foo'));
     }
 }
