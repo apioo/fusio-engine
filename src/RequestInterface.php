@@ -43,7 +43,7 @@ interface RequestInterface
     /**
      * Returns all arguments
      */
-    public function getArguments(): RecordInterface;
+    public function getArguments(): array;
 
     /**
      * Returns the complete request payload

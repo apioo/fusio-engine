@@ -21,9 +21,7 @@
 
 namespace Fusio\Engine;
 
-use Fusio\Engine\Record\PassthruRecord;
 use Fusio\Engine\Request\RequestContextInterface;
-use PSX\Record\RecordInterface;
 
 /**
  * Request
@@ -34,11 +32,11 @@ use PSX\Record\RecordInterface;
  */
 class Request implements RequestInterface
 {
-    private RecordInterface $arguments;
-    private ?RecordInterface $payload;
+    private array $arguments;
+    private mixed $payload;
     private RequestContextInterface $context;
 
-    public function __construct(RecordInterface $arguments, ?RecordInterface $payload, RequestContextInterface $context)
+    public function __construct(array $arguments, mixed $payload, RequestContextInterface $context)
     {
         $this->arguments = $arguments;
         $this->payload = $payload;
@@ -47,29 +45,25 @@ class Request implements RequestInterface
 
     public function get(string $name): mixed
     {
-        return $this->arguments->get($name);
+        return $this->arguments[$name] ?? null;
     }
 
-    public function getArguments(): RecordInterface
+    public function getArguments(): array
     {
         return $this->arguments;
     }
 
-    public function withArguments(RecordInterface $arguments): self
+    public function withArguments(array $arguments): self
     {
         return new self($arguments, $this->payload, $this->context);
     }
 
     public function getPayload(): mixed
     {
-        if ($this->payload instanceof PassthruRecord) {
-            return $this->payload->getPayload();
-        } else {
-            return $this->payload;
-        }
+        return $this->payload;
     }
 
-    public function withPayload(?RecordInterface $payload): self
+    public function withPayload(mixed $payload): self
     {
         return new self($this->arguments, $payload, $this->context);
     }
