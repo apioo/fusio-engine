@@ -72,7 +72,7 @@ trait EngineTestCaseTrait
         $context = new HttpContext($request, $uriFragments);
 
         return new EngineRequest(
-            Record::fromArray(array_merge($uriFragments, $parameters)),
+            array_merge($uriFragments, $parameters),
             $parsedBody === null ? new Record() : $parsedBody,
             new HttpRequest($context)
         );
