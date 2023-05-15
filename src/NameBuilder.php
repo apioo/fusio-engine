@@ -22,17 +22,24 @@
 namespace Fusio\Engine;
 
 /**
- * ConnectionInterface
+ * NameBuilder
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    https://www.fusio-project.org
  */
-interface ConnectionInterface
+class NameBuilder
 {
     /**
-     * Returns an arbitrary connection to a system. This can be i.e. a mysql or mongodb connection. The connection can
-     * then be used by an action to fulfill the task. The $config contains parameters which were set by the user
+     * Generates a name based on a provided class. This is used as fallback for action or connections where we generate
+     * the name based on the class
      */
-    public function getConnection(ParametersInterface $config): mixed;
+    public static function fromClass(string $class): string
+    {
+        $pos  = strrpos($class, '\\');
+        $last = $pos !== false ? substr($class, $pos + 1) : $class;
+        $name = preg_replace(array('/([A-Z]+)([A-Z][a-z])/', '/([a-z\d])([A-Z])/'), array('\\1-\\2', '\\1-\\2'), strtr($last, '_', '.'));
+
+        return $name;
+    }
 }

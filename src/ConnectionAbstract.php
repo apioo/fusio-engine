@@ -19,17 +19,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Fusio\Engine\Push;
+namespace Fusio\Engine;
+
+use Fusio\Engine\Form\BuilderInterface;
+use Fusio\Engine\Form\ElementFactoryInterface;
 
 /**
- * The push interface provides a way to send a local Fusio instance to a remote provider. I.e. a provider could parse
- * the configured actions and install them as a serverless function at AWS
+ * ConnectionAbstract
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    https://www.fusio-project.org
  */
-interface ProviderInterface
+abstract class ConnectionAbstract implements ConnectionInterface, ConfigurableInterface
 {
-    public function push(string $basePath): \Generator;
+    public function getName(): string
+    {
+        return NameBuilder::fromClass(static::class);
+    }
+
+    public function configure(BuilderInterface $builder, ElementFactoryInterface $elementFactory): void
+    {
+    }
 }

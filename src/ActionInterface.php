@@ -28,7 +28,7 @@ namespace Fusio\Engine;
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    https://www.fusio-project.org
  */
-interface ActionInterface extends ConfigurableInterface
+interface ActionInterface
 {
     /**
      * Executes a specific action and returns a response. This could be i.e. a select which returns the result as array

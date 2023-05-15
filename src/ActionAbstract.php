@@ -35,7 +35,7 @@ use Psr\SimpleCache\CacheInterface;
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    https://www.fusio-project.org
  */
-abstract class ActionAbstract implements ActionInterface
+abstract class ActionAbstract implements ActionInterface, ConfigurableInterface
 {
     protected ConnectorInterface $connector;
     protected FactoryInterface $response;
@@ -56,12 +56,7 @@ abstract class ActionAbstract implements ActionInterface
 
     public function getName(): string
     {
-        $className = get_class($this);
-        $pos       = strrpos($className, '\\');
-        $lastPart  = $pos !== false ? substr($className, $pos + 1) : $className;
-        $name      = preg_replace(array('/([A-Z]+)([A-Z][a-z])/', '/([a-z\d])([A-Z])/'), array('\\1-\\2', '\\1-\\2'), strtr($lastPart, '_', '.'));
-
-        return $name;
+        return NameBuilder::fromClass(static::class);
     }
 
     public function configure(BuilderInterface $builder, ElementFactoryInterface $elementFactory): void
