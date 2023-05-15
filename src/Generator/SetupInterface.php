@@ -21,6 +21,10 @@
 
 namespace Fusio\Engine\Generator;
 
+use Fusio\Model\Backend\Action;
+use Fusio\Model\Backend\Operation;
+use Fusio\Model\Backend\Schema;
+
 /**
  * SetupInterface
  *
@@ -33,15 +37,15 @@ interface SetupInterface
     /**
      * Adds a new schema
      */
-    public function addSchema(string $name, array $source): int;
+    public function addSchema(Schema $schema): int;
 
     /**
      * Adds a new action
      */
-    public function addAction(string $name, string $class, string $engine, array $config): int;
+    public function addAction(Action $action): int;
 
     /**
      * Adds a new route
      */
-    public function addRoute(int $priority, string $path, string $controller, array $scopes, array $config): int;
+    public function addOperation(Operation $operation): int;
 }
