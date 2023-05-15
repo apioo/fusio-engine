@@ -47,11 +47,13 @@ class ServiceBuilder
 
         $services
             ->instanceof(ConnectionInterface::class)
-            ->tag('fusio.connection');
+            ->tag('fusio.connection')
+            ->public();
 
         $services
             ->instanceof(ActionInterface::class)
-            ->tag('fusio.action');
+            ->tag('fusio.action')
+            ->public();
 
         $services
             ->instanceof(UserProviderInterface::class)
