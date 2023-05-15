@@ -22,6 +22,11 @@
 namespace Fusio\Engine\Tests\Generator;
 
 use Fusio\Engine\Generator\Setup;
+use Fusio\Model\Backend\Action;
+use Fusio\Model\Backend\ActionConfig;
+use Fusio\Model\Backend\Operation;
+use Fusio\Model\Backend\Schema;
+use Fusio\Model\Backend\SchemaSource;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -37,9 +42,12 @@ class SetupTest extends TestCase
     {
         $setup = new Setup();
 
-        $return = $setup->addAction('foo_action', \stdClass::class, \stdClass::class, [
-            'table' => 'foobar'
-        ]);
+        $action = new Action();
+        $action->setName('foo_action');
+        $action->setClass(\stdClass::class);
+        $action->setEngine(\stdClass::class);
+        $action->setConfig(ActionConfig::fromArray(['table' => 'foobar']));
+        $setup->addAction($action);
 
         $expect = <<<JSON
 {
@@ -52,24 +60,18 @@ class SetupTest extends TestCase
 }
 JSON;
 
-        $this->assertSame(0, $return);
         $this->assertSame(1, count($setup->getActions()));
         $this->assertJsonStringEqualsJsonString($expect, json_encode($setup->getActions()[0]));
-
-        $return = $setup->addAction('foo_action', \stdClass::class, \stdClass::class, [
-            'table' => 'foobar'
-        ]);
-
-        $this->assertSame(1, $return);
     }
 
     public function testAddSchema()
     {
         $setup = new Setup();
 
-        $return = $setup->addSchema('foo_schema', [
-            'type' => 'object'
-        ]);
+        $schema = new Schema();
+        $schema->setName('foo_schema');
+        $schema->setSource(SchemaSource::fromArray(['type' => 'object']));
+        $setup->addSchema($schema);
 
         $expect = <<<JSON
 {
@@ -80,87 +82,47 @@ JSON;
 }
 JSON;
 
-        $this->assertSame(0, $return);
         $this->assertSame(1, count($setup->getSchemas()));
         $this->assertJsonStringEqualsJsonString($expect, json_encode($setup->getSchemas()[0]));
-
-        $return = $setup->addSchema('foo_schema', [
-            'type' => 'object'
-        ]);
-
-        $this->assertSame(1, $return);
     }
 
     public function testAddRoute()
     {
         $setup = new Setup();
 
-        $schema = $setup->addSchema('foo_schema', [
-            'type' => 'object'
-        ]);
+        $schema = new Schema();
+        $schema->setName('foo_schema');
+        $schema->setSource(SchemaSource::fromArray(['type' => 'object']));
+        $setup->addSchema($schema);
 
-        $action = $setup->addAction('foo_action', \stdClass::class, \stdClass::class, [
-            'table' => 'foobar'
-        ]);
+        $action = new Action();
+        $action->setName('foo_action');
+        $action->setClass(\stdClass::class);
+        $action->setEngine(\stdClass::class);
+        $action->setConfig(ActionConfig::fromArray(['table' => 'foobar']));
+        $setup->addAction($action);
 
-        $return = $setup->addRoute(1, '/foo', \stdClass::class, ['foo', 'bar'], [
-            [
-                'version' => 1,
-                'methods' => [
-                    'POST' => [
-                        'active' => true,
-                        'public' => false,
-                        'description' => 'Creates a new entity',
-                        'parameters' => $schema,
-                        'request' => $schema,
-                        'responses' => [
-                            201 => $schema,
-                        ],
-                        'action' => $action,
-                    ]
-                ],
-            ]
-        ]);
+        $operation = new Operation();
+        $operation->setName('my_operation');
+        $operation->setHttpMethod('POST');
+        $operation->setHttpPath('/foo');
+        $operation->setAction($action->getName());
+        $operation->setIncoming($schema->getName());
+        $operation->setOutgoing($schema->getName());
+        $setup->addOperation($operation);
 
         $expect = <<<JSON
 {
-  "priority": 1,
-  "path": "\/foo",
-  "controller": "stdClass",
-  "scopes": [
-    "foo",
-    "bar"
-  ],
-  "config": [
-    {
-      "version": 1,
-      "methods": {
-        "POST": {
-          "active": true,
-          "public": false,
-          "description": "Creates a new entity",
-          "parameters": "0",
-          "request": "0",
-          "responses": {
-            "201": "0"
-          },
-          "action": "0"
-        }
-      }
-    }
-  ]
+  "httpMethod": "POST",
+  "httpPath": "\/foo",
+  "name": "my_operation",
+  "incoming": "foo_schema",
+  "outgoing": "foo_schema",
+  "action": "foo_action"
 }
 JSON;
 
-        $this->assertSame(0, $return);
-        $this->assertSame(1, count($setup->getRoutes()));
-        $this->assertJsonStringEqualsJsonString($expect, json_encode($setup->getRoutes()[0]));
-
-        $return = $setup->addRoute(1, '/foo', \stdClass::class, ['foo', 'bar'], [
-            'version' => 1,
-            'methods' => [],
-        ]);
-
-        $this->assertSame(1, $return);
+        $this->assertSame(1, count($setup->getOperations()));
+        $this->assertJsonStringEqualsJsonString($expect, json_encode($setup->getOperations()[0]));
     }
 }

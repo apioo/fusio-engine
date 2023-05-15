@@ -37,15 +37,15 @@ interface SetupInterface
     /**
      * Adds a new schema
      */
-    public function addSchema(Schema $schema): int;
+    public function addSchema(Schema $schema): void;
 
     /**
      * Adds a new action
      */
-    public function addAction(Action $action): int;
+    public function addAction(Action $action): void;
 
     /**
      * Adds a new route
      */
-    public function addOperation(Operation $operation): int;
+    public function addOperation(Operation $operation): void;
 }

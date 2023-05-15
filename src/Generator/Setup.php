@@ -49,32 +49,19 @@ class Setup implements SetupInterface
      */
     private array $operations = [];
 
-    private int $schemaIndex = -1;
-    private int $actionIndex = -1;
-    private int $operationIndex = -1;
-
-    public function addSchema(Schema $schema): int
+    public function addSchema(Schema $schema): void
     {
-        $this->schemaIndex++;
-        $this->schemas[$this->schemaIndex] = $schema;
-
-        return $this->schemaIndex;
+        $this->schemas[] = $schema;
     }
 
-    public function addAction(Action $action): int
+    public function addAction(Action $action): void
     {
-        $this->actionIndex++;
-        $this->actions[$this->actionIndex] = $action;
-
-        return $this->actionIndex;
+        $this->actions[] = $action;
     }
 
-    public function addOperation(Operation $operation): int
+    public function addOperation(Operation $operation): void
     {
-        $this->operationIndex++;
-        $this->operations[$this->operationIndex] = $operation;
-
-        return $this->operationIndex;
+        $this->operations[] = $operation;
     }
 
     /**
