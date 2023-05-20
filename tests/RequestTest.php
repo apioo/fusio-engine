@@ -22,7 +22,7 @@
 namespace Fusio\Engine\Tests;
 
 use Fusio\Engine\Request as EngineRequest;
-use Fusio\Engine\Request\HttpRequest;
+use Fusio\Engine\Request\HttpRequestContext;
 use Fusio\Engine\RequestInterface;
 use PHPUnit\Framework\TestCase;
 use PSX\Http\Request;
@@ -40,7 +40,7 @@ class RequestTest extends TestCase
 {
     public function testRequest()
     {
-        $context = new HttpRequest(new Request(Uri::parse('/'), 'GET'), []);
+        $context = new HttpRequestContext(new Request(Uri::parse('/'), 'GET'), []);
         $request = new EngineRequest(['foo' => 'bar'], Record::fromArray(['foo' => 'bar']), $context);
 
         $this->assertInstanceOf(RequestInterface::class, $request);

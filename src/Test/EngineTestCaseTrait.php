@@ -34,7 +34,7 @@ use Fusio\Engine\Parameters;
 use Fusio\Engine\Repository;
 use Fusio\Engine\Request as EngineRequest;
 use Fusio\Engine\Request\HttpInterface;
-use Fusio\Engine\Request\HttpRequest;
+use Fusio\Engine\Request\HttpRequestContext;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\StreamInterface;
 use PSX\Http\Request;
@@ -72,7 +72,7 @@ trait EngineTestCaseTrait
         return new EngineRequest(
             array_merge($uriFragments, $parameters),
             $parsedBody === null ? new Record() : $parsedBody,
-            new HttpRequest($request, $uriFragments)
+            new HttpRequestContext($request, $uriFragments)
         );
     }
 

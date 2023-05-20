@@ -21,7 +21,6 @@
 
 namespace Fusio\Engine\Request;
 
-use Psr\Http\Message\StreamInterface;
 use PSX\Http\RequestInterface;
 
 /**
@@ -31,7 +30,7 @@ use PSX\Http\RequestInterface;
  * @license http://www.gnu.org/licenses/agpl-3.0
  * @link    https://www.fusio-project.org
  */
-class HttpRequest implements RequestContextInterface
+class HttpRequestContext implements RequestContextInterface
 {
     private RequestInterface $request;
     private array $parameters;
@@ -42,43 +41,13 @@ class HttpRequest implements RequestContextInterface
         $this->parameters = $parameters;
     }
 
-    public function getMethod(): string
+    public function getRequest(): RequestInterface
     {
-        return $this->request->getMethod();
-    }
-
-    public function getHeader(string $name): ?string
-    {
-        return $this->request->getHeader($name);
-    }
-
-    public function getHeaders(): array
-    {
-        return $this->request->getHeaders();
-    }
-
-    public function getUriFragment(string $name): ?string
-    {
-        return $this->parameters[$name] ?? null;
-    }
-
-    public function getUriFragments(): array
-    {
-        return $this->parameters;
-    }
-
-    public function getParameter(string $name): string|array|null
-    {
-        return $this->request->getUri()->getParameter($name);
+        return $this->request;
     }
 
     public function getParameters(): array
     {
-        return $this->request->getUri()->getParameters();
-    }
-
-    public function getBody(): StreamInterface
-    {
-        return $this->request->getBody();
+        return $this->parameters;
     }
 }

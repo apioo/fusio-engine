@@ -50,8 +50,8 @@ interface RequestInterface
     public function getPayload(): mixed;
 
     /**
-     * Returns context information about the request. In general the request gets invoked by an HTTP request but it is
-     * recommended to not rely on those context information in your action
+     * Returns context information about the context of the request. In general the request gets invoked by an HTTP
+     * request but it is recommended to not rely on those context information in your action
      */
     public function getContext(): RequestContextInterface;
 }
