@@ -22,7 +22,6 @@
 namespace Fusio\Engine;
 
 use Fusio\Engine\Request\RequestContextInterface;
-use PSX\Record\RecordInterface;
 
 /**
  * Represents an incoming request, this is i.e. an HTTP or RPC request. This object can be used to access all values
@@ -51,8 +50,8 @@ interface RequestInterface
     public function getPayload(): mixed;
 
     /**
-     * Returns context information about the request. In general it is recommended to not rely on those context
-     * information since the can change depending on the request source
+     * Returns context information about the request. In general the request gets invoked by an HTTP request but it is
+     * recommended to not rely on those context information in your action
      */
     public function getContext(): RequestContextInterface;
 }

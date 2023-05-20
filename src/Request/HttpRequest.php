@@ -21,7 +21,8 @@
 
 namespace Fusio\Engine\Request;
 
-use PSX\Http\Environment\HttpContextInterface;
+use Psr\Http\Message\StreamInterface;
+use PSX\Http\RequestInterface;
 
 /**
  * Request
@@ -32,45 +33,52 @@ use PSX\Http\Environment\HttpContextInterface;
  */
 class HttpRequest implements RequestContextInterface
 {
-    private HttpContextInterface $context;
+    private RequestInterface $request;
+    private array $parameters;
 
-    public function __construct(HttpContextInterface $context)
+    public function __construct(RequestInterface $request, array $parameters)
     {
-        $this->context = $context;
+        $this->request = $request;
+        $this->parameters = $parameters;
     }
 
     public function getMethod(): string
     {
-        return $this->context->getMethod();
+        return $this->request->getMethod();
     }
 
     public function getHeader(string $name): ?string
     {
-        return $this->context->getHeader($name);
+        return $this->request->getHeader($name);
     }
 
     public function getHeaders(): array
     {
-        return $this->context->getHeaders();
+        return $this->request->getHeaders();
     }
 
     public function getUriFragment(string $name): ?string
     {
-        return $this->context->getUriFragment($name);
+        return $this->parameters[$name] ?? null;
     }
 
     public function getUriFragments(): array
     {
-        return $this->context->getUriFragments();
+        return $this->parameters;
     }
 
     public function getParameter(string $name): string|array|null
     {
-        return $this->context->getParameter($name);
+        return $this->request->getUri()->getParameter($name);
     }
 
     public function getParameters(): array
     {
-        return $this->context->getParameters();
+        return $this->request->getUri()->getParameters();
+    }
+
+    public function getBody(): StreamInterface
+    {
+        return $this->request->getBody();
     }
 }
