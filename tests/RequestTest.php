@@ -41,7 +41,7 @@ class RequestTest extends TestCase
 {
     public function testRequest()
     {
-        $context = new HttpRequest(new HttpContext(new Request(Uri::parse('/'), 'GET'), []));
+        $context = new HttpRequest(new Request(Uri::parse('/'), 'GET'), []);
         $request = new EngineRequest(['foo' => 'bar'], Record::fromArray(['foo' => 'bar']), $context);
 
         $this->assertInstanceOf(RequestInterface::class, $request);
