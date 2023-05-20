@@ -24,8 +24,7 @@ namespace Fusio\Engine;
 use Fusio\Engine\Request\RequestContextInterface;
 
 /**
- * Represents an incoming request, this is i.e. an HTTP or RPC request. This object can be used to access all values
- * from an incoming request
+ * Represents an incoming request. This object can be used to access all values from an incoming request
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.gnu.org/licenses/agpl-3.0
@@ -34,8 +33,8 @@ use Fusio\Engine\Request\RequestContextInterface;
 interface RequestInterface
 {
     /**
-     * Returns a value from the request. To make your action independent of the request context i.e. HTTP or RPC use
-     * only this method. Otherwise you can get also values from the specific request instance
+     * Returns a value from the request. The request contains all uri fragment and query parameter which are also
+     * defined at the schema
      */
     public function get(string $name): mixed;
 
@@ -50,8 +49,9 @@ interface RequestInterface
     public function getPayload(): mixed;
 
     /**
-     * Returns context information about the context of the request. In general the request gets invoked by an HTTP
-     * request but it is recommended to not rely on those context information in your action
+     * Returns information about the context of the request i.e. whether it was invoked by an HTTP request, RPC call or
+     * maybe also through a message queue. In general the request gets invoked by an HTTP request but it is recommended
+     * to not rely on those context information in your action
      */
     public function getContext(): RequestContextInterface;
 }
