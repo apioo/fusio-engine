@@ -69,12 +69,11 @@ trait EngineTestCaseTrait
         $uri = $uri->withParameters($parameters);
 
         $request = new Request($uri, $method === null ? 'GET' : $method, $headers, $rawBody);
-        $context = new HttpContext($request, $uriFragments);
 
         return new EngineRequest(
             array_merge($uriFragments, $parameters),
             $parsedBody === null ? new Record() : $parsedBody,
-            new HttpRequest($context)
+            new HttpRequest($request, $uriFragments)
         );
     }
 
