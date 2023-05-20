@@ -25,7 +25,6 @@ use Fusio\Engine\ConnectorInterface;
 use Fusio\Engine\DispatcherInterface;
 use Fusio\Engine\ProcessorInterface;
 use Fusio\Engine\Response;
-use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 use Psr\SimpleCache\CacheInterface;
 

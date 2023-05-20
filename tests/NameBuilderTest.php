@@ -21,20 +21,8 @@
 
 namespace Fusio\Engine\Tests;
 
-use Fusio\Engine\Action\MemoryQueue;
-use Fusio\Engine\ContextInterface;
-use Fusio\Engine\Exception\ActionNotFoundException;
-use Fusio\Engine\Model\Action;
 use Fusio\Engine\NameBuilder;
-use Fusio\Engine\Processor;
-use Fusio\Engine\ProcessorInterface;
-use Fusio\Engine\Repository;
-use Fusio\Engine\RequestInterface;
-use Fusio\Engine\Response\FactoryInterface;
-use Fusio\Engine\Test\CallbackAction;
-use Fusio\Engine\Test\EngineTestCaseTrait;
 use PHPUnit\Framework\TestCase;
-use PSX\Http\Environment\HttpResponseInterface;
 
 /**
  * NameBuilderTest

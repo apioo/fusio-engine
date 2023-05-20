@@ -21,21 +21,10 @@
 
 namespace Fusio\Engine\Test;
 
-use Fusio\Engine\ActionInterface;
 use Fusio\Engine\AdapterInterface;
-use Fusio\Engine\ConfigurableInterface;
-use Fusio\Engine\ConnectionInterface;
-use Fusio\Engine\Form\Builder;
-use Fusio\Engine\Form\Container;
-use Fusio\Engine\Generator;
-use Fusio\Engine\Payment;
-use Fusio\Engine\User;
 use PHPUnit\Framework\TestCase;
-use PSX\Schema\SchemaManager;
-use PSX\Schema\SchemaTraverser;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 
 /**

@@ -37,7 +37,6 @@ use Fusio\Engine\Request\HttpInterface;
 use Fusio\Engine\Request\HttpRequest;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\StreamInterface;
-use PSX\Http\Environment\HttpContext;
 use PSX\Http\Request;
 use PSX\Record\Record;
 use PSX\Record\RecordInterface;
