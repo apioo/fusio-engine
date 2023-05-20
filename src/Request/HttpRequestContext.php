@@ -50,4 +50,9 @@ class HttpRequestContext implements RequestContextInterface
     {
         return $this->parameters;
     }
+
+    public function getParameter(string $name): ?string
+    {
+        return $this->parameters[$name] ?? null;
+    }
 }
