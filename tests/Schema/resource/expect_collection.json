@@ -1,0 +1,49 @@
+{
+  "definitions": {
+    "File_Directory_Index": {
+      "type": "object",
+      "properties": {
+        "totalResults": {
+          "type": "integer"
+        },
+        "itemsPerPage": {
+          "type": "integer"
+        },
+        "startIndex": {
+          "type": "integer"
+        },
+        "entry": {
+          "type": "array",
+          "items": {
+            "$ref": "File_Directory_Index_Entry"
+          }
+        }
+      }
+    },
+    "File_Directory_Index_Entry": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "fileName": {
+          "type": "string"
+        },
+        "size": {
+          "type": "integer"
+        },
+        "contentType": {
+          "type": "string"
+        },
+        "sha1": {
+          "type": "string"
+        },
+        "lastModified": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    }
+  },
+  "$ref": "File_Directory_Index"
+}

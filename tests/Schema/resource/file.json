@@ -1,0 +1,24 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "fileName": {
+      "type": "string"
+    },
+    "size": {
+      "type": "integer"
+    },
+    "contentType": {
+      "type": "string"
+    },
+    "sha1": {
+      "type": "string"
+    },
+    "lastModified": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}

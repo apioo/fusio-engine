@@ -1,0 +1,23 @@
+{
+  "startIndex": {
+    "type": "integer"
+  },
+  "count": {
+    "type": "integer"
+  },
+  "sortBy": {
+    "type": "string"
+  },
+  "sortOrder": {
+    "type": "string"
+  },
+  "filterBy": {
+    "type": "string"
+  },
+  "filterOp": {
+    "type": "string"
+  },
+  "filterValue": {
+    "type": "string"
+  }
+}

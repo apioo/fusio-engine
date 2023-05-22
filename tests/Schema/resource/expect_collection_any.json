@@ -1,0 +1,25 @@
+{
+  "definitions": {
+    "File_Directory_Index": {
+      "type": "object",
+      "properties": {
+        "totalResults": {
+          "type": "integer"
+        },
+        "itemsPerPage": {
+          "type": "integer"
+        },
+        "startIndex": {
+          "type": "integer"
+        },
+        "entry": {
+          "type": "array",
+          "items": {
+            "type": "any"
+          }
+        }
+      }
+    }
+  },
+  "$ref": "File_Directory_Index"
+}
