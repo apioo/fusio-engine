@@ -22,12 +22,9 @@
 namespace Fusio\Engine\Tests\Generator;
 
 use Fusio\Engine\Generator\Setup;
-use Fusio\Model\Backend\Action;
 use Fusio\Model\Backend\ActionConfig;
 use Fusio\Model\Backend\ActionCreate;
-use Fusio\Model\Backend\Operation;
 use Fusio\Model\Backend\OperationCreate;
-use Fusio\Model\Backend\Schema;
 use Fusio\Model\Backend\SchemaCreate;
 use Fusio\Model\Backend\SchemaSource;
 use PHPUnit\Framework\TestCase;
