@@ -24,8 +24,11 @@ namespace Fusio\Engine\Tests\Generator;
 use Fusio\Engine\Generator\Setup;
 use Fusio\Model\Backend\Action;
 use Fusio\Model\Backend\ActionConfig;
+use Fusio\Model\Backend\ActionCreate;
 use Fusio\Model\Backend\Operation;
+use Fusio\Model\Backend\OperationCreate;
 use Fusio\Model\Backend\Schema;
+use Fusio\Model\Backend\SchemaCreate;
 use Fusio\Model\Backend\SchemaSource;
 use PHPUnit\Framework\TestCase;
 
@@ -42,7 +45,7 @@ class SetupTest extends TestCase
     {
         $setup = new Setup();
 
-        $action = new Action();
+        $action = new ActionCreate();
         $action->setName('foo_action');
         $action->setClass(\stdClass::class);
         $action->setEngine(\stdClass::class);
@@ -68,7 +71,7 @@ JSON;
     {
         $setup = new Setup();
 
-        $schema = new Schema();
+        $schema = new SchemaCreate();
         $schema->setName('foo_schema');
         $schema->setSource(SchemaSource::fromArray(['type' => 'object']));
         $setup->addSchema($schema);
@@ -90,19 +93,19 @@ JSON;
     {
         $setup = new Setup();
 
-        $schema = new Schema();
+        $schema = new SchemaCreate();
         $schema->setName('foo_schema');
         $schema->setSource(SchemaSource::fromArray(['type' => 'object']));
         $setup->addSchema($schema);
 
-        $action = new Action();
+        $action = new ActionCreate();
         $action->setName('foo_action');
         $action->setClass(\stdClass::class);
         $action->setEngine(\stdClass::class);
         $action->setConfig(ActionConfig::fromArray(['table' => 'foobar']));
         $setup->addAction($action);
 
-        $operation = new Operation();
+        $operation = new OperationCreate();
         $operation->setName('my_operation');
         $operation->setHttpMethod('POST');
         $operation->setHttpPath('/foo');
