@@ -72,7 +72,7 @@ class SchemaBuilder
         return $parameters;
     }
 
-    public static function makeCollectionResponse(string $name, ?\stdClass $type): SchemaSource
+    public static function makeCollectionResponse(string $name, ?object $type): SchemaSource
     {
         $data = new \stdClass();
         $data->definitions = (object) [
