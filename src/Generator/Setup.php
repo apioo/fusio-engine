@@ -21,9 +21,9 @@
 
 namespace Fusio\Engine\Generator;
 
-use Fusio\Model\Backend\Action;
-use Fusio\Model\Backend\Operation;
-use Fusio\Model\Backend\Schema;
+use Fusio\Model\Backend\ActionCreate;
+use Fusio\Model\Backend\OperationCreate;
+use Fusio\Model\Backend\SchemaCreate;
 
 /**
  * Setup
@@ -35,37 +35,37 @@ use Fusio\Model\Backend\Schema;
 class Setup implements SetupInterface
 {
     /**
-     * @var Schema[]
+     * @var SchemaCreate[]
      */
     private array $schemas = [];
 
     /**
-     * @var Action[]
+     * @var ActionCreate[]
      */
     private array $actions = [];
 
     /**
-     * @var Operation[]
+     * @var OperationCreate[]
      */
     private array $operations = [];
 
-    public function addSchema(Schema $schema): void
+    public function addSchema(SchemaCreate $schema): void
     {
         $this->schemas[] = $schema;
     }
 
-    public function addAction(Action $action): void
+    public function addAction(ActionCreate $action): void
     {
         $this->actions[] = $action;
     }
 
-    public function addOperation(Operation $operation): void
+    public function addOperation(OperationCreate $operation): void
     {
         $this->operations[] = $operation;
     }
 
     /**
-     * @return Schema[]
+     * @return SchemaCreate[]
      */
     public function getSchemas(): array
     {
@@ -73,7 +73,7 @@ class Setup implements SetupInterface
     }
 
     /**
-     * @return Action[]
+     * @return ActionCreate[]
      */
     public function getActions(): array
     {
@@ -81,7 +81,7 @@ class Setup implements SetupInterface
     }
 
     /**
-     * @return Operation[]
+     * @return OperationCreate[]
      */
     public function getOperations(): array
     {
