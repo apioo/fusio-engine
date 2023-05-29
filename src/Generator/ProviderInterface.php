@@ -40,5 +40,5 @@ interface ProviderInterface extends ConfigurableInterface
      * user, all routes are automatically registered under the base path so there is no need to add it manually, it is
      * there to build schema and action names based on the base path
      */
-    public function setup(SetupInterface $setup, string $basePath, ParametersInterface $configuration): void;
+    public function setup(SetupInterface $setup, ParametersInterface $configuration): void;
 }
