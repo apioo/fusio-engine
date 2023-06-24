@@ -31,24 +31,24 @@ use Fusio\Engine\Model;
  */
 class Context implements ContextInterface
 {
-    private int $routeId;
+    private int $operationId;
     private string $baseUrl;
     private Model\AppInterface $app;
     private Model\UserInterface $user;
     private ?Model\ActionInterface $action = null;
     private mixed $connection;
 
-    public function __construct(int $routeId, string $baseUrl, Model\AppInterface $app, Model\UserInterface $user)
+    public function __construct(int $operationId, string $baseUrl, Model\AppInterface $app, Model\UserInterface $user)
     {
-        $this->routeId = $routeId;
+        $this->operationId = $operationId;
         $this->baseUrl = $baseUrl;
-        $this->app     = $app;
-        $this->user    = $user;
+        $this->app = $app;
+        $this->user = $user;
     }
 
-    public function getRouteId(): int
+    public function getOperationId(): int
     {
-        return $this->routeId;
+        return $this->operationId;
     }
 
     public function getBaseUrl(): string

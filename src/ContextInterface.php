@@ -33,9 +33,9 @@ use Fusio\Engine\Model\ActionInterface as ModelActionInterface;
 interface ContextInterface
 {
     /**
-     * Returns the id of the route
+     * Returns the id of the operation
      */
-    public function getRouteId(): int;
+    public function getOperationId(): int;
 
     /**
      * Returns the base url of the system to generate i.e. HATEOAS links. The url has a trailing slash
