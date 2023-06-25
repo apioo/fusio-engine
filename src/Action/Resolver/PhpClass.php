@@ -18,24 +18,27 @@
  * limitations under the License.
  */
 
-namespace Fusio\Engine\Factory;
+namespace Fusio\Engine\Action\Resolver;
 
-use Fusio\Engine\ActionInterface as EngineActionInterface;
+use Fusio\Engine\Action\ResolverInterface;
 use Fusio\Engine\Exception\FactoryResolveException;
+use Fusio\Engine\Model;
 
 /**
- * ResolverInterface
+ * PhpClass
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.apache.org/licenses/LICENSE-2.0
  * @link    https://www.fusio-project.org
  */
-interface ResolverInterface
+class PhpClass implements ResolverInterface
 {
-    /**
-     * Resolves the provided string to an action instance
-     *
-     * @throws FactoryResolveException
-     */
-    public function resolve(string $className): EngineActionInterface;
+    public function resolve(string $action): Model\ActionInterface
+    {
+        if (!class_exists($action)) {
+            throw new FactoryResolveException('Provided action ' . $action . ' is not a PHP class');
+        }
+
+        return new Model\Action(1, 'PHP_Class', $action, false, []);
+    }
 }

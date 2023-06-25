@@ -35,8 +35,6 @@ interface ActionInterface
 
     public function getClass(): string;
 
-    public function getEngine(): string;
-
     public function isAsync(): bool;
 
     public function getConfig(): array;

@@ -21,6 +21,9 @@
 namespace Fusio\Engine\Factory;
 
 use Fusio\Engine\ActionInterface as EngineActionInterface;
+use Fusio\Engine\ConnectionInterface as EngineConnectionInterface;
+use Fusio\Engine\Exception\ActionNotFoundException;
+use Fusio\Engine\Exception\ConnectionNotFoundException;
 use Fusio\Engine\Exception\FactoryResolveException;
 use Psr\Container\ContainerInterface;
 
@@ -34,31 +37,23 @@ use Psr\Container\ContainerInterface;
 class Action implements ActionInterface
 {
     private ContainerInterface $container;
-    private array $resolvers;
 
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
-        $this->resolvers = [];
     }
 
-    public function factory(string $className, ?string $engine = null): EngineActionInterface
+    public function factory(string $className): EngineActionInterface
     {
-        if (!empty($engine) && isset($this->resolvers[$engine])) {
-            $resolver = $this->resolvers[$engine];
-        } else {
-            $resolver = reset($this->resolvers);
-
-            if (!$resolver instanceof ResolverInterface) {
-                throw new FactoryResolveException('No resolver was configured');
-            }
+        if (!$this->container->has($className)) {
+            throw new ActionNotFoundException('Action class ' . $className . ' not found');
         }
 
-        return $resolver->resolve($className);
-    }
+        $action = $this->container->get($className);
+        if (!$action instanceof EngineActionInterface) {
+            throw new ActionNotFoundException('Action class ' . $className . ' is available but it must implement the interface: ' . EngineConnectionInterface::class);
+        }
 
-    public function addResolver(ResolverInterface $resolver): void
-    {
-        $this->resolvers[get_class($resolver)] = $resolver;
+        return $action;
     }
 }

@@ -22,6 +22,7 @@ namespace Fusio\Engine\Factory;
 
 use Fusio\Engine\ConnectionInterface as EngineConnectionInterface;
 use Fusio\Engine\Exception\ConnectionNotFoundException;
+use Fusio\Engine\Exception\FactoryResolveException;
 use Psr\Container\ContainerInterface;
 
 /**
@@ -42,10 +43,13 @@ class Connection implements ConnectionInterface
 
     public function factory(string $className): EngineConnectionInterface
     {
-        $connection = $this->container->get($className);
+        if (!$this->container->has($className)) {
+            throw new ConnectionNotFoundException('Connection class ' . $className . ' not found');
+        }
 
+        $connection = $this->container->get($className);
         if (!$connection instanceof EngineConnectionInterface) {
-            throw new ConnectionNotFoundException('The service ' . $className . ' is available but it must implement the interface: ' . EngineConnectionInterface::class);
+            throw new ConnectionNotFoundException('Connection class ' . $className . ' is available but it must implement the interface: ' . EngineConnectionInterface::class);
         }
 
         return $connection;

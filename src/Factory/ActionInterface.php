@@ -40,5 +40,5 @@ interface ActionInterface extends FactoryInterface
      * @throws FactoryResolveException
      * @throws ActionNotFoundException
      */
-    public function factory(string $className, ?string $engine = null): EngineActionInterface;
+    public function factory(string $className): EngineActionInterface;
 }

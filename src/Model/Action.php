@@ -32,16 +32,14 @@ class Action implements ActionInterface
     private int $id;
     private string $name;
     private string $class;
-    private string $engine;
     private bool $async;
     private array $config;
 
-    public function __construct(int $id, string $name, string $class, string $engine, bool $async, array $config)
+    public function __construct(int $id, string $name, string $class, bool $async, array $config)
     {
         $this->id = $id;
         $this->name = $name;
         $this->class = $class;
-        $this->engine = $engine;
         $this->async = $async;
         $this->config = $config;
     }
@@ -59,11 +57,6 @@ class Action implements ActionInterface
     public function getClass(): string
     {
         return $this->class;
-    }
-
-    public function getEngine(): string
-    {
-        return $this->engine;
     }
 
     public function isAsync(): bool

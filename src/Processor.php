@@ -20,11 +20,12 @@
 
 namespace Fusio\Engine;
 
+use Fusio\Engine\Action\ResolverInterface;
 use Fusio\Engine\Exception\ActionNotFoundException;
+use Fusio\Engine\Exception\FactoryResolveException;
 use Fusio\Engine\Factory;
 use Fusio\Engine\Repository;
 use PSX\Http\Environment\HttpResponse;
-use RuntimeException;
 
 /**
  * Processor
@@ -35,33 +36,38 @@ use RuntimeException;
  */
 class Processor implements ProcessorInterface
 {
-    /**
-     * @var Repository\ActionInterface[]
-     */
-    private array $stack;
     private Factory\ActionInterface $factory;
     private Action\QueueInterface $queue;
+    /**
+     * @var ResolverInterface[]
+     */
+    private array $resolvers = [];
 
     public function __construct(Repository\ActionInterface $repository, Factory\ActionInterface $factory, Action\QueueInterface $queue)
     {
-        $this->stack   = [];
         $this->factory = $factory;
         $this->queue   = $queue;
 
-        $this->push($repository);
+        $this->register('action', new Action\Resolver\DatabaseAction($repository));
+        $this->register('class', new Action\Resolver\PhpClass());
     }
 
     public function execute(string|int $actionId, RequestInterface $request, ContextInterface $context): mixed
     {
-        $repository = $this->getCurrentRepository();
-        if (!$repository instanceof Repository\ActionInterface) {
-            throw new \RuntimeException('Repository not configured');
+        if (is_int($actionId)) {
+            $actionId = 'action://' . $actionId;
+        } elseif (!str_contains($actionId, '://')) {
+            $actionId = 'action://' . $actionId;
         }
 
-        $action = $repository->get($actionId);
-        if (!$action instanceof Model\ActionInterface) {
-            throw new ActionNotFoundException('Could not found action ' . $actionId);
+        $pos = strpos($actionId, '://');
+        $scheme = substr($actionId, 0, $pos);
+        $value = substr($actionId, $pos + 3);
+        if (!isset($this->resolvers[$scheme])) {
+            throw new FactoryResolveException('Provided scheme ' . $scheme . ' is not available');
         }
+
+        $action = $this->resolvers[$scheme]->resolve($value);
 
         $parameters = new Parameters($action->getConfig());
 
@@ -73,32 +79,12 @@ class Processor implements ProcessorInterface
                 'message' => 'Request was queued for execution',
             ]);
         } else {
-            return $this->factory->factory($action->getClass(), $action->getEngine())->handle($request, $parameters, $context->withAction($action));
+            return $this->factory->factory($action->getClass())->handle($request, $parameters, $context->withAction($action));
         }
     }
 
-    /**
-     * Pushes another repository to the processor stack. Through this it is possible to provide another action source
-     */
-    public function push(Repository\ActionInterface $repository): void
+    public function register(string $scheme, ResolverInterface $resolver): void
     {
-        $this->stack[] = $repository;
-    }
-
-    /**
-     * Removes the processor from the top of the stack
-     */
-    public function pop(): void
-    {
-        if (count($this->stack) === 1) {
-            throw new RuntimeException('One repository must be at least available');
-        }
-
-        array_pop($this->stack);
-    }
-
-    protected function getCurrentRepository(): ?Repository\ActionInterface
-    {
-        return end($this->stack) ?: null;
+        $this->resolvers[$scheme] = $resolver;
     }
 }
