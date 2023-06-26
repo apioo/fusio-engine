@@ -74,14 +74,14 @@ class DatabaseAction implements ResolverInterface
     public function pop(): void
     {
         if (count($this->stack) === 1) {
-            throw new \RuntimeException('One repository must be at least available');
+            throw new FactoryResolveException('One repository must be at least available');
         }
 
         array_pop($this->stack);
     }
 
-    private function getCurrentRepository(): ?Repository\ActionInterface
+    private function getCurrentRepository(): Repository\ActionInterface
     {
-        return end($this->stack) ?: null;
+        return end($this->stack) ?: throw new FactoryResolveException('No repository available');
     }
 }
