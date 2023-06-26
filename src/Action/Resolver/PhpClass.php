@@ -33,6 +33,11 @@ use Fusio\Engine\Model;
  */
 class PhpClass implements ResolverInterface
 {
+    public function getScheme(): string
+    {
+        return 'class';
+    }
+
     public function resolve(string $action): Model\ActionInterface
     {
         if (!class_exists($action)) {

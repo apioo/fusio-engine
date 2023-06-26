@@ -109,7 +109,6 @@ trait EngineTestCaseTrait
             id: 1,
             name: 'foo',
             class: \stdClass::class,
-            engine: \stdClass::class,
             async: false,
             config: [],
         );

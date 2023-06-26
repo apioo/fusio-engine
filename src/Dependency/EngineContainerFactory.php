@@ -78,7 +78,6 @@ class EngineContainerFactory
         $container->set(Form\ElementFactoryInterface::class, $elementFactory);
 
         $actionFactory = new Factory\Action($container);
-        $actionFactory->addResolver(new Factory\Resolver\PhpClass($container));
         $container->set(Factory\ActionInterface::class, $actionFactory);
 
         $connectionFactory = new Factory\Connection($container);
@@ -93,7 +92,11 @@ class EngineContainerFactory
         $queue = new Action\MemoryQueue();
         $container->set(Action\QueueInterface::class, $queue);
 
-        $processor = new Processor($actionRepository, $actionFactory, $queue);
+        $resolvers = [
+            new Action\Resolver\DatabaseAction($actionRepository),
+            new Action\Resolver\PhpClass(),
+        ];
+        $processor = new Processor($resolvers, $actionFactory, $queue);
         $container->set(ProcessorInterface::class, $processor);
 
         $dispatcher = new Dispatcher();

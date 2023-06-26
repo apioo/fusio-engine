@@ -21,10 +21,8 @@
 namespace Fusio\Engine;
 
 use Fusio\Engine\Action\ResolverInterface;
-use Fusio\Engine\Exception\ActionNotFoundException;
 use Fusio\Engine\Exception\FactoryResolveException;
 use Fusio\Engine\Factory;
-use Fusio\Engine\Repository;
 use PSX\Http\Environment\HttpResponse;
 
 /**
@@ -43,13 +41,14 @@ class Processor implements ProcessorInterface
      */
     private array $resolvers = [];
 
-    public function __construct(Repository\ActionInterface $repository, Factory\ActionInterface $factory, Action\QueueInterface $queue)
+    public function __construct(iterable $resolvers, Factory\ActionInterface $factory, Action\QueueInterface $queue)
     {
         $this->factory = $factory;
         $this->queue   = $queue;
 
-        $this->register('action', new Action\Resolver\DatabaseAction($repository));
-        $this->register('class', new Action\Resolver\PhpClass());
+        foreach ($resolvers as $resolver) {
+            $this->register($resolver->getScheme(), $resolver);
+        }
     }
 
     public function execute(string|int $actionId, RequestInterface $request, ContextInterface $context): mixed

@@ -45,6 +45,11 @@ class DatabaseAction implements ResolverInterface
         $this->push($repository);
     }
 
+    public function getScheme(): string
+    {
+        return 'action';
+    }
+
     public function resolve(string $action): Model\ActionInterface
     {
         $model = $this->getCurrentRepository()->get($action);

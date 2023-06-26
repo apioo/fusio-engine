@@ -81,7 +81,6 @@ class ActionMemoryTest extends TestCase
         "id": 1,
         "name": "foo",
         "class": "stdClass",
-        "engine": "stdClass",
         "async": false,
         "config": {
             "foo": "bar"
@@ -108,7 +107,6 @@ JSON;
         "id": 1,
         "name": "foo",
         "class": "stdClass",
-        "engine": "stdClass",
         "async": false,
         "config": {
             "foo": "bar"
@@ -129,7 +127,6 @@ JSON;
             id: 1,
             name: 'foo',
             class: \stdClass::class,
-            engine: \stdClass::class,
             async: false,
             config: ['foo' => 'bar'],
         );

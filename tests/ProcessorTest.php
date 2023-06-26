@@ -21,8 +21,11 @@
 namespace Fusio\Engine\Tests;
 
 use Fusio\Engine\Action\MemoryQueue;
+use Fusio\Engine\Action\Resolver\DatabaseAction;
+use Fusio\Engine\Action\Resolver\PhpClass;
 use Fusio\Engine\ContextInterface;
 use Fusio\Engine\Exception\ActionNotFoundException;
+use Fusio\Engine\Exception\FactoryResolveException;
 use Fusio\Engine\Model\Action;
 use Fusio\Engine\Processor;
 use Fusio\Engine\ProcessorInterface;
@@ -75,7 +78,7 @@ class ProcessorTest extends TestCase
 
         [$actionId, $request, $context] = $queue->pop();
 
-        $this->assertEquals(1, $actionId);
+        $this->assertEquals('action://1', $actionId);
         $this->assertInstanceOf(RequestInterface::class, $request);
         $this->assertInstanceOf(ContextInterface::class, $context);
     }
@@ -95,7 +98,7 @@ class ProcessorTest extends TestCase
 
     public function testGetConnectionInvalid()
     {
-        $this->expectException(ActionNotFoundException::class);
+        $this->expectException(FactoryResolveException::class);
 
         $repository = $this->getActionRepository();
         $processor  = $this->newProcessor($repository);
@@ -111,7 +114,6 @@ class ProcessorTest extends TestCase
             id: 1,
             name: 'foo',
             class: CallbackAction::class,
-            engine: \stdClass::class,
             async: $async,
             config: ['callback' => function(FactoryInterface $response){
                 return $response->build(200, [], ['foo' => 'bar']);
@@ -125,6 +127,10 @@ class ProcessorTest extends TestCase
 
     private function newProcessor(Repository\ActionInterface $repository): ProcessorInterface
     {
-        return new Processor($repository, $this->getActionFactory(), $this->getActionQueue());
+        $resolvers = [
+            new DatabaseAction($repository),
+            new PhpClass(),
+        ];
+        return new Processor($resolvers, $this->getActionFactory(), $this->getActionQueue());
     }
 }

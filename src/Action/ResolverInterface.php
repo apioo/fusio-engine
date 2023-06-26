@@ -33,6 +33,11 @@ use Fusio\Engine\Exception\FactoryResolveException;
 interface ResolverInterface
 {
     /**
+     * returns the registered scheme for this resolver
+     */
+    public function getScheme(): string;
+
+    /**
      * Resolves the provided string to an action instance
      *
      * @throws FactoryResolveException
