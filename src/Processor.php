@@ -21,6 +21,7 @@
 namespace Fusio\Engine;
 
 use Fusio\Engine\Action\ResolverInterface;
+use Fusio\Engine\Exception\ActionNotFoundException;
 use Fusio\Engine\Exception\FactoryResolveException;
 use Fusio\Engine\Factory;
 use PSX\Http\Environment\HttpResponse;
@@ -60,8 +61,13 @@ class Processor implements ProcessorInterface
         }
 
         $pos = strpos($actionId, '://');
-        $scheme = substr($actionId, 0, $pos);
-        $value = substr($actionId, $pos + 3);
+        if ($pos !== false) {
+            $scheme = substr($actionId, 0, $pos);
+            $value = substr($actionId, $pos + 3);
+        } else {
+            throw new ActionNotFoundException('Provided an invalid action ' . $actionId);
+        }
+
         if (!isset($this->resolvers[$scheme])) {
             throw new FactoryResolveException('Provided scheme ' . $scheme . ' is not available');
         }
