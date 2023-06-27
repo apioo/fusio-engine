@@ -40,6 +40,8 @@ class PhpClass implements ResolverInterface
 
     public function resolve(string $action): Model\ActionInterface
     {
+        $action = str_replace('.', '\\', $action);
+
         if (!class_exists($action)) {
             throw new FactoryResolveException('Provided action ' . $action . ' is not a PHP class');
         }
