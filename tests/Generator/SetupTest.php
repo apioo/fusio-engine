@@ -51,7 +51,6 @@ class SetupTest extends TestCase
 {
   "name": "foo_action",
   "class": "stdClass",
-  "engine": "stdClass",
   "config": {
     "table": "foobar"
   }
