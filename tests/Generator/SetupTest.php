@@ -44,7 +44,6 @@ class SetupTest extends TestCase
         $action = new ActionCreate();
         $action->setName('foo_action');
         $action->setClass(\stdClass::class);
-        $action->setEngine(\stdClass::class);
         $action->setConfig(ActionConfig::fromArray(['table' => 'foobar']));
         $setup->addAction($action);
 
@@ -97,7 +96,6 @@ JSON;
         $action = new ActionCreate();
         $action->setName('foo_action');
         $action->setClass(\stdClass::class);
-        $action->setEngine(\stdClass::class);
         $action->setConfig(ActionConfig::fromArray(['table' => 'foobar']));
         $setup->addAction($action);
 
