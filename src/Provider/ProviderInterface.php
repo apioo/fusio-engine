@@ -18,18 +18,19 @@
  * limitations under the License.
  */
 
-namespace Fusio\Engine\Parser;
+namespace Fusio\Engine\Provider;
 
+use Fusio\Engine\Exception\NotFoundException;
 use Fusio\Engine\Form\Container;
 
 /**
- * ParserInterface
+ * ProviderInterface
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.apache.org/licenses/LICENSE-2.0
  * @link    https://www.fusio-project.org
  */
-interface ParserInterface
+interface ProviderInterface
 {
     /**
      * Returns all available classes
@@ -38,6 +39,15 @@ interface ParserInterface
 
     /**
      * Returns a form if the class is configurable
+     *
+     * @throws NotFoundException
      */
-    public function getForm(string $className): ?Container;
+    public function getForm(string $name): ?Container;
+
+    /**
+     * Returns a concrete instance for the provided name
+     *
+     * @throws NotFoundException
+     */
+    public function getInstance(string $name): ?object;
 }

@@ -152,11 +152,9 @@ JSON;
     public function testContainer()
     {
         $this->assertInstanceOf(ContainerInterface::class, $this->getContainer());
-        $this->assertInstanceOf(Parser\ParserInterface::class, $this->getContainer()->get(Parser\ActionInterface::class));
         $this->assertInstanceOf(Factory\ActionInterface::class, $this->getContainer()->get(Factory\ActionInterface::class));
         $this->assertInstanceOf(Repository\ActionInterface::class, $this->getContainer()->get(Repository\ActionInterface::class));
         $this->assertInstanceOf(ProcessorInterface::class, $this->getContainer()->get(ProcessorInterface::class));
-        $this->assertInstanceOf(Parser\ParserInterface::class, $this->getContainer()->get(Parser\ConnectionInterface::class));
         $this->assertInstanceOf(Factory\ConnectionInterface::class, $this->getContainer()->get(Factory\ConnectionInterface::class));
         $this->assertInstanceOf(Repository\ConnectionInterface::class, $this->getContainer()->get(Repository\ConnectionInterface::class));
         $this->assertInstanceOf(ConnectorInterface::class, $this->getContainer()->get(ConnectorInterface::class));

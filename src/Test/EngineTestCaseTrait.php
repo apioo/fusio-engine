@@ -32,7 +32,6 @@ use Fusio\Engine\Model\User;
 use Fusio\Engine\Parameters;
 use Fusio\Engine\Repository;
 use Fusio\Engine\Request as EngineRequest;
-use Fusio\Engine\Request\HttpInterface;
 use Fusio\Engine\Request\HttpRequestContext;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\StreamInterface;

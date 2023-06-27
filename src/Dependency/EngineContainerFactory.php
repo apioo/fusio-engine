@@ -83,12 +83,6 @@ class EngineContainerFactory
         $connectionFactory = new Factory\Connection($container);
         $container->set(Factory\ConnectionInterface::class, $connectionFactory);
 
-        $actionParser = new Parser\Memory($actionFactory, $elementFactory, []);
-        $container->set(Parser\ActionInterface::class, $actionParser);
-
-        $connectionParser = new Parser\Memory($connectionFactory, $elementFactory, []);
-        $container->set(Parser\ConnectionInterface::class, $connectionParser);
-
         $queue = new Action\MemoryQueue();
         $container->set(Action\QueueInterface::class, $queue);
 
