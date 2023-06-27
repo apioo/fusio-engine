@@ -24,6 +24,7 @@ use Fusio\Engine\Action\ResolverInterface;
 use Fusio\Engine\Exception\ActionNotFoundException;
 use Fusio\Engine\Exception\FactoryResolveException;
 use Fusio\Engine\Factory;
+use Fusio\Engine\Model;
 use PSX\Http\Environment\HttpResponse;
 
 /**
@@ -54,6 +55,28 @@ class Processor implements ProcessorInterface
 
     public function execute(string|int $actionId, RequestInterface $request, ContextInterface $context): mixed
     {
+        $action = $this->getAction($actionId);
+        $parameters = new Parameters($action->getConfig());
+
+        if ($action->isAsync()) {
+            $this->queue->push($actionId, $request, $context);
+
+            return new HttpResponse(202, [], [
+                'success' => true,
+                'message' => 'Request was queued for execution',
+            ]);
+        } else {
+            return $this->factory->factory($action->getClass())->handle($request, $parameters, $context->withAction($action));
+        }
+    }
+
+    public function register(string $scheme, ResolverInterface $resolver): void
+    {
+        $this->resolvers[$scheme] = $resolver;
+    }
+
+    public function getAction(string|int $actionId): Model\ActionInterface
+    {
         if (is_int($actionId)) {
             $actionId = 'action://' . $actionId;
         } elseif (!str_contains($actionId, '://')) {
@@ -72,24 +95,6 @@ class Processor implements ProcessorInterface
             throw new FactoryResolveException('Provided scheme ' . $scheme . ' is not available');
         }
 
-        $action = $this->resolvers[$scheme]->resolve($value);
-
-        $parameters = new Parameters($action->getConfig());
-
-        if ($action->isAsync()) {
-            $this->queue->push($actionId, $request, $context);
-
-            return new HttpResponse(202, [], [
-                'success' => true,
-                'message' => 'Request was queued for execution',
-            ]);
-        } else {
-            return $this->factory->factory($action->getClass())->handle($request, $parameters, $context->withAction($action));
-        }
-    }
-
-    public function register(string $scheme, ResolverInterface $resolver): void
-    {
-        $this->resolvers[$scheme] = $resolver;
+        return $this->resolvers[$scheme]->resolve($value);
     }
 }

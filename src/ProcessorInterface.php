@@ -41,4 +41,12 @@ interface ProcessorInterface
      * @throws FactoryResolveException
      */
     public function execute(string|int $actionId, RequestInterface $request, ContextInterface $context): mixed;
+
+    /**
+     * Returns the action model assigned to the action id
+     *
+     * @throws ActionNotFoundException
+     * @throws FactoryResolveException
+     */
+    public function getAction(string|int $actionId): Model\ActionInterface;
 }
