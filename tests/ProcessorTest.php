@@ -78,7 +78,7 @@ class ProcessorTest extends TestCase
 
         [$actionId, $request, $context] = $queue->pop();
 
-        $this->assertEquals('action://1', $actionId);
+        $this->assertEquals(1, $actionId);
         $this->assertInstanceOf(RequestInterface::class, $request);
         $this->assertInstanceOf(ContextInterface::class, $context);
     }
