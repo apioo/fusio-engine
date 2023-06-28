@@ -35,7 +35,7 @@ class PhpClass implements ResolverInterface
 {
     public function getScheme(): string
     {
-        return 'class';
+        return 'php+class';
     }
 
     public function resolve(string $action): Model\ActionInterface
