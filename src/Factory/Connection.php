@@ -22,6 +22,7 @@ namespace Fusio\Engine\Factory;
 
 use Fusio\Engine\ConnectionInterface as EngineConnectionInterface;
 use Fusio\Engine\Exception\ConnectionNotFoundException;
+use Fusio\Engine\Inflection\ClassName;
 use Psr\Container\ContainerInterface;
 
 /**
@@ -42,7 +43,7 @@ class Connection implements ConnectionInterface
 
     public function factory(string $className): EngineConnectionInterface
     {
-        $className = str_replace('.', '\\', $className);
+        $className = ClassName::unserialize($className);
 
         if (!$this->container->has($className)) {
             throw new ConnectionNotFoundException('Connection class ' . $className . ' not found');

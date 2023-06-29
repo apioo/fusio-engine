@@ -18,35 +18,30 @@
  * limitations under the License.
  */
 
-namespace Fusio\Engine\Action\Resolver;
-
-use Fusio\Engine\Action\ResolverInterface;
-use Fusio\Engine\Exception\FactoryResolveException;
-use Fusio\Engine\Inflection\ClassName;
-use Fusio\Engine\Model;
+namespace Fusio\Engine\Inflection;
 
 /**
- * PhpClass
+ * ClassName
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.apache.org/licenses/LICENSE-2.0
  * @link    https://www.fusio-project.org
  */
-class PhpClass implements ResolverInterface
+class ClassName
 {
-    public function getScheme(): string
+    /**
+     * @param class-string $class
+     */
+    public static function serialize(string $class): string
     {
-        return 'php+class';
+        return str_replace('\\', '.', $class);
     }
 
-    public function resolve(string $action): Model\ActionInterface
+    /**
+     * @return class-string
+     */
+    public static function unserialize(string $data): string
     {
-        $action = ClassName::unserialize($action);
-
-        if (!class_exists($action)) {
-            throw new FactoryResolveException('Provided action ' . $action . ' is not a PHP class');
-        }
-
-        return new Model\Action(1, 'PHP_Class', $action, false, []);
+        return str_replace('.', '\\', $data);
     }
 }

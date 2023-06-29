@@ -23,6 +23,7 @@ namespace Fusio\Engine\Provider;
 use Fusio\Engine\ConfigurableInterface;
 use Fusio\Engine\Exception\NotFoundException;
 use Fusio\Engine\Form;
+use Fusio\Engine\Inflection\ClassName;
 
 /**
  * ProviderAbstract
@@ -49,7 +50,7 @@ abstract class ProviderAbstract implements ProviderInterface
             if ($object instanceof ConfigurableInterface) {
                 $result[] = [
                     'name'  => $object->getName(),
-                    'class' => $this->serialize($object::class),
+                    'class' => ClassName::serialize($object::class),
                 ];
             }
         }
@@ -81,7 +82,7 @@ abstract class ProviderAbstract implements ProviderInterface
         foreach ($this->objects as $object) {
             if ($object::class === $name) {
                 return $object;
-            } elseif ($this->serialize($object::class) === $name) {
+            } elseif (ClassName::serialize($object::class) === $name) {
                 return $object;
             } elseif (strcasecmp($this->shortName($object::class), $name) === 0) {
                 return $object;
@@ -89,11 +90,6 @@ abstract class ProviderAbstract implements ProviderInterface
         }
 
         throw new NotFoundException('Could not found provider: ' . $name);
-    }
-
-    private function serialize(string $class): string
-    {
-        return str_replace('\\', '.', $class);
     }
 
     /**

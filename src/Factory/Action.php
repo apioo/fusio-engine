@@ -23,6 +23,7 @@ namespace Fusio\Engine\Factory;
 use Fusio\Engine\ActionInterface as EngineActionInterface;
 use Fusio\Engine\ConnectionInterface as EngineConnectionInterface;
 use Fusio\Engine\Exception\ActionNotFoundException;
+use Fusio\Engine\Inflection\ClassName;
 use Psr\Container\ContainerInterface;
 
 /**
@@ -43,7 +44,7 @@ class Action implements ActionInterface
 
     public function factory(string $className): EngineActionInterface
     {
-        $className = str_replace('.', '\\', $className);
+        $className = ClassName::unserialize($className);
 
         if (!$this->container->has($className)) {
             throw new ActionNotFoundException('Action class ' . $className . ' not found');
