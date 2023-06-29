@@ -29,17 +29,11 @@ namespace Fusio\Engine\Inflection;
  */
 class ClassName
 {
-    /**
-     * @param class-string $class
-     */
     public static function serialize(string $class): string
     {
         return str_replace('\\', '.', $class);
     }
 
-    /**
-     * @return class-string
-     */
     public static function unserialize(string $data): string
     {
         return str_replace('.', '\\', $data);
