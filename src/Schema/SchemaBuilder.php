@@ -79,16 +79,16 @@ class SchemaBuilder
                 'type' => 'object',
                 'properties' => (object) [
                     'totalResults' => (object) [
-                        'type' => Type::INTEGER,
+                        'type' => 'integer',
                     ],
                     'itemsPerPage' => (object) [
-                        'type' => Type::INTEGER,
+                        'type' => 'integer',
                     ],
                     'startIndex' => (object) [
-                        'type' => Type::INTEGER,
+                        'type' => 'integer',
                     ],
                     'entry' => (object) [
-                        'type' => Type::ARRAY,
+                        'type' => 'array',
                         'items' => (object) [
                             '$ref' => $name . '_Entry'
                         ],
