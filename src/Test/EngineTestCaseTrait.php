@@ -200,9 +200,10 @@ trait EngineTestCaseTrait
 
             $containerBuilder->compile();
 
-            $dumper = new PhpDumper($containerBuilder);
-
-            $containerConfigCache->write($dumper->dump(), $containerBuilder->getResources());
+            $result = (new PhpDumper($containerBuilder))->dump();
+            if (is_string($result)) {
+                $containerConfigCache->write($result, $containerBuilder->getResources());
+            }
         }
 
         require_once $targetFile;

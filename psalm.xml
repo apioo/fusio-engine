@@ -9,6 +9,7 @@
     <projectFiles>
         <directory name="src" />
         <ignoreFiles>
+            <directory name="src/Test/compiled" />
             <directory name="vendor" />
         </ignoreFiles>
     </projectFiles>
