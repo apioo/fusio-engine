@@ -31,12 +31,12 @@ class Product implements ProductInterface
 {
     private int $id;
     private string $name;
-    private float $price;
+    private int $price;
     private int $points;
     private int $interval;
     private ?string $externalId;
 
-    public function __construct(int $id, string $name, float $price, int $points, int $interval, ?string $externalId = null)
+    public function __construct(int $id, string $name, int $price, int $points, int $interval, ?string $externalId = null)
     {
         $this->id = $id;
         $this->name = $name;
@@ -56,7 +56,7 @@ class Product implements ProductInterface
         return $this->name;
     }
 
-    public function getPrice(): float
+    public function getPrice(): int
     {
         return $this->price;
     }
