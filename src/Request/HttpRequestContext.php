@@ -23,7 +23,7 @@ namespace Fusio\Engine\Request;
 use PSX\Http\RequestInterface;
 
 /**
- * Request
+ * Indicates that an action was invoked by an HTTP request
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.apache.org/licenses/LICENSE-2.0

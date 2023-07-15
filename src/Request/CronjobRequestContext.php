@@ -21,23 +21,12 @@
 namespace Fusio\Engine\Request;
 
 /**
- * Indicates that an action was invoked by an RPC call
+ * Indicates that an action was invoked by a cronjob
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.apache.org/licenses/LICENSE-2.0
  * @link    https://www.fusio-project.org
  */
-class RpcRequestContext implements RequestContextInterface
+class CronjobRequestContext implements RequestContextInterface
 {
-    private string $method;
-
-    public function __construct(string $method)
-    {
-        $this->method = $method;
-    }
-
-    public function getMethod(): string
-    {
-        return $this->method;
-    }
 }
