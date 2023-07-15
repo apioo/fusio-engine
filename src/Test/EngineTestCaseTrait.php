@@ -206,10 +206,14 @@ trait EngineTestCaseTrait
             }
         }
 
+        if (!is_file($targetFile)) {
+            throw new \RuntimeException('Could not find container file');
+        }
+
         require_once $targetFile;
 
         if (!class_exists('ProjectServiceContainer')) {
-            throw new \RuntimeException('Could not build container');
+            throw new \RuntimeException('Could not find container class');
         }
 
         return new \ProjectServiceContainer();
