@@ -7,7 +7,6 @@ use Fusio\Engine\Test\EngineContainer;
 use Fusio\Engine\Test\ProviderCollection;
 use Monolog\Handler\NullHandler;
 use Monolog\Logger;
-use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 use Psr\SimpleCache\CacheInterface;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
@@ -44,8 +43,6 @@ return static function (ContainerConfigurator $container) {
     $services->set(Psr16Cache::class)
         ->arg('$pool', service(ArrayAdapter::class));
     $services->alias(CacheInterface::class, Psr16Cache::class);
-
-    $services->alias(ContainerInterface::class, 'service_container');
 
     $services->set(EngineContainer::class)
         ->public();

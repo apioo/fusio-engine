@@ -23,7 +23,7 @@ namespace Fusio\Engine\Factory;
 use Fusio\Engine\ConnectionInterface as EngineConnectionInterface;
 use Fusio\Engine\Exception\ConnectionNotFoundException;
 use Fusio\Engine\Inflection\ClassName;
-use Psr\Container\ContainerInterface;
+use Symfony\Component\DependencyInjection\ServiceLocator;
 
 /**
  * Connection
@@ -34,22 +34,22 @@ use Psr\Container\ContainerInterface;
  */
 class Connection implements ConnectionInterface
 {
-    private ContainerInterface $container;
+    private ServiceLocator $connections;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(ServiceLocator $connections)
     {
-        $this->container = $container;
+        $this->connections = $connections;
     }
 
     public function factory(string $className): EngineConnectionInterface
     {
         $className = ClassName::unserialize($className);
 
-        if (!$this->container->has($className)) {
+        if (!$this->connections->has($className)) {
             throw new ConnectionNotFoundException('Connection class ' . $className . ' not found');
         }
 
-        $connection = $this->container->get($className);
+        $connection = $this->connections->get($className);
         if (!$connection instanceof EngineConnectionInterface) {
             throw new ConnectionNotFoundException('Connection class ' . $className . ' is available but it must implement the interface: ' . EngineConnectionInterface::class);
         }

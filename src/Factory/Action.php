@@ -24,7 +24,7 @@ use Fusio\Engine\ActionInterface as EngineActionInterface;
 use Fusio\Engine\ConnectionInterface as EngineConnectionInterface;
 use Fusio\Engine\Exception\ActionNotFoundException;
 use Fusio\Engine\Inflection\ClassName;
-use Psr\Container\ContainerInterface;
+use Symfony\Component\DependencyInjection\ServiceLocator;
 
 /**
  * Action
@@ -35,22 +35,22 @@ use Psr\Container\ContainerInterface;
  */
 class Action implements ActionInterface
 {
-    private ContainerInterface $container;
+    private ServiceLocator $actions;
 
-    public function __construct(ContainerInterface $container)
+    public function __construct(ServiceLocator $actions)
     {
-        $this->container = $container;
+        $this->actions = $actions;
     }
 
     public function factory(string $className): EngineActionInterface
     {
         $className = ClassName::unserialize($className);
 
-        if (!$this->container->has($className)) {
+        if (!$this->actions->has($className)) {
             throw new ActionNotFoundException('Action class ' . $className . ' not found');
         }
 
-        $action = $this->container->get($className);
+        $action = $this->actions->get($className);
         if (!$action instanceof EngineActionInterface) {
             throw new ActionNotFoundException('Action class ' . $className . ' is available but it must implement the interface: ' . EngineConnectionInterface::class);
         }

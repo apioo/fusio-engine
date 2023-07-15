@@ -14,6 +14,7 @@ use Fusio\Engine\Repository;
 use Fusio\Engine\Response;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\tagged_iterator;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\tagged_locator;
 
 return static function (ContainerConfigurator $container) {
     $services = ServiceBuilder::build($container);
@@ -33,10 +34,12 @@ return static function (ContainerConfigurator $container) {
     $services->set(Form\ElementFactory::class);
     $services->alias(Form\ElementFactoryInterface::class, Form\ElementFactory::class);
 
-    $services->set(Factory\Action::class);
+    $services->set(Factory\Action::class)
+        ->arg('$actions', tagged_locator('fusio.action'));
     $services->alias(Factory\ActionInterface::class, Factory\Action::class);
 
-    $services->set(Factory\Connection::class);
+    $services->set(Factory\Connection::class)
+        ->arg('$connections', tagged_locator('fusio.connection'));
     $services->alias(Factory\ConnectionInterface::class, Factory\Connection::class);
 
     $services->set(Action\MemoryQueue::class);
