@@ -34,6 +34,7 @@ use Fusio\Engine\RequestInterface;
 use Fusio\Engine\Response\FactoryInterface;
 use Fusio\Engine\Test\CallbackAction;
 use Fusio\Engine\Test\EngineTestCaseTrait;
+use Fusio\Engine\Tests\Test\TestAdapter;
 use PHPUnit\Framework\TestCase;
 use PSX\Http\Environment\HttpResponseInterface;
 
@@ -132,5 +133,10 @@ class ProcessorTest extends TestCase
             new PhpClass(),
         ];
         return new Processor($resolvers, $this->getActionFactory(), $this->getActionQueue());
+    }
+
+    protected function getAdapterClass(): string
+    {
+        return TestAdapter::class;
     }
 }

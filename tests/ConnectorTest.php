@@ -23,8 +23,10 @@ namespace Fusio\Engine\Tests;
 use Fusio\Engine\Connector;
 use Fusio\Engine\Exception\ConnectionNotFoundException;
 use Fusio\Engine\Model\Connection;
+use Fusio\Engine\Repository\ConnectionInterface;
 use Fusio\Engine\Test\CallbackConnection;
 use Fusio\Engine\Test\EngineTestCaseTrait;
+use Fusio\Engine\Tests\Test\TestAdapter;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -67,7 +69,7 @@ class ConnectorTest extends TestCase
         $connector->getConnection(2);
     }
 
-    protected function getRepository()
+    protected function getRepository(): ConnectionInterface
     {
         $repository = $this->getConnectionRepository();
 
@@ -83,5 +85,10 @@ class ConnectorTest extends TestCase
         $repository->add($connection);
 
         return $repository;
+    }
+
+    protected function getAdapterClass(): string
+    {
+        return TestAdapter::class;
     }
 }

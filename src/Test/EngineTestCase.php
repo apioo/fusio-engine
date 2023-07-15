@@ -31,7 +31,7 @@ use PHPUnit\Framework\TestCase;
  *
  * @psalm-suppress PropertyNotSetInConstructor
  */
-class EngineTestCase extends TestCase
+abstract class EngineTestCase extends TestCase
 {
     use EngineTestCaseTrait;
 }

@@ -163,27 +163,20 @@ trait EngineTestCaseTrait
         return self::$container;
     }
 
-    protected function getAdapterClass(): ?string
+    abstract protected function getAdapterClass(): string;
+
+    protected function newContainer(string $adapterClass): ContainerInterface
     {
-        return null;
-    }
-
-    protected function newContainer(?string $adapterClass): ContainerInterface
-    {
-        if ($adapterClass !== null) {
-            if (!class_exists($adapterClass)) {
-                throw new \InvalidArgumentException('Provided adapter class does not exist');
-            }
-
-            $adapter = new $adapterClass();
-            if (!$adapter instanceof AdapterInterface) {
-                throw new \InvalidArgumentException('Provided class is not an adapter');
-            }
-
-            $containerFile = $adapter->getContainerFile();
-        } else {
-            $containerFile = null;
+        if (!class_exists($adapterClass)) {
+            throw new \InvalidArgumentException('Provided adapter class does not exist');
         }
+
+        $adapter = new $adapterClass();
+        if (!$adapter instanceof AdapterInterface) {
+            throw new \InvalidArgumentException('Provided class is not an adapter');
+        }
+
+        $containerFile = $adapter->getContainerFile();
 
         $targetFile = __DIR__ . '/compiled/container.php';
         $containerConfigCache = new ConfigCache($targetFile, true);
@@ -194,9 +187,7 @@ trait EngineTestCaseTrait
             $loader = new PhpFileLoader($containerBuilder, new FileLocator(__DIR__));
             $loader->load(__DIR__ . '/../../resources/container.php');
             $loader->load(__DIR__ . '/container.php');
-            if ($containerFile !== null) {
-                $loader->load($containerFile);
-            }
+            $loader->load($containerFile);
 
             $containerBuilder->compile();
 

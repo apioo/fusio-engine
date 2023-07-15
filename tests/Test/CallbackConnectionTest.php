@@ -43,4 +43,9 @@ class CallbackConnectionTest extends EngineTestCase
 
         $this->assertInstanceOf('stdClass', $result);
     }
+
+    protected function getAdapterClass(): string
+    {
+        return TestAdapter::class;
+    }
 }

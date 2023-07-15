@@ -35,7 +35,7 @@ return static function (ContainerConfigurator $container) {
 
     $services->set(NullHandler::class);
     $services->set(Logger::class)
-        ->arg('$name', '')
+        ->arg('$name', 'Fusio-Engine')
         ->arg('$handlers', [service(NullHandler::class)]);
     $services->alias(LoggerInterface::class, Logger::class);
 
@@ -46,6 +46,7 @@ return static function (ContainerConfigurator $container) {
 
     $services->set(EngineContainer::class)
         ->public();
+
     $services->set(CallbackConnection::class);
     $services->set(CallbackAction::class);
 };

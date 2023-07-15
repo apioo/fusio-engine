@@ -57,4 +57,9 @@ JSON;
         $this->assertEquals([], $response->getHeaders());
         $this->assertJsonStringEqualsJsonString($expect, $actual, $actual);
     }
+
+    protected function getAdapterClass(): string
+    {
+        return TestAdapter::class;
+    }
 }
