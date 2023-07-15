@@ -20,6 +20,7 @@
 
 namespace Fusio\Engine\Adapter;
 
+use Fusio\Engine\Action\ResolverInterface;
 use Fusio\Engine\ActionInterface;
 use Fusio\Engine\ConnectionInterface;
 use Fusio\Engine\Generator\ProviderInterface as GeneratorProviderInterface;
@@ -53,6 +54,10 @@ class ServiceBuilder
             ->instanceof(ActionInterface::class)
             ->tag('fusio.action')
             ->public();
+
+        $services
+            ->instanceof(ResolverInterface::class)
+            ->tag('fusio.action.resolver');
 
         $services
             ->instanceof(UserProviderInterface::class)

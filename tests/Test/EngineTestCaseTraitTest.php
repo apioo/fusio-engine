@@ -149,18 +149,8 @@ JSON;
         $this->assertInstanceOf(Form\ElementFactoryInterface::class, $this->getFormElementFactory());
     }
 
-    public function testContainer()
+    protected function getAdapterClass(): string
     {
-        $this->assertInstanceOf(ContainerInterface::class, $this->getContainer());
-        $this->assertInstanceOf(Factory\ActionInterface::class, $this->getContainer()->get(Factory\ActionInterface::class));
-        $this->assertInstanceOf(Repository\ActionInterface::class, $this->getContainer()->get(Repository\ActionInterface::class));
-        $this->assertInstanceOf(ProcessorInterface::class, $this->getContainer()->get(ProcessorInterface::class));
-        $this->assertInstanceOf(Factory\ConnectionInterface::class, $this->getContainer()->get(Factory\ConnectionInterface::class));
-        $this->assertInstanceOf(Repository\ConnectionInterface::class, $this->getContainer()->get(Repository\ConnectionInterface::class));
-        $this->assertInstanceOf(ConnectorInterface::class, $this->getContainer()->get(ConnectorInterface::class));
-        $this->assertInstanceOf(Repository\AppInterface::class, $this->getContainer()->get(Repository\AppInterface::class));
-        $this->assertInstanceOf(Repository\UserInterface::class, $this->getContainer()->get(Repository\UserInterface::class));
-        $this->assertInstanceOf(Form\ElementFactoryInterface::class, $this->getContainer()->get(Form\ElementFactoryInterface::class));
-        $this->assertInstanceOf(FactoryInterface::class, $this->getContainer()->get(FactoryInterface::class));
+        return TestAdapter::class;
     }
 }

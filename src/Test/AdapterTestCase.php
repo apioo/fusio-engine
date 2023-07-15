@@ -20,11 +20,12 @@
 
 namespace Fusio\Engine\Test;
 
-use Fusio\Engine\AdapterInterface;
+use Fusio\Engine\ActionInterface;
+use Fusio\Engine\ConnectionInterface;
+use Fusio\Engine\Generator;
+use Fusio\Engine\Payment;
+use Fusio\Engine\User;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\Config\FileLocator;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 
 /**
  * AdapterTestCase
@@ -39,24 +40,31 @@ abstract class AdapterTestCase extends TestCase
 
     public function testDefinition(): void
     {
-        $class = $this->getAdapterClass();
+        $container = $this->getContainer();
 
-        $this->assertTrue(class_exists($class));
+        $connections = $container->get('connections')->getServices();
+        foreach ($connections as $connection) {
+            $this->assertInstanceOf(ConnectionInterface::class, $connection);
+        }
 
-        /** @var AdapterInterface $adapter */
-        $adapter = new $class();
+        $actions = $container->get('actions')->getServices();
+        foreach ($actions as $action) {
+            $this->assertInstanceOf(ActionInterface::class, $action);
+        }
 
-        $this->assertInstanceOf(AdapterInterface::class, $adapter);
+        $users = $container->get('users')->getServices();
+        foreach ($users as $user) {
+            $this->assertInstanceOf(User\ProviderInterface::class, $user);
+        }
 
-        $containerFile = $adapter->getContainerFile();
+        $payments = $container->get('payments')->getServices();
+        foreach ($payments as $payment) {
+            $this->assertInstanceOf(Payment\ProviderInterface::class, $payment);
+        }
 
-        $containerBuilder = new ContainerBuilder();
-        $loader = new PhpFileLoader($containerBuilder, new FileLocator(__DIR__));
-        $loader->load($containerFile);
+        $generators = $container->get('generators')->getServices();
+        foreach ($generators as $generator) {
+            $this->assertInstanceOf(Generator\ProviderInterface::class, $generator);
+        }
     }
-
-    /**
-     * Returns the adapter class name
-     */
-    abstract protected function getAdapterClass(): string;
 }

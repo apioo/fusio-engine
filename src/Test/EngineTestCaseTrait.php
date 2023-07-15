@@ -21,9 +21,8 @@
 namespace Fusio\Engine\Test;
 
 use Fusio\Engine\Action\QueueInterface;
-use Fusio\Engine\Action\Runtime;
+use Fusio\Engine\AdapterInterface;
 use Fusio\Engine\Context;
-use Fusio\Engine\Dependency\EngineContainerFactory;
 use Fusio\Engine\Factory;
 use Fusio\Engine\Form\ElementFactoryInterface;
 use Fusio\Engine\Model\Action;
@@ -39,7 +38,11 @@ use PSX\Http\Request;
 use PSX\Record\Record;
 use PSX\Record\RecordInterface;
 use PSX\Uri\Uri;
-use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\Config\ConfigCache;
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
+use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 
 /**
  * EngineTestCaseTrait
@@ -118,53 +121,96 @@ trait EngineTestCaseTrait
 
     protected function getActionFactory(): Factory\ActionInterface
     {
-        return $this->getContainer()->get(Factory\ActionInterface::class);
+        return $this->getEngineContainer()->getActionFactory();
     }
 
     protected function getActionQueue(): QueueInterface
     {
-        return $this->getContainer()->get(QueueInterface::class);
+        return $this->getEngineContainer()->getActionQueue();
     }
 
     protected function getActionRepository(): Repository\ActionInterface
     {
-        return $this->getContainer()->get(Repository\ActionInterface::class);
+        return $this->getEngineContainer()->getActionRepository();
     }
 
     protected function getConnectionFactory(): Factory\ConnectionInterface
     {
-        return $this->getContainer()->get(Factory\ConnectionInterface::class);
+        return $this->getEngineContainer()->getConnectionFactory();
     }
 
     protected function getConnectionRepository(): Repository\ConnectionInterface
     {
-        return $this->getContainer()->get(Repository\ConnectionInterface::class);
+        return $this->getEngineContainer()->getConnectionRepository();
     }
 
     protected function getFormElementFactory(): ElementFactoryInterface
     {
-        return $this->getContainer()->get(ElementFactoryInterface::class);
+        return $this->getEngineContainer()->getFormElementFactory();
+    }
+
+    protected function getEngineContainer(): EngineContainer
+    {
+        return $this->getContainer()->get(EngineContainer::class);
     }
 
     protected function getContainer(): ContainerInterface
     {
         if (self::$container === null) {
-            self::$container = $this->newContainer();
+            self::$container = $this->newContainer($this->getAdapterClass());
         }
 
         return self::$container;
     }
 
-    protected function newContainer(): ContainerInterface
+    protected function getAdapterClass(): ?string
     {
-        $configure = function (Runtime $runtime, Container $container): void {
-            $this->configure($runtime, $container);
-        };
-
-        return (new EngineContainerFactory($configure))->factory();
+        return null;
     }
 
-    protected function configure(Runtime $runtime, Container $container): void
+    protected function newContainer(?string $adapterClass): ContainerInterface
     {
+        if ($adapterClass !== null) {
+            if (!class_exists($adapterClass)) {
+                throw new \InvalidArgumentException('Provided adapter class does not exist');
+            }
+
+            $adapter = new $adapterClass();
+            if (!$adapter instanceof AdapterInterface) {
+                throw new \InvalidArgumentException('Provided class is not an adapter');
+            }
+
+            $containerFile = $adapter->getContainerFile();
+        } else {
+            $containerFile = null;
+        }
+
+        $targetFile = __DIR__ . '/compiled/container.php';
+        $containerConfigCache = new ConfigCache($targetFile, true);
+
+        if (!$containerConfigCache->isFresh()) {
+            $containerBuilder = new ContainerBuilder();
+
+            $loader = new PhpFileLoader($containerBuilder, new FileLocator(__DIR__));
+            $loader->load(__DIR__ . '/../../resources/container.php');
+            $loader->load(__DIR__ . '/container.php');
+            if ($containerFile !== null) {
+                $loader->load($containerFile);
+            }
+
+            $containerBuilder->compile();
+
+            $dumper = new PhpDumper($containerBuilder);
+
+            $containerConfigCache->write($dumper->dump(), $containerBuilder->getResources());
+        }
+
+        require_once $targetFile;
+
+        if (!class_exists('ProjectServiceContainer')) {
+            throw new \RuntimeException('Could not build container');
+        }
+
+        return new \ProjectServiceContainer();
     }
 }

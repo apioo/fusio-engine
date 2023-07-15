@@ -20,18 +20,24 @@
 
 namespace Fusio\Engine\Test;
 
-use PHPUnit\Framework\TestCase;
-
 /**
- * EngineTestCase
+ * ProviderCollection
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.apache.org/licenses/LICENSE-2.0
  * @link    https://www.fusio-project.org
- *
- * @psalm-suppress PropertyNotSetInConstructor
  */
-abstract class EngineTestCase extends TestCase
+class ProviderCollection
 {
-    use EngineTestCaseTrait;
+    private iterable $services;
+
+    public function __construct(iterable $services)
+    {
+        $this->services = $services;
+    }
+
+    public function getServices(): iterable
+    {
+        return $this->services;
+    }
 }
