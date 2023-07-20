@@ -20,14 +20,16 @@
 
 namespace Fusio\Engine\User;
 
+use PSX\Uri\Uri;
+
 /**
- * Describes a remote identity provider which can be used to authorize an user through a remote system so that the
- * developer dont need to create an account. Usually this is done through OAuth2, which has the following flow:
+ * Describes an identity provider (IdP) which can be used to authorize a user through a remote system so that the
+ * developer don`t need to register an account. By default we use OAuth2 or OpenID connect to get such information but
+ * you can adjust this for a specific provider
  * 
- * - The App redirects the user to the authorization endpoint of the remote provider (i.e. Google)
- * - The user authenticates and returns via redirect to the App
- * - The App calls the API endpoint and provides the fitting data to Fusio
- * - If everything is ok Fusio will get additional information and create a new account
+ * - The user gets redirected to the authorization endpoint of the remote provider (i.e. Google)
+ * - The user authenticates and returns via redirect to Fusio
+ * - Fusio calls the API endpoint and obtains the fitting user info object
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.apache.org/licenses/LICENSE-2.0
@@ -35,18 +37,29 @@ namespace Fusio\Engine\User;
  */
 interface ProviderInterface
 {
-    public const PROVIDER_SYSTEM   = 0x1;
-    public const PROVIDER_FACEBOOK = 0x2;
-    public const PROVIDER_GOOGLE   = 0x3;
-    public const PROVIDER_GITHUB   = 0x4;
+    /**
+     * Returns the default authorization uri if available, otherwise the user can also configure this url
+     */
+    public function getAuthorizationUri(): ?string;
 
     /**
-     * Returns an id to identify the provider. This identifier is used in the user table
+     * Returns the default token uri if available, otherwise the user can also configure this url
      */
-    public function getId(): int;
+    public function getTokenUri(): ?string;
 
     /**
-     * Requests user information of a remote provider
+     * Returns the default user info uri if available, otherwise the user can also configure this url
      */
-    public function requestUser(string $code, string $clientId, string $redirectUri): ?UserDetails;
+    public function getUserInfoUri(): ?string;
+
+    /**
+     * Provides a way to modify the redirect url, by default we use the default OAuth2 parameters, if the provider needs
+     * other parameters you can implement this method
+     */
+    public function getRedirectUri(Uri $uri): Uri;
+
+    /**
+     * Requests user information of the remote provider and returns a user info object
+     */
+    public function requestUserInfo(ConfigurationInterface $configuration, string $code, string $redirectUri): ?UserInfo;
 }

@@ -21,37 +21,19 @@
 namespace Fusio\Engine\User;
 
 /**
- * UserDetails
+ * Contains a specific identity provider configuration
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.apache.org/licenses/LICENSE-2.0
  * @link    https://www.fusio-project.org
  */
-class UserDetails
+interface ConfigurationInterface
 {
-    private string $id;
-    private string $userName;
-    private ?string $email;
+    public function getClientId(): string;
 
-    public function __construct(string $id, string $userName, ?string $email)
-    {
-        $this->id = $id;
-        $this->userName = $userName;
-        $this->email = $email;
-    }
+    public function getClientSecret(): string;
 
-    public function getId(): string
-    {
-        return $this->id;
-    }
+    public function getAuthorizationUri(): string;
 
-    public function getUserName(): string
-    {
-        return $this->userName;
-    }
-
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
+    public function getTokenUri(): string;
 }
