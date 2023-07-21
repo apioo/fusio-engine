@@ -36,4 +36,6 @@ interface ConfigurationInterface
     public function getAuthorizationUri(): string;
 
     public function getTokenUri(): string;
+
+    public function getUserInfoUri(): string;
 }

@@ -33,13 +33,15 @@ class Configuration implements ConfigurationInterface
     private string $clientSecret;
     private string $authorizationUri;
     private string $tokenUri;
+    private string $userInfoUri;
 
-    public function __construct(string $clientId, string $clientSecret, string $authorizationUri, string $tokenUri)
+    public function __construct(string $clientId, string $clientSecret, string $authorizationUri, string $tokenUri, string $userInfoUri)
     {
         $this->clientId = $clientId;
         $this->clientSecret = $clientSecret;
         $this->authorizationUri = $authorizationUri;
         $this->tokenUri = $tokenUri;
+        $this->userInfoUri = $userInfoUri;
     }
 
     public function getClientId(): string
@@ -60,5 +62,10 @@ class Configuration implements ConfigurationInterface
     public function getTokenUri(): string
     {
         return $this->tokenUri;
+    }
+
+    public function getUserInfoUri(): string
+    {
+        return $this->userInfoUri;
     }
 }

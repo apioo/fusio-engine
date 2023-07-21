@@ -71,6 +71,45 @@ abstract class ProviderAbstract implements ProviderInterface
         return $uri;
     }
 
+    public function requestUserInfo(ConfigurationInterface $configuration, string $code, string $redirectUri): ?UserInfo
+    {
+        $params = [
+            'grant_type'    => 'authorization_code',
+            'code'          => $code,
+            'client_id'     => $configuration->getClientId(),
+            'client_secret' => $configuration->getClientSecret(),
+            'redirect_uri'  => $redirectUri,
+        ];
+
+        $accessToken = $this->obtainAccessToken($configuration->getTokenUri(), $params);
+        $data = $this->obtainUserInfo($configuration->getUserInfoUri(), $accessToken);
+
+        $id = $data->{$this->getIdProperty()} ?? null;
+        $name = $data->{$this->getNameProperty()} ?? null;
+        $email = $data->{$this->getEmailProperty()} ?? null;
+
+        if (!empty($id) && !empty($name)) {
+            return new UserInfo($id, $name, $email);
+        } else {
+            return null;
+        }
+    }
+
+    protected function getIdProperty(): string
+    {
+        return 'id';
+    }
+
+    protected function getNameProperty(): string
+    {
+        return 'name';
+    }
+
+    protected function getEmailProperty(): string
+    {
+        return 'email';
+    }
+
     protected function obtainUserInfo(string $userInfoUrl, string $accessToken, ?array $parameters = null): \stdClass
     {
         $headers = [
