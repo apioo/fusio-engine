@@ -82,7 +82,7 @@ abstract class ProviderAbstract implements ProviderInterface
         ];
 
         $accessToken = $this->obtainAccessToken($configuration->getTokenUri(), $params);
-        $data = $this->obtainUserInfo($configuration->getUserInfoUri(), $accessToken);
+        $data = $this->obtainUserInfo($configuration->getUserInfoUri(), $accessToken, $this->getUserInfoParameters());
 
         $id = $data->{$this->getIdProperty()} ?? null;
         $name = $data->{$this->getNameProperty()} ?? null;
@@ -93,6 +93,11 @@ abstract class ProviderAbstract implements ProviderInterface
         } else {
             return null;
         }
+    }
+
+    protected function getUserInfoParameters(): array
+    {
+        return [];
     }
 
     protected function getIdProperty(): string
