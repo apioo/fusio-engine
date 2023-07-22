@@ -97,7 +97,7 @@ abstract class ProviderAbstract implements ProviderInterface
         ];
 
         $accessToken = $this->obtainAccessToken($configuration->getTokenUri(), $params);
-        $data = $this->obtainUserInfo($configuration->getUserInfoUri(), $accessToken, $this->getUserInfoParameters($configuration, $accessToken));
+        $data = $this->obtainUserInfo($configuration->getUserInfoUri(), $accessToken, $this->getUserInfoParameters($configuration));
 
         $id = $data->{$configuration->getIdProperty()} ?? null;
         $name = $data->{$configuration->getNameProperty()} ?? null;
@@ -110,7 +110,7 @@ abstract class ProviderAbstract implements ProviderInterface
         }
     }
 
-    protected function getUserInfoParameters(ConfigurationInterface $configuration, string $accessToken): array
+    protected function getUserInfoParameters(ConfigurationInterface $configuration): array
     {
         return [];
     }
