@@ -21,37 +21,51 @@
 namespace Fusio\Engine\User;
 
 /**
- * UserDetails
+ * Configuration
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.apache.org/licenses/LICENSE-2.0
  * @link    https://www.fusio-project.org
  */
-class UserDetails
+class Configuration implements ConfigurationInterface
 {
-    private string $id;
-    private string $userName;
-    private ?string $email;
+    private string $clientId;
+    private string $clientSecret;
+    private string $authorizationUri;
+    private string $tokenUri;
+    private string $userInfoUri;
 
-    public function __construct(string $id, string $userName, ?string $email)
+    public function __construct(string $clientId, string $clientSecret, string $authorizationUri, string $tokenUri, string $userInfoUri)
     {
-        $this->id = $id;
-        $this->userName = $userName;
-        $this->email = $email;
+        $this->clientId = $clientId;
+        $this->clientSecret = $clientSecret;
+        $this->authorizationUri = $authorizationUri;
+        $this->tokenUri = $tokenUri;
+        $this->userInfoUri = $userInfoUri;
     }
 
-    public function getId(): string
+    public function getClientId(): string
     {
-        return $this->id;
+        return $this->clientId;
     }
 
-    public function getUserName(): string
+    public function getClientSecret(): string
     {
-        return $this->userName;
+        return $this->clientSecret;
     }
 
-    public function getEmail(): ?string
+    public function getAuthorizationUri(): string
     {
-        return $this->email;
+        return $this->authorizationUri;
+    }
+
+    public function getTokenUri(): string
+    {
+        return $this->tokenUri;
+    }
+
+    public function getUserInfoUri(): string
+    {
+        return $this->userInfoUri;
     }
 }
