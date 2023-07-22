@@ -34,14 +34,20 @@ class Configuration implements ConfigurationInterface
     private string $authorizationUri;
     private string $tokenUri;
     private string $userInfoUri;
+    private string $idProperty;
+    private string $nameProperty;
+    private string $emailProperty;
 
-    public function __construct(string $clientId, string $clientSecret, string $authorizationUri, string $tokenUri, string $userInfoUri)
+    public function __construct(string $clientId, string $clientSecret, string $authorizationUri, string $tokenUri, string $userInfoUri, string $idProperty, string $nameProperty, string $emailProperty)
     {
         $this->clientId = $clientId;
         $this->clientSecret = $clientSecret;
         $this->authorizationUri = $authorizationUri;
         $this->tokenUri = $tokenUri;
         $this->userInfoUri = $userInfoUri;
+        $this->idProperty = $idProperty;
+        $this->nameProperty = $nameProperty;
+        $this->emailProperty = $emailProperty;
     }
 
     public function getClientId(): string
@@ -67,5 +73,20 @@ class Configuration implements ConfigurationInterface
     public function getUserInfoUri(): string
     {
         return $this->userInfoUri;
+    }
+
+    public function getIdProperty(): string
+    {
+        return $this->idProperty;
+    }
+
+    public function getNameProperty(): string
+    {
+        return $this->nameProperty;
+    }
+
+    public function getEmailProperty(): string
+    {
+        return $this->emailProperty;
     }
 }

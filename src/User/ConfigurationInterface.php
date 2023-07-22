@@ -38,4 +38,10 @@ interface ConfigurationInterface
     public function getTokenUri(): string;
 
     public function getUserInfoUri(): string;
+
+    public function getIdProperty(): string;
+
+    public function getNameProperty(): string;
+
+    public function getEmailProperty(): string;
 }

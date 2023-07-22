@@ -66,6 +66,21 @@ abstract class ProviderAbstract implements ProviderInterface
         return null;
     }
 
+    public function getIdProperty(): string
+    {
+        return 'id';
+    }
+
+    public function getNameProperty(): string
+    {
+        return 'name';
+    }
+
+    public function getEmailProperty(): string
+    {
+        return 'email';
+    }
+
     public function getRedirectUri(Uri $uri): Uri
     {
         return $uri;
@@ -82,11 +97,11 @@ abstract class ProviderAbstract implements ProviderInterface
         ];
 
         $accessToken = $this->obtainAccessToken($configuration->getTokenUri(), $params);
-        $data = $this->obtainUserInfo($configuration->getUserInfoUri(), $accessToken, $this->getUserInfoParameters());
+        $data = $this->obtainUserInfo($configuration->getUserInfoUri(), $accessToken, $this->getUserInfoParameters($configuration, $accessToken));
 
-        $id = $data->{$this->getIdProperty()} ?? null;
-        $name = $data->{$this->getNameProperty()} ?? null;
-        $email = $data->{$this->getEmailProperty()} ?? null;
+        $id = $data->{$configuration->getIdProperty()} ?? null;
+        $name = $data->{$configuration->getNameProperty()} ?? null;
+        $email = $data->{$configuration->getEmailProperty()} ?? null;
 
         if (!empty($id) && !empty($name)) {
             return new UserInfo($id, $name, $email);
@@ -95,24 +110,9 @@ abstract class ProviderAbstract implements ProviderInterface
         }
     }
 
-    protected function getUserInfoParameters(): array
+    protected function getUserInfoParameters(ConfigurationInterface $configuration, string $accessToken): array
     {
         return [];
-    }
-
-    protected function getIdProperty(): string
-    {
-        return 'id';
-    }
-
-    protected function getNameProperty(): string
-    {
-        return 'name';
-    }
-
-    protected function getEmailProperty(): string
-    {
-        return 'email';
     }
 
     protected function obtainUserInfo(string $userInfoUrl, string $accessToken, ?array $parameters = null): \stdClass

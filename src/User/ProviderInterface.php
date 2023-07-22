@@ -53,6 +53,21 @@ interface ProviderInterface
     public function getUserInfoUri(): ?string;
 
     /**
+     * Returns the id property of the user info response
+     */
+    public function getIdProperty(): string;
+
+    /**
+     * Returns the name property of the user info response
+     */
+    public function getNameProperty(): string;
+
+    /**
+     * Returns the email property of the user info response
+     */
+    public function getEmailProperty(): string;
+
+    /**
      * Provides a way to modify the redirect url, by default we use the default OAuth2 parameters, if the provider needs
      * other parameters you can implement this method
      */
