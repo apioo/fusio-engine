@@ -88,15 +88,7 @@ abstract class ProviderAbstract implements ProviderInterface
 
     public function requestUserInfo(ConfigurationInterface $configuration, string $code, string $redirectUri): ?UserInfo
     {
-        $params = [
-            'grant_type'    => 'authorization_code',
-            'code'          => $code,
-            'client_id'     => $configuration->getClientId(),
-            'client_secret' => $configuration->getClientSecret(),
-            'redirect_uri'  => $redirectUri,
-        ];
-
-        $accessToken = $this->obtainAccessToken($configuration->getTokenUri(), $params);
+        $accessToken = $this->obtainAccessToken($configuration->getTokenUri(), $this->getAccessTokenParameters($configuration, $code, $redirectUri));
         $data = $this->obtainUserInfo($configuration->getUserInfoUri(), $accessToken, $this->getUserInfoParameters($configuration));
 
         $id = $data->{$configuration->getIdProperty()} ?? null;
@@ -108,6 +100,16 @@ abstract class ProviderAbstract implements ProviderInterface
         } else {
             return null;
         }
+    }
+
+    protected function getAccessTokenParameters(ConfigurationInterface $configuration, string $code, string $redirectUri): array
+    {
+        return [
+            'grant_type'   => 'authorization_code',
+            'code'         => $code,
+            'client_id'    => $configuration->getClientId(),
+            'redirect_uri' => $redirectUri,
+        ];
     }
 
     protected function getUserInfoParameters(ConfigurationInterface $configuration): array
