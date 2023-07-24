@@ -18,40 +18,17 @@
  * limitations under the License.
  */
 
-namespace Fusio\Engine\User;
+namespace Fusio\Engine\Identity;
 
 /**
- * UserInfo
+ * Method
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.apache.org/licenses/LICENSE-2.0
  * @link    https://www.fusio-project.org
  */
-class UserInfo
+enum Method
 {
-    private string $id;
-    private string $name;
-    private ?string $email;
-
-    public function __construct(string $id, string $name, ?string $email)
-    {
-        $this->id = $id;
-        $this->name = $name;
-        $this->email = $email;
-    }
-
-    public function getId(): string
-    {
-        return $this->id;
-    }
-
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
+    case GET;
+    case POST;
 }

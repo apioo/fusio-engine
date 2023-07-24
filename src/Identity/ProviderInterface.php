@@ -18,8 +18,10 @@
  * limitations under the License.
  */
 
-namespace Fusio\Engine\User;
+namespace Fusio\Engine\Identity;
 
+use Fusio\Engine\ConfigurableInterface;
+use Fusio\Engine\ParametersInterface;
 use PSX\Uri\Uri;
 
 /**
@@ -35,46 +37,16 @@ use PSX\Uri\Uri;
  * @license http://www.apache.org/licenses/LICENSE-2.0
  * @link    https://www.fusio-project.org
  */
-interface ProviderInterface
+interface ProviderInterface extends ConfigurableInterface
 {
-    /**
-     * Returns the default authorization uri if available, otherwise the user can also configure this url
-     */
-    public function getAuthorizationUri(): ?string;
-
-    /**
-     * Returns the default token uri if available, otherwise the user can also configure this url
-     */
-    public function getTokenUri(): ?string;
-
-    /**
-     * Returns the default user info uri if available, otherwise the user can also configure this url
-     */
-    public function getUserInfoUri(): ?string;
-
-    /**
-     * Returns the id property of the user info response
-     */
-    public function getIdProperty(): string;
-
-    /**
-     * Returns the name property of the user info response
-     */
-    public function getNameProperty(): string;
-
-    /**
-     * Returns the email property of the user info response
-     */
-    public function getEmailProperty(): string;
-
     /**
      * Provides a way to modify the redirect url, by default we use the default OAuth2 parameters, if the provider needs
      * other parameters you can implement this method
      */
-    public function getRedirectUri(Uri $uri): Uri;
+    public function getRedirectUri(ParametersInterface $configuration, string $state, string $redirectUri): Uri;
 
     /**
      * Requests user information of the remote provider and returns a user info object
      */
-    public function requestUserInfo(ConfigurationInterface $configuration, string $code, string $redirectUri): ?UserInfo;
+    public function requestUserInfo(ParametersInterface $configuration, string $code, string $redirectUri): ?UserInfo;
 }

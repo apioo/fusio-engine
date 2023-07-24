@@ -18,8 +18,12 @@
  * limitations under the License.
  */
 
-namespace Fusio\Engine\User;
+namespace Fusio\Engine\Identity;
 
+use Fusio\Engine\Form\BuilderInterface;
+use Fusio\Engine\Form\ElementFactoryInterface;
+use Fusio\Engine\NameBuilder;
+use Fusio\Engine\ParametersInterface;
 use PSX\Http\Client\ClientInterface;
 use PSX\Http\Client\GetRequest;
 use PSX\Http\Client\PostRequest;
@@ -51,49 +55,42 @@ abstract class ProviderAbstract implements ProviderInterface
         $this->httpClient = $httpClient;
     }
 
-    public function getAuthorizationUri(): ?string
+    public function getRedirectUri(ParametersInterface $configuration, string $state, string $redirectUri): Uri
     {
-        return null;
-    }
+        $authorizationUri = $configuration->get('authorization_uri');
+        if (empty($authorizationUri)) {
+            $authorizationUri = $this->getAuthorizationUri();
+        }
 
-    public function getTokenUri(): ?string
-    {
-        return null;
-    }
+        $uri = Url::parse($authorizationUri);
+        $uri = $uri->withParameters([
+            'response_type' => 'code',
+            'client_id' => $configuration->get('client_id'),
+            'state' => $state,
+            'redirect_uri' => $redirectUri,
+        ]);
 
-    public function getUserInfoUri(): ?string
-    {
-        return null;
-    }
-
-    public function getIdProperty(): string
-    {
-        return 'id';
-    }
-
-    public function getNameProperty(): string
-    {
-        return 'name';
-    }
-
-    public function getEmailProperty(): string
-    {
-        return 'email';
-    }
-
-    public function getRedirectUri(Uri $uri): Uri
-    {
         return $uri;
     }
 
-    public function requestUserInfo(ConfigurationInterface $configuration, string $code, string $redirectUri): ?UserInfo
+    public function requestUserInfo(ParametersInterface $configuration, string $code, string $redirectUri): ?UserInfo
     {
-        $accessToken = $this->obtainAccessToken($configuration->getTokenUri(), $this->getAccessTokenParameters($configuration, $code, $redirectUri));
-        $data = $this->obtainUserInfo($configuration->getUserInfoUri(), $accessToken, $this->getUserInfoParameters($configuration));
+        $tokenUri = $configuration->get('token_uri');
+        if (empty($tokenUri)) {
+            $tokenUri = $this->getTokenUri();
+        }
 
-        $id = $data->{$configuration->getIdProperty()} ?? null;
-        $name = $data->{$configuration->getNameProperty()} ?? null;
-        $email = $data->{$configuration->getEmailProperty()} ?? null;
+        $userInfoUri = $configuration->get('user_info_uri');
+        if (empty($userInfoUri)) {
+            $userInfoUri = $this->getUserInfoUri();
+        }
+
+        $accessToken = $this->obtainAccessToken($tokenUri, $this->getAccessTokenParameters($configuration, $code, $redirectUri));
+        $data = $this->obtainUserInfo($userInfoUri, $accessToken, $this->getUserInfoParameters($configuration));
+
+        $id = $this->getProperty($data, $configuration->get('id_property'), $this->getIdProperty());
+        $name = $this->getProperty($data, $configuration->get('name_property'), $this->getNameProperty());
+        $email = $this->getProperty($data, $configuration->get('email_property'), $this->getEmailProperty());
 
         if (!empty($id) && !empty($name)) {
             return new UserInfo($id, $name, $email);
@@ -102,17 +99,64 @@ abstract class ProviderAbstract implements ProviderInterface
         }
     }
 
-    protected function getAccessTokenParameters(ConfigurationInterface $configuration, string $code, string $redirectUri): array
+    public function getName(): string
+    {
+        return NameBuilder::fromClass(static::class);
+    }
+
+    public function configure(BuilderInterface $builder, ElementFactoryInterface $elementFactory): void
+    {
+        $builder->add($elementFactory->newInput('client_id', 'Client-ID', 'text', 'Client-ID'));
+        $builder->add($elementFactory->newInput('client_secret', 'Client-Secret', 'text', 'Client-Secret'));
+        $builder->add($elementFactory->newInput('authorization_uri', 'Authorization-Uri', 'text', 'Client-Secret'));
+        $builder->add($elementFactory->newInput('token_uri', 'Token-Uri', 'text', 'Client-Secret'));
+        $builder->add($elementFactory->newInput('user_info_uri', 'User-Info-Uri', 'text', 'Client-Secret'));
+        $builder->add($elementFactory->newInput('id_property', 'ID-Property', 'text', 'Optional name of the id property from the user-info response'));
+        $builder->add($elementFactory->newInput('name_property', 'Name-Property', 'text', 'Optional name of the name property from the user-info response'));
+        $builder->add($elementFactory->newInput('email_property', 'Email-Property', 'text', 'Optional name of the email property from the user-info response'));
+    }
+
+    protected function getAuthorizationUri(): ?string
+    {
+        return null;
+    }
+
+    protected function getTokenUri(): ?string
+    {
+        return null;
+    }
+
+    protected function getUserInfoUri(): ?string
+    {
+        return null;
+    }
+
+    protected function getIdProperty(): string
+    {
+        return 'id';
+    }
+
+    protected function getNameProperty(): string
+    {
+        return 'name';
+    }
+
+    protected function getEmailProperty(): string
+    {
+        return 'email';
+    }
+
+    protected function getAccessTokenParameters(ParametersInterface $configuration, string $code, string $redirectUri): array
     {
         return [
             'grant_type'   => 'authorization_code',
             'code'         => $code,
-            'client_id'    => $configuration->getClientId(),
+            'client_id'    => $configuration->get('client_id'),
             'redirect_uri' => $redirectUri,
         ];
     }
 
-    protected function getUserInfoParameters(ConfigurationInterface $configuration): array
+    protected function getUserInfoParameters(ParametersInterface $configuration): array
     {
         return [];
     }
@@ -146,12 +190,6 @@ abstract class ProviderAbstract implements ProviderInterface
     {
         $data = $this->requestAccessToken($tokenUrl, $params, $method);
         return $this->parseAccessToken($data);
-    }
-
-    protected function obtainIDToken(string $tokenUrl, array $params, Method $method = Method::POST): string
-    {
-        $data = $this->requestAccessToken($tokenUrl, $params, $method);
-        return $this->parseIDToken($data);
     }
 
     protected function requestAccessToken(string $tokenUrl, array $params, Method $method = Method::POST): array
@@ -193,17 +231,6 @@ abstract class ProviderAbstract implements ProviderInterface
         throw new StatusCode\BadRequestException('Could not obtain access token');
     }
 
-    private function parseIDToken(array $data): string
-    {
-        if (isset($data['id_token']) && is_string($data['id_token'])) {
-            return $data['id_token'];
-        } elseif (isset($data['error']) && is_string($data['error'])) {
-            $this->assertError($data);
-        }
-
-        throw new StatusCode\BadRequestException('Could not obtain id token');
-    }
-
     private function assertError(array $data): void
     {
         $error = $data['error'] ?? null;
@@ -211,5 +238,14 @@ abstract class ProviderAbstract implements ProviderInterface
         $errorUri = $data['error_uri'] ?? null;
 
         throw new StatusCode\BadRequestException('Could not obtain token: ' . implode(' - ', array_filter([$error, $errorDescription, $errorUri])));
+    }
+
+    private function getProperty(\stdClass $data, ?string $propertyName, string $fallback): mixed
+    {
+        if (empty($propertyName)) {
+            return $fallback;
+        }
+
+        return $data->{$propertyName} ?? $fallback;
     }
 }
