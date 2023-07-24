@@ -20,6 +20,7 @@
 
 namespace Fusio\Engine\Identity;
 
+use Fusio\Engine\Exception\ConfigurationException;
 use Fusio\Engine\Form\BuilderInterface;
 use Fusio\Engine\Form\ElementFactoryInterface;
 use Fusio\Engine\NameBuilder;
@@ -59,7 +60,7 @@ abstract class ProviderAbstract implements ProviderInterface
     {
         $authorizationUri = $configuration->get('authorization_uri');
         if (empty($authorizationUri)) {
-            $authorizationUri = $this->getAuthorizationUri();
+            $authorizationUri = $this->getAuthorizationUri() ?? throw new ConfigurationException('Provided no default authorization uri');
         }
 
         $uri = Url::parse($authorizationUri);
@@ -77,12 +78,12 @@ abstract class ProviderAbstract implements ProviderInterface
     {
         $tokenUri = $configuration->get('token_uri');
         if (empty($tokenUri)) {
-            $tokenUri = $this->getTokenUri();
+            $tokenUri = $this->getTokenUri() ?? throw new ConfigurationException('Provided no default token uri');
         }
 
         $userInfoUri = $configuration->get('user_info_uri');
         if (empty($userInfoUri)) {
-            $userInfoUri = $this->getUserInfoUri();
+            $userInfoUri = $this->getUserInfoUri() ?? throw new ConfigurationException('Provided no default user info uri');
         }
 
         $accessToken = $this->obtainAccessToken($tokenUri, $this->getAccessTokenParameters($configuration, $code, $redirectUri));

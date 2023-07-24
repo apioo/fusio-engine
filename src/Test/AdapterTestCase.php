@@ -23,8 +23,8 @@ namespace Fusio\Engine\Test;
 use Fusio\Engine\ActionInterface;
 use Fusio\Engine\ConnectionInterface;
 use Fusio\Engine\Generator;
+use Fusio\Engine\Identity;
 use Fusio\Engine\Payment;
-use Fusio\Engine\User;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -54,7 +54,7 @@ abstract class AdapterTestCase extends TestCase
 
         $users = $container->get('users')->getServices();
         foreach ($users as $user) {
-            $this->assertInstanceOf(User\ProviderInterface::class, $user);
+            $this->assertInstanceOf(Identity\ProviderInterface::class, $user);
         }
 
         $payments = $container->get('payments')->getServices();
