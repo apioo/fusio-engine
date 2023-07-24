@@ -25,7 +25,7 @@ use Fusio\Engine\ActionInterface;
 use Fusio\Engine\ConnectionInterface;
 use Fusio\Engine\Generator\ProviderInterface as GeneratorProviderInterface;
 use Fusio\Engine\Payment\ProviderInterface as PaymentProviderInterface;
-use Fusio\Engine\User\ProviderInterface as UserProviderInterface;
+use Fusio\Engine\Identity\ProviderInterface as IdentityProviderInterface;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ServicesConfigurator;
 
@@ -60,8 +60,8 @@ class ServiceBuilder
             ->tag('fusio.action.resolver');
 
         $services
-            ->instanceof(UserProviderInterface::class)
-            ->tag('fusio.user');
+            ->instanceof(IdentityProviderInterface::class)
+            ->tag('fusio.identity');
 
         $services
             ->instanceof(PaymentProviderInterface::class)
