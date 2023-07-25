@@ -242,12 +242,12 @@ abstract class ProviderAbstract implements ProviderInterface
         throw new StatusCode\BadRequestException('Could not obtain token: ' . implode(' - ', array_filter([$error, $errorDescription, $errorUri])));
     }
 
-    private function getProperty(\stdClass $data, ?string $propertyName, string $fallback): mixed
+    private function getProperty(\stdClass $data, ?string $propertyName, string $fallbackPropertyName): mixed
     {
         if (empty($propertyName)) {
-            return $fallback;
+            return $data->{$fallbackPropertyName} ?? null;
         }
 
-        return $data->{$propertyName} ?? $fallback;
+        return $data->{$propertyName} ?? ($data->{$fallbackPropertyName} ?? null);
     }
 }
