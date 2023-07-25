@@ -150,10 +150,11 @@ abstract class ProviderAbstract implements ProviderInterface
     protected function getAccessTokenParameters(ParametersInterface $configuration, string $code, string $redirectUri): array
     {
         return [
-            'grant_type'   => 'authorization_code',
-            'code'         => $code,
-            'client_id'    => $configuration->get('client_id'),
-            'redirect_uri' => $redirectUri,
+            'grant_type'    => 'authorization_code',
+            'code'          => $code,
+            'client_id'     => $configuration->get('client_id'),
+            'client_secret' => $configuration->get('client_secret'),
+            'redirect_uri'  => $redirectUri,
         ];
     }
 
