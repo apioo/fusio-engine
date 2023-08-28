@@ -2,7 +2,7 @@
   "name": "fusio/engine",
   "description": "Engine of the Fusio API system",
   "homepage": "https://www.fusio-project.org",
-  "license": "AGPL-3.0-only",
+  "license": "Apache-2.0",
   "authors": [
     {
       "name": "Christoph Kappestein",
