@@ -23,8 +23,6 @@ namespace Fusio\Engine;
 use Fusio\Engine\Action\ResolverInterface;
 use Fusio\Engine\Exception\ActionNotFoundException;
 use Fusio\Engine\Exception\FactoryResolveException;
-use Fusio\Engine\Factory;
-use Fusio\Engine\Model;
 use PSX\Http\Environment\HttpResponse;
 
 /**
@@ -53,12 +51,12 @@ class Processor implements ProcessorInterface
         }
     }
 
-    public function execute(string|int $actionId, RequestInterface $request, ContextInterface $context): mixed
+    public function execute(string|int $actionId, RequestInterface $request, ContextInterface $context, bool $allowAsync = true): mixed
     {
         $action = $this->getAction($actionId);
         $parameters = new Parameters($action->getConfig());
 
-        if ($action->isAsync()) {
+        if ($allowAsync && $action->isAsync()) {
             $this->queue->push($actionId, $request, $context);
 
             return new HttpResponse(202, [], [
