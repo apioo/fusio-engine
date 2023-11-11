@@ -29,7 +29,6 @@ use PSX\Http\Client\ClientInterface;
 use PSX\Http\Client\GetRequest;
 use PSX\Http\Client\PostRequest;
 use PSX\Http\Exception as StatusCode;
-use PSX\Json\Parser;
 use PSX\Uri\Uri;
 use PSX\Uri\Url;
 
@@ -180,7 +179,7 @@ abstract class ProviderAbstract implements ProviderInterface
             throw new StatusCode\BadRequestException('Could not request user info, the server returned an invalid HTTP code: ' . $response->getStatusCode());
         }
 
-        $data = Parser::decode((string) $response->getBody());
+        $data = \json_decode((string) $response->getBody());
         if (!$data instanceof \stdClass) {
             throw new StatusCode\BadRequestException('Could not request user info, the server returned an invalid JSON payload');
         }
@@ -214,7 +213,7 @@ abstract class ProviderAbstract implements ProviderInterface
             throw new StatusCode\BadRequestException('Could not request access token, the server returned a wrong HTTP code: ' . $response->getStatusCode());
         }
 
-        $data = Parser::decode((string) $response->getBody(), true);
+        $data = \json_decode((string) $response->getBody(), true);
         if (!is_array($data)) {
             throw new StatusCode\BadRequestException('Could not request access token, the server returned an invalid JSON payload');
         }
