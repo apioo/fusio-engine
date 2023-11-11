@@ -18,7 +18,6 @@
     "fusio/model": "^3.0",
     "psx/http": "^4.0",
     "psx/record": "^3.0",
-    "psx/schema": "^5.0",
     "symfony/dependency-injection": "^5.0|^6.0",
     "symfony/config": "^5.0|^6.0"
   },

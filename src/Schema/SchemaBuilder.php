@@ -23,7 +23,6 @@ namespace Fusio\Engine\Schema;
 use Fusio\Model\Backend\OperationParameters;
 use Fusio\Model\Backend\OperationSchema;
 use Fusio\Model\Backend\SchemaSource;
-use PSX\Schema\Type;
 
 /**
  * SchemaBuilder
