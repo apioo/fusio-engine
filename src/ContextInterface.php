@@ -55,6 +55,11 @@ interface ContextInterface
     public function getUser(): Model\UserInterface;
 
     /**
+     * Returns the tenant id of the current request
+     */
+    public function getTenantId(): ?string;
+
+    /**
      * Returns the current action
      */
     public function getAction(): ?Model\ActionInterface;

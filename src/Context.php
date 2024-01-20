@@ -20,8 +20,6 @@
 
 namespace Fusio\Engine;
 
-use Fusio\Engine\Model;
-
 /**
  * Context
  *
@@ -35,15 +33,17 @@ class Context implements ContextInterface
     private string $baseUrl;
     private Model\AppInterface $app;
     private Model\UserInterface $user;
+    private ?string $tenantId;
     private ?Model\ActionInterface $action = null;
     private mixed $connection;
 
-    public function __construct(int $operationId, string $baseUrl, Model\AppInterface $app, Model\UserInterface $user)
+    public function __construct(int $operationId, string $baseUrl, Model\AppInterface $app, Model\UserInterface $user, ?string $tenantId = null)
     {
         $this->operationId = $operationId;
         $this->baseUrl = $baseUrl;
         $this->app = $app;
         $this->user = $user;
+        $this->tenantId = !empty($tenantId) ? $tenantId : null;
     }
 
     public function getOperationId(): int
@@ -64,6 +64,11 @@ class Context implements ContextInterface
     public function getUser(): Model\UserInterface
     {
         return $this->user;
+    }
+
+    public function getTenantId(): ?string
+    {
+        return $this->tenantId;
     }
 
     public function getAction(): ?Model\ActionInterface
