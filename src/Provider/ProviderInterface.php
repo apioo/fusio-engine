@@ -35,7 +35,7 @@ interface ProviderInterface
     /**
      * Returns all available classes
      */
-    public function getClasses(): array;
+    public function getClasses(?array $excludeClasses = null): array;
 
     /**
      * Returns a form if the class is configurable

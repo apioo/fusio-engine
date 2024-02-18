@@ -43,10 +43,14 @@ abstract class ProviderAbstract implements ProviderInterface
         $this->objects = $objects;
     }
 
-    public function getClasses(): array
+    public function getClasses(?array $excludeClasses = null): array
     {
         $result = [];
         foreach ($this->objects as $object) {
+            if ($excludeClasses !== null && in_array($object::class, $excludeClasses)) {
+                continue;
+            }
+
             if ($object instanceof ConfigurableInterface) {
                 $result[] = [
                     'name'  => $object->getName(),
