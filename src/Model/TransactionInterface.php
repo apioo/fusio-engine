@@ -27,7 +27,7 @@ namespace Fusio\Engine\Model;
  * @license http://www.apache.org/licenses/LICENSE-2.0
  * @link    https://www.fusio-project.org
  */
-interface TransactionInterface
+interface TransactionInterface extends \JsonSerializable
 {
     public const STATUS_PREPARED = 0;
     public const STATUS_CREATED  = 1;

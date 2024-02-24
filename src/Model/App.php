@@ -106,4 +106,19 @@ class App implements AppInterface
     {
         return $this->parameters[$name] ?? null;
     }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'anonymous' => $this->anonymous,
+            'id' => $this->id,
+            'userId' => $this->userId,
+            'status' => $this->status,
+            'name' => $this->name,
+            'url' => $this->url,
+            'parameters' => $this->parameters,
+            'appKey' => $this->appKey,
+            'scopes' => $this->scopes,
+        ];
+    }
 }

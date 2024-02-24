@@ -96,4 +96,16 @@ class Context implements ContextInterface
 
         return $me;
     }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'operationId' => $this->operationId,
+            'baseUrl' => $this->baseUrl,
+            'app' => $this->app,
+            'user' => $this->user,
+            'tenantId' => $this->tenantId,
+            'action' => $this->action,
+        ];
+    }
 }

@@ -75,4 +75,16 @@ class Token implements TokenInterface
     {
         return $this->date;
     }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'appId' => $this->appId,
+            'userId' => $this->userId,
+            'scopes' => $this->scopes,
+            'expire' => $this->expire,
+            'date' => $this->date,
+        ];
+    }
 }

@@ -27,7 +27,7 @@ namespace Fusio\Engine\Model;
  * @license http://www.apache.org/licenses/LICENSE-2.0
  * @link    https://www.fusio-project.org
  */
-interface ProductInterface
+interface ProductInterface extends \JsonSerializable
 {
     public const INTERVAL_ONETIME = 0;
     public const INTERVAL_SUBSCRIPTION = 1;

@@ -1,0 +1,34 @@
+{
+  "operationId": 1,
+  "baseUrl": "https:\/\/api.acme.com",
+  "app": {
+    "anonymous": false,
+    "id": 1,
+    "userId": 1,
+    "status": 1,
+    "name": "foo",
+    "url": "https:\/\/myapp.com",
+    "parameters": {
+      "foo": "bar"
+    },
+    "appKey": "key",
+    "scopes": [
+      "foo",
+      "bar"
+    ]
+  },
+  "user": {
+    "anonymous": false,
+    "id": 1,
+    "roleId": 1,
+    "categoryId": 1,
+    "status": 1,
+    "name": "bar",
+    "email": "foo@bar.com",
+    "points": 1000,
+    "externalId": "external_id",
+    "planId": "1"
+  },
+  "tenantId": "my_tenant",
+  "action": null
+}

@@ -18,57 +18,32 @@
  * limitations under the License.
  */
 
-namespace Fusio\Engine\Model;
+namespace Fusio\Engine\Tests;
+
+use Fusio\Engine\Context;
+use Fusio\Engine\Model\App;
+use Fusio\Engine\Model\User;
+use Fusio\Engine\NameBuilder;
+use PHPUnit\Framework\TestCase;
 
 /**
- * Connection
+ * ContextTest
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.apache.org/licenses/LICENSE-2.0
  * @link    https://www.fusio-project.org
  */
-class Connection implements ConnectionInterface
+class ContextTest extends TestCase
 {
-    private int $id;
-    private string $name;
-    private string $class;
-    private array $config;
-
-    public function __construct(int $id, string $name, string $class, array $config)
+    public function testContext()
     {
-        $this->id = $id;
-        $this->name = $name;
-        $this->class = $class;
-        $this->config = $config;
-    }
+        $app = new App(false, 1, 1, 1, 'foo', 'https://myapp.com', 'key', ['foo' => 'bar'], ['foo', 'bar']);
+        $user = new User(false, 1, 1, 1, 1, 'bar', 'foo@bar.com', 1000, 'external_id', 1);
+        $context = new Context(1, 'https://api.acme.com', $app, $user, 'my_tenant');
 
-    public function getId(): int
-    {
-        return $this->id;
-    }
+        $actual = \json_encode($context);
+        $expect = file_get_contents(__DIR__ . '/context.json');
 
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
-    public function getClass(): string
-    {
-        return $this->class;
-    }
-
-    public function getConfig(): array
-    {
-        return $this->config;
-    }
-
-    public function jsonSerialize(): array
-    {
-        return [
-            'id' => $this->id,
-            'name' => $this->name,
-            'class' => $this->class,
-            'config' => $this->config,
-        ];
+        $this->assertJsonStringEqualsJsonString($expect, $actual);
     }
 }

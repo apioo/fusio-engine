@@ -30,7 +30,7 @@ use Fusio\Engine\Model\ActionInterface as ModelActionInterface;
  * @license http://www.apache.org/licenses/LICENSE-2.0
  * @link    https://www.fusio-project.org
  */
-interface ContextInterface
+interface ContextInterface extends \JsonSerializable
 {
     /**
      * Returns the id of the operation

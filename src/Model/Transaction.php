@@ -113,4 +113,20 @@ class Transaction implements TransactionInterface
     {
         $this->remoteId = $remoteId;
     }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'invoiceId' => $this->invoiceId,
+            'status' => $this->status,
+            'provider' => $this->provider,
+            'transactionId' => $this->transactionId,
+            'remoteId' => $this->remoteId,
+            'amount' => $this->amount,
+            'returnUrl' => $this->returnUrl,
+            'updateDate' => $this->updateDate?->format(\DateTimeInterface::RFC3339),
+            'createDate' => $this->createDate->format(\DateTimeInterface::RFC3339),
+        ];
+    }
 }

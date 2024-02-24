@@ -75,4 +75,16 @@ class Product implements ProductInterface
     {
         return $this->externalId;
     }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'price' => $this->price,
+            'points' => $this->points,
+            'interval' => $this->interval,
+            'externalId' => $this->externalId,
+        ];
+    }
 }

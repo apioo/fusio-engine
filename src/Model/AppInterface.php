@@ -27,7 +27,7 @@ namespace Fusio\Engine\Model;
  * @license http://www.apache.org/licenses/LICENSE-2.0
  * @link    https://www.fusio-project.org
  */
-interface AppInterface
+interface AppInterface extends \JsonSerializable
 {
     public const STATUS_ACTIVE      = 1;
     public const STATUS_PENDING     = 2;

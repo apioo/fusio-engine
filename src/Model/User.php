@@ -103,4 +103,20 @@ class User implements UserInterface
     {
         return $this->planId;
     }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'anonymous' => $this->anonymous,
+            'id' => $this->id,
+            'roleId' => $this->roleId,
+            'categoryId' => $this->categoryId,
+            'status' => $this->status,
+            'name' => $this->name,
+            'email' => $this->email,
+            'points' => $this->points,
+            'externalId' => $this->externalId,
+            'planId' => $this->planId,
+        ];
+    }
 }

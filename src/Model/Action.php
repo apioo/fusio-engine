@@ -68,4 +68,15 @@ class Action implements ActionInterface
     {
         return $this->config;
     }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'class' => $this->class,
+            'async' => $this->async,
+            'config' => $this->config,
+        ];
+    }
 }
