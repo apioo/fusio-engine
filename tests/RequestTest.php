@@ -49,7 +49,7 @@ class RequestTest extends TestCase
 
     public function testRequestSerialize()
     {
-        $context = new HttpRequestContext(new Request(Uri::parse('/'), 'GET', ['User-Agent' => 'MyAgent'], 'my_body'), []);
+        $context = new HttpRequestContext(new Request(Uri::parse('/my_endpoint?query=foo'), 'GET', ['User-Agent' => 'MyAgent'], 'my_body'), ['id' => 12]);
         $request = new EngineRequest(['foo' => 'bar'], Record::fromArray(['foo' => 'bar']), $context);
 
         $actual = \json_encode($request);

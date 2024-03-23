@@ -61,8 +61,9 @@ class HttpRequestContext implements RequestContextInterface
         return [
             'type' => ClassName::serialize(self::class),
             'uriFragments' => (object) $this->parameters,
-            'queryParameters' => (object) $this->request->getUri()->getParameters(),
             'method' => $this->request->getMethod(),
+            'path' => $this->request->getUri()->getPath(),
+            'queryParameters' => (object) $this->request->getUri()->getParameters(),
             'headers' => (object) $this->request->getHeaders(),
         ];
     }

@@ -7,13 +7,18 @@
   },
   "context": {
     "type": "Fusio.Engine.Request.HttpRequestContext",
+    "uriFragments": {
+      "id": 12
+    },
+    "method": "GET",
+    "path": "/my_endpoint",
+    "queryParameters": {
+      "query": "foo"
+    },
     "headers": {
       "user-agent": [
         "MyAgent"
       ]
-    },
-    "method": "GET",
-    "queryParameters": {},
-    "uriFragments": {}
+    }
   }
 }

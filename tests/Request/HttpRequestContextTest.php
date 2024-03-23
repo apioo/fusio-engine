@@ -42,14 +42,15 @@ class HttpRequestContextTest extends TestCase
         $expect = <<<JSON
 {
   "type": "Fusio.Engine.Request.HttpRequestContext",
+  "uriFragments": {},
+  "method": "GET",
+  "path": "/",
+  "queryParameters": {},
   "headers": {
     "user-agent": [
       "MyAgent"
     ]
-  },
-  "method": "GET",
-  "queryParameters": {},
-  "uriFragments": {}
+  }
 }
 JSON;
 
