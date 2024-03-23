@@ -41,6 +41,21 @@ abstract class OAuth2ConnectionAbstract implements ConnectionInterface, OAuth2In
         $builder->add($elementFactory->newInput(OAuth2Interface::CONFIG_ACCESS_TOKEN, 'Access-Token', 'password', 'Optional an access token'));
     }
 
+    public function getRedirectUriParameters(array $params): array
+    {
+        return $params;
+    }
+
+    public function getAuthorizationCodeParameters(array $params): array
+    {
+        return $params;
+    }
+
+    public function getRefreshTokenParameters(array $params): array
+    {
+        return $params;
+    }
+
     protected function getClientId(ParametersInterface $config): string
     {
         return $config->get(OAuth2Interface::CONFIG_CLIENT_ID);

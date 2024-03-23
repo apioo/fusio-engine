@@ -51,10 +51,8 @@ interface OAuth2Interface
      * https://github.com/login/oauth/authorize
      *
      * The url can contain also query parameters, the system will then add automatically the required OAuth2 parameters
-     *
-     * @return string
      */
-    public function getAuthorizationUrl(): string;
+    public function getAuthorizationUrl(/* ParametersInterface $parameters */): string;
 
     /**
      * Returns the token url for this connection. This must be a provider specific absolute url i.e.
@@ -62,8 +60,21 @@ interface OAuth2Interface
      *
      * Then system then automatically uses the endpoint to obtain an access token, the access token will be then stored
      * at the connection config
-     *
-     * @return string
      */
-    public function getTokenUrl(): string;
+    public function getTokenUrl(/* ParametersInterface $parameters */): string;
+
+    /**
+     * Allows the connection to adjust the redirect parameters in case there are vendor specific requirements
+     */
+    public function getRedirectUriParameters(array $params): array;
+
+    /**
+     * Allows the connection to adjust the authorization code parameters in case there are vendor specific requirements
+     */
+    public function getAuthorizationCodeParameters(array $params): array;
+
+    /**
+     * Allows the connection to adjust the refresh token parameters in case there are vendor specific requirements
+     */
+    public function getRefreshTokenParameters(array $params): array;
 }
