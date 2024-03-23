@@ -1,0 +1,19 @@
+{
+  "arguments": {
+    "foo": "bar"
+  },
+  "payload": {
+    "foo": "bar"
+  },
+  "context": {
+    "type": "Fusio.Engine.Request.HttpRequestContext",
+    "headers": {
+      "user-agent": [
+        "MyAgent"
+      ]
+    },
+    "method": "GET",
+    "queryParameters": {},
+    "uriFragments": {}
+  }
+}

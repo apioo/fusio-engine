@@ -42,7 +42,7 @@ class ContextTest extends TestCase
         $context = new Context(1, 'https://api.acme.com', $app, $user, 'my_tenant');
 
         $actual = \json_encode($context);
-        $expect = file_get_contents(__DIR__ . '/context.json');
+        $expect = file_get_contents(__DIR__ . '/resource/context.json');
 
         $this->assertJsonStringEqualsJsonString($expect, $actual);
     }

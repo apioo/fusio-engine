@@ -53,27 +53,7 @@ class RequestTest extends TestCase
         $request = new EngineRequest(['foo' => 'bar'], Record::fromArray(['foo' => 'bar']), $context);
 
         $actual = \json_encode($request);
-        $expect = <<<JSON
-{
-  "arguments": {
-    "foo": "bar"
-  },
-  "payload": {
-    "foo": "bar"
-  },
-  "context": {
-    "type": "Fusio.Engine.Request.HttpRequestContext",
-    "headers": {
-      "user-agent": [
-        "MyAgent"
-      ]
-    },
-    "method": "GET",
-    "queryParameters": {},
-    "uriFragments": {}
-  }
-}
-JSON;
+        $expect = file_get_contents(__DIR__ . '/resource/request.json');
 
         $this->assertJsonStringEqualsJsonString($expect, $actual);
     }
