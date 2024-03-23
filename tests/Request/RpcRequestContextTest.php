@@ -18,39 +18,32 @@
  * limitations under the License.
  */
 
-namespace Fusio\Engine;
+namespace Fusio\Engine\Tests\Request;
 
-use Fusio\Engine\Request\RequestContextInterface;
+use Fusio\Engine\Request\RpcRequestContext;
+use PHPUnit\Framework\TestCase;
 
 /**
- * Represents an incoming request. This object can be used to access all values from an incoming request
+ * RpcRequestContextTest
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.apache.org/licenses/LICENSE-2.0
  * @link    https://www.fusio-project.org
  */
-interface RequestInterface extends \JsonSerializable
+class RpcRequestContextTest extends TestCase
 {
-    /**
-     * Returns a value from the request. The request contains all uri fragment and query parameter which are also
-     * defined at the schema
-     */
-    public function get(string $name): mixed;
+    public function testSerialize()
+    {
+        $context = new RpcRequestContext('my_method');
 
-    /**
-     * Returns all arguments
-     */
-    public function getArguments(): array;
+        $actual = \json_encode($context);
+        $expect = <<<JSON
+{
+  "type": "Fusio.Engine.Request.RpcRequestContext",
+  "method": "my_method"
+}
+JSON;
 
-    /**
-     * Returns the complete request payload
-     */
-    public function getPayload(): mixed;
-
-    /**
-     * Returns information about the context of the request i.e. whether it was invoked by an HTTP request, RPC call or
-     * maybe also through a message queue. In general the request gets invoked by an HTTP request but it is recommended
-     * to not rely on those context information in your action
-     */
-    public function getContext(): RequestContextInterface;
+        $this->assertJsonStringEqualsJsonString($expect, $actual);
+    }
 }

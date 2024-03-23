@@ -27,6 +27,6 @@ namespace Fusio\Engine\Request;
  * @license http://www.apache.org/licenses/LICENSE-2.0
  * @link    https://www.fusio-project.org
  */
-interface RequestContextInterface
+interface RequestContextInterface extends \JsonSerializable
 {
 }

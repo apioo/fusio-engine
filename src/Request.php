@@ -76,4 +76,13 @@ class Request implements RequestInterface
     {
         return new self($this->arguments, $this->payload, $context);
     }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'arguments' => $this->arguments,
+            'payload' => $this->payload,
+            'context' => $this->context,
+        ];
+    }
 }

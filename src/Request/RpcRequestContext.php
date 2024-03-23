@@ -20,6 +20,8 @@
 
 namespace Fusio\Engine\Request;
 
+use Fusio\Engine\Inflection\ClassName;
+
 /**
  * Indicates that an action was invoked by an RPC call
  *
@@ -39,5 +41,13 @@ class RpcRequestContext implements RequestContextInterface
     public function getMethod(): string
     {
         return $this->method;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'type' => ClassName::serialize(self::class),
+            'method' => $this->method
+        ];
     }
 }

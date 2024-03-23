@@ -18,60 +18,38 @@
  * limitations under the License.
  */
 
-namespace Fusio\Engine\Tests;
+namespace Fusio\Engine\Tests\Request;
 
-use Fusio\Engine\Request as EngineRequest;
 use Fusio\Engine\Request\HttpRequestContext;
-use Fusio\Engine\RequestInterface;
 use PHPUnit\Framework\TestCase;
 use PSX\Http\Request;
-use PSX\Record\Record;
 use PSX\Uri\Uri;
 
 /**
- * RequestTest
+ * HttpRequestContextTest
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.apache.org/licenses/LICENSE-2.0
  * @link    https://www.fusio-project.org
  */
-class RequestTest extends TestCase
+class HttpRequestContextTest extends TestCase
 {
-    public function testRequest()
-    {
-        $context = new HttpRequestContext(new Request(Uri::parse('/'), 'GET'), []);
-        $request = new EngineRequest(['foo' => 'bar'], Record::fromArray(['foo' => 'bar']), $context);
-
-        $this->assertInstanceOf(RequestInterface::class, $request);
-        $this->assertEquals('bar', $request->get('foo'));
-        $this->assertEquals('bar', $request->getPayload()->get('foo'));
-    }
-
-    public function testRequestSerialize()
+    public function testSerialize()
     {
         $context = new HttpRequestContext(new Request(Uri::parse('/'), 'GET', ['User-Agent' => 'MyAgent'], 'my_body'), []);
-        $request = new EngineRequest(['foo' => 'bar'], Record::fromArray(['foo' => 'bar']), $context);
 
-        $actual = \json_encode($request);
+        $actual = \json_encode($context);
         $expect = <<<JSON
 {
-  "arguments": {
-    "foo": "bar"
+  "type": "Fusio.Engine.Request.HttpRequestContext",
+  "headers": {
+    "user-agent": [
+      "MyAgent"
+    ]
   },
-  "payload": {
-    "foo": "bar"
-  },
-  "context": {
-    "type": "Fusio.Engine.Request.HttpRequestContext",
-    "headers": {
-      "user-agent": [
-        "MyAgent"
-      ]
-    },
-    "method": "GET",
-    "queryParameters": {},
-    "uriFragments": {}
-  }
+  "method": "GET",
+  "queryParameters": {},
+  "uriFragments": {}
 }
 JSON;
 

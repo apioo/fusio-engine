@@ -20,6 +20,7 @@
 
 namespace Fusio\Engine\Request;
 
+use Fusio\Engine\Inflection\ClassName;
 use PSX\Http\RequestInterface;
 
 /**
@@ -53,5 +54,16 @@ class HttpRequestContext implements RequestContextInterface
     public function getParameter(string $name): ?string
     {
         return $this->parameters[$name] ?? null;
+    }
+
+    public function jsonSerialize(): array
+    {
+        return [
+            'type' => ClassName::serialize(self::class),
+            'uriFragments' => (object) $this->parameters,
+            'queryParameters' => (object) $this->request->getUri()->getParameters(),
+            'method' => $this->request->getMethod(),
+            'headers' => (object) $this->request->getHeaders(),
+        ];
     }
 }

@@ -20,6 +20,8 @@
 
 namespace Fusio\Engine\Request;
 
+use Fusio\Engine\Inflection\ClassName;
+
 /**
  * Indicates that an action was invoked by a cronjob
  *
@@ -29,4 +31,10 @@ namespace Fusio\Engine\Request;
  */
 class CronjobRequestContext implements RequestContextInterface
 {
+    public function jsonSerialize(): array
+    {
+        return [
+            'type' => ClassName::serialize(self::class),
+        ];
+    }
 }
