@@ -64,7 +64,17 @@ class HttpRequestContext implements RequestContextInterface
             'method' => $this->request->getMethod(),
             'path' => $this->request->getUri()->getPath(),
             'queryParameters' => (object) $this->request->getUri()->getParameters(),
-            'headers' => (object) $this->request->getHeaders(),
+            'headers' => $this->getRequestHeaders(),
         ];
+    }
+
+    private function getRequestHeaders(): object
+    {
+        $headers = new \stdClass();
+        foreach ($this->request->getHeaders() as $key => $values) {
+            $headers->{$key} = implode(', ', $values);
+        }
+
+        return $headers;
     }
 }

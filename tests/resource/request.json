@@ -16,9 +16,7 @@
       "query": "foo"
     },
     "headers": {
-      "user-agent": [
-        "MyAgent"
-      ]
+      "user-agent": "MyAgent"
     }
   }
 }

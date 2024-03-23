@@ -47,9 +47,7 @@ class HttpRequestContextTest extends TestCase
   "path": "/",
   "queryParameters": {},
   "headers": {
-    "user-agent": [
-      "MyAgent"
-    ]
+    "user-agent": "MyAgent"
   }
 }
 JSON;
