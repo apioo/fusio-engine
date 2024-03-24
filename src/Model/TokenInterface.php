@@ -29,9 +29,11 @@ namespace Fusio\Engine\Model;
  */
 interface TokenInterface extends \JsonSerializable
 {
+    public function isAnonymous(): bool;
+
     public function getId(): int;
 
-    public function getAppId(): int;
+    public function getAppId(): ?int;
 
     public function getUserId(): int;
 

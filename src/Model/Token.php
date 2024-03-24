@@ -30,13 +30,13 @@ namespace Fusio\Engine\Model;
 class Token implements TokenInterface
 {
     private int $id;
-    private int $appId;
+    private ?int $appId;
     private int $userId;
     private array $scopes;
     private string $expire;
     private string $date;
 
-    public function __construct(int $id, int $appId, int $userId, array $scopes, string $expire, string $date)
+    public function __construct(int $id, ?int $appId, int $userId, array $scopes, string $expire, string $date)
     {
         $this->id = $id;
         $this->appId = $appId;
@@ -46,12 +46,17 @@ class Token implements TokenInterface
         $this->date = $date;
     }
 
+    public function isAnonymous(): bool
+    {
+        return false;
+    }
+
     public function getId(): int
     {
         return $this->id;
     }
 
-    public function getAppId(): int
+    public function getAppId(): ?int
     {
         return $this->appId;
     }
@@ -79,6 +84,7 @@ class Token implements TokenInterface
     public function jsonSerialize(): array
     {
         return [
+            'anonymous' => false,
             'id' => $this->id,
             'appId' => $this->appId,
             'userId' => $this->userId,
