@@ -54,4 +54,6 @@ interface AppInterface extends \JsonSerializable
     public function getParameters(): array;
 
     public function getParameter(string $name): mixed;
+
+    public function getMetadata(string $key): mixed;
 }

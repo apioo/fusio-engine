@@ -48,4 +48,6 @@ interface UserInterface extends \JsonSerializable
     public function getExternalId(): ?string;
 
     public function getPlanId(): ?string;
+
+    public function getMetadata(string $key): mixed;
 }

@@ -84,6 +84,11 @@ class AppAnonymous implements AppInterface
         return null;
     }
 
+    public function getMetadata(string $key): mixed
+    {
+        return null;
+    }
+
     public function jsonSerialize(): array
     {
         return [

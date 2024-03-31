@@ -35,8 +35,9 @@ class Product implements ProductInterface
     private int $points;
     private int $interval;
     private ?string $externalId;
+    private ?\stdClass $metadata;
 
-    public function __construct(int $id, string $name, int $price, int $points, int $interval, ?string $externalId = null)
+    public function __construct(int $id, string $name, int $price, int $points, int $interval, ?string $externalId = null, ?\stdClass $metadata = null)
     {
         $this->id = $id;
         $this->name = $name;
@@ -44,6 +45,7 @@ class Product implements ProductInterface
         $this->points = $points;
         $this->interval = $interval;
         $this->externalId = $externalId;
+        $this->metadata = $metadata;
     }
 
     public function getId(): int
@@ -76,6 +78,11 @@ class Product implements ProductInterface
         return $this->externalId;
     }
 
+    public function getMetadata(string $key): mixed
+    {
+        return $this->metadata?->{$key} ?? null;
+    }
+
     public function jsonSerialize(): array
     {
         return [
@@ -85,6 +92,7 @@ class Product implements ProductInterface
             'points' => $this->points,
             'interval' => $this->interval,
             'externalId' => $this->externalId,
+            'metadata' => $this->metadata,
         ];
     }
 }

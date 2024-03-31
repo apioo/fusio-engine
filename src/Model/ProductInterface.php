@@ -43,4 +43,6 @@ interface ProductInterface extends \JsonSerializable
     public function getInterval(): int;
 
     public function getExternalId(): ?string;
+
+    public function getMetadata(string $key): mixed;
 }

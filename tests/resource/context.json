@@ -15,7 +15,10 @@
     "scopes": [
       "foo",
       "bar"
-    ]
+    ],
+    "metadata": {
+      "foo": "bar"
+    }
   },
   "user": {
     "anonymous": false,
@@ -27,7 +30,10 @@
     "email": "foo@bar.com",
     "points": 1000,
     "externalId": "external_id",
-    "planId": "1"
+    "planId": "1",
+    "metadata": {
+      "foo": "bar"
+    }
   },
   "tenantId": "my_tenant",
   "action": null

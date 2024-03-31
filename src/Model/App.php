@@ -38,8 +38,9 @@ class App implements AppInterface
     private string $appKey;
     private array $parameters;
     private array $scopes;
+    private ?\stdClass $metadata;
 
-    public function __construct(bool $anonymous, int $id, int $userId, int $status, string $name, string $url, string $appKey, array $parameters, array $scopes)
+    public function __construct(bool $anonymous, int $id, int $userId, int $status, string $name, string $url, string $appKey, array $parameters, array $scopes, ?\stdClass $metadata = null)
     {
         $this->anonymous = $anonymous;
         $this->id = $id;
@@ -50,6 +51,7 @@ class App implements AppInterface
         $this->parameters = $parameters;
         $this->appKey = $appKey;
         $this->scopes = $scopes;
+        $this->metadata = $metadata;
     }
 
     public function isAnonymous(): bool
@@ -107,6 +109,11 @@ class App implements AppInterface
         return $this->parameters[$name] ?? null;
     }
 
+    public function getMetadata(string $key): mixed
+    {
+        return $this->metadata?->{$key} ?? null;
+    }
+
     public function jsonSerialize(): array
     {
         return [
@@ -119,6 +126,7 @@ class App implements AppInterface
             'parameters' => $this->parameters,
             'appKey' => $this->appKey,
             'scopes' => $this->scopes,
+            'metadata' => $this->metadata,
         ];
     }
 }

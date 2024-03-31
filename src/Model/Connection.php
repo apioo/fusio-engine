@@ -33,13 +33,15 @@ class Connection implements ConnectionInterface
     private string $name;
     private string $class;
     private array $config;
+    private ?\stdClass $metadata;
 
-    public function __construct(int $id, string $name, string $class, array $config)
+    public function __construct(int $id, string $name, string $class, array $config, ?\stdClass $metadata = null)
     {
         $this->id = $id;
         $this->name = $name;
         $this->class = $class;
         $this->config = $config;
+        $this->metadata = $metadata;
     }
 
     public function getId(): int
@@ -62,6 +64,11 @@ class Connection implements ConnectionInterface
         return $this->config;
     }
 
+    public function getMetadata(string $key): mixed
+    {
+        return $this->metadata?->{$key} ?? null;
+    }
+
     public function jsonSerialize(): array
     {
         return [
@@ -69,6 +76,7 @@ class Connection implements ConnectionInterface
             'name' => $this->name,
             'class' => $this->class,
             'config' => $this->config,
+            'metadata' => $this->metadata,
         ];
     }
 }

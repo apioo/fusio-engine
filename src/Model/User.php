@@ -39,8 +39,9 @@ class User implements UserInterface
     private int $points;
     private ?string $externalId;
     private ?string $planId;
+    private ?\stdClass $metadata;
 
-    public function __construct(bool $anonymous, int $id, int $roleId, int $categoryId, int $status, string $name, string $email, int $points, ?string $externalId = null, ?string $planId = null)
+    public function __construct(bool $anonymous, int $id, int $roleId, int $categoryId, int $status, string $name, string $email, int $points, ?string $externalId = null, ?string $planId = null, ?\stdClass $metadata = null)
     {
         $this->anonymous = $anonymous;
         $this->id = $id;
@@ -52,6 +53,7 @@ class User implements UserInterface
         $this->points = $points;
         $this->externalId = $externalId;
         $this->planId = $planId;
+        $this->metadata = $metadata;
     }
 
     public function isAnonymous(): bool
@@ -104,6 +106,11 @@ class User implements UserInterface
         return $this->planId;
     }
 
+    public function getMetadata(string $key): mixed
+    {
+        return $this->metadata?->{$key} ?? null;
+    }
+
     public function jsonSerialize(): array
     {
         return [
@@ -117,6 +124,7 @@ class User implements UserInterface
             'points' => $this->points,
             'externalId' => $this->externalId,
             'planId' => $this->planId,
+            'metadata' => $this->metadata,
         ];
     }
 }

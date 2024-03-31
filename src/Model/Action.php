@@ -34,14 +34,16 @@ class Action implements ActionInterface
     private string $class;
     private bool $async;
     private array $config;
+    private ?\stdClass $metadata;
 
-    public function __construct(int $id, string $name, string $class, bool $async, array $config)
+    public function __construct(int $id, string $name, string $class, bool $async, array $config, ?\stdClass $metadata = null)
     {
         $this->id = $id;
         $this->name = $name;
         $this->class = $class;
         $this->async = $async;
         $this->config = $config;
+        $this->metadata = $metadata;
     }
 
     public function getId(): int
@@ -69,6 +71,11 @@ class Action implements ActionInterface
         return $this->config;
     }
 
+    public function getMetadata(string $key): mixed
+    {
+        return $this->metadata?->{$key} ?? null;
+    }
+
     public function jsonSerialize(): array
     {
         return [
@@ -77,6 +84,7 @@ class Action implements ActionInterface
             'class' => $this->class,
             'async' => $this->async,
             'config' => $this->config,
+            'metadata' => $this->metadata,
         ];
     }
 }

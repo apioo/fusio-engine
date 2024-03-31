@@ -38,4 +38,6 @@ interface ActionInterface extends \JsonSerializable
     public function isAsync(): bool;
 
     public function getConfig(): array;
+
+    public function getMetadata(string $key): mixed;
 }
