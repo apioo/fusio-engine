@@ -75,4 +75,9 @@ interface ElementFactoryInterface
      * Creates a new type schema designer
      */
     public function newTypeSchema(string $name, string $title, ?string $help = null): Element\TypeSchema;
+
+    /**
+     * Creates a new type api designer
+     */
+    public function newTypeAPI(string $name, string $title, ?string $help = null): Element\TypeAPI;
 }

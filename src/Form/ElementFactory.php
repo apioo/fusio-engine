@@ -92,4 +92,9 @@ class ElementFactory implements ElementFactoryInterface
     {
         return new Element\TypeSchema($name, $title, $help);
     }
+
+    public function newTypeAPI(string $name, string $title, ?string $help = null): Element\TypeAPI
+    {
+        return new Element\TypeAPI($name, $title, $help);
+    }
 }
