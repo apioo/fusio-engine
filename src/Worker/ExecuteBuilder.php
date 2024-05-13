@@ -38,13 +38,13 @@ use Fusio\Worker\ExecuteRequestContext;
 use PSX\Record\Record;
 
 /**
- * Builds an execute worker payload which can be sent to a worker instance
+ * ExecuteBuilder
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.apache.org/licenses/LICENSE-2.0
  * @link    https://www.fusio-project.org
  */
-class ExecuteBuilder
+class ExecuteBuilder implements ExecuteBuilderInterface
 {
     private Repository\ConnectionInterface $connectionRepository;
 

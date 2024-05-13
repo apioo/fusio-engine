@@ -12,6 +12,8 @@ use Fusio\Engine\Processor;
 use Fusio\Engine\ProcessorInterface;
 use Fusio\Engine\Repository;
 use Fusio\Engine\Response;
+use Fusio\Engine\Worker\ExecuteBuilder;
+use Fusio\Engine\Worker\ExecuteBuilderInterface;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\tagged_iterator;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\tagged_locator;
@@ -63,4 +65,7 @@ return static function (ContainerConfigurator $container) {
 
     $services->set(Action\Runtime::class);
     $services->alias(Action\RuntimeInterface::class, Action\Runtime::class);
+
+    $services->set(ExecuteBuilder::class);
+    $services->alias(ExecuteBuilderInterface::class, ExecuteBuilder::class);
 };
