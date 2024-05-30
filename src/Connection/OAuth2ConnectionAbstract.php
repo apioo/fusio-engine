@@ -43,9 +43,6 @@ abstract class OAuth2ConnectionAbstract implements ConnectionInterface, OAuth2In
         $builder->add($elementFactory->newInput(OAuth2Interface::CONFIG_ACCESS_TOKEN, 'Access-Token', 'password', 'Optional an access token, note the system automatically sets this value if you authorize a connection'));
     }
 
-    /**
-     * @throws ConfigurationException
-     */
     public function getRedirectUriParameters(string $redirectUri, string $state, ParametersInterface $config): array
     {
         $parameters = [
@@ -63,9 +60,6 @@ abstract class OAuth2ConnectionAbstract implements ConnectionInterface, OAuth2In
         return $parameters;
     }
 
-    /**
-     * @throws ConfigurationException
-     */
     public function getAuthorizationCodeParameters(string $code, string $redirectUri, ParametersInterface $config): array
     {
         return [
@@ -77,9 +71,6 @@ abstract class OAuth2ConnectionAbstract implements ConnectionInterface, OAuth2In
         ];
     }
 
-    /**
-     * @throws ConfigurationException
-     */
     public function getRefreshTokenParameters(ParametersInterface $config): array
     {
         $parameters = [

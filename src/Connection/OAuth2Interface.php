@@ -20,6 +20,7 @@
 
 namespace Fusio\Engine\Connection;
 
+use Fusio\Engine\Exception\ConfigurationException;
 use Fusio\Engine\ParametersInterface;
 
 /**
@@ -66,16 +67,22 @@ interface OAuth2Interface
 
     /**
      * Allows the connection to adjust the redirect parameters in case there are vendor specific requirements
+     *
+     * @throws ConfigurationException
      */
     public function getRedirectUriParameters(string $redirectUri, string $state, ParametersInterface $config): array;
 
     /**
      * Allows the connection to adjust the authorization code parameters in case there are vendor specific requirements
+     *
+     * @throws ConfigurationException
      */
     public function getAuthorizationCodeParameters(string $code, string $redirectUri, ParametersInterface $config): array;
 
     /**
      * Allows the connection to adjust the refresh token parameters in case there are vendor specific requirements
+     *
+     * @throws ConfigurationException
      */
     public function getRefreshTokenParameters(ParametersInterface $config): array;
 }
