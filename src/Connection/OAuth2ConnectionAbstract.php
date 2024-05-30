@@ -126,8 +126,8 @@ abstract class OAuth2ConnectionAbstract implements ConnectionInterface, OAuth2In
         return $refreshToken;
     }
 
-    protected function getAccessToken(ParametersInterface $config): ?string
+    protected function getAccessToken(ParametersInterface $config): string
     {
-        return $config->get(OAuth2Interface::CONFIG_ACCESS_TOKEN);
+        return $config->get(OAuth2Interface::CONFIG_ACCESS_TOKEN) ?? '';
     }
 }
