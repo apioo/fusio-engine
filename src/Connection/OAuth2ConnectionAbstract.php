@@ -20,7 +20,7 @@
 
 namespace Fusio\Engine\Connection;
 
-use Fusio\Engine\ConnectionInterface;
+use Fusio\Engine\ConnectionAbstract;
 use Fusio\Engine\Exception\ConfigurationException;
 use Fusio\Engine\Form\BuilderInterface;
 use Fusio\Engine\Form\ElementFactoryInterface;
@@ -33,7 +33,7 @@ use Fusio\Engine\ParametersInterface;
  * @license http://www.apache.org/licenses/LICENSE-2.0
  * @link    https://www.fusio-project.org
  */
-abstract class OAuth2ConnectionAbstract implements ConnectionInterface, OAuth2Interface
+abstract class OAuth2ConnectionAbstract extends ConnectionAbstract implements OAuth2Interface
 {
     public function configure(BuilderInterface $builder, ElementFactoryInterface $elementFactory): void
     {
