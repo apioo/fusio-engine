@@ -40,7 +40,7 @@ abstract class OAuth2ConnectionAbstract extends ConnectionAbstract implements OA
         $builder->add($elementFactory->newInput(OAuth2Interface::CONFIG_CLIENT_ID, 'Client-Id', 'text', 'The client id'));
         $builder->add($elementFactory->newInput(OAuth2Interface::CONFIG_CLIENT_SECRET, 'Client-Secret', 'text', 'The client secret'));
         $builder->add($elementFactory->newCollection(OAuth2Interface::CONFIG_SCOPES, 'Scopes', 'text', 'List of needed scopes, it is recommended to include only the needed scopes for your operation. You can find a current documentation of all available scopes at the documentation of the provider.'));
-        $builder->add($elementFactory->newInput(OAuth2Interface::CONFIG_ACCESS_TOKEN, 'Access-Token', 'password', 'Optional an access token, note the system automatically sets this value if you authorize a connection'));
+        $builder->add($elementFactory->newInput(OAuth2Interface::CONFIG_ACCESS_TOKEN, 'Access-Token', 'text', 'Optional an access token, note the system automatically sets this value if you authorize a connection'));
     }
 
     public function getRedirectUriParameters(string $redirectUri, string $state, ParametersInterface $config): array
