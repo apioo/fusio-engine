@@ -20,6 +20,8 @@
 
 namespace Fusio\Engine\Connection;
 
+use Fusio\Engine\ParametersInterface;
+
 /**
  * If a connection implements this interface it is possible that you can obtain an access token through OAuth2.
  * This means that the user does not need to manually configure the access token instead the user can start the OAuth2
@@ -42,6 +44,7 @@ interface OAuth2Interface
 {
     public const CONFIG_CLIENT_ID = 'client_id';
     public const CONFIG_CLIENT_SECRET = 'client_secret';
+    public const CONFIG_SCOPES = 'scopes';
     public const CONFIG_ACCESS_TOKEN = 'access_token';
     public const CONFIG_EXPIRES_IN = 'expires_in';
     public const CONFIG_REFRESH_TOKEN = 'refresh_token';
@@ -49,10 +52,8 @@ interface OAuth2Interface
     /**
      * Returns the authorization url for this connection. This must be a provider specific absolute url i.e.
      * https://github.com/login/oauth/authorize
-     *
-     * The url can contain also query parameters, the system will then add automatically the required OAuth2 parameters
      */
-    public function getAuthorizationUrl(/* ParametersInterface $parameters */): string;
+    public function getAuthorizationUrl(ParametersInterface $config): string;
 
     /**
      * Returns the token url for this connection. This must be a provider specific absolute url i.e.
@@ -61,20 +62,20 @@ interface OAuth2Interface
      * Then system then automatically uses the endpoint to obtain an access token, the access token will be then stored
      * at the connection config
      */
-    public function getTokenUrl(/* ParametersInterface $parameters */): string;
+    public function getTokenUrl(ParametersInterface $config): string;
 
     /**
      * Allows the connection to adjust the redirect parameters in case there are vendor specific requirements
      */
-    public function getRedirectUriParameters(array $params): array;
+    public function getRedirectUriParameters(string $redirectUri, string $state, ParametersInterface $config): array;
 
     /**
      * Allows the connection to adjust the authorization code parameters in case there are vendor specific requirements
      */
-    public function getAuthorizationCodeParameters(array $params): array;
+    public function getAuthorizationCodeParameters(string $code, string $redirectUri, ParametersInterface $config): array;
 
     /**
      * Allows the connection to adjust the refresh token parameters in case there are vendor specific requirements
      */
-    public function getRefreshTokenParameters(array $params): array;
+    public function getRefreshTokenParameters(ParametersInterface $config): array;
 }
