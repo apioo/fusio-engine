@@ -21,7 +21,6 @@
 namespace Fusio\Engine;
 
 use Fusio\Engine\Exception\ConnectionNotFoundException;
-use Fusio\Engine\Factory;
 
 /**
  * Connector
@@ -34,6 +33,7 @@ class Connector implements ConnectorInterface
 {
     private Repository\ConnectionInterface $repository;
     private Factory\ConnectionInterface $factory;
+    private array $connections = [];
 
     public function __construct(Repository\ConnectionInterface $repository, Factory\ConnectionInterface $factory)
     {
@@ -46,12 +46,16 @@ class Connector implements ConnectorInterface
      */
     public function getConnection(string|int $connectionId): mixed
     {
+        if (isset($this->connections[$connectionId])) {
+            return $this->connections[$connectionId];
+        }
+
         $connection = $this->repository->get($connectionId);
 
         if ($connection instanceof Model\ConnectionInterface) {
             $parameters = new Parameters($connection->getConfig());
 
-            return $this->factory->factory($connection->getClass())->getConnection($parameters);
+            return $this->connections[$connectionId] = $this->factory->factory($connection->getClass())->getConnection($parameters);
         } else {
             throw new ConnectionNotFoundException('Could not find connection ' . $connectionId);
         }
