@@ -60,4 +60,9 @@ class Connector implements ConnectorInterface
             throw new ConnectionNotFoundException('Could not find connection ' . $connectionId);
         }
     }
+
+    public function clear(): void
+    {
+        $this->connections = [];
+    }
 }
