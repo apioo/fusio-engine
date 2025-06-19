@@ -26,7 +26,6 @@ namespace Fusio\Engine\Connection\Introspection;
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.apache.org/licenses/LICENSE-2.0
  * @link    https://www.fusio-project.org
- * @deprecated
  */
 class Entity implements \JsonSerializable
 {
