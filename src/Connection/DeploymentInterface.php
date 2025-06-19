@@ -23,10 +23,10 @@ namespace Fusio\Engine\Connection;
 use Fusio\Engine\ParametersInterface;
 
 /**
- * If a connection implements this interface those callback methods are called if a connection gets created or is
- * removed. Those methods can not work with the corresponding connection and it is guaranteed that they are called even
+ * If a connection implements this interface, those callback methods are called if a connection gets created or is
+ * removed. Those methods cannot work with the corresponding connection and it is guaranteed that they are called even
  * if the connection later on fails. It is recommended to implement it in an idempotent way that means that the
- * side-effects of N > 0 method calls is the same as for a single call
+ * side effects of N > 0 method calls are the same as for a single call
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.apache.org/licenses/LICENSE-2.0
