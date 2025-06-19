@@ -39,6 +39,6 @@ class NameBuilder
         $last = $pos !== false ? substr($class, $pos + 1) : $class;
         $name = preg_replace(array('/([A-Z]+)([A-Z][a-z])/', '/([a-z\d])([A-Z])/'), array('\\1-\\2', '\\1-\\2'), strtr($last, '_', '.'));
 
-        return $name;
+        return '' . $name;
     }
 }

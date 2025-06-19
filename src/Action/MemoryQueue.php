@@ -32,6 +32,9 @@ use Fusio\Engine\RequestInterface;
  */
 class MemoryQueue implements QueueInterface
 {
+    /**
+     * @var array<array{string|int, RequestInterface, ContextInterface}>
+     */
     private array $container;
 
     public function __construct()
@@ -46,6 +49,6 @@ class MemoryQueue implements QueueInterface
 
     public function pop(): array
     {
-        return array_pop($this->container);
+        return array_pop($this->container) ?? throw new \RuntimeException('Container is empty');
     }
 }

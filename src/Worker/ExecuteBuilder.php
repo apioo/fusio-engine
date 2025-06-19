@@ -35,6 +35,7 @@ use Fusio\Worker\ExecuteContextApp;
 use Fusio\Worker\ExecuteContextUser;
 use Fusio\Worker\ExecuteRequest;
 use Fusio\Worker\ExecuteRequestContext;
+use PSX\Json\Parser;
 use PSX\Record\Record;
 
 /**
@@ -72,7 +73,7 @@ class ExecuteBuilder implements ExecuteBuilderInterface
         foreach ($connections as $connection) {
             $con = new ExecuteConnection();
             $con->setType(ClassName::serialize($connection->getClass()));
-            $con->setConfig(\base64_encode(\json_encode((object) $connection->getConfig())));
+            $con->setConfig(\base64_encode(Parser::encode((object) $connection->getConfig())));
 
             $result->put($connection->getName(), $con);
         }
