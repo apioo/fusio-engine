@@ -16,6 +16,8 @@ use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\tagged_iterator;
 
 return static function (ContainerConfigurator $container) {
+    $container->parameters()->set('psx_path_cache', __DIR__ . '/compiled');
+
     $services = ServiceBuilder::build($container);
     $services->set('connections', ProviderCollection::class)
         ->arg('$services', tagged_iterator('fusio.connection'))
