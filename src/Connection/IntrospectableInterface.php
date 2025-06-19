@@ -28,9 +28,13 @@ use Fusio\Engine\Connection\Introspection\IntrospectorInterface;
  * table we can obtain a columns. This can be useful for users of Fusio so that they can get information about the
  * schema without the need to use a different tool
  *
+ * This interface is deprecated since we have implemented a dedicated database view, in case we need a view for a
+ * different connection like MongoDB or MQ we should also build a dedicated view.
+ *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.apache.org/licenses/LICENSE-2.0
  * @link    https://www.fusio-project.org
+ * @deprecated
  */
 interface IntrospectableInterface
 {
