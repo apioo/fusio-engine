@@ -166,7 +166,7 @@ abstract class ProviderAbstract implements ProviderInterface
     {
         $headers = [
             'Authorization' => 'Bearer ' . $accessToken,
-            'User-Agent'    => self::USER_AGENT
+            'User-Agent' => self::USER_AGENT
         ];
 
         $url = Url::parse($userInfoUrl);
@@ -196,9 +196,15 @@ abstract class ProviderAbstract implements ProviderInterface
     protected function requestAccessToken(string $tokenUrl, array $params, Method $method = Method::POST): array
     {
         $headers = [
-            'Accept'     => 'application/json',
-            'User-Agent' => self::USER_AGENT
+            'Accept' => 'application/json',
+            'User-Agent' => self::USER_AGENT,
         ];
+
+        $clientId = $params['client_id'] ?? null;
+        $clientSecret = $params['client_secret'] ?? null;
+        if (!empty($clientId) && !empty($clientSecret)) {
+            $headers['Authorization'] = 'Basic ' . base64_encode($clientId . ':' . $clientSecret);
+        }
 
         if ($method === Method::POST) {
             $request = new PostRequest(Url::parse($tokenUrl), $headers, $params);
