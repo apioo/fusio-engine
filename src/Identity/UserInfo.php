@@ -20,6 +20,8 @@
 
 namespace Fusio\Engine\Identity;
 
+use PSX\OAuth2\AccessToken;
+
 /**
  * UserInfo
  *
@@ -27,17 +29,15 @@ namespace Fusio\Engine\Identity;
  * @license http://www.apache.org/licenses/LICENSE-2.0
  * @link    https://www.fusio-project.org
  */
-class UserInfo
+readonly class UserInfo
 {
-    private string $id;
-    private string $name;
-    private ?string $email;
-
-    public function __construct(string $id, string $name, ?string $email)
+    public function __construct(private AccessToken $accessToken, private string $id, private string $name, private ?string $email)
     {
-        $this->id = $id;
-        $this->name = $name;
-        $this->email = $email;
+    }
+
+    public function getAccessToken(): AccessToken
+    {
+        return $this->accessToken;
     }
 
     public function getId(): string

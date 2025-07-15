@@ -18,6 +18,7 @@
     "fusio/model": "^4.0",
     "fusio/worker-sdk": "^0.1|^0.2",
     "psx/http": "^4.0",
+    "psx/oauth2": "^4.0",
     "psx/record": "^3.0",
     "symfony/dependency-injection": "^5.0|^6.0|^7.0",
     "symfony/config": "^5.0|^6.0|^7.0",

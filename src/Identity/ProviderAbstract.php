@@ -29,6 +29,7 @@ use PSX\Http\Client\ClientInterface;
 use PSX\Http\Client\GetRequest;
 use PSX\Http\Client\PostRequest;
 use PSX\Http\Exception as StatusCode;
+use PSX\OAuth2\AccessToken;
 use PSX\Uri\Uri;
 use PSX\Uri\Url;
 
@@ -93,7 +94,7 @@ abstract class ProviderAbstract implements ProviderInterface
         $email = $this->getProperty($data, $configuration->get('email_property'), $this->getEmailProperty());
 
         if (!empty($id) && !empty($name)) {
-            return new UserInfo($id, $name, $email);
+            return new UserInfo($accessToken, $id, $name, $email);
         } else {
             return null;
         }
@@ -162,10 +163,10 @@ abstract class ProviderAbstract implements ProviderInterface
         return [];
     }
 
-    protected function obtainUserInfo(string $userInfoUrl, string $accessToken, ?array $parameters = null): \stdClass
+    protected function obtainUserInfo(string $userInfoUrl, AccessToken $accessToken, ?array $parameters = null): \stdClass
     {
         $headers = [
-            'Authorization' => 'Bearer ' . $accessToken,
+            'Authorization' => 'Bearer ' . $accessToken->getAccessToken(),
             'User-Agent' => self::USER_AGENT
         ];
 
@@ -187,7 +188,7 @@ abstract class ProviderAbstract implements ProviderInterface
         return $data;
     }
 
-    protected function obtainAccessToken(string $tokenUrl, array $params, Method $method = Method::POST): string
+    protected function obtainAccessToken(string $tokenUrl, array $params, Method $method = Method::POST): AccessToken
     {
         $data = $this->requestAccessToken($tokenUrl, $params, $method);
         return $this->parseAccessToken($data);
@@ -199,12 +200,6 @@ abstract class ProviderAbstract implements ProviderInterface
             'Accept' => 'application/json',
             'User-Agent' => self::USER_AGENT,
         ];
-
-        $clientId = $params['client_id'] ?? null;
-        $clientSecret = $params['client_secret'] ?? null;
-        if (!empty($clientId) && !empty($clientSecret)) {
-            $headers['Authorization'] = 'Basic ' . base64_encode($clientId . ':' . $clientSecret);
-        }
 
         if ($method === Method::POST) {
             $request = new PostRequest(Url::parse($tokenUrl), $headers, $params);
@@ -227,10 +222,10 @@ abstract class ProviderAbstract implements ProviderInterface
         return $data;
     }
 
-    private function parseAccessToken(array $data): string
+    private function parseAccessToken(array $data): AccessToken
     {
         if (isset($data['access_token']) && is_string($data['access_token'])) {
-            return $data['access_token'];
+            return AccessToken::fromArray($data);
         } elseif (isset($data['error']) && is_string($data['error'])) {
             $this->assertError($data);
         }
