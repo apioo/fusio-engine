@@ -35,13 +35,17 @@ class GraphQLRequestContextTest extends TestCase
 {
     public function testSerialize()
     {
-        $context = new GraphQLRequestContext('foo');
+        $context = new GraphQLRequestContext('foo', 'bar', ['field' => true]);
 
         $actual = \json_encode($context);
         $expect = <<<JSON
 {
   "type": "Fusio.Engine.Request.GraphQLRequestContext",
-  "rootValue": "foo"
+  "rootValue": "foo",
+  "context": "bar",
+  "fieldSelection": {
+    "field": true
+  }
 }
 JSON;
 

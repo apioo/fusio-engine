@@ -32,10 +32,14 @@ use Fusio\Engine\Inflection\ClassName;
 class GraphQLRequestContext implements RequestContextInterface
 {
     private mixed $rootValue;
+    private mixed $context;
+    private array $fieldSelection;
 
-    public function __construct(mixed $rootValue)
+    public function __construct(mixed $rootValue, mixed $context, array $fieldSelection)
     {
         $this->rootValue = $rootValue;
+        $this->context = $context;
+        $this->fieldSelection = $fieldSelection;
     }
 
     public function getRootValue(): mixed
@@ -43,11 +47,26 @@ class GraphQLRequestContext implements RequestContextInterface
         return $this->rootValue;
     }
 
+    public function getContext(): mixed
+    {
+        return $this->context;
+    }
+
+    /**
+     * @return array<string, bool>
+     */
+    public function getFieldSelection(): array
+    {
+        return $this->fieldSelection;
+    }
+
     public function jsonSerialize(): array
     {
         return [
             'type' => ClassName::serialize(self::class),
             'rootValue' => $this->rootValue,
+            'context' => $this->context,
+            'fieldSelection' => $this->fieldSelection,
         ];
     }
 }
