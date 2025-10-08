@@ -1,0 +1,12 @@
+{
+  "operationId": 0,
+  "baseUrl": "\/",
+  "app": {
+    "anonymous": true
+  },
+  "user": {
+    "anonymous": true
+  },
+  "tenantId": "my_tenant",
+  "action": null
+}
