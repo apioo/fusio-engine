@@ -36,15 +36,18 @@ class Processor implements ProcessorInterface
 {
     private Factory\ActionInterface $factory;
     private Action\QueueInterface $queue;
+    private Processor\ExecutionStackInterface $executionStack;
+
     /**
      * @var ResolverInterface[]
      */
     private array $resolvers = [];
 
-    public function __construct(iterable $resolvers, Factory\ActionInterface $factory, Action\QueueInterface $queue)
+    public function __construct(iterable $resolvers, Factory\ActionInterface $factory, Action\QueueInterface $queue, Processor\ExecutionStackInterface $executionStack)
     {
         $this->factory = $factory;
-        $this->queue   = $queue;
+        $this->queue = $queue;
+        $this->executionStack = $executionStack;
 
         foreach ($resolvers as $resolver) {
             $this->register($resolver->getScheme(), $resolver);
@@ -64,7 +67,15 @@ class Processor implements ProcessorInterface
                 'message' => 'Request was queued for execution',
             ]);
         } else {
-            return $this->factory->factory($action->getClass())->handle($request, $parameters, $context->withAction($action));
+            $this->executionStack->push($actionId, $request, $context);
+
+            try {
+                $response = $this->factory->factory($action->getClass())->handle($request, $parameters, $context->withAction($action));
+            } finally {
+                $this->executionStack->pop();
+            }
+
+            return $response;
         }
     }
 

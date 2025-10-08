@@ -54,6 +54,10 @@ return static function (ContainerConfigurator $container) {
         ->arg('$resolvers', tagged_iterator('fusio.action.resolver'));
     $services->alias(ProcessorInterface::class, Processor::class);
 
+    $services->set(Processor\ExecutionStack::class);
+    $services->alias(Processor\ExecutionStackInterface::class, Processor\ExecutionStack::class);
+    $services->alias(Processor\ExecutionStateInterface::class, Processor\ExecutionStack::class);
+
     $services->set(Dispatcher::class);
     $services->alias(DispatcherInterface::class, Dispatcher::class);
 
