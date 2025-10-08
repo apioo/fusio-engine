@@ -35,12 +35,13 @@ class EventRequestContextTest extends TestCase
 {
     public function testSerialize()
     {
-        $context = new EventRequestContext();
+        $context = new EventRequestContext('my_event');
 
         $actual = \json_encode($context);
         $expect = <<<JSON
 {
-  "type": "Fusio.Engine.Request.EventRequestContext"
+  "type": "Fusio.Engine.Request.EventRequestContext",
+  "eventName": "my_event"
 }
 JSON;
 

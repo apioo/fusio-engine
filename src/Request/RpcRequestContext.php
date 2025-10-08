@@ -29,18 +29,10 @@ use Fusio\Engine\Inflection\ClassName;
  * @license http://www.apache.org/licenses/LICENSE-2.0
  * @link    https://www.fusio-project.org
  */
-class RpcRequestContext implements RequestContextInterface
+readonly class RpcRequestContext implements RequestContextInterface
 {
-    private string $method;
-
-    public function __construct(string $method)
+    public function __construct(private string $method)
     {
-        $this->method = $method;
-    }
-
-    public function getMethod(): string
-    {
-        return $this->method;
     }
 
     public function jsonSerialize(): array

@@ -30,15 +30,10 @@ use PSX\Http\RequestInterface;
  * @license http://www.apache.org/licenses/LICENSE-2.0
  * @link    https://www.fusio-project.org
  */
-class HttpRequestContext implements RequestContextInterface
+readonly class HttpRequestContext implements RequestContextInterface
 {
-    private RequestInterface $request;
-    private array $parameters;
-
-    public function __construct(RequestInterface $request, array $parameters)
+    public function __construct(private RequestInterface $request, private array $parameters)
     {
-        $this->request = $request;
-        $this->parameters = $parameters;
     }
 
     public function getRequest(): RequestInterface

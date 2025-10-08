@@ -29,12 +29,22 @@ use Fusio\Engine\Inflection\ClassName;
  * @license http://www.apache.org/licenses/LICENSE-2.0
  * @link    https://www.fusio-project.org
  */
-class EventRequestContext implements RequestContextInterface
+readonly class EventRequestContext implements RequestContextInterface
 {
+    public function __construct(private string $eventName)
+    {
+    }
+
+    public function getEventName(): string
+    {
+        return $this->eventName;
+    }
+
     public function jsonSerialize(): array
     {
         return [
             'type' => ClassName::serialize(self::class),
+            'eventName' => $this->eventName,
         ];
     }
 }

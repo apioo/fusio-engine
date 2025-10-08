@@ -29,17 +29,10 @@ use Fusio\Engine\Inflection\ClassName;
  * @license http://www.apache.org/licenses/LICENSE-2.0
  * @link    https://www.fusio-project.org
  */
-class GraphQLRequestContext implements RequestContextInterface
+readonly class GraphQLRequestContext implements RequestContextInterface
 {
-    private mixed $rootValue;
-    private mixed $context;
-    private array $fieldSelection;
-
-    public function __construct(mixed $rootValue, mixed $context, array $fieldSelection)
+    public function __construct(private mixed $rootValue, private mixed $context, private array $fieldSelection)
     {
-        $this->rootValue = $rootValue;
-        $this->context = $context;
-        $this->fieldSelection = $fieldSelection;
     }
 
     public function getRootValue(): mixed
