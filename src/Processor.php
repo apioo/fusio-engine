@@ -43,11 +43,11 @@ class Processor implements ProcessorInterface
      */
     private array $resolvers = [];
 
-    public function __construct(iterable $resolvers, Factory\ActionInterface $factory, Action\QueueInterface $queue, Processor\ExecutionStackInterface $executionStack)
+    public function __construct(iterable $resolvers, Factory\ActionInterface $factory, Action\QueueInterface $queue, ?Processor\ExecutionStackInterface $executionStack = null)
     {
         $this->factory = $factory;
         $this->queue = $queue;
-        $this->executionStack = $executionStack;
+        $this->executionStack = $executionStack ?? new Processor\ExecutionStack();
 
         foreach ($resolvers as $resolver) {
             $this->register($resolver->getScheme(), $resolver);

@@ -132,7 +132,8 @@ class ProcessorTest extends TestCase
             new DatabaseAction($repository),
             new PhpClass(),
         ];
-        return new Processor($resolvers, $this->getActionFactory(), $this->getActionQueue());
+
+        return new Processor($resolvers, $this->getActionFactory(), $this->getActionQueue(), $this->getExecutionStack());
     }
 
     protected function getAdapterClass(): string

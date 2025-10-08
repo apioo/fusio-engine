@@ -20,9 +20,10 @@
 
 namespace Fusio\Engine\Test;
 
-use Fusio\Engine\Action\QueueInterface;
+use Fusio\Engine\Action;
 use Fusio\Engine\Factory;
 use Fusio\Engine\Form\ElementFactoryInterface;
+use Fusio\Engine\Processor;
 use Fusio\Engine\Repository;
 
 /**
@@ -32,23 +33,17 @@ use Fusio\Engine\Repository;
  * @license http://www.apache.org/licenses/LICENSE-2.0
  * @link    https://www.fusio-project.org
  */
-class EngineContainer
+readonly class EngineContainer
 {
-    private Factory\ActionInterface $actionFactory;
-    private QueueInterface $actionQueue;
-    private Repository\ActionInterface $actionRepository;
-    private Factory\ConnectionInterface $connectionFactory;
-    private Repository\ConnectionInterface $connectionRepository;
-    private ElementFactoryInterface $formElementFactory;
-
-    public function __construct(Factory\ActionInterface $actionFactory, QueueInterface $actionQueue, Repository\ActionInterface $actionRepository, Factory\ConnectionInterface $connectionFactory, Repository\ConnectionInterface $connectionRepository, ElementFactoryInterface $formElementFactory)
-    {
-        $this->actionFactory = $actionFactory;
-        $this->actionQueue = $actionQueue;
-        $this->actionRepository = $actionRepository;
-        $this->connectionFactory = $connectionFactory;
-        $this->connectionRepository = $connectionRepository;
-        $this->formElementFactory = $formElementFactory;
+    public function __construct(
+        private Factory\ActionInterface $actionFactory,
+        private Action\QueueInterface $actionQueue,
+        private Processor\ExecutionStackInterface $executionStack,
+        private Repository\ActionInterface $actionRepository,
+        private Factory\ConnectionInterface $connectionFactory,
+        private Repository\ConnectionInterface $connectionRepository,
+        private ElementFactoryInterface $formElementFactory
+    ) {
     }
 
     public function getActionFactory(): Factory\ActionInterface
@@ -56,9 +51,14 @@ class EngineContainer
         return $this->actionFactory;
     }
 
-    public function getActionQueue(): QueueInterface
+    public function getActionQueue(): Action\QueueInterface
     {
         return $this->actionQueue;
+    }
+
+    public function getExecutionStack(): Processor\ExecutionStackInterface
+    {
+        return $this->executionStack;
     }
 
     public function getActionRepository(): Repository\ActionInterface

@@ -34,5 +34,5 @@ interface ExecutionStackInterface
 {
     public function push(string|int $actionId, RequestInterface $request, ContextInterface $context): void;
 
-    public function pop(): ?ContextInterface;
+    public function pop(): void;
 }

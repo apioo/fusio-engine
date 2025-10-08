@@ -47,9 +47,9 @@ class ExecutionStack implements ExecutionStackInterface, ExecutionStateInterface
         ];
     }
 
-    public function pop(): ?ContextInterface
+    public function pop(): void
     {
-        return array_pop($this->stack);
+        array_pop($this->stack);
     }
 
     public function getCurrentAction(): string|int|null

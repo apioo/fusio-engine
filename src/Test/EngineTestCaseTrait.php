@@ -29,6 +29,7 @@ use Fusio\Engine\Model\Action;
 use Fusio\Engine\Model\App;
 use Fusio\Engine\Model\User;
 use Fusio\Engine\Parameters;
+use Fusio\Engine\Processor;
 use Fusio\Engine\Repository;
 use Fusio\Engine\Request as EngineRequest;
 use Fusio\Engine\Request\HttpRequestContext;
@@ -127,6 +128,11 @@ trait EngineTestCaseTrait
     protected function getActionQueue(): QueueInterface
     {
         return $this->getEngineContainer()->getActionQueue();
+    }
+
+    protected function getExecutionStack(): Processor\ExecutionStackInterface
+    {
+        return $this->getEngineContainer()->getExecutionStack();
     }
 
     protected function getActionRepository(): Repository\ActionInterface
