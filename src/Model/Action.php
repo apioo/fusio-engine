@@ -73,7 +73,7 @@ class Action implements ActionInterface
 
     public function getMetadata(string $key): mixed
     {
-        return $this->metadata?->{$key} ?? null;
+        return $this->metadata?->{$key};
     }
 
     public function jsonSerialize(): array

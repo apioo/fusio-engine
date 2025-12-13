@@ -39,6 +39,7 @@ use PSX\Http\Request;
 use PSX\Record\Record;
 use PSX\Record\RecordInterface;
 use PSX\Uri\Uri;
+use RuntimeException;
 use Symfony\Component\Config\ConfigCache;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -204,15 +205,20 @@ trait EngineTestCaseTrait
         }
 
         if (!is_file($targetFile)) {
-            throw new \RuntimeException('Could not find container file');
+            throw new RuntimeException('Could not find container file');
         }
 
         require_once $targetFile;
 
         if (!class_exists('ProjectServiceContainer')) {
-            throw new \RuntimeException('Could not find container class');
+            throw new RuntimeException('Could not find container class');
         }
 
-        return new \ProjectServiceContainer();
+        $container = new \ProjectServiceContainer();
+        if (!$container instanceof ContainerInterface) {
+            throw new RuntimeException('Generated container must implement: ' . ContainerInterface::class);
+        }
+
+        return $container;
     }
 }

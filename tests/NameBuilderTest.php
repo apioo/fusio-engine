@@ -21,6 +21,7 @@
 namespace Fusio\Engine\Tests;
 
 use Fusio\Engine\NameBuilder;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -32,15 +33,13 @@ use PHPUnit\Framework\TestCase;
  */
 class NameBuilderTest extends TestCase
 {
-    /**
-     * @dataProvider providerNames
-     */
+    #[DataProvider('providerNames')]
     public function testFromClass(string $action, string $expect)
     {
         $this->assertSame($expect, NameBuilder::fromClass($action));
     }
 
-    public function providerNames(): array
+    public static function providerNames(): array
     {
         return [
             ['Foo', 'Foo'],

@@ -35,7 +35,7 @@ class UserTest extends TestCase
 {
     public function testModel()
     {
-        $model = new User(false, 1, 1, 1, 1, 'foo', 'me@chrisk.app', 1337, 'external_id', 1);
+        $model = new User(false, 1, 1, 1, 1, 'foo', 'me@chrisk.app', 1337, 'external_id', '1');
 
         $this->assertSame(1, $model->getId());
         $this->assertSame(1, $model->getRoleId());
@@ -67,14 +67,14 @@ class UserTest extends TestCase
 
     public function testModelWithMetadata()
     {
-        $model = new User(false, 1, 1, 1, 1, 'foo', 'me@chrisk.app', 1337, 'external_id', 1, (object) ['foo' => 'bar']);
+        $model = new User(false, 1, 1, 1, 1, 'foo', 'me@chrisk.app', 1337, 'external_id', '1', (object) ['foo' => 'bar']);
 
         $this->assertEquals('bar', $model->getMetadata('foo'));
     }
 
     public function testModelSerialize()
     {
-        $model = new User(false, 1, 1, 1, 1, 'foo', 'me@chrisk.app', 1337, 'external_id', 1, (object) ['foo' => 'bar']);
+        $model = new User(false, 1, 1, 1, 1, 'foo', 'me@chrisk.app', 1337, 'external_id', '1', (object) ['foo' => 'bar']);
 
         $actual = json_encode($model);
         $expect = <<<'JSON'

@@ -38,7 +38,7 @@ class ContextTest extends TestCase
     public function testContext()
     {
         $app = new App(false, 1, 1, 1, 'foo', 'https://myapp.com', 'key', ['foo' => 'bar'], ['foo', 'bar'], (object) ['foo' => 'bar']);
-        $user = new User(false, 1, 1, 1, 1, 'bar', 'foo@bar.com', 1000, 'external_id', 1, (object) ['foo' => 'bar']);
+        $user = new User(false, 1, 1, 1, 1, 'bar', 'foo@bar.com', 1000, 'external_id', '1', (object) ['foo' => 'bar']);
         $context = new Context(1, 'https://api.acme.com', $app, $user, 'my_tenant');
 
         $actual = \json_encode($context);

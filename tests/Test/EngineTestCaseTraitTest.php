@@ -22,6 +22,7 @@ namespace Fusio\Engine\Tests\Test;
 
 use Fusio\Engine\Action\Runtime;
 use Fusio\Engine\ActionInterface;
+use Fusio\Engine\ConfigurableInterface;
 use Fusio\Engine\ConnectionInterface;
 use Fusio\Engine\ConnectorInterface;
 use Fusio\Engine\ContextInterface;
@@ -132,9 +133,11 @@ JSON;
 
         $this->assertInstanceOf(ConnectionInterface::class, $connection);
 
-        $connection->configure($builder, $factory);
+        if ($connection instanceof ConfigurableInterface) {
+            $connection->configure($builder, $factory);
 
-        $this->assertInstanceOf(Form\Container::class, $builder->getForm());
+            $this->assertInstanceOf(Form\Container::class, $builder->getForm());
+        }
     }
 
     public function testGetConnectionRepository()

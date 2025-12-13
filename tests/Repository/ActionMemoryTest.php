@@ -67,7 +67,9 @@ class ActionMemoryTest extends TestCase
     {
         $repository = $this->createRepository();
 
-        $this->assertEquals(1, count($repository));
+        if ($repository instanceof Repository\ActionMemory) {
+            $this->assertEquals(1, count($repository));
+        }
     }
 
     public function testJsonSerialize()

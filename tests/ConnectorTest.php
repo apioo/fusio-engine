@@ -24,6 +24,7 @@ use Fusio\Engine\Connector;
 use Fusio\Engine\Exception\ConnectionNotFoundException;
 use Fusio\Engine\Model\Connection;
 use Fusio\Engine\Repository\ConnectionInterface;
+use Fusio\Engine\Repository\ConnectionMemory;
 use Fusio\Engine\Test\CallbackConnection;
 use Fusio\Engine\Test\EngineTestCaseTrait;
 use Fusio\Engine\Tests\Test\TestAdapter;
@@ -82,7 +83,9 @@ class ConnectorTest extends TestCase
             }]
         );
 
-        $repository->add($connection);
+        if ($repository instanceof ConnectionMemory) {
+            $repository->add($connection);
+        }
 
         return $repository;
     }

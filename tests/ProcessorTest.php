@@ -121,7 +121,9 @@ class ProcessorTest extends TestCase
             }]
         );
 
-        $repository->add($action);
+        if ($repository instanceof Repository\ActionMemory) {
+            $repository->add($action);
+        }
 
         return $repository;
     }
