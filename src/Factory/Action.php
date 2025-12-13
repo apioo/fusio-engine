@@ -47,7 +47,7 @@ class Action implements ActionInterface
         $className = ClassName::unserialize($className);
 
         if (!$this->actions->has($className)) {
-            throw new ActionNotFoundException('Action class ' . $className . ' not found');
+            throw new ActionNotFoundException('Action class ' . $className . ' not found, make sure that autoloading is configured for the src/ folder at the composer.json and that the action folder is loaded at the resources/container.php configuration');
         }
 
         $action = $this->actions->get($className);
