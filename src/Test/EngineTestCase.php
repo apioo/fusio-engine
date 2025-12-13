@@ -28,8 +28,6 @@ use PHPUnit\Framework\TestCase;
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.apache.org/licenses/LICENSE-2.0
  * @link    https://www.fusio-project.org
- *
- * @psalm-suppress PropertyNotSetInConstructor
  */
 abstract class EngineTestCase extends TestCase
 {
