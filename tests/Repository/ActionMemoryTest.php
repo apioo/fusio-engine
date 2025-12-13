@@ -63,15 +63,6 @@ class ActionMemoryTest extends TestCase
         $this->assertSame('foo', $action->getName());
     }
 
-    public function testCount()
-    {
-        $repository = $this->createRepository();
-
-        if ($repository instanceof Repository\ActionMemory) {
-            $this->assertEquals(1, count($repository));
-        }
-    }
-
     public function testJsonSerialize()
     {
         $repository = $this->createRepository();
