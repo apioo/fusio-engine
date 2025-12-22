@@ -36,5 +36,8 @@ interface RepositoryInterface
      */
     public function getAll(): array;
 
+    /**
+     * @return T
+     */
     public function get(string|int $id): mixed;
 }
