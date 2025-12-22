@@ -64,6 +64,9 @@ class TokenAnonymous implements TokenInterface
         return '';
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return [

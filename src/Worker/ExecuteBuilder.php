@@ -64,6 +64,9 @@ class ExecuteBuilder implements ExecuteBuilderInterface
         return $execute;
     }
 
+    /**
+     * @return Record<ExecuteConnection>
+     */
     private function getConnections(): Record
     {
         /** @var Record<ExecuteConnection> $result */
@@ -106,6 +109,9 @@ class ExecuteBuilder implements ExecuteBuilderInterface
         return $return;
     }
 
+    /**
+     * @return Record<string>
+     */
     private function getRequestHeaders(\PSX\Http\RequestInterface $request): Record
     {
         /** @var Record<string> $headers */

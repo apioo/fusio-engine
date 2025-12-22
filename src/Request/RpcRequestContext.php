@@ -40,6 +40,9 @@ readonly class RpcRequestContext implements RequestContextInterface
         return $this->method;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return [

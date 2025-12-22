@@ -36,7 +36,10 @@ class UserMemory implements UserInterface
      */
     private array $users;
 
-    public function __construct(array $users = array())
+    /**
+     * @param Model\UserInterface[] $users
+     */
+    public function __construct(array $users = [])
     {
         $this->users = $users;
     }

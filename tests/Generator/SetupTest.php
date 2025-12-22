@@ -27,6 +27,7 @@ use Fusio\Model\Backend\OperationCreate;
 use Fusio\Model\Backend\SchemaCreate;
 use Fusio\Model\Backend\SchemaSource;
 use PHPUnit\Framework\TestCase;
+use PSX\Json\Parser;
 
 /**
  * SetupTest
@@ -37,7 +38,7 @@ use PHPUnit\Framework\TestCase;
  */
 class SetupTest extends TestCase
 {
-    public function testAddAction()
+    public function testAddAction(): void
     {
         $setup = new Setup();
 
@@ -58,10 +59,10 @@ class SetupTest extends TestCase
 JSON;
 
         $this->assertSame(1, count($setup->getActions()));
-        $this->assertJsonStringEqualsJsonString($expect, json_encode($setup->getActions()[0]));
+        $this->assertJsonStringEqualsJsonString($expect, Parser::encode($setup->getActions()[0]));
     }
 
-    public function testAddSchema()
+    public function testAddSchema(): void
     {
         $setup = new Setup();
 
@@ -80,10 +81,10 @@ JSON;
 JSON;
 
         $this->assertSame(1, count($setup->getSchemas()));
-        $this->assertJsonStringEqualsJsonString($expect, json_encode($setup->getSchemas()[0]));
+        $this->assertJsonStringEqualsJsonString($expect, Parser::encode($setup->getSchemas()[0]));
     }
 
-    public function testAddRoute()
+    public function testAddOperation(): void
     {
         $setup = new Setup();
 
@@ -119,6 +120,6 @@ JSON;
 JSON;
 
         $this->assertSame(1, count($setup->getOperations()));
-        $this->assertJsonStringEqualsJsonString($expect, json_encode($setup->getOperations()[0]));
+        $this->assertJsonStringEqualsJsonString($expect, Parser::encode($setup->getOperations()[0]));
     }
 }

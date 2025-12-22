@@ -23,6 +23,7 @@ namespace Fusio\Engine\Tests\Model;
 use Fusio\Engine\Model\App;
 use Fusio\Engine\Model\AppAnonymous;
 use PHPUnit\Framework\TestCase;
+use PSX\Json\Parser;
 
 /**
  * AppTest
@@ -33,7 +34,7 @@ use PHPUnit\Framework\TestCase;
  */
 class AppTest extends TestCase
 {
-    public function testModel()
+    public function testModel(): void
     {
         $model = new App(false, 1, 1, 1, 'foo', 'https://chrisk.app', 'key', ['param' => 'value'], ['foo']);
 
@@ -48,7 +49,7 @@ class AppTest extends TestCase
         $this->assertNull($model->getMetadata('foo'));
     }
 
-    public function testModelAnonymous()
+    public function testModelAnonymous(): void
     {
         $model = new AppAnonymous();
 
@@ -63,18 +64,18 @@ class AppTest extends TestCase
         $this->assertNull($model->getMetadata('foo'));
     }
 
-    public function testModelWithMetadata()
+    public function testModelWithMetadata(): void
     {
         $model = new App(false, 1, 1, 1, 'foo', 'https://chrisk.app', 'key', ['param' => 'value'], ['foo'], (object) ['foo' => 'bar']);
 
         $this->assertEquals('bar', $model->getMetadata('foo'));
     }
 
-    public function testModelSerialize()
+    public function testModelSerialize(): void
     {
         $model = new App(false, 1, 1, 1, 'foo', 'https://chrisk.app', 'key', ['param' => 'value'], ['foo'], (object) ['foo' => 'bar']);
 
-        $actual = json_encode($model);
+        $actual = Parser::encode($model);
         $expect = <<<'JSON'
 {
   "anonymous": false,
@@ -100,11 +101,11 @@ JSON;
     }
 
 
-    public function testModelSerializeAnonymous()
+    public function testModelSerializeAnonymous(): void
     {
         $model = new AppAnonymous();
 
-        $actual = json_encode($model);
+        $actual = Parser::encode($model);
         $expect = <<<'JSON'
 {
   "anonymous": true

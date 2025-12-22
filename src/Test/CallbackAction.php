@@ -43,7 +43,7 @@ class CallbackAction extends ActionAbstract
         return 'Callback-Action';
     }
 
-    public function handle(RequestInterface $request, ParametersInterface $configuration, ContextInterface $context): HttpResponseInterface
+    public function handle(RequestInterface $request, ParametersInterface $configuration, ContextInterface $context): mixed
     {
         $callback = $configuration->get('callback');
 

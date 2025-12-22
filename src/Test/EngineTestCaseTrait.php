@@ -65,6 +65,12 @@ trait EngineTestCaseTrait
         self::$container = null;
     }
 
+    /**
+     * @param array<string, mixed> $uriFragments
+     * @param array<string, mixed> $parameters
+     * @param array<string, mixed> $headers
+     * @param RecordInterface<mixed>|null $parsedBody
+     */
     protected function getRequest(?string $method = null, array $uriFragments = [], array $parameters = [], array $headers = [], ?RecordInterface $parsedBody = null, ?StreamInterface $rawBody = null): \Fusio\Engine\Request
     {
         $uri = Uri::parse('http://127.0.0.1/foo');
@@ -79,6 +85,9 @@ trait EngineTestCaseTrait
         );
     }
 
+    /**
+     * @param array<string, mixed> $parameters
+     */
     protected function getParameters(array $parameters = array()): Parameters
     {
         return new Parameters($parameters);
@@ -158,6 +167,7 @@ trait EngineTestCaseTrait
 
     protected function getEngineContainer(): EngineContainer
     {
+        /** @phpstan-ignore return.type */
         return $this->getContainer()->get(EngineContainer::class);
     }
 

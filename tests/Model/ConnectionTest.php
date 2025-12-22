@@ -22,6 +22,7 @@ namespace Fusio\Engine\Tests\Model;
 
 use Fusio\Engine\Model\Connection;
 use PHPUnit\Framework\TestCase;
+use PSX\Json\Parser;
 
 /**
  * ConnectionTest
@@ -32,7 +33,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ConnectionTest extends TestCase
 {
-    public function testModel()
+    public function testModel(): void
     {
         $model = new Connection(1, 'foo', self::class, ['param' => 'value']);
 
@@ -43,18 +44,18 @@ class ConnectionTest extends TestCase
         $this->assertNull($model->getMetadata('foo'));
     }
 
-    public function testModelWithMetadata()
+    public function testModelWithMetadata(): void
     {
         $model = new Connection(1, 'foo', self::class, ['param' => 'value'], (object) ['foo' => 'bar']);
 
         $this->assertEquals('bar', $model->getMetadata('foo'));
     }
 
-    public function testModelSerialize()
+    public function testModelSerialize(): void
     {
         $model = new Connection(1, 'foo', self::class, ['param' => 'value'], (object) ['foo' => 'bar']);
 
-        $actual = json_encode($model);
+        $actual = Parser::encode($model);
         $expect = <<<'JSON'
 {
   "id": 1,

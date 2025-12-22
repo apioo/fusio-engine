@@ -37,6 +37,9 @@ interface TokenInterface extends \JsonSerializable
 
     public function getUserId(): int;
 
+    /**
+     * @return list<string>
+     */
     public function getScopes(): array;
 
     public function getExpire(): string;

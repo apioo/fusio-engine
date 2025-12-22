@@ -33,7 +33,7 @@ use Fusio\Engine\RequestInterface;
 class MemoryQueue implements QueueInterface
 {
     /**
-     * @var array<array{string|int, RequestInterface, ContextInterface}>
+     * @var list<array{string|int, RequestInterface, ContextInterface}>
      */
     private array $container;
 
@@ -47,6 +47,9 @@ class MemoryQueue implements QueueInterface
         $this->container[] = [$actionId, $request, $context];
     }
 
+    /**
+     * @return array{string|int, RequestInterface, ContextInterface}
+     */
     public function pop(): array
     {
         return array_pop($this->container) ?? throw new \RuntimeException('Container is empty');

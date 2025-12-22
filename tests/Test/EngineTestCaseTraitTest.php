@@ -24,21 +24,15 @@ use Fusio\Engine\Action\Runtime;
 use Fusio\Engine\ActionInterface;
 use Fusio\Engine\ConfigurableInterface;
 use Fusio\Engine\ConnectionInterface;
-use Fusio\Engine\ConnectorInterface;
 use Fusio\Engine\ContextInterface;
-use Fusio\Engine\Factory;
 use Fusio\Engine\Form;
 use Fusio\Engine\Parameters;
 use Fusio\Engine\ParametersInterface;
-use Fusio\Engine\Parser;
-use Fusio\Engine\ProcessorInterface;
 use Fusio\Engine\Repository;
 use Fusio\Engine\RequestInterface;
-use Fusio\Engine\Response\FactoryInterface;
-use Fusio\Engine\Schema;
 use Fusio\Engine\Test\EngineTestCase;
-use Psr\Container\ContainerInterface;
 use PSX\Http\Environment\HttpResponseInterface;
+use PSX\Json\Parser;
 use Symfony\Component\DependencyInjection\Container;
 
 /**
@@ -56,22 +50,22 @@ class EngineTestCaseTraitTest extends EngineTestCase
         $container->set(Impl\Action::class, new Impl\Action($runtime));
     }
 
-    public function testGetRequest()
+    public function testGetRequest(): void
     {
         $this->assertInstanceOf(RequestInterface::class, $this->getRequest());
     }
 
-    public function testGetParameters()
+    public function testGetParameters(): void
     {
         $this->assertInstanceOf(ParametersInterface::class, $this->getParameters());
     }
 
-    public function testGetContext()
+    public function testGetContext(): void
     {
         $this->assertInstanceOf(ContextInterface::class, $this->getContext());
     }
 
-    public function testGetActionHandle()
+    public function testGetActionHandle(): void
     {
         $action = $this->getActionFactory()->factory(Impl\Action::class);
 
@@ -80,40 +74,42 @@ class EngineTestCaseTraitTest extends EngineTestCase
         $parameters = $this->getParameters([]);
         $response   = $action->handle($this->getRequest(), $parameters, $this->getContext());
 
-        $actual = json_encode($response->getBody(), JSON_PRETTY_PRINT);
+        $this->assertInstanceOf(HttpResponseInterface::class, $response);
+
+        $actual = Parser::encode($response->getBody(), JSON_PRETTY_PRINT);
         $expect = <<<JSON
 {
     "foo": "bar"
 }
 JSON;
 
-        $this->assertInstanceOf(HttpResponseInterface::class, $response);
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals([], $response->getHeaders());
         $this->assertJsonStringEqualsJsonString($expect, $actual, $actual);
     }
 
-    public function testGetActionConfigure()
+    public function testGetActionConfigure(): void
     {
         $action  = $this->getActionFactory()->factory(Impl\Action::class);
         $builder = new Form\Builder();
         $factory = $this->getFormElementFactory();
 
         $this->assertInstanceOf(ActionInterface::class, $action);
+        $this->assertInstanceOf(ConfigurableInterface::class, $action);
 
         $action->configure($builder, $factory);
 
         $this->assertInstanceOf(Form\Container::class, $builder->getForm());
     }
 
-    public function testGetActionRepository()
+    public function testGetActionRepository(): void
     {
         $repository = $this->getActionRepository();
 
         $this->assertInstanceOf(Repository\ActionInterface::class, $repository);
     }
 
-    public function testGetConnection()
+    public function testGetConnection(): void
     {
         $connection = $this->getConnectionFactory()->factory(Impl\Connection::class);
         $parameters = new Parameters([]);
@@ -125,7 +121,7 @@ JSON;
         $this->assertInstanceOf(\stdClass::class, $result);
     }
 
-    public function testGetConnectionConfigure()
+    public function testGetConnectionConfigure(): void
     {
         $connection = $this->getConnectionFactory()->factory(Impl\Connection::class);
         $builder    = new Form\Builder();
@@ -140,14 +136,14 @@ JSON;
         }
     }
 
-    public function testGetConnectionRepository()
+    public function testGetConnectionRepository(): void
     {
         $repository = $this->getConnectionRepository();
 
         $this->assertInstanceOf(Repository\ConnectionInterface::class, $repository);
     }
 
-    public function testGetFormElementFactory()
+    public function testGetFormElementFactory(): void
     {
         $this->assertInstanceOf(Form\ElementFactoryInterface::class, $this->getFormElementFactory());
     }

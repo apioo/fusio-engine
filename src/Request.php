@@ -31,10 +31,16 @@ use Fusio\Engine\Request\RequestContextInterface;
  */
 class Request implements RequestInterface
 {
+    /**
+     * @var array<string, mixed>
+     */
     private array $arguments;
     private mixed $payload;
     private RequestContextInterface $context;
 
+    /**
+     * @param array<string, mixed> $arguments
+     */
     public function __construct(array $arguments, mixed $payload, RequestContextInterface $context)
     {
         $this->arguments = $arguments;
@@ -52,6 +58,9 @@ class Request implements RequestInterface
         return $this->arguments;
     }
 
+    /**
+     * @param array<string, mixed> $arguments
+     */
     public function withArguments(array $arguments): self
     {
         return new self($arguments, $this->payload, $this->context);
@@ -77,6 +86,9 @@ class Request implements RequestInterface
         return new self($this->arguments, $this->payload, $context);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return [

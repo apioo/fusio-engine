@@ -97,6 +97,9 @@ class Context implements ContextInterface
         return $me;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return [

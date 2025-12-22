@@ -31,11 +31,15 @@ interface ElementFactoryInterface
 {
     /**
      * Creates a select which contains all available actions
+     *
+     * @param list<string> $allowedClasses
      */
     public function newAction(string $name, string $title, ?string $help = null, ?array $allowedClasses = null): Element\Action;
 
     /**
      * Creates a select which contains all available connections
+     *
+     * @param list<string> $allowedClasses
      */
     public function newConnection(string $name, string $title, ?string $help = null, ?array $allowedClasses = null): Element\Connection;
 
@@ -48,6 +52,8 @@ interface ElementFactoryInterface
 
     /**
      * Creates a new select
+     *
+     * @param array<string, mixed> $options
      */
     public function newSelect(string $name, string $title, array $options = [], ?string $help = null): Element\Select;
 

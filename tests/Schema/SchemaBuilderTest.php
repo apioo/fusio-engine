@@ -22,6 +22,8 @@ namespace Fusio\Engine\Tests\Schema;
 
 use Fusio\Engine\Schema\SchemaBuilder;
 use PHPUnit\Framework\TestCase;
+use PSX\Json\Parser;
+use function file_get_contents;
 
 /**
  * SchemaBuilderTest
@@ -32,29 +34,32 @@ use PHPUnit\Framework\TestCase;
  */
 class SchemaBuilderTest extends TestCase
 {
-    public function testMakeCollectionParameters()
+    public function testMakeCollectionParameters(): void
     {
-        $actual = \json_encode(SchemaBuilder::makeCollectionParameters(), \JSON_PRETTY_PRINT);
-        $expect = \file_get_contents(__DIR__ . '/resource/expect_parameters.json');
+        $actual = Parser::encode(SchemaBuilder::makeCollectionParameters(), \JSON_PRETTY_PRINT);
+        $expect = file_get_contents(__DIR__ . '/resource/expect_parameters.json');
 
+        $this->assertNotFalse($expect);
         $this->assertJsonStringEqualsJsonString($expect, $actual, $actual);
     }
 
-    public function testMakeCollectionResponse()
+    public function testMakeCollectionResponse(): void
     {
-        $type = \json_decode(\file_get_contents(__DIR__ . '/resource/file.json'));
+        $type = Parser::decodeAsObject(file_get_contents(__DIR__ . '/resource/file.json') ?: '');
 
-        $actual = \json_encode(SchemaBuilder::makeCollectionResponse('File_Directory_Index', $type), \JSON_PRETTY_PRINT);
-        $expect = \file_get_contents(__DIR__ . '/resource/expect_collection.json');
+        $actual = Parser::encode(SchemaBuilder::makeCollectionResponse('File_Directory_Index', $type), \JSON_PRETTY_PRINT);
+        $expect = file_get_contents(__DIR__ . '/resource/expect_collection.json');
 
+        $this->assertNotFalse($expect);
         $this->assertJsonStringEqualsJsonString($expect, $actual, $actual);
     }
 
-    public function testMakeCollectionResponseAny()
+    public function testMakeCollectionResponseAny(): void
     {
-        $actual = \json_encode(SchemaBuilder::makeCollectionResponse('File_Directory_Index', null), \JSON_PRETTY_PRINT);
-        $expect = \file_get_contents(__DIR__ . '/resource/expect_collection_any.json');
+        $actual = Parser::encode(SchemaBuilder::makeCollectionResponse('File_Directory_Index', null), \JSON_PRETTY_PRINT);
+        $expect = file_get_contents(__DIR__ . '/resource/expect_collection_any.json');
 
+        $this->assertNotFalse($expect);
         $this->assertJsonStringEqualsJsonString($expect, $actual, $actual);
     }
 }

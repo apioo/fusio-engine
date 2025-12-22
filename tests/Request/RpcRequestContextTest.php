@@ -22,6 +22,7 @@ namespace Fusio\Engine\Tests\Request;
 
 use Fusio\Engine\Request\RpcRequestContext;
 use PHPUnit\Framework\TestCase;
+use PSX\Json\Parser;
 
 /**
  * RpcRequestContextTest
@@ -32,11 +33,11 @@ use PHPUnit\Framework\TestCase;
  */
 class RpcRequestContextTest extends TestCase
 {
-    public function testSerialize()
+    public function testSerialize(): void
     {
         $context = new RpcRequestContext('my_method');
 
-        $actual = \json_encode($context);
+        $actual = Parser::encode($context);
         $expect = <<<JSON
 {
   "type": "Fusio.Engine.Request.RpcRequestContext",

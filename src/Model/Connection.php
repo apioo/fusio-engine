@@ -20,6 +20,8 @@
 
 namespace Fusio\Engine\Model;
 
+use stdClass;
+
 /**
  * Connection
  *
@@ -32,10 +34,16 @@ class Connection implements ConnectionInterface
     private int $id;
     private string $name;
     private string $class;
+    /**
+     * @var array<string, mixed>
+     */
     private array $config;
-    private ?\stdClass $metadata;
+    private ?stdClass $metadata;
 
-    public function __construct(int $id, string $name, string $class, array $config, ?\stdClass $metadata = null)
+    /**
+     * @param array<string, mixed> $config
+     */
+    public function __construct(int $id, string $name, string $class, array $config, ?stdClass $metadata = null)
     {
         $this->id = $id;
         $this->name = $name;
@@ -69,6 +77,9 @@ class Connection implements ConnectionInterface
         return $this->metadata?->{$key};
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return [

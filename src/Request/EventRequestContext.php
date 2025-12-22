@@ -40,6 +40,9 @@ readonly class EventRequestContext implements RequestContextInterface
         return $this->eventName;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return [

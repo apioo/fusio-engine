@@ -32,10 +32,13 @@ use Fusio\Engine\RequestInterface;
  */
 class ExecutionStack implements ExecutionStackInterface, ExecutionStateInterface
 {
-    private const KEY_ACTION = 0;
-    private const KEY_REQUEST = 1;
-    private const KEY_CONTEXT = 2;
+    private const int KEY_ACTION = 0;
+    private const int KEY_REQUEST = 1;
+    private const int KEY_CONTEXT = 2;
 
+    /**
+     * @var array<array{0: string|int, 1: RequestInterface, 2: ContextInterface}>
+     */
     private array $stack = [];
 
     public function push(string|int $actionId, RequestInterface $request, ContextInterface $context): void
@@ -54,26 +57,31 @@ class ExecutionStack implements ExecutionStackInterface, ExecutionStateInterface
 
     public function getCurrentAction(): string|int|null
     {
-        return $this->getCurrent(self::KEY_ACTION);
+        $lastKey = array_key_last($this->stack);
+        if ($lastKey === null) {
+            return null;
+        }
+
+        return $this->stack[$lastKey][self::KEY_ACTION] ?? null;
     }
 
     public function getCurrentRequest(): ?RequestInterface
-    {
-        return $this->getCurrent(self::KEY_REQUEST);
-    }
-
-    public function getCurrentContext(): ?ContextInterface
-    {
-        return $this->getCurrent(self::KEY_CONTEXT);
-    }
-
-    private function getCurrent(int $index): mixed
     {
         $lastKey = array_key_last($this->stack);
         if ($lastKey === null) {
             return null;
         }
 
-        return $this->stack[$lastKey][$index] ?? null;
+        return $this->stack[$lastKey][self::KEY_REQUEST] ?? null;
+    }
+
+    public function getCurrentContext(): ?ContextInterface
+    {
+        $lastKey = array_key_last($this->stack);
+        if ($lastKey === null) {
+            return null;
+        }
+
+        return $this->stack[$lastKey][self::KEY_CONTEXT] ?? null;
     }
 }

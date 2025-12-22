@@ -32,6 +32,9 @@ use PSX\Http\RequestInterface;
  */
 readonly class HttpRequestContext implements RequestContextInterface
 {
+    /**
+     * @param array<string, mixed> $parameters
+     */
     public function __construct(private RequestInterface $request, private array $parameters)
     {
     }
@@ -41,16 +44,22 @@ readonly class HttpRequestContext implements RequestContextInterface
         return $this->request;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getParameters(): array
     {
         return $this->parameters;
     }
 
-    public function getParameter(string $name): ?string
+    public function getParameter(string $name): mixed
     {
         return $this->parameters[$name] ?? null;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return [

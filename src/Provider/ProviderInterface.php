@@ -34,6 +34,9 @@ interface ProviderInterface
 {
     /**
      * Returns all available classes
+     *
+     * @param list<string>|null $excludeClasses
+     * @return list<array{name: string, class: string}>
      */
     public function getClasses(?array $excludeClasses = null): array;
 

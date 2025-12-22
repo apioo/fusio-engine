@@ -31,6 +31,9 @@ use Fusio\Engine\Inflection\ClassName;
  */
 readonly class GraphQLRequestContext implements RequestContextInterface
 {
+    /**
+     * @param array<string, bool> $fieldSelection
+     */
     public function __construct(private mixed $rootValue, private mixed $context, private array $fieldSelection)
     {
     }
@@ -53,6 +56,9 @@ readonly class GraphQLRequestContext implements RequestContextInterface
         return $this->fieldSelection;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return [

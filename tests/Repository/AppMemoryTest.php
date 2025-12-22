@@ -34,7 +34,7 @@ use PHPUnit\Framework\TestCase;
  */
 class AppMemoryTest extends TestCase
 {
-    public function testGet()
+    public function testGet(): void
     {
         $repository = $this->createRepository();
 
@@ -44,7 +44,7 @@ class AppMemoryTest extends TestCase
         $this->assertSame('foo', $app->getName());
     }
 
-    public function testGetAll()
+    public function testGetAll(): void
     {
         $repository  = $this->createRepository();
         $connections = $repository->getAll();

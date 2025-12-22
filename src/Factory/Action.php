@@ -35,8 +35,14 @@ use Symfony\Component\DependencyInjection\ServiceLocator;
  */
 class Action implements ActionInterface
 {
+    /**
+     * @var ServiceLocator<EngineActionInterface>
+     */
     private ServiceLocator $actions;
 
+    /**
+     * @param ServiceLocator<EngineActionInterface> $actions
+     */
     public function __construct(ServiceLocator $actions)
     {
         $this->actions = $actions;

@@ -47,10 +47,16 @@ interface AppInterface extends \JsonSerializable
 
     public function getAppKey(): string;
 
+    /**
+     * @return list<string>
+     */
     public function getScopes(): array;
 
     public function hasScope(string $name): bool;
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getParameters(): array;
 
     public function getParameter(string $name): mixed;

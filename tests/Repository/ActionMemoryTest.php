@@ -24,6 +24,7 @@ use Fusio\Engine\Model\Action;
 use Fusio\Engine\Model\ActionInterface;
 use Fusio\Engine\Repository;
 use PHPUnit\Framework\TestCase;
+use PSX\Json\Parser;
 
 /**
  * ActionMemoryTest
@@ -34,7 +35,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ActionMemoryTest extends TestCase
 {
-    public function testGet()
+    public function testGet(): void
     {
         $repository = $this->createRepository();
 
@@ -49,7 +50,7 @@ class ActionMemoryTest extends TestCase
         $this->assertSame('foo', $action->getName());
     }
 
-    public function testGetAll()
+    public function testGetAll(): void
     {
         $repository = $this->createRepository();
         $actions    = $repository->getAll();
@@ -63,11 +64,11 @@ class ActionMemoryTest extends TestCase
         $this->assertSame('foo', $action->getName());
     }
 
-    public function testJsonSerialize()
+    public function testJsonSerialize(): void
     {
         $repository = $this->createRepository();
 
-        $actual = json_encode($repository, JSON_PRETTY_PRINT);
+        $actual = Parser::encode($repository, JSON_PRETTY_PRINT);
         $expect = <<<'JSON'
 [
     {
@@ -85,14 +86,14 @@ JSON;
         $this->assertJsonStringEqualsJsonString($expect, $actual, $actual);
     }
 
-    public function testJsonSerializeEmpty()
+    public function testJsonSerializeEmpty(): void
     {
         $repository = new Repository\ActionMemory();
 
         $this->assertSame([], $repository->jsonSerialize());
     }
 
-    public function testFromJson()
+    public function testFromJson(): void
     {
         $json = <<<'JSON'
 [

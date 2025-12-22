@@ -31,8 +31,14 @@ use Fusio\Engine\Form\Element;
  */
 class Select extends Element
 {
+    /**
+     * @var list<array{key: string, value: mixed}>
+     */
     private array $options = [];
 
+    /**
+     * @param array<string, mixed> $options
+     */
     public function __construct(string $name, string $title, array $options = [], ?string $help = null)
     {
         parent::__construct($name, $title, $help);
@@ -42,11 +48,17 @@ class Select extends Element
         }
     }
 
+    /**
+     * @param list<array{key: string, value: mixed}> $options
+     */
     public function setOptions(array $options): void
     {
         $this->options = $options;
     }
 
+    /**
+     * @return list<array{key: string, value: mixed}>
+     */
     public function getOptions(): array
     {
         return $this->options;
@@ -60,6 +72,9 @@ class Select extends Element
         );
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return array_merge(parent::jsonSerialize(), [

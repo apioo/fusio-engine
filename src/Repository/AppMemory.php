@@ -36,7 +36,10 @@ class AppMemory implements AppInterface
      */
     private array $apps;
 
-    public function __construct(array $apps = array())
+    /**
+     * @param Model\AppInterface[] $apps
+     */
+    public function __construct(array $apps = [])
     {
         $this->apps = $apps;
     }
@@ -46,6 +49,9 @@ class AppMemory implements AppInterface
         $this->apps[$app->getId()] = $app;
     }
 
+    /**
+     * @return Model\AppInterface[]
+     */
     public function getAll(): array
     {
         return $this->apps;

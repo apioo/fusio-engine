@@ -111,6 +111,9 @@ class User implements UserInterface
         return $this->metadata?->{$key};
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return [

@@ -35,14 +35,25 @@ use Fusio\Engine\Inflection\ClassName;
 abstract class ProviderAbstract implements ProviderInterface
 {
     private Form\ElementFactoryInterface $elementFactory;
+
+    /**
+     * @var iterable<object>
+     */
     private iterable $objects;
 
+    /**
+     * @param iterable<object> $objects
+     */
     public function __construct(Form\ElementFactoryInterface $elementFactory, iterable $objects)
     {
         $this->elementFactory = $elementFactory;
         $this->objects = $objects;
     }
 
+    /**
+     * @param list<string>|null $excludeClasses
+     * @return list<array{name: string, class: string}>
+     */
     public function getClasses(?array $excludeClasses = null): array
     {
         $result = [];

@@ -23,6 +23,7 @@ namespace Fusio\Engine\Tests\Request;
 use Fusio\Engine\Request\HttpRequestContext;
 use PHPUnit\Framework\TestCase;
 use PSX\Http\Request;
+use PSX\Json\Parser;
 use PSX\Uri\Uri;
 
 /**
@@ -34,11 +35,11 @@ use PSX\Uri\Uri;
  */
 class HttpRequestContextTest extends TestCase
 {
-    public function testSerialize()
+    public function testSerialize(): void
     {
         $context = new HttpRequestContext(new Request(Uri::parse('/'), 'GET', ['User-Agent' => 'MyAgent'], 'my_body'), []);
 
-        $actual = \json_encode($context);
+        $actual = Parser::encode($context);
         $expect = <<<JSON
 {
   "type": "Fusio.Engine.Request.HttpRequestContext",

@@ -36,6 +36,9 @@ class ConnectionMemory implements ConnectionInterface
      */
     private array $connections;
 
+    /**
+     * @param Model\ConnectionInterface[] $connections
+     */
     public function __construct(array $connections = array())
     {
         $this->connections = $connections;

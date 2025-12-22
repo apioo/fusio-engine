@@ -114,6 +114,9 @@ class Transaction implements TransactionInterface
         $this->remoteId = $remoteId;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return [

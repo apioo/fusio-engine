@@ -34,7 +34,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ConnectionMemoryTest extends TestCase
 {
-    public function testGet()
+    public function testGet(): void
     {
         $repository = $this->createRepository();
 
@@ -49,7 +49,7 @@ class ConnectionMemoryTest extends TestCase
         $this->assertSame('foo', $connection->getName());
     }
 
-    public function testGetAll()
+    public function testGetAll(): void
     {
         $repository  = $this->createRepository();
         $connections = $repository->getAll();

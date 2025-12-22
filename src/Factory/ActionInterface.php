@@ -39,10 +39,6 @@ interface ActionInterface extends FactoryInterface
      *
      * @throws FactoryResolveException
      * @throws ActionNotFoundException
-     *
-     * @template T of EngineActionInterface
-     * @param class-string<T> $className
-     * @return T
      */
     public function factory(string $className): EngineActionInterface;
 }

@@ -43,6 +43,9 @@ class Processor implements ProcessorInterface
      */
     private array $resolvers = [];
 
+    /**
+     * @param iterable<ResolverInterface> $resolvers
+     */
     public function __construct(iterable $resolvers, Factory\ActionInterface $factory, Action\QueueInterface $queue, ?Processor\ExecutionStackInterface $executionStack = null)
     {
         $this->factory = $factory;

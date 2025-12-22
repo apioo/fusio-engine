@@ -29,13 +29,22 @@ namespace Fusio\Engine\Test;
  */
 class ProviderCollection
 {
+    /**
+     * @var iterable<object>
+     */
     private iterable $services;
 
+    /**
+     * @param iterable<object> $services
+     */
     public function __construct(iterable $services)
     {
         $this->services = $services;
     }
 
+    /**
+     * @return iterable<object>
+     */
     public function getServices(): iterable
     {
         return $this->services;

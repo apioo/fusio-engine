@@ -57,6 +57,8 @@ interface ParametersInterface extends IteratorAggregate
 
     /**
      * Returns an array representation of this collection
+     *
+     * @return array<string, mixed>
      */
     public function toArray(): array;
 }

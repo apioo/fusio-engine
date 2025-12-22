@@ -33,6 +33,10 @@ class Connector implements ConnectorInterface
 {
     private Repository\ConnectionInterface $repository;
     private Factory\ConnectionInterface $factory;
+
+    /**
+     * @var array<string|int, Model\ConnectionInterface>
+     */
     private array $connections = [];
 
     public function __construct(Repository\ConnectionInterface $repository, Factory\ConnectionInterface $factory)

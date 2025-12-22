@@ -35,7 +35,7 @@ class SchemaNameTest extends TestCase
     /**
      * These constant values are connected to the Fusio installation so we should change those values carefully
      */
-    public function testConstants()
+    public function testConstants(): void
     {
         $this->assertEquals('Passthru', SchemaName::PASSTHRU);
         $this->assertEquals('Message', SchemaName::MESSAGE);

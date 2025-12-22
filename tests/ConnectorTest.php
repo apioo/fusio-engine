@@ -41,7 +41,7 @@ class ConnectorTest extends TestCase
 {
     use EngineTestCaseTrait;
 
-    public function testGetConnection()
+    public function testGetConnection(): void
     {
         $repository = $this->getRepository();
         $factory    = $this->getConnectionFactory();
@@ -50,7 +50,7 @@ class ConnectorTest extends TestCase
         $this->assertInstanceOf(\stdClass::class, $connector->getConnection(1));
     }
 
-    public function testGetConnectionNamed()
+    public function testGetConnectionNamed(): void
     {
         $repository = $this->getRepository();
         $factory    = $this->getConnectionFactory();
@@ -59,7 +59,7 @@ class ConnectorTest extends TestCase
         $this->assertInstanceOf(\stdClass::class, $connector->getConnection('foo'));
     }
 
-    public function testGetConnectionInvalid()
+    public function testGetConnectionInvalid(): void
     {
         $this->expectException(ConnectionNotFoundException::class);
 

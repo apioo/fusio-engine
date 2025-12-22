@@ -32,7 +32,7 @@ use Fusio\Engine\Test\EngineTestCase;
  */
 class CallbackConnectionTest extends EngineTestCase
 {
-    public function testGetConnection()
+    public function testGetConnection(): void
     {
         $callback = function(){
             return new \stdClass();

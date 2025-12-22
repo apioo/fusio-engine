@@ -84,6 +84,9 @@ class UserAnonymous implements UserInterface
         return null;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return [

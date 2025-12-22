@@ -25,7 +25,9 @@ use Fusio\Engine\Request\HttpRequestContext;
 use Fusio\Engine\RequestInterface;
 use PHPUnit\Framework\TestCase;
 use PSX\Http\Request;
+use PSX\Json\Parser;
 use PSX\Record\Record;
+use PSX\Record\RecordInterface;
 use PSX\Uri\Uri;
 
 /**
@@ -37,24 +39,29 @@ use PSX\Uri\Uri;
  */
 class RequestTest extends TestCase
 {
-    public function testRequest()
+    public function testRequest(): void
     {
         $context = new HttpRequestContext(new Request(Uri::parse('/'), 'GET'), []);
         $request = new EngineRequest(['foo' => 'bar'], Record::fromArray(['foo' => 'bar']), $context);
 
         $this->assertInstanceOf(RequestInterface::class, $request);
         $this->assertEquals('bar', $request->get('foo'));
-        $this->assertEquals('bar', $request->getPayload()->get('foo'));
+
+        $payload = $request->getPayload();
+
+        $this->assertInstanceOf(RecordInterface::class, $payload);
+        $this->assertEquals('bar', $payload->get('foo'));
     }
 
-    public function testRequestSerialize()
+    public function testRequestSerialize(): void
     {
         $context = new HttpRequestContext(new Request(Uri::parse('/my_endpoint?query=foo'), 'GET', ['User-Agent' => 'MyAgent'], 'my_body'), ['id' => 12]);
         $request = new EngineRequest(['foo' => 'bar'], Record::fromArray(['foo' => 'bar']), $context);
 
-        $actual = \json_encode($request);
+        $actual = Parser::encode($request);
         $expect = file_get_contents(__DIR__ . '/resource/request.json');
 
+        $this->assertNotFalse($expect);
         $this->assertJsonStringEqualsJsonString($expect, $actual);
     }
 }

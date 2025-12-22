@@ -20,6 +20,8 @@
 
 namespace Fusio\Engine\Model;
 
+use stdClass;
+
 /**
  * App
  *
@@ -36,11 +38,21 @@ class App implements AppInterface
     private string $name;
     private string $url;
     private string $appKey;
+    /**
+     * @var array<string, mixed>
+     */
     private array $parameters;
+    /**
+     * @var list<string>
+     */
     private array $scopes;
-    private ?\stdClass $metadata;
+    private ?stdClass $metadata;
 
-    public function __construct(bool $anonymous, int $id, int $userId, int $status, string $name, string $url, string $appKey, array $parameters, array $scopes, ?\stdClass $metadata = null)
+    /**
+     * @param array<string, mixed> $parameters
+     * @param list<string> $scopes
+     */
+    public function __construct(bool $anonymous, int $id, int $userId, int $status, string $name, string $url, string $appKey, array $parameters, array $scopes, ?stdClass $metadata = null)
     {
         $this->anonymous = $anonymous;
         $this->id = $id;
@@ -114,6 +126,9 @@ class App implements AppInterface
         return $this->metadata?->{$key};
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return [

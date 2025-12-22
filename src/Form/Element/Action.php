@@ -32,8 +32,15 @@ use Fusio\Engine\Repository;
 class Action extends Select
 {
     private Repository\ActionInterface $repository;
+
+    /**
+     * @var list<string>|null
+     */
     private ?array $allowedClasses;
 
+    /**
+     * @param list<string>|null $allowedClasses
+     */
     public function __construct(string $name, string $title, Repository\ActionInterface $repository, ?string $help = null, ?array $allowedClasses = null)
     {
         parent::__construct($name, $title, [], $help);

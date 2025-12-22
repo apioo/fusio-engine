@@ -31,8 +31,14 @@ use ArrayIterator;
  */
 class Parameters implements ParametersInterface
 {
+    /**
+     * @var array<string, mixed>
+     */
     private array $container;
 
+    /**
+     * @param array<string, mixed> $container
+     */
     public function __construct(array $container)
     {
         $this->container = $container;
@@ -63,6 +69,9 @@ class Parameters implements ParametersInterface
         return new ArrayIterator($this->container);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function toArray(): array
     {
         return $this->container;

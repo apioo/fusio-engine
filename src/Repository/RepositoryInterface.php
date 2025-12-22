@@ -26,9 +26,14 @@ namespace Fusio\Engine\Repository;
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.apache.org/licenses/LICENSE-2.0
  * @link    https://www.fusio-project.org
+ *
+ * @template T
  */
 interface RepositoryInterface
 {
+    /**
+     * @return array<T>
+     */
     public function getAll(): array;
 
     public function get(string|int $id): mixed;

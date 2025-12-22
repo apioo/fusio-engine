@@ -39,6 +39,8 @@ interface RequestInterface extends \JsonSerializable
 
     /**
      * Returns all arguments
+     *
+     * @return array<string, mixed>
      */
     public function getArguments(): array;
 

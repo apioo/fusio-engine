@@ -50,6 +50,9 @@ class Input extends Element
         return $this->type;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return array_merge(parent::jsonSerialize(), [

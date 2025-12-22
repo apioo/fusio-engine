@@ -29,6 +29,9 @@ namespace Fusio\Engine\Form;
  */
 class Container implements \JsonSerializable
 {
+    /**
+     * @var list<Element>
+     */
     private array $elements = [];
 
     public function add(Element $element): void
@@ -36,11 +39,17 @@ class Container implements \JsonSerializable
         $this->elements[] = $element;
     }
 
+    /**
+     * @return list<Element>
+     */
     public function getElements(): array
     {
         return $this->elements;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return [

@@ -20,9 +20,9 @@
 
 namespace Fusio\Engine\Tests\Model;
 
-use Fusio\Engine\Model\Connection;
 use Fusio\Engine\Model\Product;
 use PHPUnit\Framework\TestCase;
+use PSX\Json\Parser;
 
 /**
  * ProductTest
@@ -33,7 +33,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ProductTest extends TestCase
 {
-    public function testModel()
+    public function testModel(): void
     {
         $model = new Product(1, 'foo', 1337, 1024, 1, 'external_id');
 
@@ -46,18 +46,18 @@ class ProductTest extends TestCase
         $this->assertNull($model->getMetadata('foo'));
     }
 
-    public function testModelWithMetadata()
+    public function testModelWithMetadata(): void
     {
         $model = new Product(1, 'foo', 1337, 1024, 1, 'external_id', (object) ['foo' => 'bar']);
 
         $this->assertEquals('bar', $model->getMetadata('foo'));
     }
 
-    public function testModelSerialize()
+    public function testModelSerialize(): void
     {
         $model = new Product(1, 'foo', 1337, 1024, 1, 'external_id', (object) ['foo' => 'bar']);
 
-        $actual = json_encode($model);
+        $actual = Parser::encode($model);
         $expect = <<<'JSON'
 {
   "id": 1,

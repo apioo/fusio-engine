@@ -83,6 +83,9 @@ class Product implements ProductInterface
         return $this->metadata?->{$key};
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return [

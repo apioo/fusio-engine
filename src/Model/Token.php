@@ -32,10 +32,16 @@ class Token implements TokenInterface
     private int $id;
     private ?int $appId;
     private int $userId;
+    /**
+     * @var list<string>
+     */
     private array $scopes;
     private string $expire;
     private string $date;
 
+    /**
+     * @param list<string> $scopes
+     */
     public function __construct(int $id, ?int $appId, int $userId, array $scopes, string $expire, string $date)
     {
         $this->id = $id;
@@ -81,6 +87,9 @@ class Token implements TokenInterface
         return $this->date;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return [

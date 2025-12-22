@@ -22,6 +22,7 @@ namespace Fusio\Engine\Tests\Model;
 
 use Fusio\Engine\Model\Action;
 use PHPUnit\Framework\TestCase;
+use PSX\Json\Parser;
 
 /**
  * ActionTest
@@ -32,7 +33,7 @@ use PHPUnit\Framework\TestCase;
  */
 class ActionTest extends TestCase
 {
-    public function testModel()
+    public function testModel(): void
     {
         $model = new Action(1, 'foo', self::class, true, ['dsn' => 'secret']);
 
@@ -44,18 +45,18 @@ class ActionTest extends TestCase
         $this->assertNull($model->getMetadata('foo'));
     }
 
-    public function testModelWithMetadata()
+    public function testModelWithMetadata(): void
     {
         $model = new Action(1, 'foo', self::class, true, ['dsn' => 'secret'], (object) ['foo' => 'bar']);
 
         $this->assertEquals('bar', $model->getMetadata('foo'));
     }
 
-    public function testModelSerialize()
+    public function testModelSerialize(): void
     {
         $model = new Action(1, 'foo', self::class, true, ['dsn' => 'secret'], (object) ['foo' => 'bar']);
 
-        $actual = json_encode($model);
+        $actual = Parser::encode($model);
         $expect = <<<'JSON'
 {
   "id": 1,

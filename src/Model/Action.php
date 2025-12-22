@@ -20,6 +20,8 @@
 
 namespace Fusio\Engine\Model;
 
+use stdClass;
+
 /**
  * Action
  *
@@ -33,10 +35,16 @@ class Action implements ActionInterface
     private string $name;
     private string $class;
     private bool $async;
+    /**
+     * @var array<string, mixed>
+     */
     private array $config;
-    private ?\stdClass $metadata;
+    private ?stdClass $metadata;
 
-    public function __construct(int $id, string $name, string $class, bool $async, array $config, ?\stdClass $metadata = null)
+    /**
+     * @param array<string, mixed> $config
+     */
+    public function __construct(int $id, string $name, string $class, bool $async, array $config, ?stdClass $metadata = null)
     {
         $this->id = $id;
         $this->name = $name;
@@ -76,6 +84,9 @@ class Action implements ActionInterface
         return $this->metadata?->{$key};
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return [

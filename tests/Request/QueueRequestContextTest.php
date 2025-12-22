@@ -22,6 +22,7 @@ namespace Fusio\Engine\Tests\Request;
 
 use Fusio\Engine\Request\QueueRequestContext;
 use PHPUnit\Framework\TestCase;
+use PSX\Json\Parser;
 
 /**
  * QueueRequestContextTest
@@ -32,11 +33,11 @@ use PHPUnit\Framework\TestCase;
  */
 class QueueRequestContextTest extends TestCase
 {
-    public function testSerialize()
+    public function testSerialize(): void
     {
         $context = new QueueRequestContext();
 
-        $actual = \json_encode($context);
+        $actual = Parser::encode($context);
         $expect = <<<JSON
 {
   "type": "Fusio.Engine.Request.QueueRequestContext"

@@ -25,6 +25,7 @@ use Fusio\Engine\Model\App;
 use Fusio\Engine\Model\User;
 use Fusio\Engine\NameBuilder;
 use PHPUnit\Framework\TestCase;
+use PSX\Json\Parser;
 
 /**
  * ContextTest
@@ -35,15 +36,16 @@ use PHPUnit\Framework\TestCase;
  */
 class ContextTest extends TestCase
 {
-    public function testContext()
+    public function testContext(): void
     {
         $app = new App(false, 1, 1, 1, 'foo', 'https://myapp.com', 'key', ['foo' => 'bar'], ['foo', 'bar'], (object) ['foo' => 'bar']);
         $user = new User(false, 1, 1, 1, 1, 'bar', 'foo@bar.com', 1000, 'external_id', '1', (object) ['foo' => 'bar']);
         $context = new Context(1, 'https://api.acme.com', $app, $user, 'my_tenant');
 
-        $actual = \json_encode($context);
+        $actual = Parser::encode($context);
         $expect = file_get_contents(__DIR__ . '/resource/context.json');
 
+        $this->assertNotFalse($expect);
         $this->assertJsonStringEqualsJsonString($expect, $actual);
     }
 }

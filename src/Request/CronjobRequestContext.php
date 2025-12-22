@@ -31,6 +31,9 @@ use Fusio\Engine\Inflection\ClassName;
  */
 class CronjobRequestContext implements RequestContextInterface
 {
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return [

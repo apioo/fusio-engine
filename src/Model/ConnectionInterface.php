@@ -35,6 +35,9 @@ interface ConnectionInterface extends \JsonSerializable
 
     public function getClass(): string;
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getConfig(): array;
 
     public function getMetadata(string $key): mixed;

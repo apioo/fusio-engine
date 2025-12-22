@@ -55,6 +55,9 @@ class ElementFactory implements ElementFactoryInterface
         return new Element\Input($name, $title, $type, $help);
     }
 
+    /**
+     * @param array<string, mixed> $options
+     */
     public function newSelect(string $name, string $title, array $options = [], ?string $help = null): Element\Select
     {
         return new Element\Select($name, $title, $options, $help);

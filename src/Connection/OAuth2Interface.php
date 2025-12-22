@@ -68,6 +68,7 @@ interface OAuth2Interface
     /**
      * Allows the connection to adjust the redirect parameters in case there are vendor specific requirements
      *
+     * @return array<string, string>
      * @throws ConfigurationException
      */
     public function getRedirectUriParameters(string $redirectUri, string $state, ParametersInterface $config): array;
@@ -75,6 +76,7 @@ interface OAuth2Interface
     /**
      * Allows the connection to adjust the authorization code parameters in case there are vendor specific requirements
      *
+     * @return array<string, string>
      * @throws ConfigurationException
      */
     public function getAuthorizationCodeParameters(string $code, string $redirectUri, ParametersInterface $config): array;
@@ -82,6 +84,7 @@ interface OAuth2Interface
     /**
      * Allows the connection to adjust the refresh token parameters in case there are vendor specific requirements
      *
+     * @return array<string, string>
      * @throws ConfigurationException
      */
     public function getRefreshTokenParameters(ParametersInterface $config): array;

@@ -70,6 +70,9 @@ abstract class Element implements \JsonSerializable
         return $this->help;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return [

@@ -34,11 +34,14 @@ use PHPUnit\Framework\TestCase;
 class NameBuilderTest extends TestCase
 {
     #[DataProvider('providerNames')]
-    public function testFromClass(string $action, string $expect)
+    public function testFromClass(string $action, string $expect): void
     {
         $this->assertSame($expect, NameBuilder::fromClass($action));
     }
 
+    /**
+     * @return array<array{string, string}>
+     */
     public static function providerNames(): array
     {
         return [

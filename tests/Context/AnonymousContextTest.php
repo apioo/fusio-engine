@@ -25,6 +25,7 @@ use Fusio\Engine\Model\App;
 use Fusio\Engine\Model\User;
 use Fusio\Engine\NameBuilder;
 use PHPUnit\Framework\TestCase;
+use PSX\Json\Parser;
 
 /**
  * AnonymousContextTest
@@ -35,13 +36,14 @@ use PHPUnit\Framework\TestCase;
  */
 class AnonymousContextTest extends TestCase
 {
-    public function testContext()
+    public function testContext(): void
     {
         $context = new Context\AnonymousContext('my_tenant');
 
-        $actual = \json_encode($context);
+        $actual = Parser::encode($context);
         $expect = file_get_contents(__DIR__ . '/../resource/context_anonymous.json');
 
+        $this->assertNotFalse($expect);
         $this->assertJsonStringEqualsJsonString($expect, $actual);
     }
 }

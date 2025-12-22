@@ -89,6 +89,9 @@ class AppAnonymous implements AppInterface
         return null;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return [

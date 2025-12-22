@@ -28,6 +28,8 @@ use Fusio\Engine\Model;
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.apache.org/licenses/LICENSE-2.0
  * @link    https://www.fusio-project.org
+ *
+ * @extends RepositoryInterface<Model\AppInterface>
  */
 interface AppInterface extends RepositoryInterface
 {

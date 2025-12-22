@@ -32,6 +32,8 @@ use PSX\Http\Exception as StatusCode;
 use PSX\OAuth2\AccessToken;
 use PSX\Uri\Uri;
 use PSX\Uri\Url;
+use stdClass;
+use function json_decode;
 
 /**
  * ProviderAbstract
@@ -147,6 +149,9 @@ abstract class ProviderAbstract implements ProviderInterface
         return 'email';
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function getAccessTokenParameters(ParametersInterface $configuration, string $code, string $redirectUri): array
     {
         return [
@@ -158,12 +163,18 @@ abstract class ProviderAbstract implements ProviderInterface
         ];
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     protected function getUserInfoParameters(ParametersInterface $configuration): array
     {
         return [];
     }
 
-    protected function obtainUserInfo(string $userInfoUrl, AccessToken $accessToken, ?array $parameters = null): \stdClass
+    /**
+     * @param array<string, mixed>|null $parameters
+     */
+    protected function obtainUserInfo(string $userInfoUrl, AccessToken $accessToken, ?array $parameters = null): stdClass
     {
         $headers = [
             'Authorization' => 'Bearer ' . $accessToken->getAccessToken(),
@@ -180,20 +191,27 @@ abstract class ProviderAbstract implements ProviderInterface
             throw new StatusCode\BadRequestException('Could not request user info, the server returned an invalid HTTP code: ' . $response->getStatusCode());
         }
 
-        $data = \json_decode((string) $response->getBody());
-        if (!$data instanceof \stdClass) {
+        $data = json_decode((string) $response->getBody());
+        if (!$data instanceof stdClass) {
             throw new StatusCode\BadRequestException('Could not request user info, the server returned an invalid JSON payload');
         }
 
         return $data;
     }
 
+    /**
+     * @param array<string, mixed> $params
+     */
     protected function obtainAccessToken(string $tokenUrl, array $params, Method $method = Method::POST): AccessToken
     {
         $data = $this->requestAccessToken($tokenUrl, $params, $method);
         return $this->parseAccessToken($data);
     }
 
+    /**
+     * @param array<string, mixed> $params
+     * @return array<string, mixed>
+     */
     protected function requestAccessToken(string $tokenUrl, array $params, Method $method = Method::POST): array
     {
         $headers = [
@@ -214,7 +232,7 @@ abstract class ProviderAbstract implements ProviderInterface
             throw new StatusCode\BadRequestException('Could not request access token, the server returned a wrong HTTP code: ' . $response->getStatusCode());
         }
 
-        $data = \json_decode((string) $response->getBody(), true);
+        $data = json_decode((string) $response->getBody(), true);
         if (!is_array($data)) {
             throw new StatusCode\BadRequestException('Could not request access token, the server returned an invalid JSON payload');
         }
@@ -222,6 +240,10 @@ abstract class ProviderAbstract implements ProviderInterface
         return $data;
     }
 
+    /**
+     * @param array{access_token?: string, error?: string} $data
+     * @return AccessToken
+     */
     private function parseAccessToken(array $data): AccessToken
     {
         if (isset($data['access_token']) && is_string($data['access_token'])) {
@@ -233,6 +255,10 @@ abstract class ProviderAbstract implements ProviderInterface
         throw new StatusCode\BadRequestException('Could not obtain access token');
     }
 
+    /**
+     * @param array{error?: string, error_description?: string, error_uri?: string} $data
+     * @return void
+     */
     private function assertError(array $data): void
     {
         $error = $data['error'] ?? null;
@@ -242,7 +268,7 @@ abstract class ProviderAbstract implements ProviderInterface
         throw new StatusCode\BadRequestException('Could not obtain token: ' . implode(' - ', array_filter([$error, $errorDescription, $errorUri])));
     }
 
-    private function getProperty(\stdClass $data, ?string $propertyName, string $fallbackPropertyName): mixed
+    private function getProperty(stdClass $data, ?string $propertyName, string $fallbackPropertyName): mixed
     {
         if (empty($propertyName)) {
             return $data->{$fallbackPropertyName} ?? null;

@@ -49,7 +49,7 @@ class ProcessorTest extends TestCase
 {
     use EngineTestCaseTrait;
 
-    public function testExecute()
+    public function testExecute(): void
     {
         $repository = $this->newRepository();
         $processor  = $this->newProcessor($repository);
@@ -62,7 +62,7 @@ class ProcessorTest extends TestCase
         $this->assertEquals(['foo' => 'bar'], $response->getBody());
     }
 
-    public function testExecuteAsync()
+    public function testExecuteAsync(): void
     {
         $repository = $this->newRepository(true);
         $processor  = $this->newProcessor($repository);
@@ -84,7 +84,7 @@ class ProcessorTest extends TestCase
         $this->assertInstanceOf(ContextInterface::class, $context);
     }
 
-    public function testGetConnectionNamed()
+    public function testGetConnectionNamed(): void
     {
         $repository = $this->newRepository();
         $processor  = $this->newProcessor($repository);
@@ -97,7 +97,7 @@ class ProcessorTest extends TestCase
         $this->assertEquals(['foo' => 'bar'], $response->getBody());
     }
 
-    public function testGetConnectionInvalid()
+    public function testGetConnectionInvalid(): void
     {
         $this->expectException(FactoryResolveException::class);
 

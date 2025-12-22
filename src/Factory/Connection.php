@@ -34,8 +34,14 @@ use Symfony\Component\DependencyInjection\ServiceLocator;
  */
 class Connection implements ConnectionInterface
 {
+    /**
+     * @var ServiceLocator<EngineConnectionInterface>
+     */
     private ServiceLocator $connections;
 
+    /**
+     * @param ServiceLocator<EngineConnectionInterface> $connections
+     */
     public function __construct(ServiceLocator $connections)
     {
         $this->connections = $connections;

@@ -36,6 +36,9 @@ class ActionMemory implements ActionInterface, \JsonSerializable, \Countable
      */
     private array $actions;
 
+    /**
+     * @param Model\ActionInterface[] $actions
+     */
     public function __construct(array $actions = array())
     {
         $this->actions = $actions;
@@ -46,6 +49,9 @@ class ActionMemory implements ActionInterface, \JsonSerializable, \Countable
         $this->actions[$action->getId()] = $action;
     }
 
+    /**
+     * @return Model\ActionInterface[]
+     */
     public function getAll(): array
     {
         return $this->actions;
@@ -75,6 +81,9 @@ class ActionMemory implements ActionInterface, \JsonSerializable, \Countable
         return count($this->actions);
     }
 
+    /**
+     * @return list<array<string, mixed>>
+     */
     public function jsonSerialize(): array
     {
         $result = [];
@@ -98,12 +107,19 @@ class ActionMemory implements ActionInterface, \JsonSerializable, \Countable
 
         if (is_array($data)) {
             foreach ($data as $row) {
+                if (!is_array($row)) {
+                    continue;
+                }
+
+                /** @var array<string, mixed> $config */
+                $config = $row['config'] ?? [];
+
                 $repo->add(new Model\Action(
                     (int) $row['id'],
                     $row['name'],
                     $row['class'],
                     (bool) $row['async'],
-                    $row['config']
+                    $config
                 ));
             }
         }

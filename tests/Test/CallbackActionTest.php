@@ -24,6 +24,7 @@ use Fusio\Engine\Response\FactoryInterface;
 use Fusio\Engine\Test\CallbackAction;
 use Fusio\Engine\Test\EngineTestCase;
 use PSX\Http\Environment\HttpResponseInterface;
+use PSX\Json\Parser;
 
 /**
  * CallbackActionTest
@@ -34,7 +35,7 @@ use PSX\Http\Environment\HttpResponseInterface;
  */
 class CallbackActionTest extends EngineTestCase
 {
-    public function testHandle()
+    public function testHandle(): void
     {
         $callback = function(FactoryInterface $response){
             return $response->build(200, [], [
@@ -45,14 +46,15 @@ class CallbackActionTest extends EngineTestCase
         $action   = $this->getActionFactory()->factory(CallbackAction::class);
         $response = $action->handle($this->getRequest(), $this->getParameters(['callback' => $callback]), $this->getContext());
 
-        $actual = json_encode($response->getBody(), JSON_PRETTY_PRINT);
+        $this->assertInstanceOf(HttpResponseInterface::class, $response);
+
+        $actual = Parser::encode($response->getBody(), JSON_PRETTY_PRINT);
         $expect = <<<JSON
 {
     "foo": "bar"
 }
 JSON;
 
-        $this->assertInstanceOf(HttpResponseInterface::class, $response);
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals([], $response->getHeaders());
         $this->assertJsonStringEqualsJsonString($expect, $actual, $actual);

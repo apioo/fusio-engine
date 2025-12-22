@@ -20,9 +20,9 @@
 
 namespace Fusio\Engine\Tests\Request;
 
-use Fusio\Engine\Request\CronjobRequestContext;
 use Fusio\Engine\Request\EventRequestContext;
 use PHPUnit\Framework\TestCase;
+use PSX\Json\Parser;
 
 /**
  * EventRequestContextTest
@@ -33,11 +33,11 @@ use PHPUnit\Framework\TestCase;
  */
 class EventRequestContextTest extends TestCase
 {
-    public function testSerialize()
+    public function testSerialize(): void
     {
         $context = new EventRequestContext('my_event');
 
-        $actual = \json_encode($context);
+        $actual = Parser::encode($context);
         $expect = <<<JSON
 {
   "type": "Fusio.Engine.Request.EventRequestContext",

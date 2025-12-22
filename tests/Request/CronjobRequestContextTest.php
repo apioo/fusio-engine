@@ -22,6 +22,7 @@ namespace Fusio\Engine\Tests\Request;
 
 use Fusio\Engine\Request\CronjobRequestContext;
 use PHPUnit\Framework\TestCase;
+use PSX\Json\Parser;
 
 /**
  * CronjobRequestContextTest
@@ -32,11 +33,11 @@ use PHPUnit\Framework\TestCase;
  */
 class CronjobRequestContextTest extends TestCase
 {
-    public function testSerialize()
+    public function testSerialize(): void
     {
         $context = new CronjobRequestContext();
 
-        $actual = \json_encode($context);
+        $actual = Parser::encode($context);
         $expect = <<<JSON
 {
   "type": "Fusio.Engine.Request.CronjobRequestContext"

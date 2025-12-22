@@ -106,8 +106,12 @@ abstract class OAuth2ConnectionAbstract extends ConnectionAbstract implements OA
         return $clientSecret;
     }
 
+    /**
+     * @return list<string>
+     */
     protected function getScopes(ParametersInterface $config): array
     {
+        /** @var list<string> $scopes */
         $scopes = $config->get(OAuth2Interface::CONFIG_SCOPES);
         if (!is_array($scopes)) {
             return [];
