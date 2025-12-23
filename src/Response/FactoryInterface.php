@@ -35,7 +35,7 @@ interface FactoryInterface
     /**
      * Creates a new response object
      *
-     * @param array<string, string> $headers
+     * @param array<string, string|list<string>> $headers
      */
     public function build(int $statusCode, array $headers, mixed $body): HttpResponseInterface;
 }
