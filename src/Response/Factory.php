@@ -20,8 +20,10 @@
 
 namespace Fusio\Engine\Response;
 
+use Psr\Http\Message\ResponseInterface;
 use PSX\Http\Environment\HttpResponse;
 use PSX\Http\Environment\HttpResponseInterface;
+use PSX\Http\Writer\Stream;
 
 /**
  * Factory
@@ -35,5 +37,17 @@ class Factory implements FactoryInterface
     public function build(int $statusCode, array $headers, mixed $body): HttpResponseInterface
     {
         return new HttpResponse($statusCode, $headers, $body);
+    }
+
+    public function proxy(ResponseInterface $response): HttpResponseInterface
+    {
+        $contentType = $response->getHeaderLine('Content-Type');
+        if (empty($contentType)) {
+            $contentType = 'application/octet-stream';
+        }
+
+        $body = new Stream($response->getBody(), $contentType);
+
+        return new HttpResponse($response->getStatusCode(), $response->getHeaders(), $body);
     }
 }
