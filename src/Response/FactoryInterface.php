@@ -41,7 +41,7 @@ interface FactoryInterface
     public function build(int $statusCode, array $headers, mixed $body): HttpResponseInterface;
 
     /**
-     * Creates a response based on a PSR response which can be used to proxy a request
+     * Creates a response based on a PSR response
      */
     public function proxy(ResponseInterface $response): HttpResponseInterface;
 }
