@@ -20,6 +20,7 @@
 
 namespace Fusio\Engine\Response;
 
+use Psr\Http\Message\ResponseInterface;
 use PSX\Http\Environment\HttpResponseInterface;
 
 /**
@@ -38,4 +39,9 @@ interface FactoryInterface
      * @param array<string, string|list<string>> $headers
      */
     public function build(int $statusCode, array $headers, mixed $body): HttpResponseInterface;
+
+    /**
+     * Creates a response based on a PSR response which can be used to proxy a request
+     */
+    public function proxy(ResponseInterface $response): HttpResponseInterface;
 }
