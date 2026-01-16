@@ -34,6 +34,17 @@ use PSX\Http\Writer\Stream;
  */
 class Factory implements FactoryInterface
 {
+    private const HOP_BY_HOP_HEADERS = [
+        'connection',
+        'keep-alive',
+        'proxy-authenticate',
+        'proxy-authorization',
+        'te',
+        'trailers',
+        'transfer-encoding',
+        'upgrade',
+    ];
+
     public function build(int $statusCode, array $headers, mixed $body): HttpResponseInterface
     {
         return new HttpResponse($statusCode, $headers, $body);
@@ -44,6 +55,15 @@ class Factory implements FactoryInterface
         $contentType = $response->getHeaderLine('Content-Type');
         if (empty($contentType)) {
             $contentType = 'application/octet-stream';
+        }
+
+        $response = $response->withoutHeader('Content-Type');
+        $response = $response->withoutHeader('Content-Length');
+
+        foreach (self::HOP_BY_HOP_HEADERS as $headerName) {
+            if ($response->hasHeader($headerName)) {
+                $response = $response->withoutHeader($headerName);
+            }
         }
 
         $body = new Stream($response->getBody(), $contentType);
