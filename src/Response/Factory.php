@@ -48,7 +48,6 @@ class Factory implements FactoryInterface
         }
 
         $response = $response->withoutHeader('Content-Type');
-        $response = $response->withoutHeader('Content-Length');
 
         foreach (Http::HOP_BY_HOP_HEADERS as $headerName) {
             if ($response->hasHeader($headerName)) {
