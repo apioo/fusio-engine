@@ -23,6 +23,7 @@ namespace Fusio\Engine\Response;
 use Psr\Http\Message\ResponseInterface;
 use PSX\Http\Environment\HttpResponse;
 use PSX\Http\Environment\HttpResponseInterface;
+use PSX\Http\Http;
 use PSX\Http\Writer\Stream;
 
 /**
@@ -34,17 +35,6 @@ use PSX\Http\Writer\Stream;
  */
 class Factory implements FactoryInterface
 {
-    private const HOP_BY_HOP_HEADERS = [
-        'connection',
-        'keep-alive',
-        'proxy-authenticate',
-        'proxy-authorization',
-        'te',
-        'trailers',
-        'transfer-encoding',
-        'upgrade',
-    ];
-
     public function build(int $statusCode, array $headers, mixed $body): HttpResponseInterface
     {
         return new HttpResponse($statusCode, $headers, $body);
@@ -60,7 +50,7 @@ class Factory implements FactoryInterface
         $response = $response->withoutHeader('Content-Type');
         $response = $response->withoutHeader('Content-Length');
 
-        foreach (self::HOP_BY_HOP_HEADERS as $headerName) {
+        foreach (Http::HOP_BY_HOP_HEADERS as $headerName) {
             if ($response->hasHeader($headerName)) {
                 $response = $response->withoutHeader($headerName);
             }
