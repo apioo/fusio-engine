@@ -55,7 +55,7 @@ class Factory implements FactoryInterface
 
         $headers = [];
         foreach ($response->getHeaders() as $name => $values) {
-            $headers[$name] = $values;
+            $headers[$name] = implode(', ', $values);
         }
 
         $body = new Stream($response->getBody(), $contentType);
