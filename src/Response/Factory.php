@@ -55,8 +55,13 @@ class Factory implements FactoryInterface
             }
         }
 
+        $headers = [];
+        foreach ($response->getHeaders() as $name => $values) {
+            $headers[$name] = $values;
+        }
+
         $body = new Stream($response->getBody(), $contentType);
 
-        return new HttpResponse($response->getStatusCode(), $response->getHeaders(), $body);
+        return new HttpResponse($response->getStatusCode(), $headers, $body);
     }
 }
