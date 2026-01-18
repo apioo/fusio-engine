@@ -20,13 +20,6 @@
 
 namespace Fusio\Engine\Agent;
 
-use Fusio\Engine\Action\RuntimeInterface;
-use Fusio\Engine\Form\BuilderInterface;
-use Fusio\Engine\Form\ElementFactoryInterface;
-use Fusio\Engine\Response\FactoryInterface;
-use Psr\Log\LoggerInterface;
-use Psr\SimpleCache\CacheInterface;
-
 /**
  * Tools
  *
