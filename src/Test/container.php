@@ -1,6 +1,8 @@
 <?php
 
 use Fusio\Engine\Adapter\ServiceBuilder;
+use Fusio\Engine\Agent\Tools;
+use Fusio\Engine\Agent\ToolsInterface;
 use Fusio\Engine\Test\CallbackAction;
 use Fusio\Engine\Test\CallbackConnection;
 use Fusio\Engine\Test\EngineContainer;
@@ -10,8 +12,6 @@ use Monolog\Logger;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
 use Psr\SimpleCache\CacheInterface;
-use Symfony\AI\Agent\Toolbox\Toolbox;
-use Symfony\AI\Agent\Toolbox\ToolboxInterface;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Cache\Psr16Cache;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
@@ -53,9 +53,8 @@ return static function (ContainerConfigurator $container) {
     $services->set(EventDispatcher::class);
     $services->alias(EventDispatcherInterface::class, EventDispatcher::class);
 
-    $services->set(Toolbox::class)
-        ->arg('$tools', tagged_iterator('fusio.ai.tool'));
-    $services->alias(ToolboxInterface::class, Toolbox::class);
+    $services->set(Tools::class);
+    $services->alias(ToolsInterface::class, Tools::class);
 
     $services->set(EngineContainer::class)
         ->public();
