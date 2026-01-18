@@ -7,11 +7,13 @@ use Fusio\Engine\Test\EngineContainer;
 use Fusio\Engine\Test\ProviderCollection;
 use Monolog\Handler\NullHandler;
 use Monolog\Logger;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Psr\Log\LoggerInterface;
 use Psr\SimpleCache\CacheInterface;
 use Symfony\Component\Cache\Adapter\ArrayAdapter;
 use Symfony\Component\Cache\Psr16Cache;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\tagged_iterator;
 
@@ -45,6 +47,9 @@ return static function (ContainerConfigurator $container) {
     $services->set(Psr16Cache::class)
         ->arg('$pool', service(ArrayAdapter::class));
     $services->alias(CacheInterface::class, Psr16Cache::class);
+
+    $services->set(EventDispatcher::class);
+    $services->alias(EventDispatcherInterface::class, EventDispatcher::class);
 
     $services->set(EngineContainer::class)
         ->public();
