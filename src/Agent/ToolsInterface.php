@@ -36,4 +36,5 @@ use Psr\SimpleCache\CacheInterface;
  */
 interface ToolsInterface
 {
+    public function resolve(): mixed;
 }

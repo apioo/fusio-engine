@@ -36,4 +36,8 @@ use Psr\SimpleCache\CacheInterface;
  */
 class Tools implements ToolsInterface
 {
+    public function resolve(): null
+    {
+        return null;
+    }
 }
