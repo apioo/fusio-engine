@@ -43,4 +43,6 @@ interface ActionInterface extends \JsonSerializable
     public function getConfig(): array;
 
     public function getMetadata(string $key): mixed;
+
+    public function getHash(): ?string;
 }
