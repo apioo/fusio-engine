@@ -125,11 +125,17 @@ class ExecuteBuilder implements ExecuteBuilderInterface
 
     private function getContext(ContextInterface $context): ExecuteContext
     {
+        $action = $context->getAction()?->getName();
+        $hash = $context->getAction()?->getHash();
+        if (!empty($hash)) {
+            $action.= '@' . $hash;
+        }
+
         $return = new ExecuteContext();
         $return->setOperationId($context->getOperationId());
         $return->setBaseUrl($context->getBaseUrl());
         $return->setTenantId($context->getTenantId());
-        $return->setAction($context->getAction()?->getName());
+        $return->setAction($action);
         $return->setApp($this->getApp($context->getApp()));
         $return->setUser($this->getUser($context->getUser()));
 
