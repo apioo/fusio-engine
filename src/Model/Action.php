@@ -96,7 +96,7 @@ class Action implements ActionInterface
      */
     public function jsonSerialize(): array
     {
-        return [
+        return array_filter([
             'id' => $this->id,
             'name' => $this->name,
             'class' => $this->class,
@@ -104,6 +104,6 @@ class Action implements ActionInterface
             'config' => $this->config,
             'metadata' => $this->metadata,
             'hash' => $this->hash,
-        ];
+        ], fn(mixed $value) => $value !== null);
     }
 }
