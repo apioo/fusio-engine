@@ -40,11 +40,12 @@ class Action implements ActionInterface
      */
     private array $config;
     private ?stdClass $metadata;
+    private ?string $hash;
 
     /**
      * @param array<string, mixed> $config
      */
-    public function __construct(int $id, string $name, string $class, bool $async, array $config, ?stdClass $metadata = null)
+    public function __construct(int $id, string $name, string $class, bool $async, array $config, ?stdClass $metadata = null, ?string $hash = null)
     {
         $this->id = $id;
         $this->name = $name;
@@ -52,6 +53,7 @@ class Action implements ActionInterface
         $this->async = $async;
         $this->config = $config;
         $this->metadata = $metadata;
+        $this->hash = $hash;
     }
 
     public function getId(): int
@@ -84,6 +86,11 @@ class Action implements ActionInterface
         return $this->metadata?->{$key};
     }
 
+    public function getHash(): ?string
+    {
+        return $this->hash;
+    }
+
     /**
      * @return array<string, mixed>
      */
@@ -96,6 +103,7 @@ class Action implements ActionInterface
             'async' => $this->async,
             'config' => $this->config,
             'metadata' => $this->metadata,
+            'hash' => $this->hash,
         ];
     }
 }
