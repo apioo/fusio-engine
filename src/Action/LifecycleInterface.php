@@ -34,12 +34,12 @@ interface LifecycleInterface
     /**
      * Is called if an action gets created
      */
-    public function onCreate(string $name, ParametersInterface $config): void;
+    public function onCreate(string $name, ParametersInterface $config /*, ?string $hash = null*/): void;
 
     /**
      * Is called if an action gets updated
      */
-    public function onUpdate(string $name, ParametersInterface $config): void;
+    public function onUpdate(string $name, ParametersInterface $config /*, ?string $hash = null*/): void;
 
     /**
      * Is called if an action gets deleted
