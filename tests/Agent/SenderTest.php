@@ -18,31 +18,33 @@
  * limitations under the License.
  */
 
-namespace Fusio\Engine\Agent;
+namespace Fusio\Engine\Tests\Agent;
 
-use Fusio\Engine\ContextInterface;
+use Fusio\Engine\Agent\Sender;
+use Fusio\Engine\Context\AnonymousContext;
 use Fusio\Model\Common\AgentContentText;
 use Fusio\Model\Common\AgentInput;
 use Fusio\Model\Common\AgentOutput;
+use PHPUnit\Framework\TestCase;
+use PSX\Json\Parser;
 
 /**
- * Sender
+ * SenderTest
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.apache.org/licenses/LICENSE-2.0
  * @link    https://www.fusio-project.org
  */
-class Sender implements SenderInterface
+class SenderTest extends TestCase
 {
-    public function send(int $agentId, AgentInput $input, ContextInterface $context): AgentOutput
+    public function testSend(): void
     {
-        $content = new AgentContentText();
-        $content->setType('text');
-        $content->setContent('Fusio, self-Hosted API Management for Builders.');
+        $sender = new Sender();
 
-        $output = new AgentOutput();
-        $output->setOutput($content);
+        $output = $sender->send(1, new AgentInput(), new AnonymousContext());
 
-        return $output;
+        $this->assertInstanceOf(AgentOutput::class, $output);
+        $this->assertInstanceOf(AgentContentText::class, $output->getOutput());
+        $this->assertJsonStringEqualsJsonString(Parser::encode(['type' => 'text', 'content' => 'Fusio, self-Hosted API Management for Builders.']), Parser::encode($output->getOutput()));
     }
 }
