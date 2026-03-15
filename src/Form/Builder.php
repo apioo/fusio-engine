@@ -20,6 +20,8 @@
 
 namespace Fusio\Engine\Form;
 
+use Fusio\Model\Common\FormElement;
+
 /**
  * Builder
  *
@@ -36,7 +38,7 @@ class Builder implements BuilderInterface
         $this->container = new Container();
     }
 
-    public function add(Element $element): void
+    public function add(FormElement $element): void
     {
         $this->container->add($element);
     }

@@ -20,6 +20,8 @@
 
 namespace Fusio\Engine\Form;
 
+use Fusio\Model\Common\FormElement;
+
 /**
  * BuilderInterface
  *
@@ -32,7 +34,7 @@ interface BuilderInterface
     /**
      * Adds a new element to the form
      */
-    public function add(Element $element): void;
+    public function add(FormElement $element): void;
 
     /**
      * Returns the form

@@ -20,6 +20,8 @@
 
 namespace Fusio\Engine\Form;
 
+use Fusio\Model\Common\FormElement;
+
 /**
  * Container
  *
@@ -30,17 +32,17 @@ namespace Fusio\Engine\Form;
 class Container implements \JsonSerializable
 {
     /**
-     * @var list<Element>
+     * @var list<FormElement>
      */
     private array $elements = [];
 
-    public function add(Element $element): void
+    public function add(FormElement $element): void
     {
         $this->elements[] = $element;
     }
 
     /**
-     * @return list<Element>
+     * @return list<FormElement>
      */
     public function getElements(): array
     {
