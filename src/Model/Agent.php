@@ -18,31 +18,40 @@
  * limitations under the License.
  */
 
-namespace Fusio\Engine\Form;
+namespace Fusio\Engine\Model;
+
+use stdClass;
 
 /**
- * Element
+ * Agent
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.apache.org/licenses/LICENSE-2.0
  * @link    https://www.fusio-project.org
  */
-abstract class Element implements \JsonSerializable
+class Agent implements AgentInterface
 {
+    private int $id;
     private string $name;
-    private string $title;
-    private ?string $help;
+    private ?string $description;
+    private ?stdClass $metadata;
 
-    public function __construct(string $name, string $title, ?string $help = null)
+    public function __construct(int $id, string $name, ?string $description, ?stdClass $metadata = null)
     {
-        $this->name  = $name;
-        $this->title = $title;
-        $this->help  = $help;
+        $this->id = $id;
+        $this->name = $name;
+        $this->description = $description;
+        $this->metadata = $metadata;
     }
 
-    public function setName(string $name): void
+    public function getId(): int
     {
-        $this->name = $name;
+        return $this->id;
+    }
+
+    public function setId(int $id): void
+    {
+        $this->id = $id;
     }
 
     public function getName(): string
@@ -50,24 +59,24 @@ abstract class Element implements \JsonSerializable
         return $this->name;
     }
 
-    public function setTitle(string $title): void
+    public function setName(string $name): void
     {
-        $this->title = $title;
+        $this->name = $name;
     }
 
-    public function getTitle(): string
+    public function getDescription(): ?string
     {
-        return $this->title;
+        return $this->description;
     }
 
-    public function setHelp(string $help): void
+    public function setDescription(?string $description): void
     {
-        $this->help = $help;
+        $this->description = $description;
     }
 
-    public function getHelp(): ?string
+    public function getMetadata(string $key): mixed
     {
-        return $this->help;
+        return $this->metadata?->{$key};
     }
 
     /**
@@ -76,12 +85,10 @@ abstract class Element implements \JsonSerializable
     public function jsonSerialize(): array
     {
         return [
-            'element' => $this->getElement(),
+            'id' => $this->id,
             'name' => $this->name,
-            'title' => $this->title,
-            'help' => $this->help,
+            'description' => $this->description,
+            'metadata' => $this->metadata,
         ];
     }
-
-    abstract protected function getElement(): string;
 }

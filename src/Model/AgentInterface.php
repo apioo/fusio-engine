@@ -18,19 +18,22 @@
  * limitations under the License.
  */
 
-namespace Fusio\Engine\Form\Element;
+namespace Fusio\Engine\Model;
 
 /**
- * Map
+ * AgentInterface
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.apache.org/licenses/LICENSE-2.0
  * @link    https://www.fusio-project.org
  */
-class Map extends Input
+interface AgentInterface extends ModelInterface
 {
-    protected function getElement(): string
-    {
-        return 'map';
-    }
+    public function getId(): int;
+
+    public function getName(): string;
+
+    public function getDescription(): ?string;
+
+    public function getMetadata(string $key): mixed;
 }

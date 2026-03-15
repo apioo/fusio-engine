@@ -18,21 +18,20 @@
  * limitations under the License.
  */
 
-namespace Fusio\Engine\Form\Element;
+namespace Fusio\Engine\Model;
 
-use Fusio\Engine\Form\Element;
+use JsonSerializable;
 
 /**
- * TypeAPI
+ * ModelInterface
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.apache.org/licenses/LICENSE-2.0
  * @link    https://www.fusio-project.org
  */
-class TypeAPI extends Element
+interface ModelInterface extends JsonSerializable
 {
-    protected function getElement(): string
-    {
-        return 'typeapi';
-    }
+    public function getId(): int;
+
+    public function getName(): string;
 }

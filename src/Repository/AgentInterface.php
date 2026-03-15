@@ -18,31 +18,28 @@
  * limitations under the License.
  */
 
-namespace Fusio\Engine\Model;
+namespace Fusio\Engine\Repository;
+
+use Fusio\Engine\Model;
 
 /**
- * ActionInterface
+ * AgentInterface
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.apache.org/licenses/LICENSE-2.0
  * @link    https://www.fusio-project.org
+ *
+ * @extends RepositoryInterface<Model\AgentInterface>
  */
-interface ActionInterface extends ClassModelInterface
+interface AgentInterface extends RepositoryInterface
 {
-    public function getId(): int;
-
-    public function getName(): string;
-
-    public function getClass(): string;
-
-    public function isAsync(): bool;
+    /**
+     * @return Model\AgentInterface[]
+     */
+    public function getAll(): array;
 
     /**
-     * @return array<string, mixed>
+     * Returns an agent with the provided id
      */
-    public function getConfig(): array;
-
-    public function getMetadata(string $key): mixed;
-
-    public function getHash(): ?string;
+    public function get(string|int $id): ?Model\AgentInterface;
 }

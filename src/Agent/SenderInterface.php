@@ -18,21 +18,20 @@
  * limitations under the License.
  */
 
-namespace Fusio\Engine\Form\Element;
+namespace Fusio\Engine\Agent;
 
-use Fusio\Engine\Form\Element;
+use Fusio\Engine\ContextInterface;
+use Fusio\Model\Common\AgentInput;
+use Fusio\Model\Common\AgentOutput;
 
 /**
- * Checkbox
+ * SenderInterface
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.apache.org/licenses/LICENSE-2.0
  * @link    https://www.fusio-project.org
  */
-class Checkbox extends Element
+interface SenderInterface
 {
-    protected function getElement(): string
-    {
-        return 'checkbox';
-    }
+    public function send(int $agentId, int $parentId, AgentInput $message, ContextInterface $context): AgentOutput;
 }

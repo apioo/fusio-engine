@@ -20,26 +20,59 @@
 
 namespace Fusio\Engine\Repository;
 
-use Fusio\Engine\Model\ModelInterface;
+use Fusio\Engine\Model;
 
 /**
- * RepositoryInterface
+ * AgentMemory
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.apache.org/licenses/LICENSE-2.0
  * @link    https://www.fusio-project.org
- *
- * @template T of ModelInterface
  */
-interface RepositoryInterface
+class AgentMemory implements AgentInterface
 {
     /**
-     * @return array<T>
+     * @var Model\AgentInterface[]
      */
-    public function getAll(): array;
+    private array $agents;
 
     /**
-     * @return T
+     * @param Model\AgentInterface[] $agents
      */
-    public function get(string|int $id): mixed;
+    public function __construct(array $agents = [])
+    {
+        $this->agents = $agents;
+    }
+
+    public function add(Model\AgentInterface $connection): void
+    {
+        $this->agents[$connection->getId()] = $connection;
+    }
+
+    /**
+     * @return Model\AgentInterface[]
+     */
+    public function getAll(): array
+    {
+        return $this->agents;
+    }
+
+    public function get(string|int $id): ?Model\AgentInterface
+    {
+        if (empty($this->agents)) {
+            return null;
+        }
+
+        if (isset($this->agents[$id])) {
+            return $this->agents[$id];
+        }
+
+        foreach ($this->agents as $agent) {
+            if ($agent->getName() == $id) {
+                return $agent;
+            }
+        }
+
+        return null;
+    }
 }

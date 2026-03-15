@@ -27,7 +27,7 @@ namespace Fusio\Engine\Model;
  * @license http://www.apache.org/licenses/LICENSE-2.0
  * @link    https://www.fusio-project.org
  */
-interface UserInterface extends \JsonSerializable
+interface UserInterface extends ModelInterface
 {
     public function isAnonymous(): bool;
 

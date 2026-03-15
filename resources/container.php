@@ -24,6 +24,9 @@ return static function (ContainerConfigurator $container) {
     $services->set(Repository\ActionMemory::class);
     $services->alias(Repository\ActionInterface::class, Repository\ActionMemory::class);
 
+    $services->set(Repository\AgentMemory::class);
+    $services->alias(Repository\AgentInterface::class, Repository\AgentMemory::class);
+
     $services->set(Repository\ConnectionMemory::class);
     $services->alias(Repository\ConnectionInterface::class, Repository\ConnectionMemory::class);
 

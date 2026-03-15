@@ -18,21 +18,16 @@
  * limitations under the License.
  */
 
-namespace Fusio\Engine\Form\Element;
-
-use Fusio\Engine\Form\Element;
+namespace Fusio\Engine\Model;
 
 /**
- * TypeSchema
+ * ClassModelInterface
  *
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.apache.org/licenses/LICENSE-2.0
  * @link    https://www.fusio-project.org
  */
-class TypeSchema extends Element
+interface ClassModelInterface extends ModelInterface
 {
-    protected function getElement(): string
-    {
-        return 'typeschema';
-    }
+    public function getClass(): string;
 }
