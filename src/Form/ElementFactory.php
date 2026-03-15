@@ -24,11 +24,8 @@ use Fusio\Engine\Model\ClassModelInterface;
 use Fusio\Engine\Model\ModelInterface;
 use Fusio\Engine\Repository;
 use Fusio\Model\Common\FormElement;
-use Fusio\Model\Common\FormElementAction;
-use Fusio\Model\Common\FormElementAgent;
 use Fusio\Model\Common\FormElementCheckbox;
 use Fusio\Model\Common\FormElementCollection;
-use Fusio\Model\Common\FormElementConnection;
 use Fusio\Model\Common\FormElementInput;
 use Fusio\Model\Common\FormElementMap;
 use Fusio\Model\Common\FormElementSelect;
@@ -53,17 +50,17 @@ readonly class ElementFactory implements ElementFactoryInterface
     ) {
     }
 
-    public function newAction(string $name, string $title, ?string $help = null, ?array $allowedClasses = null): FormElementAction
+    public function newAction(string $name, string $title, ?string $help = null, ?array $allowedClasses = null): FormElementSelect
     {
-        $element = $this->newElement(new FormElementAction(), 'select', $name, $title, $help);
+        $element = $this->newElement(new FormElementSelect(), 'select', $name, $title, $help);
         $element->setOptions($this->newOptionsFromRepository($this->actionRepository, $allowedClasses));
 
         return $element;
     }
 
-    public function newAgent(string $name, string $title, ?string $help = null): FormElementAgent
+    public function newAgent(string $name, string $title, ?string $help = null): FormElementSelect
     {
-        $element = $this->newElement(new FormElementAgent(), 'select', $name, $title, $help);
+        $element = $this->newElement(new FormElementSelect(), 'select', $name, $title, $help);
         $element->setOptions($this->newOptionsFromRepository($this->agentRepository));
 
         return $element;
@@ -82,9 +79,9 @@ readonly class ElementFactory implements ElementFactoryInterface
         return $element;
     }
 
-    public function newConnection(string $name, string $title, ?string $help = null, ?array $allowedClasses = null): FormElementConnection
+    public function newConnection(string $name, string $title, ?string $help = null, ?array $allowedClasses = null): FormElementSelect
     {
-        $element = $this->newElement(new FormElementConnection(), 'select', $name, $title, $help);
+        $element = $this->newElement(new FormElementSelect(), 'select', $name, $title, $help);
         $element->setOptions($this->newOptionsFromRepository($this->connectionRepository, $allowedClasses));
 
         return $element;
