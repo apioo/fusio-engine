@@ -55,7 +55,7 @@ readonly class ElementFactory implements ElementFactoryInterface
 
     public function newAction(string $name, string $title, ?string $help = null, ?array $allowedClasses = null): FormElementAction
     {
-        $element = $this->newElement(new FormElementAction(), 'action', $name, $title, $help);
+        $element = $this->newElement(new FormElementAction(), 'select', $name, $title, $help);
         $element->setOptions($this->newOptionsFromRepository($this->actionRepository, $allowedClasses));
 
         return $element;
@@ -63,7 +63,7 @@ readonly class ElementFactory implements ElementFactoryInterface
 
     public function newAgent(string $name, string $title, ?string $help = null): FormElementAgent
     {
-        $element = $this->newElement(new FormElementAgent(), 'agent', $name, $title, $help);
+        $element = $this->newElement(new FormElementAgent(), 'select', $name, $title, $help);
         $element->setOptions($this->newOptionsFromRepository($this->agentRepository));
 
         return $element;
@@ -84,7 +84,7 @@ readonly class ElementFactory implements ElementFactoryInterface
 
     public function newConnection(string $name, string $title, ?string $help = null, ?array $allowedClasses = null): FormElementConnection
     {
-        $element = $this->newElement(new FormElementConnection(), 'connection', $name, $title, $help);
+        $element = $this->newElement(new FormElementConnection(), 'select', $name, $title, $help);
         $element->setOptions($this->newOptionsFromRepository($this->connectionRepository, $allowedClasses));
 
         return $element;
