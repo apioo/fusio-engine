@@ -2,6 +2,8 @@
 
 use Fusio\Engine\Action;
 use Fusio\Engine\Adapter\ServiceBuilder;
+use Fusio\Engine\Agent\Sender;
+use Fusio\Engine\Agent\SenderInterface;
 use Fusio\Engine\Connector;
 use Fusio\Engine\ConnectorInterface;
 use Fusio\Engine\Dispatcher;
@@ -75,4 +77,7 @@ return static function (ContainerConfigurator $container) {
 
     $services->set(ExecuteBuilder::class);
     $services->alias(ExecuteBuilderInterface::class, ExecuteBuilder::class);
+
+    $services->set(Sender::class);
+    $services->alias(SenderInterface::class, Sender::class);
 };
