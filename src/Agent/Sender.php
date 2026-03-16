@@ -21,9 +21,9 @@
 namespace Fusio\Engine\Agent;
 
 use Fusio\Engine\ContextInterface;
-use Fusio\Model\Common\AgentContentText;
-use Fusio\Model\Common\AgentInput;
-use Fusio\Model\Common\AgentOutput;
+use Fusio\Model\Agent\Input;
+use Fusio\Model\Agent\ItemText;
+use Fusio\Model\Agent\Output;
 
 /**
  * Sender
@@ -34,14 +34,14 @@ use Fusio\Model\Common\AgentOutput;
  */
 class Sender implements SenderInterface
 {
-    public function send(int $agentId, AgentInput $input, ContextInterface $context): AgentOutput
+    public function send(int $agentId, Input $input, ContextInterface $context): Output
     {
-        $content = new AgentContentText();
-        $content->setType('text');
-        $content->setContent('Fusio, self-Hosted API Management for Builders.');
+        $item = new ItemText();
+        $item->setType('text');
+        $item->setContent('Fusio, self-Hosted API Management for Builders.');
 
-        $output = new AgentOutput();
-        $output->setOutput($content);
+        $output = new Output();
+        $output->setItem($item);
 
         return $output;
     }

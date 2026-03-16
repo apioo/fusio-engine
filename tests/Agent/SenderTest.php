@@ -22,9 +22,9 @@ namespace Fusio\Engine\Tests\Agent;
 
 use Fusio\Engine\Agent\Sender;
 use Fusio\Engine\Context\AnonymousContext;
-use Fusio\Model\Common\AgentContentText;
-use Fusio\Model\Common\AgentInput;
-use Fusio\Model\Common\AgentOutput;
+use Fusio\Model\Agent\Input;
+use Fusio\Model\Agent\ItemText;
+use Fusio\Model\Agent\Output;
 use PHPUnit\Framework\TestCase;
 use PSX\Json\Parser;
 
@@ -41,10 +41,10 @@ class SenderTest extends TestCase
     {
         $sender = new Sender();
 
-        $output = $sender->send(1, new AgentInput(), new AnonymousContext());
+        $output = $sender->send(1, new Input(), new AnonymousContext());
 
-        $this->assertInstanceOf(AgentOutput::class, $output);
-        $this->assertInstanceOf(AgentContentText::class, $output->getOutput());
-        $this->assertJsonStringEqualsJsonString(Parser::encode(['type' => 'text', 'content' => 'Fusio, self-Hosted API Management for Builders.']), Parser::encode($output->getOutput()));
+        $this->assertInstanceOf(Output::class, $output);
+        $this->assertInstanceOf(ItemText::class, $output->getItem());
+        $this->assertJsonStringEqualsJsonString(Parser::encode(['type' => 'text', 'content' => 'Fusio, self-Hosted API Management for Builders.']), Parser::encode($output->getItem()));
     }
 }

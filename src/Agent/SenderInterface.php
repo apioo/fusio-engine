@@ -21,8 +21,8 @@
 namespace Fusio\Engine\Agent;
 
 use Fusio\Engine\ContextInterface;
-use Fusio\Model\Common\AgentInput;
-use Fusio\Model\Common\AgentOutput;
+use Fusio\Model\Agent\Input;
+use Fusio\Model\Agent\Output;
 
 /**
  * SenderInterface
@@ -33,5 +33,5 @@ use Fusio\Model\Common\AgentOutput;
  */
 interface SenderInterface
 {
-    public function send(int $agentId, AgentInput $input, ContextInterface $context): AgentOutput;
+    public function send(int $agentId, Input $input, ContextInterface $context): Output;
 }
