@@ -62,4 +62,59 @@ class Factory implements FactoryInterface
 
         return new HttpResponse($response->getStatusCode(), $headers, $body);
     }
+
+    public function ok(mixed $body, array $headers = []): HttpResponseInterface
+    {
+        return $this->build(200, $headers, $body);
+    }
+
+    public function created(mixed $body, array $headers = []): HttpResponseInterface
+    {
+        return $this->build(201, $headers, $body);
+    }
+
+    public function accepted(mixed $body, array $headers = []): HttpResponseInterface
+    {
+        return $this->build(202, $headers, $body);
+    }
+
+    public function noContent(array $headers = []): HttpResponseInterface
+    {
+        return $this->build(204, $headers, null);
+    }
+
+    public function badRequest(string $message, array $headers = []): HttpResponseInterface
+    {
+        return $this->build(400, $headers, ['success' => false, 'message' => $message]);
+    }
+
+    public function forbidden(string $message, array $headers = []): HttpResponseInterface
+    {
+        return $this->build(403, $headers, ['success' => false, 'message' => $message]);
+    }
+
+    public function notFound(string $message, array $headers = []): HttpResponseInterface
+    {
+        return $this->build(404, $headers, ['success' => false, 'message' => $message]);
+    }
+
+    public function conflict(string $message, array $headers = []): HttpResponseInterface
+    {
+        return $this->build(409, $headers, ['success' => false, 'message' => $message]);
+    }
+
+    public function gone(string $message, array $headers = []): HttpResponseInterface
+    {
+        return $this->build(410, $headers, ['success' => false, 'message' => $message]);
+    }
+
+    public function internalServerError(string $message, array $headers = []): HttpResponseInterface
+    {
+        return $this->build(500, $headers, ['success' => false, 'message' => $message]);
+    }
+
+    public function notImplemented(string $message, array $headers = []): HttpResponseInterface
+    {
+        return $this->build(501, $headers, ['success' => false, 'message' => $message]);
+    }
 }

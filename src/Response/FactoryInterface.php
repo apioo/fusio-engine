@@ -34,14 +34,69 @@ use PSX\Http\Environment\HttpResponseInterface;
 interface FactoryInterface
 {
     /**
-     * Creates a new response object
+     * Builds a new response object
      *
      * @param array<string, string|list<string>> $headers
      */
     public function build(int $statusCode, array $headers, mixed $body): HttpResponseInterface;
 
     /**
-     * Creates a response based on a PSR response
+     * Builds a response based on a PSR response
      */
     public function proxy(ResponseInterface $response): HttpResponseInterface;
+
+    /**
+     * Builds an ok (200) success response
+     */
+    public function ok(mixed $body, array $headers = []): HttpResponseInterface;
+
+    /**
+     * Builds a created (201) success response
+     */
+    public function created(mixed $body, array $headers = []): HttpResponseInterface;
+
+    /**
+     * Builds an accepted (202) success response
+     */
+    public function accepted(mixed $body, array $headers = []): HttpResponseInterface;
+
+    /**
+     * Builds a no content (204) success response
+     */
+    public function noContent(array $headers = []): HttpResponseInterface;
+
+    /**
+     * Builds a bad request (400) client error response
+     */
+    public function badRequest(string $message): HttpResponseInterface;
+
+    /**
+     * Builds a forbidden (403) client error response
+     */
+    public function forbidden(string $message): HttpResponseInterface;
+
+    /**
+     * Builds a not found (404) client error response
+     */
+    public function notFound(string $message): HttpResponseInterface;
+
+    /**
+     * Builds a conflict (409) client error response
+     */
+    public function conflict(string $message): HttpResponseInterface;
+
+    /**
+     * Builds a gone (410) client error response
+     */
+    public function gone(string $message): HttpResponseInterface;
+
+    /**
+     * Builds an internal server error (500) server error response
+     */
+    public function internalServerError(string $message): HttpResponseInterface;
+
+    /**
+     * Builds a not implemented (501) server error response
+     */
+    public function notImplemented(string $message): HttpResponseInterface;
 }
