@@ -36,7 +36,7 @@ class FactoryTest extends TestCase
 {
     public function testBuild(): void
     {
-        $response = new Factory()->build(200, ['x-customer' => 'my_header'], ['foo' => 'bar']);
+        $response = (new Factory())->build(200, ['x-customer' => 'my_header'], ['foo' => 'bar']);
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals(['x-customer' => 'my_header'], $response->getHeaders());
@@ -45,7 +45,7 @@ class FactoryTest extends TestCase
 
     public function testProxy(): void
     {
-        $response = new Factory()->proxy(new Response(200, ['x-customer' => 'my_header'], 'foobar'));
+        $response = (new Factory())->proxy(new Response(200, ['x-customer' => 'my_header'], 'foobar'));
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals(['x-customer' => 'my_header'], $response->getHeaders());
@@ -63,7 +63,7 @@ class FactoryTest extends TestCase
 
     public function testOk(): void
     {
-        $response = new Factory()->ok(['foo' => 'bar']);
+        $response = (new Factory())->ok(['foo' => 'bar']);
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals([], $response->getHeaders());
@@ -72,7 +72,7 @@ class FactoryTest extends TestCase
 
     public function testOkWithHeader(): void
     {
-        $response = new Factory()->ok(['foo' => 'bar'], ['x-customer' => 'my_header']);
+        $response = (new Factory())->ok(['foo' => 'bar'], ['x-customer' => 'my_header']);
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals(['x-customer' => 'my_header'], $response->getHeaders());
@@ -81,7 +81,7 @@ class FactoryTest extends TestCase
 
     public function testCreated(): void
     {
-        $response = new Factory()->created(['foo' => 'bar']);
+        $response = (new Factory())->created(['foo' => 'bar']);
 
         $this->assertEquals(201, $response->getStatusCode());
         $this->assertEquals([], $response->getHeaders());
@@ -90,7 +90,7 @@ class FactoryTest extends TestCase
 
     public function testCreatedWithHeader(): void
     {
-        $response = new Factory()->created(['foo' => 'bar'], ['x-customer' => 'my_header']);
+        $response = (new Factory())->created(['foo' => 'bar'], ['x-customer' => 'my_header']);
 
         $this->assertEquals(201, $response->getStatusCode());
         $this->assertEquals(['x-customer' => 'my_header'], $response->getHeaders());
@@ -99,7 +99,7 @@ class FactoryTest extends TestCase
 
     public function testAccepted(): void
     {
-        $response = new Factory()->accepted(['foo' => 'bar']);
+        $response = (new Factory())->accepted(['foo' => 'bar']);
 
         $this->assertEquals(202, $response->getStatusCode());
         $this->assertEquals([], $response->getHeaders());
@@ -108,7 +108,7 @@ class FactoryTest extends TestCase
 
     public function testAcceptedWithHeader(): void
     {
-        $response = new Factory()->accepted(['foo' => 'bar'], ['x-customer' => 'my_header']);
+        $response = (new Factory())->accepted(['foo' => 'bar'], ['x-customer' => 'my_header']);
 
         $this->assertEquals(202, $response->getStatusCode());
         $this->assertEquals(['x-customer' => 'my_header'], $response->getHeaders());
@@ -117,7 +117,7 @@ class FactoryTest extends TestCase
 
     public function testNoContent(): void
     {
-        $response = new Factory()->noContent();
+        $response = (new Factory())->noContent();
 
         $this->assertEquals(204, $response->getStatusCode());
         $this->assertEquals([], $response->getHeaders());
@@ -126,7 +126,7 @@ class FactoryTest extends TestCase
 
     public function testNoContentWithHeader(): void
     {
-        $response = new Factory()->noContent(['x-customer' => 'my_header']);
+        $response = (new Factory())->noContent(['x-customer' => 'my_header']);
 
         $this->assertEquals(204, $response->getStatusCode());
         $this->assertEquals(['x-customer' => 'my_header'], $response->getHeaders());
@@ -135,7 +135,7 @@ class FactoryTest extends TestCase
 
     public function testBadRequest(): void
     {
-        $response = new Factory()->badRequest('error message');
+        $response = (new Factory())->badRequest('error message');
 
         $this->assertEquals(400, $response->getStatusCode());
         $this->assertEquals([], $response->getHeaders());
@@ -144,7 +144,7 @@ class FactoryTest extends TestCase
 
     public function testBadRequestWithHeader(): void
     {
-        $response = new Factory()->badRequest('error message', ['x-customer' => 'my_header']);
+        $response = (new Factory())->badRequest('error message', ['x-customer' => 'my_header']);
 
         $this->assertEquals(400, $response->getStatusCode());
         $this->assertEquals(['x-customer' => 'my_header'], $response->getHeaders());
@@ -153,7 +153,7 @@ class FactoryTest extends TestCase
 
     public function testForbidden(): void
     {
-        $response = new Factory()->forbidden('error message');
+        $response = (new Factory())->forbidden('error message');
 
         $this->assertEquals(403, $response->getStatusCode());
         $this->assertEquals([], $response->getHeaders());
@@ -162,7 +162,7 @@ class FactoryTest extends TestCase
 
     public function testForbiddenWithHeader(): void
     {
-        $response = new Factory()->forbidden('error message', ['x-customer' => 'my_header']);
+        $response = (new Factory())->forbidden('error message', ['x-customer' => 'my_header']);
 
         $this->assertEquals(403, $response->getStatusCode());
         $this->assertEquals(['x-customer' => 'my_header'], $response->getHeaders());
@@ -171,7 +171,7 @@ class FactoryTest extends TestCase
 
     public function testNotFound(): void
     {
-        $response = new Factory()->notFound('error message');
+        $response = (new Factory())->notFound('error message');
 
         $this->assertEquals(404, $response->getStatusCode());
         $this->assertEquals([], $response->getHeaders());
@@ -180,7 +180,7 @@ class FactoryTest extends TestCase
 
     public function testNotFoundWithHeader(): void
     {
-        $response = new Factory()->notFound('error message', ['x-customer' => 'my_header']);
+        $response = (new Factory())->notFound('error message', ['x-customer' => 'my_header']);
 
         $this->assertEquals(404, $response->getStatusCode());
         $this->assertEquals(['x-customer' => 'my_header'], $response->getHeaders());
@@ -189,7 +189,7 @@ class FactoryTest extends TestCase
 
     public function testConflict(): void
     {
-        $response = new Factory()->conflict('error message');
+        $response = (new Factory())->conflict('error message');
 
         $this->assertEquals(409, $response->getStatusCode());
         $this->assertEquals([], $response->getHeaders());
@@ -198,7 +198,7 @@ class FactoryTest extends TestCase
 
     public function testConflictWithHeader(): void
     {
-        $response = new Factory()->conflict('error message', ['x-customer' => 'my_header']);
+        $response = (new Factory())->conflict('error message', ['x-customer' => 'my_header']);
 
         $this->assertEquals(409, $response->getStatusCode());
         $this->assertEquals(['x-customer' => 'my_header'], $response->getHeaders());
@@ -207,7 +207,7 @@ class FactoryTest extends TestCase
 
     public function testGone(): void
     {
-        $response = new Factory()->gone('error message');
+        $response = (new Factory())->gone('error message');
 
         $this->assertEquals(410, $response->getStatusCode());
         $this->assertEquals([], $response->getHeaders());
@@ -216,7 +216,7 @@ class FactoryTest extends TestCase
 
     public function testGoneWithHeader(): void
     {
-        $response = new Factory()->gone('error message', ['x-customer' => 'my_header']);
+        $response = (new Factory())->gone('error message', ['x-customer' => 'my_header']);
 
         $this->assertEquals(410, $response->getStatusCode());
         $this->assertEquals(['x-customer' => 'my_header'], $response->getHeaders());
@@ -225,7 +225,7 @@ class FactoryTest extends TestCase
 
     public function testInternalServerError(): void
     {
-        $response = new Factory()->internalServerError('error message');
+        $response = (new Factory())->internalServerError('error message');
 
         $this->assertEquals(500, $response->getStatusCode());
         $this->assertEquals([], $response->getHeaders());
@@ -234,7 +234,7 @@ class FactoryTest extends TestCase
 
     public function testInternalServerErrorWithHeader(): void
     {
-        $response = new Factory()->internalServerError('error message', ['x-customer' => 'my_header']);
+        $response = (new Factory())->internalServerError('error message', ['x-customer' => 'my_header']);
 
         $this->assertEquals(500, $response->getStatusCode());
         $this->assertEquals(['x-customer' => 'my_header'], $response->getHeaders());
@@ -243,7 +243,7 @@ class FactoryTest extends TestCase
 
     public function testNotImplemented(): void
     {
-        $response = new Factory()->notImplemented('error message');
+        $response = (new Factory())->notImplemented('error message');
 
         $this->assertEquals(501, $response->getStatusCode());
         $this->assertEquals([], $response->getHeaders());
@@ -252,7 +252,7 @@ class FactoryTest extends TestCase
 
     public function testNotImplementedWithHeader(): void
     {
-        $response = new Factory()->notImplemented('error message', ['x-customer' => 'my_header']);
+        $response = (new Factory())->notImplemented('error message', ['x-customer' => 'my_header']);
 
         $this->assertEquals(501, $response->getStatusCode());
         $this->assertEquals(['x-customer' => 'my_header'], $response->getHeaders());
