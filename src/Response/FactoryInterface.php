@@ -30,13 +30,15 @@ use PSX\Http\Environment\HttpResponseInterface;
  * @author  Christoph Kappestein <christoph.kappestein@gmail.com>
  * @license http://www.apache.org/licenses/LICENSE-2.0
  * @link    https://www.fusio-project.org
+ *
+ * @phpstan-type Headers array<string, string|list<string>>
  */
 interface FactoryInterface
 {
     /**
      * Builds a new response object
      *
-     * @param array<string, string|list<string>> $headers
+     * @param Headers $headers
      */
     public function build(int $statusCode, array $headers, mixed $body): HttpResponseInterface;
 
@@ -47,56 +49,78 @@ interface FactoryInterface
 
     /**
      * Builds an ok (200) success response
+     *
+     * @param Headers $headers
      */
     public function ok(mixed $body, array $headers = []): HttpResponseInterface;
 
     /**
      * Builds a created (201) success response
+     *
+     * @param Headers $headers
      */
     public function created(mixed $body, array $headers = []): HttpResponseInterface;
 
     /**
      * Builds an accepted (202) success response
+     *
+     * @param Headers $headers
      */
     public function accepted(mixed $body, array $headers = []): HttpResponseInterface;
 
     /**
      * Builds a no content (204) success response
+     *
+     * @param Headers $headers
      */
     public function noContent(array $headers = []): HttpResponseInterface;
 
     /**
      * Builds a bad request (400) client error response
+     *
+     * @param Headers $headers
      */
-    public function badRequest(string $message): HttpResponseInterface;
+    public function badRequest(string $message, array $headers = []): HttpResponseInterface;
 
     /**
      * Builds a forbidden (403) client error response
+     *
+     * @param Headers $headers
      */
-    public function forbidden(string $message): HttpResponseInterface;
+    public function forbidden(string $message, array $headers = []): HttpResponseInterface;
 
     /**
      * Builds a not found (404) client error response
+     *
+     * @param Headers $headers
      */
-    public function notFound(string $message): HttpResponseInterface;
+    public function notFound(string $message, array $headers = []): HttpResponseInterface;
 
     /**
      * Builds a conflict (409) client error response
+     *
+     * @param Headers $headers
      */
-    public function conflict(string $message): HttpResponseInterface;
+    public function conflict(string $message, array $headers = []): HttpResponseInterface;
 
     /**
      * Builds a gone (410) client error response
+     *
+     * @param Headers $headers
      */
-    public function gone(string $message): HttpResponseInterface;
+    public function gone(string $message, array $headers = []): HttpResponseInterface;
 
     /**
      * Builds an internal server error (500) server error response
+     *
+     * @param Headers $headers
      */
-    public function internalServerError(string $message): HttpResponseInterface;
+    public function internalServerError(string $message, array $headers = []): HttpResponseInterface;
 
     /**
      * Builds a not implemented (501) server error response
+     *
+     * @param Headers $headers
      */
-    public function notImplemented(string $message): HttpResponseInterface;
+    public function notImplemented(string $message, array $headers = []): HttpResponseInterface;
 }
