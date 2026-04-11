@@ -17,6 +17,7 @@ use Symfony\Component\Cache\Psr16Cache;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface as SymfonyEventDispatcherInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface as SymfonyContractsEventDispatcherInterface;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\tagged_iterator;
 
@@ -54,6 +55,7 @@ return static function (ContainerConfigurator $container) {
     $services->set(EventDispatcher::class);
     $services->alias(EventDispatcherInterface::class, EventDispatcher::class);
     $services->alias(SymfonyEventDispatcherInterface::class, EventDispatcher::class);
+    $services->alias(SymfonyContractsEventDispatcherInterface::class, EventDispatcher::class);
 
     $services->set(Tools::class);
     $services->alias(ToolsInterface::class, Tools::class);
