@@ -47,7 +47,8 @@ class Factory implements FactoryInterface
             $contentType = 'application/octet-stream';
         }
 
-        foreach (Http::HOP_BY_HOP_HEADERS as $headerName) {
+        $excludeHeaders = array_merge(Http::HOP_BY_HOP_HEADERS, Http::CORS_HEADERS);
+        foreach ($excludeHeaders as $headerName) {
             if ($response->hasHeader($headerName)) {
                 $response = $response->withoutHeader($headerName);
             }
