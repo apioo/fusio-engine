@@ -34,7 +34,7 @@ use Fusio\Model\Agent\Output;
  */
 class Sender implements SenderInterface
 {
-    public function send(int $agentId, Input $input, ContextInterface $context, bool $public = false): Output
+    public function send(int $agentId, Input $input, ContextInterface $context): Output
     {
         $item = new ItemText();
         $item->setType('text');
