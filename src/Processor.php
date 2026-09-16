@@ -24,6 +24,9 @@ use Fusio\Engine\Action\ResolverInterface;
 use Fusio\Engine\Exception\ActionNotFoundException;
 use Fusio\Engine\Exception\FactoryResolveException;
 use PSX\Http\Environment\HttpResponse;
+use PSX\Http\Environment\HttpResponseInterface;
+use PSX\Record\Record;
+use PSX\Record\RecordInterface;
 
 /**
  * Processor
@@ -108,5 +111,20 @@ class Processor implements ProcessorInterface
         }
 
         return $this->resolvers[$scheme]->resolve($value);
+    }
+
+    public function extract(mixed $data): ?RecordInterface
+    {
+        if ($data instanceof HttpResponseInterface) {
+            return $this->extract($data->getBody());
+        } elseif ($data instanceof RecordInterface) {
+            return $data;
+        } elseif (is_iterable($data)) {
+            return Record::fromIterable($data);
+        } elseif (is_object($data)) {
+            return Record::fromObject($data);
+        } else {
+            return null;
+        }
     }
 }

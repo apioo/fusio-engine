@@ -22,6 +22,7 @@ namespace Fusio\Engine;
 
 use Fusio\Engine\Exception\ActionNotFoundException;
 use Fusio\Engine\Exception\FactoryResolveException;
+use PSX\Record\RecordInterface;
 
 /**
  * The processor can be used to invoke another action. Normally an action should only contain simple logic but in some
@@ -35,7 +36,7 @@ interface ProcessorInterface
 {
     /**
      * Executes a specific action using the request and context and returns a response. It is recommended to use the
-     * action name but you can also use the actual database id of the action
+     * action name, but you can also use the actual database id of the action
      *
      * @throws ActionNotFoundException
      * @throws FactoryResolveException
@@ -49,4 +50,11 @@ interface ProcessorInterface
      * @throws FactoryResolveException
      */
     public function getAction(string|int $actionId): Model\ActionInterface;
+
+    /**
+     * This method helps to extract the mixed return of the execute method into a record
+     *
+     * @return RecordInterface<mixed>|null
+     */
+    public function extract(mixed $data): ?RecordInterface;
 }
