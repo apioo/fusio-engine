@@ -24,6 +24,7 @@ use Fusio\Engine\ConfigurableInterface;
 use Fusio\Engine\Exception\NotFoundException;
 use Fusio\Engine\Form;
 use Fusio\Engine\Inflection\ClassName;
+use Fusio\Engine\ExcludedInterface;
 
 /**
  * ProviderAbstract
@@ -62,12 +63,14 @@ abstract class ProviderAbstract implements ProviderInterface
                 continue;
             }
 
-            if ($object instanceof ConfigurableInterface) {
-                $result[] = [
-                    'name'  => $object->getName(),
-                    'class' => ClassName::serialize($object::class),
-                ];
+            if (!$object instanceof ConfigurableInterface || $object instanceof ExcludedInterface) {
+                continue;
             }
+
+            $result[] = [
+                'name'  => $object->getName(),
+                'class' => ClassName::serialize($object::class),
+            ];
         }
 
         usort($result, function($a, $b) {
@@ -104,7 +107,7 @@ abstract class ProviderAbstract implements ProviderInterface
             }
         }
 
-        throw new NotFoundException('Could not found provider: ' . $name);
+        throw new NotFoundException('Could not find provider: ' . $name);
     }
 
     /**
