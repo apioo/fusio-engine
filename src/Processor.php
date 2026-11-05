@@ -76,7 +76,16 @@ class Processor implements ProcessorInterface
             $this->executionStack->push($actionId, $request, $context);
 
             try {
-                $response = $this->factory->factory($action->getClass())->handle($request, $parameters, $context->withAction($action));
+                $class = $action->getClass();
+                if (!str_contains($class, '.') && !str_contains($class, '\\')) {
+                    // in case the class is not a PHP class we try to load it is another action
+                    $childAction = $this->getAction('action://' . $class);
+                    $class = $childAction->getClass();
+                    $context = $context->withConfig($action->getConfig());
+                    $parameters = new Parameters($childAction->getConfig());
+                }
+
+                $response = $this->factory->factory($class)->handle($request, $parameters, $context->withAction($action));
             } finally {
                 $this->executionStack->pop();
             }
