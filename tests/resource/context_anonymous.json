@@ -8,5 +8,7 @@
     "anonymous": true
   },
   "tenantId": "my_tenant",
-  "action": null
+  "action": null,
+  "connection": null,
+  "config": null
 }

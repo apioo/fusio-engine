@@ -36,5 +36,17 @@
     }
   },
   "tenantId": "my_tenant",
-  "action": null
+  "action": {
+    "id": 1,
+    "name": "foo",
+    "class": "bar",
+    "async": false,
+    "config": {
+      "foo": "bar"
+    }
+  },
+  "connection": null,
+  "config": {
+    "foo": "bar"
+  }
 }
