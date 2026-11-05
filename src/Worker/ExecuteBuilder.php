@@ -24,6 +24,7 @@ use Fusio\Engine\ContextInterface;
 use Fusio\Engine\Inflection\ClassName;
 use Fusio\Engine\Model\AppInterface;
 use Fusio\Engine\Model\UserInterface;
+use Fusio\Engine\ParametersInterface;
 use Fusio\Engine\Repository;
 use Fusio\Engine\Request\HttpRequestContext;
 use Fusio\Engine\Request\RequestContextInterface;
@@ -138,6 +139,11 @@ class ExecuteBuilder implements ExecuteBuilderInterface
         $return->setAction($action);
         $return->setApp($this->getApp($context->getApp()));
         $return->setUser($this->getUser($context->getUser()));
+
+        $config = $context->getConfig();
+        if (is_array($config)) {
+            $return->setConfig(Record::fromArray($config));
+        }
 
         return $return;
     }
