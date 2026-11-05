@@ -35,7 +35,11 @@ class Context implements ContextInterface
     private Model\UserInterface $user;
     private ?string $tenantId;
     private ?Model\ActionInterface $action = null;
-    private mixed $connection;
+    private mixed $connection = null;
+    /**
+     * @var array<string, scalar>|null
+     */
+    private ?array $config = null;
 
     public function __construct(int $operationId, string $baseUrl, Model\AppInterface $app, Model\UserInterface $user, ?string $tenantId = null)
     {
@@ -98,6 +102,25 @@ class Context implements ContextInterface
     }
 
     /**
+     * @return array<string, scalar>|null
+     */
+    public function getConfig(): ?array
+    {
+        return $this->config;
+    }
+
+    /**
+     * @param array<string, scalar> $config
+     */
+    public function withConfig(array $config): self
+    {
+        $me = clone $this;
+        $me->config = $config;
+
+        return $me;
+    }
+
+    /**
      * @return array<string, mixed>
      */
     public function jsonSerialize(): array
@@ -109,6 +132,8 @@ class Context implements ContextInterface
             'user' => $this->user,
             'tenantId' => $this->tenantId,
             'action' => $this->action,
+            'connection' => $this->connection,
+            'config' => $this->config,
         ];
     }
 }

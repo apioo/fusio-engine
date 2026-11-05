@@ -78,4 +78,8 @@ interface ContextInterface extends \JsonSerializable
      * Sets the currently used connection
      */
     public function withConnection(mixed $connection): self;
+
+    public function getConfig(): ?array;
+
+    public function withConfig(array $config): self;
 }
