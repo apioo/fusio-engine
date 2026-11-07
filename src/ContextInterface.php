@@ -79,7 +79,13 @@ interface ContextInterface extends \JsonSerializable
      */
     public function withConnection(mixed $connection): self;
 
+    /**
+     * @return array<string, scalar>|null
+     */
     public function getConfig(): ?array;
 
+    /**
+     * @param array<string, scalar> $config
+     */
     public function withConfig(array $config): self;
 }
