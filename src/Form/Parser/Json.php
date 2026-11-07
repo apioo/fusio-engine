@@ -47,9 +47,13 @@ readonly class Json
             return null;
         }
 
-        $elements = $container->element ?? null;
-        if (!is_array($elements)) {
-            return null;
+        $elements = [];
+        $keywords = ['form', 'element', 'elements'];
+        foreach ($keywords as $keyword) {
+            if (isset($container->$keyword) && is_array($container->$keyword)) {
+                $elements = $container->$keyword;
+                break;
+            }
         }
 
         $builder = new Builder();
