@@ -14,6 +14,8 @@ return
 #[Map('map', 'Map', 'text', 'Map description')]
 #[Select('select', 'Select', ['foo' => 'Foo', 'bar' => 'Bar'], 'Select description')]
 #[TextArea('textarea', 'TextArea', 'json', 'TextArea description')]
+#[TypeAPI('typeapi', 'TypeAPI', 'TypeAPI description')]
+#[TypeSchema('typeschema', 'TypeSchema', 'TypeSchema description')]
 function(Worker\ExecuteRequest $request, Worker\ExecuteContext $context, Engine\ConnectorInterface $connector, Engine\Response\FactoryInterface $response, Engine\DispatcherInterface $dispatcher, LoggerInterface $logger) {
 
 };

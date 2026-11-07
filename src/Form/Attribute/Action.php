@@ -33,7 +33,7 @@ use Attribute;
 #[Attribute(Attribute::TARGET_FUNCTION)]
 class Action
 {
-    public function __construct(public string $name, public string $title, public ?string $help = null, public ?array $allowedClasses = null)
+    public function __construct(public string $name, public string $title, public ?string $help = null)
     {
     }
 }

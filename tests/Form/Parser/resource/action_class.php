@@ -15,6 +15,8 @@ return new
 #[Form\Map('map', 'Map', 'text', 'Map description')]
 #[Form\Select('select', 'Select', ['foo' => 'Foo', 'bar' => 'Bar'], 'Select description')]
 #[Form\TextArea('textarea', 'TextArea', 'json', 'TextArea description')]
+#[Form\TypeAPI('typeapi', 'TypeAPI', 'TypeAPI description')]
+#[Form\TypeSchema('typeschema', 'TypeSchema', 'TypeSchema description')]
 class {
     public function __invoke(Worker\ExecuteRequest $request, Worker\ExecuteContext $context, Engine\ConnectorInterface $connector, Engine\Response\FactoryInterface $response, Engine\DispatcherInterface $dispatcher, LoggerInterface $logger)
     {

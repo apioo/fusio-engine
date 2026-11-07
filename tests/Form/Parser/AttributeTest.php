@@ -41,13 +41,13 @@ class AttributeTest extends TestCase
     #[DataProvider('actionProvider')]
     public function testParse(string $actionFile): void
     {
-        $code = file_get_contents($actionFile);
+        $code = (string) file_get_contents($actionFile);
         $parser = new Form\Parser\Attribute($this->getFormElementFactory());
 
         $form = $parser->parse($code);
 
         $this->assertInstanceOf(Form\Container::class, $form);
-        $this->assertEquals(9, count($form->getElements()));
+        $this->assertEquals(11, count($form->getElements()));
 
         $actual = Parser::encode($form);
         $expect = $this->getExpect();
@@ -59,6 +59,9 @@ class AttributeTest extends TestCase
         $this->assertIsCallable($return);
     }
 
+    /**
+     * @return list<array{string}>
+     */
     public static function actionProvider(): array
     {
         return [
@@ -74,18 +77,16 @@ class AttributeTest extends TestCase
 {
     "element": [
         {
-            "element": "select",
+            "element": "action",
             "name": "action",
             "title": "Action",
-            "help": "Action description",
-            "options": []
+            "help": "Action description"
         },
         {
-            "element": "select",
+            "element": "agent",
             "name": "agent",
             "title": "Agent",
-            "help": "Agent description",
-            "options": []
+            "help": "Agent description"
         },
         {
             "element": "checkbox",
@@ -101,11 +102,10 @@ class AttributeTest extends TestCase
             "type": "text"
         },
         {
-            "element": "select",
+            "element": "connection",
             "name": "connection",
             "title": "Connection",
-            "help": "Connection description",
-            "options": []
+            "help": "Connection description"
         },
         {
             "element": "input",
@@ -143,6 +143,18 @@ class AttributeTest extends TestCase
             "title": "TextArea",
             "help": "TextArea description",
             "mode": "json"
+        },
+        {
+            "element": "typeapi",
+            "help": "TypeAPI description",
+            "name": "typeapi",
+            "title": "TypeAPI"
+        },
+        {
+            "element": "typeschema",
+            "help": "TypeSchema description",
+            "name": "typeschema",
+            "title": "TypeSchema"
         }
     ]
 }

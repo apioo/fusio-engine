@@ -33,6 +33,9 @@ use Attribute;
 #[Attribute(Attribute::TARGET_FUNCTION)]
 class Select
 {
+    /**
+     * @param array<string, scalar> $options
+     */
     public function __construct(public string $name, public string $title, public array $options = [], public ?string $help = null)
     {
     }
