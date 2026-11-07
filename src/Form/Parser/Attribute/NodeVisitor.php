@@ -40,16 +40,16 @@ class NodeVisitor extends NodeVisitorAbstract
     {
     }
 
-    public function enterNode(Node $node): void
+    public function enterNode(Node $node)
     {
         if (!$node instanceof Node\AttributeGroup) {
-            return;
+            return null;
         }
 
         foreach ($node->attrs as $attr) {
             $name = $attr->name->toString();
             if (str_contains($name, '\\')) {
-                $name = substr(strstr($name, '\\'), 1);
+                $name = substr((string) strstr($name, '\\'), 1);
             }
 
             $arguments = [];
@@ -57,19 +57,29 @@ class NodeVisitor extends NodeVisitorAbstract
                 $arguments[] = $this->parseNodeValue($arg->value);
             }
 
-            $methodName = 'new' . $name;
-            $callable = [$this->elementFactory, $methodName];
-            if (!is_callable($callable)) {
-                continue;
-            }
+            $element = match ($name) {
+                'Action' => $this->elementFactory->newAction(...$arguments),
+                'Agent' => $this->elementFactory->newAgent(...$arguments),
+                'Checkbox' => $this->elementFactory->newCheckbox(...$arguments),
+                'Collection' => $this->elementFactory->newCollection(...$arguments),
+                'Connection' => $this->elementFactory->newConnection(...$arguments),
+                'Input' => $this->elementFactory->newInput(...$arguments),
+                'Map' => $this->elementFactory->newMap(...$arguments),
+                'Select' => $this->elementFactory->newSelect(...$arguments),
+                'TextArea' => $this->elementFactory->newTextArea(...$arguments),
+                'TypeAPI' => $this->elementFactory->newTypeAPI(...$arguments),
+                'TypeSchema' => $this->elementFactory->newTypeSchema(...$arguments),
+                default => null,
+            };
 
-            $element = call_user_func_array($callable, $arguments);
             if (!$element instanceof FormElement) {
                 continue;
             }
 
             $this->builder->add($element);
         }
+
+        return null;
     }
 
     private function parseNodeValue(Node $node): mixed

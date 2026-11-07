@@ -46,6 +46,9 @@ readonly class Attribute
         try {
             $parser = new ParserFactory()->createForNewestSupportedVersion();
             $ast = $parser->parse($code);
+            if ($ast === null) {
+                return null;
+            }
 
             $builder = new Builder();
 
