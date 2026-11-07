@@ -20,8 +20,11 @@
 
 namespace Fusio\Engine\Form;
 
+use Fusio\Model\Common\FormElementAction;
+use Fusio\Model\Common\FormElementAgent;
 use Fusio\Model\Common\FormElementCheckbox;
 use Fusio\Model\Common\FormElementCollection;
+use Fusio\Model\Common\FormElementConnection;
 use Fusio\Model\Common\FormElementInput;
 use Fusio\Model\Common\FormElementMap;
 use Fusio\Model\Common\FormElementSelect;
@@ -40,15 +43,13 @@ interface ElementFactoryInterface
 {
     /**
      * Creates a select which contains all available actions
-     *
-     * @param list<string> $allowedClasses
      */
-    public function newAction(string $name, string $title, ?string $help = null, ?array $allowedClasses = null): FormElementSelect;
+    public function newAction(string $name, string $title, ?string $help = null): FormElementAction;
 
     /**
      * Creates a select which contains all available agents
      */
-    public function newAgent(string $name, string $title, ?string $help = null): FormElementSelect;
+    public function newAgent(string $name, string $title, ?string $help = null): FormElementAgent;
 
     /**
      * Creates a new checkbox input, this results in a JSON boolean type
@@ -62,10 +63,8 @@ interface ElementFactoryInterface
 
     /**
      * Creates a select which contains all available connections
-     *
-     * @param list<string> $allowedClasses
      */
-    public function newConnection(string $name, string $title, ?string $help = null, ?array $allowedClasses = null): FormElementSelect;
+    public function newConnection(string $name, string $title, ?string $help = null): FormElementConnection;
 
     /**
      * Creates a new input field. The type must be a valid html input type

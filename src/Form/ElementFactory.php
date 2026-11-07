@@ -24,8 +24,11 @@ use Fusio\Engine\Model\ClassModelInterface;
 use Fusio\Engine\Model\ModelInterface;
 use Fusio\Engine\Repository;
 use Fusio\Model\Common\FormElement;
+use Fusio\Model\Common\FormElementAction;
+use Fusio\Model\Common\FormElementAgent;
 use Fusio\Model\Common\FormElementCheckbox;
 use Fusio\Model\Common\FormElementCollection;
+use Fusio\Model\Common\FormElementConnection;
 use Fusio\Model\Common\FormElementInput;
 use Fusio\Model\Common\FormElementMap;
 use Fusio\Model\Common\FormElementSelect;
@@ -43,27 +46,14 @@ use Fusio\Model\Common\FormElementTypeSchema;
  */
 readonly class ElementFactory implements ElementFactoryInterface
 {
-    public function __construct(
-        private Repository\ActionInterface $actionRepository,
-        private Repository\AgentInterface $agentRepository,
-        private Repository\ConnectionInterface $connectionRepository
-    ) {
+    public function newAction(string $name, string $title, ?string $help = null): FormElementAction
+    {
+        return $this->newElement(new FormElementAction(), 'action', $name, $title, $help);
     }
 
-    public function newAction(string $name, string $title, ?string $help = null, ?array $allowedClasses = null): FormElementSelect
+    public function newAgent(string $name, string $title, ?string $help = null): FormElementAgent
     {
-        $element = $this->newElement(new FormElementSelect(), 'select', $name, $title, $help);
-        $element->setOptions($this->newOptionsFromRepository($this->actionRepository, $allowedClasses));
-
-        return $element;
-    }
-
-    public function newAgent(string $name, string $title, ?string $help = null): FormElementSelect
-    {
-        $element = $this->newElement(new FormElementSelect(), 'select', $name, $title, $help);
-        $element->setOptions($this->newOptionsFromRepository($this->agentRepository));
-
-        return $element;
+        return $this->newElement(new FormElementAgent(), 'agent', $name, $title, $help);
     }
 
     public function newCheckbox(string $name, string $title, ?string $help = null): FormElementCheckbox
@@ -79,12 +69,9 @@ readonly class ElementFactory implements ElementFactoryInterface
         return $element;
     }
 
-    public function newConnection(string $name, string $title, ?string $help = null, ?array $allowedClasses = null): FormElementSelect
+    public function newConnection(string $name, string $title, ?string $help = null): FormElementConnection
     {
-        $element = $this->newElement(new FormElementSelect(), 'select', $name, $title, $help);
-        $element->setOptions($this->newOptionsFromRepository($this->connectionRepository, $allowedClasses));
-
-        return $element;
+        return $this->newElement(new FormElementConnection(), 'connection', $name, $title, $help);
     }
 
     public function newInput(string $name, string $title, string $type = 'text', ?string $help = null): FormElementInput
@@ -145,27 +132,6 @@ readonly class ElementFactory implements ElementFactoryInterface
         $object->setHelp($help);
 
         return $object;
-    }
-
-    /**
-     * @template T of ModelInterface
-     * @param Repository\RepositoryInterface<T> $repository
-     * @param list<string> $allowedClasses
-     * @return list<FormElementSelectOption>
-     */
-    private function newOptionsFromRepository(Repository\RepositoryInterface $repository, ?array $allowedClasses = null): array
-    {
-        $options = [];
-        $result = $repository->getAll();
-        foreach ($result as $row) {
-            if ($allowedClasses !== null && $row instanceof ClassModelInterface && !in_array($row->getClass(), $allowedClasses)) {
-                continue;
-            }
-
-            $options[$row->getId()] = $row->getName();
-        }
-
-        return $this->newOptions($options);
     }
 
     /**
