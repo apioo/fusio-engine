@@ -6,3 +6,4 @@ parameters:
 		- tests
 	excludePaths:
 		- src/Test/compiled/*
+		- tests/Form/Parser/resource/*
