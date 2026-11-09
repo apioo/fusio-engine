@@ -43,17 +43,12 @@ readonly class Json
     public function parse(string $json): ?Container
     {
         $container = Parser::decode($json);
-        if (!$container instanceof stdClass) {
+        if ($container instanceof stdClass) {
+            $elements = $this->extractElements($container) ?? [];
+        } elseif (is_array($container)) {
+            $elements = $container;
+        } else {
             return null;
-        }
-
-        $elements = [];
-        $keywords = ['form', 'element', 'elements'];
-        foreach ($keywords as $keyword) {
-            if (isset($container->$keyword) && is_array($container->$keyword)) {
-                $elements = $container->$keyword;
-                break;
-            }
         }
 
         $builder = new Builder();
@@ -144,5 +139,20 @@ readonly class Json
     private function parseMode(stdClass $rawElement): string
     {
         return $rawElement->mode ?? 'json';
+    }
+
+    /**
+     * @return array<mixed>|null
+     */
+    private function extractElements(stdClass $container): ?array
+    {
+        $keywords = ['form', 'element', 'elements'];
+        foreach ($keywords as $keyword) {
+            if (isset($container->$keyword) && is_array($container->$keyword)) {
+                return $container->$keyword;
+            }
+        }
+
+        return null;
     }
 }
