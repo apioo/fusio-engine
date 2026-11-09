@@ -23,6 +23,7 @@ namespace Fusio\Engine;
 use Fusio\Engine\Action\ResolverInterface;
 use Fusio\Engine\Exception\ActionNotFoundException;
 use Fusio\Engine\Exception\FactoryResolveException;
+use Fusio\Engine\Inflection\ClassShape;
 use PSX\Http\Environment\HttpResponse;
 use PSX\Http\Environment\HttpResponseInterface;
 use PSX\Record\Record;
@@ -76,14 +77,7 @@ class Processor implements ProcessorInterface
             $this->executionStack->push($actionId, $request, $context);
 
             try {
-                $class = $action->getClass();
-                if (!str_contains($class, '.') && !str_contains($class, '\\')) {
-                    // in case the class is not a PHP class we try to load it is another action
-                    $childAction = $this->getAction('action://' . $class);
-                    $class = $childAction->getClass();
-                    $context = $context->withConfig($action->getConfig());
-                    $parameters = new Parameters($childAction->getConfig());
-                }
+                [$class, $context, $parameters] = $this->resolveClass($action, $context, $parameters);
 
                 $response = $this->factory->factory($class)->handle($request, $parameters, $context->withAction($action));
             } finally {
@@ -134,6 +128,29 @@ class Processor implements ProcessorInterface
             return Record::fromObject($data);
         } else {
             return null;
+        }
+    }
+
+    /**
+     * @return array{string, ContextInterface, Parameters}
+     * @throws ActionNotFoundException
+     * @throws FactoryResolveException
+     */
+    private function resolveClass(Model\ActionInterface $action, ContextInterface $context, Parameters $parameters): array
+    {
+        $class = $action->getClass();
+        $shape = ClassShape::fromString($class);
+
+        if ($shape === ClassShape::PHP_CLASS) {
+            return [$class, $context, $parameters];
+        } elseif ($shape === ClassShape::ENTITY_NAME) {
+            $targetAction = $this->getAction('action://' . $class);
+            $context = $context->withConfig($action->getConfig());
+            $parameters = new Parameters($targetAction->getConfig());
+
+            return $this->resolveClass($targetAction, $context, $parameters);
+        } else {
+            throw new ActionNotFoundException('Provided an invalid action class shape');
         }
     }
 }
