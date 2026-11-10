@@ -133,7 +133,7 @@ abstract class ProviderAbstract implements ProviderInterface
      */
     private function shortName(string $class): string
     {
-        return new ReflectionClass($class)->getShortName();
+        return (new ReflectionClass($class))->getShortName();
     }
 
     private function resolveByClass(string $name): ?Form\Container
@@ -172,9 +172,9 @@ abstract class ProviderAbstract implements ProviderInterface
         }
 
         if ($source instanceof Form\Source\PhpCode) {
-            return new Form\Parser\Attribute($this->elementFactory)->parse($source->code);
+            return (new Form\Parser\Attribute($this->elementFactory))->parse($source->code);
         } elseif ($source instanceof Form\Source\Json) {
-            return new Form\Parser\Json($this->elementFactory)->parse($source->json);
+            return (new Form\Parser\Json($this->elementFactory))->parse($source->json);
         } elseif ($source instanceof Form\Source\Instance) {
             return $source->container;
         }
@@ -207,6 +207,6 @@ abstract class ProviderAbstract implements ProviderInterface
 
         $body = (string) $response->getBody();
 
-        return new Json($this->elementFactory)->parse($body);
+        return (new Json($this->elementFactory))->parse($body);
     }
 }
